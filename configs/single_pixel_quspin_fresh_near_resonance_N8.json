@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "study": "fresh_single_pixel_quspin_near_resonance",
+  "evidence_policy": "Fresh execution only; no prior numerical outputs are admissible.",
+  "mode": "focused",
+  "output": "work/single_pixel_quspin_fresh_2026-07-12/near_resonance_N8",
+  "N": [8],
+  "hz": [
+    -2.25, -2.10, -2.05, -2.01, -2.00, -1.99, -1.95, -1.90, -1.75,
+    -0.25, -0.10, -0.05, -0.01, 0.00, 0.01, 0.05, 0.10, 0.25,
+    1.75, 1.90, 1.95, 1.99, 2.00, 2.01, 2.05, 2.10, 2.25
+  ],
+  "times": [100.0, 1000.0, 10000.0, 100000.0, 1000000.0],
+  "fixed_parameters": {"J": 1.0, "Jx": 0.01, "hz0": 0.0},
+  "seed": 20260712,
+  "theta_bins": 48,
+  "solve_condition_limit": 10000000000.0,
+  "spacing_sector": {"kblock": 0, "pblock": 1, "zblock_at_hz_zero": 1}
+}

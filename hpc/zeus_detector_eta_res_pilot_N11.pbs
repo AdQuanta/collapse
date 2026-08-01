@@ -1,0 +1,131 @@
+#!/bin/bash
+# PBS pilot for detector-basis resonant-coupling diagnostics at detector N=11.
+#
+# This runs examples/detector_resonant_coupling_diagnostic.py on selected
+# high-S_born, phi-covered rows from imported Zeus pairwise summaries.  The
+# diagnostic is dense in the detector Hilbert space, so keep this pilot at
+# N=11 unless the implementation is replaced by a sector/sampled estimator.
+#
+# Submit manually from the repository root on Zeus. Do not submit from Codex.
+#
+#PBS -N eta_res_N11
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -l walltime=12:00:00
+#PBS -J 1-2
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export BLIS_NUM_THREADS="${BLIS_NUM_THREADS:-1}"
+export VECLIB_MAXIMUM_THREADS="${VECLIB_MAXIMUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+
+RUN_ROOT="${RUN_ROOT:-figures/zeus_detector_eta_res_pilot_N11}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_detector_eta_res_pilot_N11}"
+MIN_N="${MIN_N:-11}"
+MAX_N="${MAX_N:-11}"
+TOP_ROWS="${TOP_ROWS:-24}"
+PHI_MIN="${PHI_MIN:-0.7}"
+ENERGY_TOL="${ENERGY_TOL:-1e-9}"
+WINDOW_FACTOR="${WINDOW_FACTOR:-1.0}"
+REQUIRE_NONZERO_COUPLING="${REQUIRE_NONZERO_COUPLING:-1}"
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+LOG_FILE="$LOG_ROOT/task_${TASK_ID}_eta_res.log"
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+echo "=== detector eta_res pilot ==="
+date
+echo "PBS_O_WORKDIR=$PBS_O_WORKDIR"
+echo "TASK_ID=$TASK_ID"
+echo "RUN_ROOT=$RUN_ROOT"
+echo "LOG_ROOT=$LOG_ROOT"
+echo "PYTHON_BIN=$PYTHON_BIN"
+echo "MIN_N=$MIN_N MAX_N=$MAX_N TOP_ROWS=$TOP_ROWS PHI_MIN=$PHI_MIN"
+echo "ENERGY_TOL=$ENERGY_TOL WINDOW_FACTOR=$WINDOW_FACTOR"
+echo "Threads: OMP=$OMP_NUM_THREADS MKL=$MKL_NUM_THREADS OPENBLAS=$OPENBLAS_NUM_THREADS NUMEXPR=$NUMEXPR_NUM_THREADS"
+
+if [ -z "${SOURCE_CSVS:-}" ]; then
+  case "$TASK_ID" in
+    1)
+      LABEL="j_jpm_jy0_N11"
+      SOURCE_CSVS="figures/zeus_single_pixel_j_jpm_fixed_jx_jy0_N11_N17_20260703_145152/N11_hz0-matched/pairwise_summary.csv figures/zeus_single_pixel_j_jpm_fixed_jx_jy0_N11_N17_20260703_145152/N11_hz0-zero/pairwise_summary.csv"
+      ;;
+    2)
+      LABEL="j0_jpm1_jx_jy_N11"
+      SOURCE_CSVS="figures/zeus_single_pixel_j0_jpm1_jx_jy_heatmaps_N11_N17_20260704_114732/N11_hz0-matched/pairwise_summary.csv figures/zeus_single_pixel_j0_jpm1_jx_jy_heatmaps_N11_N17_20260704_114732/N11_hz0-zero/pairwise_summary.csv"
+      ;;
+    *)
+      echo "Unsupported TASK_ID=$TASK_ID; valid array range is 1-2." >&2
+      exit 2
+      ;;
+  esac
+else
+  LABEL="${LABEL:-custom_N11}"
+fi
+
+OUT_CSV="${OUT_CSV:-$RUN_ROOT/${LABEL}_eta_res.csv}"
+
+echo "LABEL=$LABEL"
+echo "SOURCE_CSVS=$SOURCE_CSVS"
+echo "OUT_CSV=$OUT_CSV"
+
+read -r -a SOURCE_CSV_ARRAY <<< "$SOURCE_CSVS"
+
+CMD=(
+  "$PYTHON_BIN" examples/detector_resonant_coupling_diagnostic.py
+  --source-csv "${SOURCE_CSV_ARRAY[@]}"
+  --out-csv "$OUT_CSV"
+  --min-n "$MIN_N"
+  --max-n "$MAX_N"
+  --top-rows "$TOP_ROWS"
+  --phi-min "$PHI_MIN"
+  --energy-tol "$ENERGY_TOL"
+  --window-factor "$WINDOW_FACTOR"
+)
+
+if [ "$REQUIRE_NONZERO_COUPLING" = "1" ]; then
+  CMD+=(--require-nonzero-coupling)
+fi
+
+printf 'Command:'
+printf ' %q' "${CMD[@]}"
+printf '\n'
+
+"${CMD[@]}"
+
+echo "Completed detector eta_res pilot."
+date

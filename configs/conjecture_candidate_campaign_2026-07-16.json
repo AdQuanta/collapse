@@ -1,0 +1,128 @@
+{
+  "description": "Conjecture-driven Hamiltonian campaign. Jx and Jy are the unscaled collective couplings; the Hamiltonian uses Jx/sqrt(N_pixel) and Jy/sqrt(N_pixel).",
+  "default_times": [1000, 10000, 100000, 1000000],
+  "local_N": 9,
+  "zeus_N": [11, 12, 13, 14, 15, 16, 17, 18],
+  "cases": [
+    {
+      "id": "born_matched_xy",
+      "priority": 1,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 exact matching; B2 independent central X/Y channels; test B3 reciprocity.",
+      "hypothesis": "Exact hz0=hz matching supplies extensive flip resonances, while X and Y coupling removes meridional locking; this is the cleanest new Born candidate.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "born_matched_anisotropic_xy",
+      "priority": 2,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 exact matching; B2 detector XX/YY anisotropy plus central X/Y mixing; test B3.",
+      "hypothesis": "Weak noncommuting detector exchange broadens the resonant graph without overwhelming the matched Ising energy structure.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--Jxx", "0.1", "--Jyy", "0.05", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "born_matched_weak_hz_disorder",
+      "priority": 3,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 broadened matching; B2 disorder smooths coherent atoms while X/Y mixes; test B3.",
+      "hypothesis": "Weak field disorder should smooth finite-size spectral atoms while leaving the matched resonant window intact; excessive disorder would destroy B1.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all", "--disorder", "uniform", "--disorder-strength-hz", "0.02", "--seed", "716"]
+    },
+    {
+      "id": "chain_ends_negative_control",
+      "priority": 4,
+      "local": true,
+      "zeus": true,
+      "target": "control",
+      "conditions": "B1 retained but HT3/B2 intentionally weakened by sparse end coupling.",
+      "hypothesis": "Restricting the central qubit to chain ends should reduce resonant-graph extension and azimuthal mixing, separating energy matching from collective mixing.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "chain", "--central-coupling", "ends"]
+    },
+    {
+      "id": "heavy_jpm_band_edge_disorder",
+      "priority": 5,
+      "local": true,
+      "zeus": true,
+      "target": "wrapped-heavy-tail",
+      "conditions": "HT1 small denominators at the Jpm band edge; HT2-HT3 exchange graph; disorder probes HT5 smoothing.",
+      "hypothesis": "At hz=Jpm the exchange band edge supplies many small detunings; weak field disorder should fill phase gaps and reduce coherent atoms without erasing the tail.",
+      "args": ["--model", "single_pixel", "--J", "0", "--Jpm", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0", "--hz", "1", "--hz0-modes", "zero", "--connectivity", "ring", "--central-coupling", "all", "--disorder", "uniform", "--disorder-strength-hz", "0.02", "--seed", "716"]
+    },
+    {
+      "id": "heavy_jpm_band_center_disorder",
+      "priority": 6,
+      "local": true,
+      "zeus": true,
+      "target": "wrapped-heavy-tail",
+      "conditions": "HT1-HT3 exchange-band resonance at hz=0; weak bond disorder tests coherent-block versus stable-law behavior.",
+      "hypothesis": "The band center maximizes accessible exchange transitions; weak Jpm disorder should suppress repeated eigenvalues and reveal whether the inverse-square tail survives incoherent mixing.",
+      "args": ["--model", "single_pixel", "--J", "0", "--Jpm", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0", "--hz", "0", "--hz0-modes", "zero", "--connectivity", "ring", "--central-coupling", "all", "--disorder", "uniform", "--disorder-strength-Jpm", "0.02", "--seed", "716"]
+    },
+    {
+      "id": "hybrid_matched_ising_jpm",
+      "priority": 7,
+      "local": true,
+      "zeus": true,
+      "target": "hybrid",
+      "conditions": "B1-B2 matching and X/Y mixing plus HT1-HT4 exchange-induced small denominators.",
+      "hypothesis": "Jpm=J combines the strongest heavy-tail family with exact central matching; it should expose a finite-range r^-2 shoulder followed by any Born r^-4 crossover.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "dimerized_degeneracy_control",
+      "priority": 8,
+      "local": true,
+      "zeus": true,
+      "target": "control",
+      "conditions": "Tests why exact degeneracy without HT2-HT3 extension is insufficient.",
+      "hypothesis": "Repeated isolated dimers create exact or near degeneracies but fragmented projected blocks; the output should remain atomic or nonuniversal despite a large raw degeneracy count.",
+      "args": ["--model", "dimerized_pixel", "--J", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "auto"]
+    },
+    {
+      "id": "born_matched_transverse_detector",
+      "priority": 9,
+      "local": false,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 approximate matching with explicit detector noncommutation; B2 enhanced mixing.",
+      "hypothesis": "A weak detector transverse field should break the meridional symmetry while perturbing, rather than destroying, the matched transition manifold.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hx", "0.03", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "all_to_all_mixing_stress_test",
+      "priority": 10,
+      "local": false,
+      "zeus": true,
+      "target": "Born/control",
+      "conditions": "Maximizes HT3 connectivity and B2 mixing while changing energy extensivity.",
+      "hypothesis": "All-to-all geometry tests whether connectivity alone improves Born reciprocity or instead produces coherent collective modes and spectral atoms.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.1", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "all_to_all", "--central-coupling", "all"]
+    },
+    {
+      "id": "sz_conserving_central_exchange",
+      "priority": 11,
+      "local": false,
+      "zeus": true,
+      "target": "control/heavy-tail",
+      "conditions": "Conserves total Sz and tests whether sector-resolved HT conditions survive a different central coupling.",
+      "hypothesis": "Central flip-flop exchange can create exact energy exchange but may remain symmetry-sector locked; it distinguishes resonance from full qubit-state mixing.",
+      "args": ["--model", "single_pixel", "--J", "0", "--Jpm", "1", "--jx-unscaled", "0", "--jy-unscaled", "0", "--jcpm-unscaled", "0.01", "--Jz", "0.02", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "heavy_near_band_edge_detuning_control",
+      "priority": 12,
+      "local": false,
+      "zeus": true,
+      "target": "wrapped-heavy-tail/control",
+      "conditions": "Directly probes HT1 finite-time window and HT4 pole reach on both sides of a resonance.",
+      "hypothesis": "Fine detuning around the exchange band edge should reveal a width set by max(1/t,g||V||res), not a singular effect at one exact hz value.",
+      "args": ["--model", "single_pixel", "--J", "0", "--Jpm", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0", "--hz", "0.99", "1", "1.01", "--hz0-modes", "zero", "--connectivity", "ring", "--central-coupling", "all"]
+    }
+  ]
+}

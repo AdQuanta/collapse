@@ -1,0 +1,117 @@
+{
+  "description": "Perturbative necessity/sufficiency campaign for exact detector-degeneracy activation versus wrapped heavy-tailed P(theta). It combines clean Ising and non-pure-Ising SU(2)-exchange cases, hz0=0, collective Jx=0.01, edge coupling Jx/sqrt(N), and t=1e6. Zero parameters are admitted as exact symmetry limits; every nonzero |hz|, |J|, and |Jpm| is at least 10 Jx.",
+  "detector_sizes": [13, 14, 15, 16, 17, 18],
+  "evolution_time": 1000000.0,
+  "jx": 0.01,
+  "hz0": 0.0,
+  "bins": 48,
+  "max_bloch_points": 6000,
+  "seed": 44,
+  "degeneracy_tolerance": 1e-12,
+  "perturbative_ratio_max": 0.1,
+  "gates": {
+    "power_law_alpha_max": 2.0,
+    "power_law_js_max": 0.1,
+    "angular_coverage_min": 0.5,
+    "power_law_log10_span_min": 1.0,
+    "robust_alpha_min": 0.1,
+    "robust_power_law_js_max": 0.05,
+    "robust_angular_coverage_min": 0.75,
+    "robust_power_law_log10_span_min": 1.5,
+    "robust_atomic_fraction_max": 0.05
+  },
+  "cases": [
+    {
+      "case_id": "active_flat_atomic",
+      "hz": 0.0,
+      "J": 0.0,
+      "Jpm": 0.0,
+      "role": "sufficiency_falsifier",
+      "rationale": "Exact zero-scale symmetry limit: all detector states are degenerate and D_act=1, but the finite-N phase law is atomic rather than a resolved heavy tail."
+    },
+    {
+      "case_id": "active_hz0_resonance",
+      "hz": 0.0,
+      "J": 1.0,
+      "Jpm": 0.0,
+      "role": "sufficiency_stress_test",
+      "rationale": "Exact zero-field Ising resonance with D_act=1/2 and J/Jx=100."
+    },
+    {
+      "case_id": "active_plus_2J",
+      "hz": 2.0,
+      "J": 1.0,
+      "Jpm": 0.0,
+      "role": "sufficiency_stress_test",
+      "rationale": "Exact local spin-flip resonance at hz=+2J with D_act=1/4; all physical scales exceed collective Jx by at least 100x."
+    },
+    {
+      "case_id": "active_minus_2J",
+      "hz": -2.0,
+      "J": 1.0,
+      "Jpm": 0.0,
+      "role": "sufficiency_stress_test",
+      "rationale": "Spin-reversed exact local resonance at hz=-2J with D_act=1/4; all physical scales exceed collective Jx by at least 100x."
+    },
+    {
+      "case_id": "inactive_near_plus_2J",
+      "hz": 2.01,
+      "J": 1.0,
+      "Jpm": 0.0,
+      "role": "necessity_falsifier",
+      "rationale": "A 0.01 detuning removes exact activation (minimum coupled gap 0.02), while N=14 remains heavy-tailed."
+    },
+    {
+      "case_id": "inactive_near_minus_2J",
+      "hz": -2.01,
+      "J": 1.0,
+      "Jpm": 0.0,
+      "role": "necessity_falsifier",
+      "rationale": "Spin-reversed 0.01 detuning removes exact activation while preserving a perturbative field scale."
+    },
+    {
+      "case_id": "inactive_far_control",
+      "hz": 1.0,
+      "J": 0.25,
+      "Jpm": 0.0,
+      "role": "inactive_negative_control",
+      "rationale": "Far from all exact Ising spin-flip resonances; tests that absence of activation can also coincide with a non-heavy distribution."
+    },
+    {
+      "case_id": "nonising_su2_active_hz0",
+      "hz": 0.0,
+      "J": 0.5,
+      "Jpm": 1.0,
+      "role": "sufficiency_falsifier",
+      "rationale": "Non-pure-Ising SU(2) exchange: at hz=0, [H_D,V]=0 and all V weight is exactly degenerate, while J/Jx=50 and Jpm/Jx=100. The finite-N P(theta) is expected to remain atomic.",
+      "activation_model": "su2_total_spin"
+    },
+    {
+      "case_id": "nonising_su2_small",
+      "hz": 0.25,
+      "J": 0.25,
+      "Jpm": 0.5,
+      "role": "nonising_inactive_control",
+      "rationale": "Non-pure-Ising SU(2) exchange at the smallest admitted perturbative scales. Since hz is nonzero, every V transition has gap 2|hz| and exact activation is absent.",
+      "activation_model": "su2_total_spin"
+    },
+    {
+      "case_id": "nonising_su2_medium",
+      "hz": 1.0,
+      "J": 0.5,
+      "Jpm": 1.0,
+      "role": "nonising_inactive_control",
+      "rationale": "Non-pure-Ising SU(2) exchange with intermediate J and Jpm; exact activation is rigorously absent at nonzero hz.",
+      "activation_model": "su2_total_spin"
+    },
+    {
+      "case_id": "nonising_su2_large",
+      "hz": 2.0,
+      "J": 1.0,
+      "Jpm": 2.0,
+      "role": "nonising_inactive_control",
+      "rationale": "Strong non-pure-Ising SU(2) exchange control; Jx is at most one percent of hz, J, and Jpm, and exact activation is absent.",
+      "activation_model": "su2_total_spin"
+    }
+  ]
+}

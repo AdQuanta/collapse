@@ -1,0 +1,233 @@
+#!/bin/bash
+# PBS post-processing array for the anisotropic/larger-N Born search.
+#
+# Submit after hpc/zeus_born_anisotropic_largerN.pbs has finished:
+#   qsub hpc/zeus_born_anisotropic_postprocess.pbs
+#
+# The job writes one scheduler-side log per task plus per-output run.log files
+# for the expensive stability and diagnostic reruns.
+#
+#PBS -N born_aniso_post
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=96gb
+#PBS -J 1-5
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+if [ -n "${PBS_NODEFILE:-}" ] && [ -r "$PBS_NODEFILE" ]; then
+  PBS_NP_DEFAULT="$(wc -l < "$PBS_NODEFILE")"
+else
+  PBS_NP_DEFAULT="${PBS_NP:-8}"
+fi
+export BORN_WORKERS="${BORN_WORKERS:-$PBS_NP_DEFAULT}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_anisotropic_largerN}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_anisotropic_postprocess}"
+SUMMARY_CSV="${SUMMARY_CSV:-$RUN_ROOT/summary_rows.csv}"
+PRIMARY_QUEUE_CSV="${PRIMARY_QUEUE_CSV:-$RUN_ROOT/shortlist_primary_n15_n16.csv}"
+OFF_RESONANCE_CSV="${OFF_RESONANCE_CSV:-$RUN_ROOT/shortlist_off_resonance_controls.csv}"
+
+PRIMARY_FAMILIES=(
+  ring_baseline_matched_N15_N16
+  ring_anisotropic_xx_yy_N15_N16
+  ring_weak_zz_anisotropic_N15_N16
+  ring_strong_zz_anisotropic_N15_N16
+  ring_central_coupling_channels_N15_N16
+)
+
+CONTROL_FAMILIES=(
+  ring_detuned_controls_N15_N16
+  chain_sz_conserving_N13_N14
+  chain_transverse_perturbative_N13_N14
+  all_to_all_sz_conserving_N15_N16
+)
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="summary_shortlist_audit"
+    ;;
+  2)
+    RUN_NAME="metric_stability_primary_N15_N16"
+    ;;
+  3)
+    RUN_NAME="metric_stability_controls_N13_N16"
+    ;;
+  4)
+    RUN_NAME="diagnostics_primary_N15_N16"
+    ;;
+  5)
+    RUN_NAME="diagnostics_controls_N13_N16"
+    ;;
+  *)
+    echo "Unknown anisotropic postprocess TASK_ID: $TASK_ID" >&2
+    echo "Valid task ids are 1 through 5." >&2
+    exit 2
+    ;;
+esac
+
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$RUN_ROOT/$RUN_NAME/run.log"
+
+mkdir -p "$RUN_ROOT/$RUN_NAME"
+
+timestamp_stream() {
+  awk 'BEGIN { ts_re="^\[[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T" } $0 ~ ts_re { print; fflush(); next } { print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+
+exec > >(timestamp_stream | tee "$RUN_LOG") 2>&1
+
+ensure_output_log_on_exit() {
+  status=$?
+  if [ ! -s "$OUT_LOG" ] && [ -s "$RUN_LOG" ]; then
+    cp "$RUN_LOG" "$OUT_LOG"
+  fi
+  exit "$status"
+}
+trap ensure_output_log_on_exit EXIT
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Run root: $RUN_ROOT"
+echo "Summary CSV: $SUMMARY_CSV"
+echo "Primary queue CSV: $PRIMARY_QUEUE_CSV"
+echo "Off-resonance CSV: $OFF_RESONANCE_CSV"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Workdir: $(pwd)"
+echo "Python command: $PYTHON_BIN"
+echo "Python version: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
+
+case "$TASK_ID" in
+  1)
+    "$PYTHON_BIN" examples/summarize_born_search_results.py \
+      --root "$RUN_ROOT" \
+      --top 40 \
+      --out-md "$RUN_ROOT/summary.md" \
+      --out-csv "$SUMMARY_CSV"
+    "$PYTHON_BIN" examples/shortlist_born_followup_candidates.py \
+      --source-csv "$SUMMARY_CSV" \
+      --out-dir "$RUN_ROOT" \
+      --top 40 \
+      --primary-pair-n 15 16 \
+      --primary-triplet-n 15 16 \
+      --pair-label n15_n16 \
+      --triplet-label n15_n16
+    "$PYTHON_BIN" examples/audit_born_followup_resonance.py \
+      --root "$RUN_ROOT" \
+      --summary-csv "$SUMMARY_CSV" \
+      --primary-csv "$PRIMARY_QUEUE_CSV" \
+      --off-controls-csv "$OFF_RESONANCE_CSV"
+    ;;
+  2)
+    "$PYTHON_BIN" examples/born_candidate_stability.py \
+      --source-csv "$SUMMARY_CSV" \
+      --queue-csv "$PRIMARY_QUEUE_CSV" \
+      --mode primary \
+      --min-n 15 \
+      --max-n 16 \
+      --family "${PRIMARY_FAMILIES[@]}" \
+      --top-groups 12 \
+      --top-rows 24 \
+      --bins 60 80 120 \
+      --tail-fractions 0.05 0.10 0.20 \
+      --log-bins 50 \
+      --backend quspin \
+      --max-jy-unscaled 0.05 \
+      --workers "$BORN_WORKERS" \
+      --out-dir "$RUN_ROOT/$RUN_NAME" \
+      --log-file "$OUT_LOG"
+    ;;
+  3)
+    "$PYTHON_BIN" examples/born_candidate_stability.py \
+      --source-csv "$SUMMARY_CSV" \
+      --mode controls \
+      --min-n 13 \
+      --max-n 16 \
+      --family "${CONTROL_FAMILIES[@]}" \
+      --top-rows 24 \
+      --bins 60 80 120 \
+      --tail-fractions 0.05 0.10 0.20 \
+      --log-bins 50 \
+      --backend quspin \
+      --max-jy-unscaled 0.05 \
+      --workers "$BORN_WORKERS" \
+      --out-dir "$RUN_ROOT/$RUN_NAME" \
+      --log-file "$OUT_LOG"
+    ;;
+  4)
+    "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py \
+      --source-csv "$SUMMARY_CSV" \
+      --queue-csv "$PRIMARY_QUEUE_CSV" \
+      --mode primary \
+      --min-n 15 \
+      --max-n 16 \
+      --family "${PRIMARY_FAMILIES[@]}" \
+      --top-groups 12 \
+      --top-rows 24 \
+      --bins 120 \
+      --tail-fraction 0.10 \
+      --log-bins 60 \
+      --backend quspin \
+      --max-jy-unscaled 0.05 \
+      --extra-distribution-plots \
+      --workers "$BORN_WORKERS" \
+      --out-dir "$RUN_ROOT/$RUN_NAME" \
+      --log-file "$OUT_LOG"
+    ;;
+  5)
+    "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py \
+      --source-csv "$SUMMARY_CSV" \
+      --mode controls \
+      --min-n 13 \
+      --max-n 16 \
+      --family "${CONTROL_FAMILIES[@]}" \
+      --top-rows 24 \
+      --bins 120 \
+      --tail-fraction 0.10 \
+      --log-bins 60 \
+      --backend quspin \
+      --max-jy-unscaled 0.05 \
+      --extra-distribution-plots \
+      --workers "$BORN_WORKERS" \
+      --out-dir "$RUN_ROOT/$RUN_NAME" \
+      --log-file "$OUT_LOG"
+    ;;
+esac

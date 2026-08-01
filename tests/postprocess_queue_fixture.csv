@@ -1,0 +1,2 @@
+model,connectivity,hz0_mode,J,Jx_unscaled,Jy_unscaled,hz,Jpm,Jxx,Jyy,Jz,Jzx,Jcpm_unscaled,t,n_values
+single_pixel,ring,matched,1.0,0.04,0.0,0.08,0.0,0.0,0.0,0.0,0.0,0.0,3162.0,"13,14"

@@ -1,0 +1,67 @@
+#!/bin/bash
+# Aggregate one completed detector size into J--Jpm S_born heatmaps.
+# Submit with an afterok dependency on the simulation array.
+#PBS -N sp_aniso_agg
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -l walltime=12:00:00
+#PBS -J 11-18
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
+if [[ -f "$SUBMIT_DIR/examples/run_single_pixel_anisotropic_sweep.py" ]]; then
+  REPO_ROOT="$SUBMIT_DIR"
+elif [[ -f "$SUBMIT_DIR/../examples/run_single_pixel_anisotropic_sweep.py" ]]; then
+  REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
+else
+  echo "Cannot locate examples/run_single_pixel_anisotropic_sweep.py from PBS_O_WORKDIR=$SUBMIT_DIR." >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+if [[ -n "${ZEUS_ENV_SETUP:-}" ]]; then source "$ZEUS_ENV_SETUP"; fi
+if [[ -n "${PYTHON_MODULES:-}" ]]; then
+  if ! command -v module >/dev/null 2>&1; then echo "module command unavailable" >&2; exit 2; fi
+  for mod in $PYTHON_MODULES; do module load "$mod"; done
+fi
+if [[ -n "${VIRTUAL_ENV_PATH:-}" ]]; then source "$VIRTUAL_ENV_PATH/bin/activate"; fi
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+CONFIG_PATH="${CONFIG_PATH:-configs/zeus_single_pixel_anisotropic_j_jpm_hz_t1e6.json}"
+RUN_ROOT="${RUN_ROOT:-work/zeus_single_pixel_anisotropic_j_jpm_hz_t1e6}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_single_pixel_anisotropic_j_jpm_hz_t1e6/aggregate}"
+TASK_N="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_N:-}}}"
+if [[ -z "$TASK_N" || ! "$TASK_N" =~ ^(11|12|13|14|15|16|17|18)$ ]]; then
+  echo "PBS index must select N=11..18; got '$TASK_N'." >&2
+  exit 2
+fi
+mkdir -p "$RUN_ROOT" "$LOG_ROOT" "$RUN_ROOT/.mplconfig"
+export MPLBACKEND=Agg
+export MPLCONFIGDIR="$RUN_ROOT/.mplconfig"
+export PYTHONUNBUFFERED=1
+
+JOB_TAG="${PBS_JOBID:-manual}"
+TASK_LOG="$LOG_ROOT/N${TASK_N}_${JOB_TAG}.log"
+exec >"$TASK_LOG" 2>&1
+
+"$PYTHON_BIN" -c 'import sys; assert sys.version_info[:2] == (3, 11), sys.version; import importlib.metadata as m; expected={"quspin":"1.0.0","quspin-extensions":"0.1.6"}; actual={k:m.version(k) for k in expected}; assert actual == expected, actual; print(sys.version); print(actual)'
+
+GLOBAL_ARGS=(--config "$CONFIG_PATH" --run-root "$RUN_ROOT")
+AGGREGATE_N="$TASK_N"
+if [[ "${SMOKE:-0}" == "1" ]]; then
+  if [[ "$TASK_N" != "11" ]]; then echo "SMOKE=1: safely skipping N=$TASK_N"; exit 0; fi
+  GLOBAL_ARGS+=(--smoke)
+  AGGREGATE_N=4
+fi
+AGGREGATE_ARGS=(aggregate --N "$AGGREGATE_N")
+if [[ "${ALLOW_PARTIAL:-0}" == "1" ]]; then AGGREGATE_ARGS+=(--allow-partial); fi
+
+echo "[$(date --iso-8601=seconds)] aggregating N=$AGGREGATE_N"
+"$PYTHON_BIN" examples/run_single_pixel_anisotropic_sweep.py "${GLOBAL_ARGS[@]}" "${AGGREGATE_ARGS[@]}"
+echo "[$(date --iso-8601=seconds)] finished N=$AGGREGATE_N"
+echo "Outputs: $RUN_ROOT/aggregates/N$(printf '%02d' "$AGGREGATE_N")"
+echo "Log: $TASK_LOG"

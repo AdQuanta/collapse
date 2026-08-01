@@ -1,0 +1,7 @@
+# Recreated local environment used for the h_z resonance study.
+numpy==2.4.6
+scipy==1.18.0
+matplotlib==3.11.0
+pytest==9.1.1
+quspin==1.0.0
+quspin-extensions==0.1.6

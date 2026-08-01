@@ -1,0 +1,66 @@
+#!/bin/bash
+#PBS -N conjecture_candidates
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -J 11-18
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PROJECT_ROOT="${PROJECT_ROOT:-${PBS_O_WORKDIR:-$HOME/research/collapse}}"
+cd "$PROJECT_ROOT"
+
+if [ ! -f "$PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py" ]; then
+  echo "ERROR: submit from the repository root or set PROJECT_ROOT." >&2
+  echo "Missing: $PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py" >&2
+  exit 2
+fi
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+"$PYTHON_BIN" -c 'import sys; assert sys.version_info[:2] == (3, 11), sys.version'
+
+TASK_N="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-}}"
+if [ -z "$TASK_N" ]; then
+  echo "ERROR: PBS array index is unavailable." >&2
+  exit 2
+fi
+
+RUN_TAG="${RUN_TAG:-zeus_$(date +%Y%m%d_%H%M%S)}"
+RUN_ROOT="${RUN_ROOT:-work/conjecture_candidate_campaign_${RUN_TAG}/N${TASK_N}}"
+FIGURE_ROOT="${FIGURE_ROOT:-figures/conjecture_candidate_campaign_${RUN_TAG}/N${TASK_N}}"
+LOG_ROOT="${LOG_ROOT:-logs/conjecture_candidate_campaign_${RUN_TAG}}"
+mkdir -p "$RUN_ROOT" "$FIGURE_ROOT" "$LOG_ROOT"
+
+LOG_FILE="$LOG_ROOT/N${TASK_N}.${PBS_JOBID:-local}.${TASK_N}.log"
+timestamp_stream() {
+  awk '{ print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+exec > >(timestamp_stream | tee -a "$LOG_FILE") 2>&1
+
+export PYTHONUNBUFFERED=1
+export MPLBACKEND=Agg
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
+echo "Project root: $PROJECT_ROOT"
+echo "N: $TASK_N"
+echo "Python: $($PYTHON_BIN --version 2>&1)"
+echo "Run root: $RUN_ROOT"
+echo "Figure root: $FIGURE_ROOT"
+echo "Log: $LOG_FILE"
+
+"$PYTHON_BIN" "$PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py" \
+  --config "$PROJECT_ROOT/configs/conjecture_candidate_campaign_2026-07-16.json" \
+  --N "$TASK_N" \
+  --scope zeus \
+  --workers 8 \
+  --plot-top 1 \
+  --run-root "$RUN_ROOT" \
+  --figure-root "$FIGURE_ROOT" \
+  --python "$PYTHON_BIN"
+
+echo "Completed N=$TASK_N. Each case has its own results.csv, run.log, and diagnostics checkpoint."

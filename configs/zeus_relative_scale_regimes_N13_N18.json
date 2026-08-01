@@ -1,0 +1,193 @@
+{
+  "description": "Exhaustive relative-magnitude regime campaign for (|hz|,J,Jpm): all 13 strictly-positive weak orderings, all 9 one-zero regimes, all 3 single-nonzero regimes, the all-zero limit, and four sign/scale/resonance controls. Every ordinary >> step is at least 10:1. N=13..18, t=1e6, hz0=0, collective Jx=0.01, edge Jx/sqrt(N). Every nonzero scale is at least 10 Jx.",
+  "detector_sizes": [13, 14, 15, 16, 17, 18],
+  "evolution_time": 1000000.0,
+  "jx": 0.01,
+  "hz0": 0.0,
+  "bins": 48,
+  "max_bloch_points": 6000,
+  "seed": 44,
+  "minimum_nonzero_scale_multiple": 10.0,
+  "cases": [
+    {
+      "case_id": "p_h_gt_j_gt_p",
+      "regime": "|hz| >> J >> Jpm > 0",
+      "hz": 10.0, "J": 1.0, "Jpm": 0.1,
+      "description": "Strict positive ordering: field, Ising, exchange."
+    },
+    {
+      "case_id": "p_h_gt_p_gt_j",
+      "regime": "|hz| >> Jpm >> J > 0",
+      "hz": 10.0, "J": 0.1, "Jpm": 1.0,
+      "description": "Strict positive ordering: field, exchange, Ising."
+    },
+    {
+      "case_id": "p_j_gt_h_gt_p",
+      "regime": "J >> |hz| >> Jpm > 0",
+      "hz": 1.0, "J": 10.0, "Jpm": 0.1,
+      "description": "Strict positive ordering: Ising, field, exchange."
+    },
+    {
+      "case_id": "p_j_gt_p_gt_h",
+      "regime": "J >> Jpm >> |hz| > 0",
+      "hz": 0.1, "J": 10.0, "Jpm": 1.0,
+      "description": "Strict positive ordering: Ising, exchange, field."
+    },
+    {
+      "case_id": "p_p_gt_h_gt_j",
+      "regime": "Jpm >> |hz| >> J > 0",
+      "hz": 1.0, "J": 0.1, "Jpm": 10.0,
+      "description": "Strict positive ordering: exchange, field, Ising."
+    },
+    {
+      "case_id": "p_p_gt_j_gt_h",
+      "regime": "Jpm >> J >> |hz| > 0",
+      "hz": 0.1, "J": 1.0, "Jpm": 10.0,
+      "description": "Strict positive ordering: exchange, Ising, field."
+    },
+    {
+      "case_id": "p_h_eq_j_gt_p",
+      "regime": "|hz| = J >> Jpm > 0",
+      "hz": 1.0, "J": 1.0, "Jpm": 0.1,
+      "description": "Field-Ising upper tie."
+    },
+    {
+      "case_id": "p_h_eq_p_gt_j",
+      "regime": "|hz| = Jpm >> J > 0",
+      "hz": 1.0, "J": 0.1, "Jpm": 1.0,
+      "description": "Field-exchange upper tie."
+    },
+    {
+      "case_id": "p_j_eq_p_gt_h",
+      "regime": "J = Jpm >> |hz| > 0",
+      "hz": 0.1, "J": 1.0, "Jpm": 1.0,
+      "description": "Ising-exchange upper tie."
+    },
+    {
+      "case_id": "p_h_gt_j_eq_p",
+      "regime": "|hz| >> J = Jpm > 0",
+      "hz": 1.0, "J": 0.1, "Jpm": 0.1,
+      "description": "Field-dominated lower interaction tie."
+    },
+    {
+      "case_id": "p_j_gt_h_eq_p",
+      "regime": "J >> |hz| = Jpm > 0",
+      "hz": 0.1, "J": 1.0, "Jpm": 0.1,
+      "description": "Ising-dominated lower field-exchange tie."
+    },
+    {
+      "case_id": "p_p_gt_h_eq_j",
+      "regime": "Jpm >> |hz| = J > 0",
+      "hz": 0.1, "J": 0.1, "Jpm": 1.0,
+      "description": "Exchange-dominated lower field-Ising tie."
+    },
+    {
+      "case_id": "p_all_equal",
+      "regime": "|hz| = J = Jpm > 0",
+      "hz": 1.0, "J": 1.0, "Jpm": 1.0,
+      "description": "All three nonzero scales equal."
+    },
+    {
+      "case_id": "z_p_h_gt_j",
+      "regime": "Jpm = 0, |hz| >> J > 0",
+      "hz": 1.0, "J": 0.1, "Jpm": 0.0,
+      "description": "Zero exchange; field exceeds Ising."
+    },
+    {
+      "case_id": "z_p_h_eq_j",
+      "regime": "Jpm = 0, |hz| = J > 0",
+      "hz": 1.0, "J": 1.0, "Jpm": 0.0,
+      "description": "Zero exchange; field and Ising equal."
+    },
+    {
+      "case_id": "z_p_j_gt_h",
+      "regime": "Jpm = 0, J >> |hz| > 0",
+      "hz": 0.1, "J": 1.0, "Jpm": 0.0,
+      "description": "Zero exchange; Ising exceeds field."
+    },
+    {
+      "case_id": "z_j_h_gt_p",
+      "regime": "J = 0, |hz| >> Jpm > 0",
+      "hz": 1.0, "J": 0.0, "Jpm": 0.1,
+      "description": "Zero Ising; field exceeds exchange."
+    },
+    {
+      "case_id": "z_j_h_eq_p",
+      "regime": "J = 0, |hz| = Jpm > 0",
+      "hz": 1.0, "J": 0.0, "Jpm": 1.0,
+      "description": "Zero Ising; field and exchange equal."
+    },
+    {
+      "case_id": "z_j_p_gt_h",
+      "regime": "J = 0, Jpm >> |hz| > 0",
+      "hz": 0.1, "J": 0.0, "Jpm": 1.0,
+      "description": "Zero Ising; exchange exceeds field."
+    },
+    {
+      "case_id": "z_h_j_gt_p",
+      "regime": "hz = 0, J >> Jpm > 0",
+      "hz": 0.0, "J": 1.0, "Jpm": 0.1,
+      "description": "Zero field; Ising exceeds exchange."
+    },
+    {
+      "case_id": "z_h_j_eq_p",
+      "regime": "hz = 0, J = Jpm > 0",
+      "hz": 0.0, "J": 1.0, "Jpm": 1.0,
+      "description": "Zero field; detector interactions equal."
+    },
+    {
+      "case_id": "z_h_p_gt_j",
+      "regime": "hz = 0, Jpm >> J > 0",
+      "hz": 0.0, "J": 0.1, "Jpm": 1.0,
+      "description": "Zero field; exchange exceeds Ising."
+    },
+    {
+      "case_id": "only_h",
+      "regime": "|hz| > 0, J = Jpm = 0",
+      "hz": 1.0, "J": 0.0, "Jpm": 0.0,
+      "description": "Field-only detector."
+    },
+    {
+      "case_id": "only_j",
+      "regime": "J > 0, hz = Jpm = 0",
+      "hz": 0.0, "J": 1.0, "Jpm": 0.0,
+      "description": "Ising-only detector."
+    },
+    {
+      "case_id": "only_p",
+      "regime": "Jpm > 0, hz = J = 0",
+      "hz": 0.0, "J": 0.0, "Jpm": 1.0,
+      "description": "Exchange-only detector."
+    },
+    {
+      "case_id": "all_zero",
+      "regime": "hz = J = Jpm = 0",
+      "hz": 0.0, "J": 0.0, "Jpm": 0.0,
+      "description": "Fully degenerate zero-detector limit."
+    },
+    {
+      "case_id": "negative_h_mirror",
+      "regime": "negative-hz mirror of |hz| >> J >> Jpm",
+      "hz": -10.0, "J": 1.0, "Jpm": 0.1,
+      "description": "Sign-control partner of p_h_gt_j_gt_p."
+    },
+    {
+      "case_id": "all_equal_strong",
+      "regime": "|hz| = J = Jpm at larger common scale",
+      "hz": 2.0, "J": 2.0, "Jpm": 2.0,
+      "description": "Absolute-scale control for p_all_equal."
+    },
+    {
+      "case_id": "ising_resonance_with_exchange",
+      "regime": "|hz| = 2J >> Jpm > 0",
+      "hz": 2.0, "J": 1.0, "Jpm": 0.1,
+      "description": "Clean-Ising resonance surface with a nonzero perturbative exchange term."
+    },
+    {
+      "case_id": "su2_line_weak_field",
+      "regime": "Jpm = 2J >> |hz| > 0",
+      "hz": 0.1, "J": 0.5, "Jpm": 1.0,
+      "description": "SU(2) exchange line with the smallest admitted nonzero field."
+    }
+  ]
+}

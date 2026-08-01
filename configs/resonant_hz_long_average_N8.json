@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "study": "single_pixel_hz_resonance_long_time_average",
+  "mode": "focused",
+  "output": "work/resonant_hz_study_2026-07-12/long_average_N8",
+  "N": [8],
+  "hz": [-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0],
+  "times": [100.0, 1000.0, 10000.0, 100000.0, 1000000.0],
+  "long_time_grid": {"kind": "logspace", "start": 1000.001, "stop": 1000000.0, "count": 64},
+  "fixed_parameters": {"J": 1.0, "Jx": 0.01, "hz0": 0.0},
+  "seed": 20260712,
+  "theta_bins": 48,
+  "stability": {"bin_counts": [32, 48, 64], "alternate_grid": "interleaved even/odd log samples", "lower_edge_comparison": 10000.0},
+  "solve_condition_limit": 10000000000.0,
+  "spacing_sector": {"kblock": 0, "pblock": 1, "zblock_at_hz_zero": 1}
+}

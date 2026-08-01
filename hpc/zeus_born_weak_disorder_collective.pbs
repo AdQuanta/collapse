@@ -1,0 +1,229 @@
+#!/bin/bash
+# PBS array for weakly symmetry-broken collective/all-to-all detector scans.
+#
+# These jobs test whether small additive detector-bond disorder can broaden the
+# M(t)=U00^{-1}U10 radius distribution without changing the canonical S_born
+# metric.  Disorder plus perturbative central XX coupling usually disables the
+# translation/magnetization sector speedups, so this script stays at N<=12.
+#
+#PBS -N born_wdis
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -J 1-5
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+if [ -n "${PBS_NODEFILE:-}" ] && [ -r "$PBS_NODEFILE" ]; then
+  PBS_NP_DEFAULT="$(wc -l < "$PBS_NODEFILE")"
+else
+  PBS_NP_DEFAULT="${PBS_NP:-8}"
+fi
+export BORN_WORKERS="${BORN_WORKERS:-$PBS_NP_DEFAULT}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_weak_disorder_collective}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_weak_disorder_collective}"
+PLOT_TOP="${PLOT_TOP:-12}"
+PLOT_MAX_BLOCH_POINTS="${PLOT_MAX_BLOCH_POINTS:-6000}"
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+COMMON_ARGS=(
+  --disorder uniform
+  --disorder-strength 0
+  --disorder-strength-Jpm 0
+  --disorder-strength-Jx 0
+  --disorder-strength-Jz 0
+  --disorder-strength-Jzx 0
+  --disorder-strength-Jcpm 0
+  --disorder-strength-hx 0
+  --disorder-strength-hz 0
+  --bins 80
+  --tail-fraction 0.10
+  --log-bins 50
+  --energy-degeneracy-tol 1e-9
+  --backend auto
+  --top 40
+  --workers "$BORN_WORKERS"
+  --plot-top "$PLOT_TOP"
+  --plot-max-bloch-points "$PLOT_MAX_BLOCH_POINTS"
+)
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="all_to_all_near_degree_norm_N9_N10_dJ"
+    ARGS=(
+      --model single_pixel
+      --N 9 10
+      --connectivity all_to_all
+      --times 100 316 1000 3162
+      --J 0.142857142857
+      --Jpm 0
+      --Jxx 0
+      --Jyy 0
+      --jx-unscaled 0.02 0.03 0.05
+      --central-coupling all first
+      --jy-unscaled 0
+      --Jz 0 0.02
+      --Jzx 0
+      --jcpm-unscaled 0
+      --hx 0
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --disorder-strength-J 0.002 0.005 0.02
+    )
+    ;;
+  2)
+    RUN_NAME="all_to_all_near_degree_norm_N11_N12_focused_dJ"
+    ARGS=(
+      --model single_pixel
+      --N 11 12
+      --connectivity all_to_all
+      --times 100 316 1000 3162
+      --J 0.1
+      --Jpm 0
+      --Jxx 0
+      --Jyy 0
+      --jx-unscaled 0.03 0.05
+      --central-coupling all
+      --jy-unscaled 0
+      --Jz 0 0.02
+      --Jzx 0
+      --jcpm-unscaled 0
+      --hx 0
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --disorder-strength-J 0.002 0.005 0.02
+    )
+    ;;
+  3)
+    RUN_NAME="ring_weak_bond_disorder_N11_N12"
+    ARGS=(
+      --model single_pixel
+      --N 11 12
+      --connectivity ring
+      --times 316 1000 3162 10000
+      --J 1.0
+      --Jpm 0 0.05
+      --Jxx 0
+      --Jyy 0
+      --jx-unscaled 0.02 0.03 0.05
+      --central-coupling all first
+      --jy-unscaled 0
+      --Jz 0 0.02
+      --Jzx 0
+      --jcpm-unscaled 0
+      --hx 0
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --disorder-strength-J 0.002 0.005 0.02
+    )
+    ;;
+  4)
+    RUN_NAME="chain_weak_bond_disorder_N11_N12_control"
+    ARGS=(
+      --model single_pixel
+      --N 11 12
+      --connectivity chain
+      --times 316 1000 3162 10000
+      --J 1.0
+      --Jpm 0 0.05
+      --Jxx 0
+      --Jyy 0
+      --jx-unscaled 0.02 0.03 0.05
+      --central-coupling first ends
+      --jy-unscaled 0
+      --Jz 0 0.02
+      --Jzx 0
+      --jcpm-unscaled 0
+      --hx 0
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --disorder-strength-J 0.002 0.005 0.02
+    )
+    ;;
+  5)
+    RUN_NAME="dimerized_weak_bond_disorder_N11_N13"
+    ARGS=(
+      --model dimerized_pixel
+      --N 11 13
+      --times 316 1000 3162 10000
+      --J 1.0
+      --jx-unscaled 0.02 0.03 0.05
+      --central-coupling all first ends
+      --Jz 0 0.02
+      --hx 0
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --disorder-strength-J 0.002 0.005 0.02
+    )
+    ;;
+  *)
+    echo "Unknown weak-disorder TASK_ID: $TASK_ID" >&2
+    echo "Valid task ids are 1 through 5." >&2
+    exit 2
+    ;;
+esac
+
+OUT_DIR="$RUN_ROOT/$RUN_NAME"
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$OUT_DIR/run.log"
+
+mkdir -p "$OUT_DIR"
+
+exec > >(tee "$RUN_LOG") 2>&1
+
+ensure_output_log_on_exit() {
+  status=$?
+  if [ ! -s "$OUT_LOG" ] && [ -s "$RUN_LOG" ]; then
+    cp "$RUN_LOG" "$OUT_LOG"
+  fi
+  exit "$status"
+}
+trap ensure_output_log_on_exit EXIT
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Output: $OUT_DIR"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Workdir: $(pwd)"
+echo "Python command: $PYTHON_BIN"
+echo "Python version: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
+
+"$PYTHON_BIN" examples/born_hamiltonian_search.py "${ARGS[@]}" "${COMMON_ARGS[@]}" --out-dir "$OUT_DIR" --log-file "$OUT_LOG"

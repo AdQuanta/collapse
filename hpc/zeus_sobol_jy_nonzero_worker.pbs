@@ -1,0 +1,47 @@
+#!/bin/bash
+#PBS -N sobol_jynz_worker
+#PBS -q zeus_new_q
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+# The per-N select/ncpus/mem request is supplied by the submission script.
+set -euo pipefail
+
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+if [[ -f examples/run_zeus_sobol_jy_nonzero_scan.py ]]; then
+  REPO_ROOT="$PWD"
+elif [[ -f ../examples/run_zeus_sobol_jy_nonzero_scan.py ]]; then
+  REPO_ROOT="$(cd .. && pwd)"
+elif [[ -f hpc/../examples/run_zeus_sobol_jy_nonzero_scan.py ]]; then
+  REPO_ROOT="$(cd hpc/.. && pwd)"
+else
+  echo "Cannot locate examples/run_zeus_sobol_jy_nonzero_scan.py from $PWD" >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+: "${RUN_ROOT:?RUN_ROOT is not set}"
+: "${N:?N is not set}"
+: "${CONFIG_WORKERS:?CONFIG_WORKERS is not set}"
+: "${NUMERIC_THREADS:?NUMERIC_THREADS is not set}"
+case "$N" in
+  13|14|15|16) ;;
+  *) echo "N must be one of 13,14,15,16; got $N" >&2; exit 2 ;;
+esac
+
+mkdir -p "$RUN_ROOT/logs"
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS="$NUMERIC_THREADS"
+export OPENBLAS_NUM_THREADS="$NUMERIC_THREADS"
+export MKL_NUM_THREADS="$NUMERIC_THREADS"
+export BLIS_NUM_THREADS="$NUMERIC_THREADS"
+export NUMEXPR_NUM_THREADS="$NUMERIC_THREADS"
+
+python3.11 examples/run_zeus_sobol_jy_nonzero_scan.py \
+  --output-root "$RUN_ROOT" \
+  --seed 20260727 --count 100 \
+  --sizes 13 14 15 16 --only-N "$N" \
+  --lower 1e-3 --upper 10 --kappa 0.1 \
+  --evolution-time 1e6 --workers "$CONFIG_WORKERS" --resume \
+  2>&1 | tee -a "$RUN_ROOT/logs/jy_nonzero_N${N}_${PBS_JOBID:-manual}.log"

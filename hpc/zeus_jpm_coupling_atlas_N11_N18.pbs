@@ -1,0 +1,26 @@
+#!/bin/bash
+# Jpm sweep: J=1, hz=0.1, hz0=0, collective Jx=0.01, including Jpm=J.
+#PBS -N sp_jpmsw_11_18
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -l walltime=72:00:00
+#PBS -J 11-18
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+STUDY="jpm_coupling"
+set -euo pipefail
+SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
+if [[ -f "$SUBMIT_DIR/hpc/zeus_single_pixel_atlas_common.sh" ]]; then
+  REPO_ROOT="$SUBMIT_DIR"
+elif [[ -f "$SUBMIT_DIR/zeus_single_pixel_atlas_common.sh" && -d "$SUBMIT_DIR/../examples" ]]; then
+  REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
+else
+  echo "Cannot locate the repository from PBS_O_WORKDIR=$SUBMIT_DIR." >&2
+  echo "Submit from the repository root or hpc/, and copy hpc/zeus_single_pixel_atlas_common.sh to Zeus." >&2
+  exit 2
+fi
+export REPO_ROOT
+# shellcheck source=hpc/zeus_single_pixel_atlas_common.sh
+source "$REPO_ROOT/hpc/zeus_single_pixel_atlas_common.sh"

@@ -1,0 +1,28 @@
+{
+  "source_campaign_config": "configs/zeus_relative_scale_regimes_N13_N18.json",
+  "output_directory": "work/zeus_detector_spectra_N13",
+  "selected_n": 13,
+  "threads": 8,
+  "plot_dpi": 220,
+  "tolerances": {
+    "absolute": 1e-09,
+    "relative": 1.4210854715202004e-14,
+    "structural_relative": 5.684341886080802e-14,
+    "near_multiplier": 100.0,
+    "rank_relative": 1e-10,
+    "validation_relative": 2e-10,
+    "active_weight_relative": 1e-12
+  },
+  "hardware_assessment": {
+    "cpu": "resolved on the Zeus execution node",
+    "physical_cores": 8,
+    "logical_cores": 8,
+    "total_ram_gib": 128,
+    "free_ram_gib": "resolved on the Zeus execution node",
+    "gpu": "not used",
+    "numerical_backend": "Python 3.11 NumPy CPU LAPACK"
+  },
+  "selection_reason": "The user requested a common N=13 detector-spectrum campaign on Zeus.",
+  "next_n_estimated_peak_gib": 23.2,
+  "next_n_reason": "N=14 is outside this requested campaign. Its conservative dense peak estimate is approximately 23.2 GiB per regime before filesystem cache and plotting overhead."
+}

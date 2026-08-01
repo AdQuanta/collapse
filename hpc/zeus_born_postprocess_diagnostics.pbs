@@ -1,0 +1,133 @@
+#!/bin/bash
+# PBS post-processing job for Born candidate diagnostic plots.
+#
+# This generates angle histograms, Born-ratio curves, radius survival plots, and
+# reciprocal-envelope plots for the imported Zeus follow-up shortlist.
+#
+#PBS -N born_diag
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=64gb
+#PBS -J 1-2
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+if [ -n "${PBS_NODEFILE:-}" ] && [ -r "$PBS_NODEFILE" ]; then
+  PBS_NP_DEFAULT="$(wc -l < "$PBS_NODEFILE")"
+else
+  PBS_NP_DEFAULT="${PBS_NP:-8}"
+fi
+export BORN_WORKERS="${BORN_WORKERS:-$PBS_NP_DEFAULT}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_followup}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_postprocess_diagnostics}"
+SUMMARY_CSV="${SUMMARY_CSV:-$RUN_ROOT/summary_rows.csv}"
+PRIMARY_QUEUE_CSV="${PRIMARY_QUEUE_CSV:-$RUN_ROOT/shortlist_primary_n13_n14.csv}"
+OFF_RESONANCE_CSV="${OFF_RESONANCE_CSV:-$RUN_ROOT/shortlist_off_resonance_controls.csv}"
+
+mkdir -p "$LOG_ROOT"
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="diagnostics_primary_N13_N14"
+    ARGS=(
+      --source-csv "$SUMMARY_CSV"
+      --queue-csv "$PRIMARY_QUEUE_CSV"
+      --mode primary
+      --min-n 13
+      --max-n 14
+      --family primary_matched_ring_N13 primary_matched_ring_N14 primary_matched_ring_long_time_N12_N13
+      --top-groups 8
+      --top-rows 16
+      --bins 100
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --extra-distribution-plots
+      --out-dir "$RUN_ROOT/$RUN_NAME"
+      --log-file "$RUN_ROOT/$RUN_NAME/run.log"
+    )
+    ;;
+  2)
+    RUN_NAME="diagnostics_off_resonance_controls"
+    ARGS=(
+      --source-csv "$OFF_RESONANCE_CSV"
+      --mode all
+      --min-n 12
+      --max-n 13
+      --top-rows 8
+      --bins 100
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --extra-distribution-plots
+      --out-dir "$RUN_ROOT/$RUN_NAME"
+      --log-file "$RUN_ROOT/$RUN_NAME/run.log"
+    )
+    ;;
+  *)
+    echo "Unknown diagnostics TASK_ID: $TASK_ID" >&2
+    echo "Valid task ids are 1 and 2." >&2
+    exit 2
+    ;;
+esac
+
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$RUN_ROOT/$RUN_NAME/run.log"
+
+mkdir -p "$RUN_ROOT/$RUN_NAME"
+
+timestamp_stream() {
+  awk 'BEGIN { ts_re="^\[[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T" } $0 ~ ts_re { print; fflush(); next } { print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+
+exec > >(timestamp_stream | tee "$RUN_LOG") 2>&1
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Run root: $RUN_ROOT"
+echo "Summary CSV: $SUMMARY_CSV"
+echo "Primary queue CSV: $PRIMARY_QUEUE_CSV"
+echo "Off-resonance CSV: $OFF_RESONANCE_CSV"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Workdir: $(pwd)"
+echo "Python command: $PYTHON_BIN"
+echo "Python version: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
+
+"$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py "${ARGS[@]}" --workers "$BORN_WORKERS"

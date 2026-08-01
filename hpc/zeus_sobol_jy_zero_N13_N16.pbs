@@ -1,0 +1,39 @@
+#!/bin/bash
+#PBS -N sobol_jy0
+#PBS -J 13-16
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+if [[ -f examples/run_zeus_sobol_jy_zero_scan.py ]]; then
+  REPO_ROOT="$PWD"
+elif [[ -f ../examples/run_zeus_sobol_jy_zero_scan.py ]]; then
+  REPO_ROOT="$(cd .. && pwd)"
+elif [[ -f hpc/../examples/run_zeus_sobol_jy_zero_scan.py ]]; then
+  REPO_ROOT="$(cd hpc/.. && pwd)"
+else
+  echo "Cannot locate examples/run_zeus_sobol_jy_zero_scan.py from $PWD" >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+: "${RUN_ROOT:?Submit with qsub -v RUN_ROOT=/absolute/path/to/new_campaign hpc/zeus_sobol_jy_zero_N13_N16.pbs}"
+N="${PBS_ARRAY_INDEX:?PBS_ARRAY_INDEX is not set}"
+mkdir -p "$RUN_ROOT/logs"
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
+python3.11 examples/run_zeus_sobol_jy_zero_scan.py \
+  --output-root "$RUN_ROOT" \
+  --seed 20260726 --count 100 --sizes 13 14 15 16 --only-N "$N" \
+  --lower 1e-3 --upper 10 --kappa 0.1 \
+  --evolution-time 1e6 --workers 0 --resume \
+  2>&1 | tee -a "$RUN_ROOT/logs/jy_zero_N${N}_${PBS_JOBID:-manual}.log"

@@ -1,0 +1,250 @@
+#!/bin/bash
+# PBS array for single-pixel detector scans in the J-Jpm plane.
+#
+# Model:
+#   detector: ring nearest-neighbor ZZ coupling J plus +- exchange Jpm and hz field
+#   central: weak all-site XX coupling with no YY central coupling,
+#            Jx_unscaled = 1e-2 and Jy_unscaled = 0 by default
+#   scan: detector J x detector Jpm
+#   sizes: N = 11..17
+#   branches: hz0 in {zero, matched}
+#
+# Symmetry choice:
+#   The clean ring with uniform all-site central coupling preserves cyclic
+#   detector-site shift symmetry.  This is the symmetry path used by the
+#   current single-pixel QuSpin infrastructure for this scan, so the script
+#   enforces:
+#     BACKEND=quspin, CONNECTIVITY=ring, CENTRAL_COUPLING=all.
+#
+# Submit manually from the repository root on Zeus. Do not submit from Codex.
+#
+#PBS -N sp_j_jpm_jx_jy0
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=16:mem=256gb
+#PBS -l walltime=72:00:00
+#PBS -J 1-14
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export BLIS_NUM_THREADS="${BLIS_NUM_THREADS:-1}"
+export VECLIB_MAXIMUM_THREADS="${VECLIB_MAXIMUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+
+RUN_ROOT="${RUN_ROOT:-figures/zeus_single_pixel_j_jpm_fixed_jx_jy0_N11_N17}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_single_pixel_j_jpm_fixed_jx_jy0_N11_N17}"
+CONNECTIVITY="${CONNECTIVITY:-ring}"
+CENTRAL_COUPLING="${CENTRAL_COUPLING:-all}"
+BACKEND="${BACKEND:-quspin}"
+EXPECTED_SYMMETRY="${EXPECTED_SYMMETRY:-pixel_shift}"
+HZ="${HZ:-0.1}"
+SEED="${SEED:-44}"
+
+# Fixed weak central couplings. These are unscaled values; the Python
+# Hamiltonian convention uses Jx_unscaled/sqrt(N) and Jy_unscaled/sqrt(N) as
+# the physical all-site coupling strength.
+JX_UNSCALED="${JX_UNSCALED:-0.01}"
+JY_UNSCALED="${JY_UNSCALED:-0}"
+
+# Default 11x11 detector grid. Override these from qsub -v for narrower pilots
+# or denser production runs.
+J_VALUES="${J_VALUES:-0 0.1 0.2 0.3 0.5 0.75 1.0 1.25 1.5 2.0 3.0}"
+JPM_VALUES="${JPM_VALUES:-0 0.01 0.02 0.03 0.05 0.075 0.1 0.15 0.2 0.3 0.5}"
+TIMES="${TIMES:-100 316.227766 1000 3162.27766 10000 100000 1000000}"
+
+BINS="${BINS:-120}"
+LOG_BINS="${LOG_BINS:-60}"
+TAIL_FRACTION="${TAIL_FRACTION:-0.10}"
+ENERGY_DEGENERACY_TOL="${ENERGY_DEGENERACY_TOL:-1e-9}"
+PLOT_TOP="${PLOT_TOP:-16}"
+PLOT_MAX_BLOCH_POINTS="${PLOT_MAX_BLOCH_POINTS:-6000}"
+MAX_DETECTOR_SPECTRUM_QUBITS="${MAX_DETECTOR_SPECTRUM_QUBITS:-12}"
+BORN_COLORMAP="${BORN_COLORMAP:-RdYlGn}"
+PLOT_SPECTRA="${PLOT_SPECTRA:-0}"
+
+# Worker defaults balance throughput against memory. Override BORN_WORKERS to
+# force one value, or override LOW/MID/HIGH for a memory-aware schedule.
+BORN_WORKERS_LOW="${BORN_WORKERS_LOW:-4}"
+BORN_WORKERS_MID="${BORN_WORKERS_MID:-2}"
+BORN_WORKERS_HIGH="${BORN_WORKERS_HIGH:-1}"
+
+if [ "$EXPECTED_SYMMETRY" != "pixel_shift" ]; then
+  echo "Unsupported EXPECTED_SYMMETRY=$EXPECTED_SYMMETRY; this script is configured for pixel_shift." >&2
+  exit 2
+fi
+
+if [ "$BACKEND" != "quspin" ]; then
+  echo "BACKEND=$BACKEND disables the QuSpin sector path. Use BACKEND=quspin for cyclic-shift symmetry." >&2
+  exit 2
+fi
+
+if [ "$CONNECTIVITY" != "ring" ] || [ "$CENTRAL_COUPLING" != "all" ]; then
+  if [ "${ALLOW_NO_SHIFT_SYMMETRY:-0}" != "1" ]; then
+    echo "This run expects cyclic pixel-shift symmetry: CONNECTIVITY=ring and CENTRAL_COUPLING=all." >&2
+    echo "Current CONNECTIVITY=$CONNECTIVITY CENTRAL_COUPLING=$CENTRAL_COUPLING would remove that symmetry." >&2
+    echo "Set ALLOW_NO_SHIFT_SYMMETRY=1 only for deliberate no-symmetry pilot jobs." >&2
+    exit 2
+  fi
+fi
+
+case "$TASK_ID" in
+  1)  N=11; HZ0_MODE="zero" ;;
+  2)  N=11; HZ0_MODE="matched" ;;
+  3)  N=12; HZ0_MODE="zero" ;;
+  4)  N=12; HZ0_MODE="matched" ;;
+  5)  N=13; HZ0_MODE="zero" ;;
+  6)  N=13; HZ0_MODE="matched" ;;
+  7)  N=14; HZ0_MODE="zero" ;;
+  8)  N=14; HZ0_MODE="matched" ;;
+  9)  N=15; HZ0_MODE="zero" ;;
+  10) N=15; HZ0_MODE="matched" ;;
+  11) N=16; HZ0_MODE="zero" ;;
+  12) N=16; HZ0_MODE="matched" ;;
+  13) N=17; HZ0_MODE="zero" ;;
+  14) N=17; HZ0_MODE="matched" ;;
+  *)
+    echo "Unknown TASK_ID=$TASK_ID. Expected 1..14." >&2
+    exit 2
+    ;;
+esac
+
+if [ -n "${BORN_WORKERS:-}" ]; then
+  WORKERS="$BORN_WORKERS"
+else
+  case "$N" in
+    11|12|13) WORKERS="$BORN_WORKERS_LOW" ;;
+    14|15)    WORKERS="$BORN_WORKERS_MID" ;;
+    *)        WORKERS="$BORN_WORKERS_HIGH" ;;
+  esac
+fi
+
+SPECTRA_ARGS=()
+if [ "$PLOT_SPECTRA" = "1" ]; then
+  SPECTRA_ARGS+=(--diagnostic-spectra)
+else
+  SPECTRA_ARGS+=(--skip-diagnostic-spectra)
+fi
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+TASK_NAME="N${N}_hz0-${HZ0_MODE}"
+OUT_DIR="$RUN_ROOT/$TASK_NAME"
+TASK_LOG_DIR="$LOG_ROOT/$TASK_NAME"
+LOG_FILE="$TASK_LOG_DIR/run.log"
+mkdir -p "$OUT_DIR" "$TASK_LOG_DIR"
+
+{
+  echo "[$(date --iso-8601=seconds)] Starting $TASK_NAME"
+  echo "PBS_JOBID=${PBS_JOBID:-}"
+  echo "PBS_ARRAY_INDEX=${PBS_ARRAY_INDEX:-}"
+  echo "PBS_ARRAYID=${PBS_ARRAYID:-}"
+  echo "TASK_ID=$TASK_ID"
+  echo "PBS_O_WORKDIR=$PBS_O_WORKDIR"
+  echo "RUN_ROOT=$RUN_ROOT"
+  echo "LOG_ROOT=$LOG_ROOT"
+  echo "OUT_DIR=$OUT_DIR"
+  echo "PYTHON_BIN=$PYTHON_BIN"
+  echo "BACKEND=$BACKEND"
+  echo "CONNECTIVITY=$CONNECTIVITY"
+  echo "CENTRAL_COUPLING=$CENTRAL_COUPLING"
+  echo "EXPECTED_SYMMETRY=$EXPECTED_SYMMETRY"
+  echo "SYMMETRY_NOTE=clean ring/all geometry preserves cyclic pixel-shift sectors; this script enforces that QuSpin path"
+  echo "N=$N"
+  echo "HZ=$HZ"
+  echo "HZ0_MODE=$HZ0_MODE"
+  echo "JX_UNSCALED=$JX_UNSCALED"
+  echo "JY_UNSCALED=$JY_UNSCALED"
+  echo "J_VALUES=$J_VALUES"
+  echo "JPM_VALUES=$JPM_VALUES"
+  echo "TIMES=$TIMES"
+  echo "PLOT_SPECTRA=$PLOT_SPECTRA"
+  echo "WORKERS=$WORKERS"
+  echo "BORN_WORKERS=${BORN_WORKERS:-unset}"
+  echo "BORN_WORKERS_LOW=$BORN_WORKERS_LOW"
+  echo "BORN_WORKERS_MID=$BORN_WORKERS_MID"
+  echo "BORN_WORKERS_HIGH=$BORN_WORKERS_HIGH"
+  echo "OMP_NUM_THREADS=$OMP_NUM_THREADS"
+  echo "MKL_NUM_THREADS=$MKL_NUM_THREADS"
+  echo "OPENBLAS_NUM_THREADS=$OPENBLAS_NUM_THREADS"
+  echo "NUMEXPR_NUM_THREADS=$NUMEXPR_NUM_THREADS"
+} | tee "$TASK_LOG_DIR/scheduler_context.log"
+
+set -x
+"$PYTHON_BIN" examples/born_pairwise_heatmap.py \
+  --model single_pixel \
+  --N "$N" \
+  --connectivity "$CONNECTIVITY" \
+  --central-coupling "$CENTRAL_COUPLING" \
+  --hz0-mode "$HZ0_MODE" \
+  --J 1 \
+  --hz "$HZ" \
+  --Jpm 0 \
+  --Jxx 0 \
+  --Jyy 0 \
+  --jx-unscaled "$JX_UNSCALED" \
+  --jy-unscaled "$JY_UNSCALED" \
+  --Jz 0 \
+  --Jzx 0 \
+  --jcpm-unscaled 0 \
+  --hx 0 \
+  --seed "$SEED" \
+  --x-param J \
+  --x-values $J_VALUES \
+  --y-param Jpm \
+  --y-values $JPM_VALUES \
+  --times $TIMES \
+  --bins "$BINS" \
+  --tail-fraction "$TAIL_FRACTION" \
+  --log-bins "$LOG_BINS" \
+  --energy-degeneracy-tol "$ENERGY_DEGENERACY_TOL" \
+  --backend "$BACKEND" \
+  --workers "$WORKERS" \
+  --plot-top "$PLOT_TOP" \
+  --plot-max-bloch-points "$PLOT_MAX_BLOCH_POINTS" \
+  --max-detector-spectrum-qubits "$MAX_DETECTOR_SPECTRUM_QUBITS" \
+  "${SPECTRA_ARGS[@]}" \
+  --born-colormap "$BORN_COLORMAP" \
+  --out-dir "$OUT_DIR" \
+  --log-file "$LOG_FILE"
+set +x
+
+{
+  echo "[$(date --iso-8601=seconds)] Finished $TASK_NAME"
+  echo "Results: $OUT_DIR"
+  echo "Run log: $LOG_FILE"
+  echo "Index: $OUT_DIR/index.md"
+  echo "CSV: $OUT_DIR/pairwise_summary.csv"
+  echo "Diagnostics: $OUT_DIR/diagnostics"
+} | tee "$OUT_DIR/CHECKPOINT_DONE.txt" "$TASK_LOG_DIR/done.log"

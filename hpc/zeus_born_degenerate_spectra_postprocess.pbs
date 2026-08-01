@@ -1,0 +1,171 @@
+#!/bin/bash
+# PBS post-processing array for degenerate-spectrum Born search outputs.
+#
+# Submit summary first, then submit tasks 2-3 after summary_rows.csv exists.
+# See hpc/zeus_born_degenerate_spectra.md for exact qsub blocks.
+#
+# The job writes one scheduler-side log per task and one output-side run.log
+# per postprocess task.
+#
+#PBS -N born_degen_post
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=96gb
+#PBS -J 1
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+if [ -n "${PBS_NODEFILE:-}" ] && [ -r "$PBS_NODEFILE" ]; then
+  PBS_NP_DEFAULT="$(wc -l < "$PBS_NODEFILE")"
+else
+  PBS_NP_DEFAULT="${PBS_NP:-8}"
+fi
+export BORN_WORKERS="${BORN_WORKERS:-$PBS_NP_DEFAULT}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_degenerate_spectra}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_degenerate_spectra_postprocess}"
+SUMMARY_CSV="${SUMMARY_CSV:-$RUN_ROOT/summary_rows.csv}"
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="summary_degenerate"
+    ;;
+  2)
+    RUN_NAME="metric_stability_degenerate"
+    ;;
+  3)
+    RUN_NAME="diagnostics_degenerate"
+    ;;
+  *)
+    echo "Unknown degenerate postprocess TASK_ID: $TASK_ID" >&2
+    echo "Valid task ids are 1 through 3." >&2
+    exit 2
+    ;;
+esac
+
+OUT_DIR="$RUN_ROOT/$RUN_NAME"
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$OUT_DIR/run.log"
+
+mkdir -p "$OUT_DIR"
+
+timestamp_stream() {
+  awk 'BEGIN { ts_re="^\[[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T" } $0 ~ ts_re { print; fflush(); next } { print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+
+exec > >(timestamp_stream | tee "$RUN_LOG") 2>&1
+
+ensure_output_log_on_exit() {
+  status=$?
+  if [ ! -s "$OUT_LOG" ] && [ -s "$RUN_LOG" ]; then
+    cp "$RUN_LOG" "$OUT_LOG"
+  fi
+  exit "$status"
+}
+trap ensure_output_log_on_exit EXIT
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Run root: $RUN_ROOT"
+echo "Summary CSV: $SUMMARY_CSV"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Workdir: $(pwd)"
+echo "Python command: $PYTHON_BIN"
+echo "Python version: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
+
+if [ "$TASK_ID" != "1" ] && [ ! -s "$SUMMARY_CSV" ]; then
+  echo "Missing summary CSV required by task $TASK_ID: $SUMMARY_CSV" >&2
+  echo "Run task 1 first and submit tasks 2-3 only after this file exists." >&2
+  exit 2
+fi
+
+case "$TASK_ID" in
+  1)
+    "$PYTHON_BIN" examples/summarize_born_search_results.py \
+      --root "$RUN_ROOT" \
+      --out-md "$RUN_ROOT/summary.md" \
+      --out-csv "$SUMMARY_CSV" \
+      --top 30
+    ;;
+  2)
+    "$PYTHON_BIN" examples/born_candidate_stability.py \
+      --source-csv "$SUMMARY_CSV" \
+      --mode all \
+      --min-n 8 \
+      --max-n 16 \
+      --top-rows 30 \
+      --bins 60 80 120 \
+      --tail-fractions 0.05 0.10 0.20 \
+      --log-bins 50 \
+      --backend quspin \
+      --max-jx-unscaled 0.05 \
+      --max-jy-unscaled 0.05 \
+      --max-jcpm-unscaled 0.05 \
+      --max-hx 0.05 \
+      --min-born-similarity 0.0 \
+      --max-atomic-fraction 1 \
+      --workers "$BORN_WORKERS" \
+      --out-dir "$OUT_DIR" \
+      --log-file "$OUT_LOG"
+    ;;
+  3)
+    "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py \
+      --source-csv "$SUMMARY_CSV" \
+      --mode all \
+      --min-n 8 \
+      --max-n 16 \
+      --top-rows 30 \
+      --bins 120 \
+      --tail-fraction 0.10 \
+      --log-bins 60 \
+      --backend quspin \
+      --max-jx-unscaled 0.05 \
+      --max-jy-unscaled 0.05 \
+      --max-jcpm-unscaled 0.05 \
+      --max-hx 0.05 \
+      --min-born-similarity 0.0 \
+      --max-atomic-fraction 1 \
+      --extra-distribution-plots \
+      --workers "$BORN_WORKERS" \
+      --out-dir "$OUT_DIR" \
+      --log-file "$OUT_LOG"
+    ;;
+esac

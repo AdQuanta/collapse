@@ -1,0 +1,82 @@
+#!/bin/bash
+#PBS -N expanded_ham_sweep
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -J 11-18
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PROJECT_ROOT="${PROJECT_ROOT:-${PBS_O_WORKDIR:-$HOME/research/collapse}}"
+cd "$PROJECT_ROOT"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+RUNNER="$PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py"
+ANALYZER="$PROJECT_ROOT/examples/analyze_expanded_hamiltonian_sweep.py"
+ATLAS="$PROJECT_ROOT/examples/plot_expanded_hamiltonian_atlases.py"
+CONFIG="$PROJECT_ROOT/configs/expanded_hamiltonian_sweep_2026-07-16.json"
+for required in "$RUNNER" "$ANALYZER" "$ATLAS" "$CONFIG"; do
+  if [ ! -f "$required" ]; then
+    echo "ERROR: missing $required; submit from the repository root or set PROJECT_ROOT." >&2
+    exit 2
+  fi
+done
+"$PYTHON_BIN" -c 'import sys; assert sys.version_info[:2] == (3, 11), sys.version'
+
+TASK_N="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-}}"
+if [ -z "$TASK_N" ]; then
+  echo "ERROR: PBS array index is unavailable." >&2
+  exit 2
+fi
+
+RUN_TAG="${RUN_TAG:-expanded_$(date +%Y%m%d_%H%M%S)}"
+RUN_ROOT="${RUN_ROOT:-work/expanded_hamiltonian_sweep_${RUN_TAG}/N${TASK_N}}"
+FIGURE_ROOT="${FIGURE_ROOT:-figures/expanded_hamiltonian_sweep_${RUN_TAG}/N${TASK_N}}"
+LOG_ROOT="${LOG_ROOT:-logs/expanded_hamiltonian_sweep_${RUN_TAG}}"
+mkdir -p "$RUN_ROOT" "$FIGURE_ROOT" "$LOG_ROOT"
+LOG_FILE="$LOG_ROOT/N${TASK_N}.${PBS_JOBID:-local}.${TASK_N}.log"
+
+timestamp_stream() {
+  awk '{ print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+exec > >(timestamp_stream | tee -a "$LOG_FILE") 2>&1
+
+export PYTHONUNBUFFERED=1
+export MPLBACKEND=Agg
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+
+echo "Project root: $PROJECT_ROOT"
+echo "N: $TASK_N"
+echo "Python: $($PYTHON_BIN --version 2>&1)"
+echo "Run root: $RUN_ROOT"
+echo "Log: $LOG_FILE"
+
+"$PYTHON_BIN" "$RUNNER" \
+  --config "$CONFIG" \
+  --N "$TASK_N" \
+  --scope zeus \
+  --workers 8 \
+  --plot-top 1 \
+  --run-root "$RUN_ROOT" \
+  --figure-root "$FIGURE_ROOT" \
+  --python "$PYTHON_BIN"
+
+"$PYTHON_BIN" "$ANALYZER" \
+  --aggregate "$RUN_ROOT/aggregate_results.csv" \
+  --output-dir "$RUN_ROOT" \
+  --figure-dir "$FIGURE_ROOT"
+
+# Keep atlas diagonalizations serial: at large N, concurrent dense workspaces
+# would exceed the 128 GB allocation even though the simulation phase uses CPUs.
+"$PYTHON_BIN" "$ATLAS" \
+  --config "$CONFIG" \
+  --run-root "$RUN_ROOT" \
+  --figure-root "$FIGURE_ROOT" \
+  --workers 1
+
+echo "Completed N=$TASK_N. Results and plots were checkpointed after every Hamiltonian."

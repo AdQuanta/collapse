@@ -1,0 +1,278 @@
+#!/bin/bash
+# PBS array for dense 11x11 pairwise Born-stability heatmaps around the
+# strongest Born-like Hamiltonian candidates.
+#
+# Submit manually from the repository root on Zeus.  Do not SSH or submit from
+# Codex.  N16 tasks are kept as separate array entries so they can be piloted
+# and throttled independently.
+#
+#PBS -N born_heat11
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=192gb
+#PBS -J 1-8
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+export BORN_WORKERS="${BORN_WORKERS:-1}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export BLIS_NUM_THREADS="${BLIS_NUM_THREADS:-1}"
+export VECLIB_MAXIMUM_THREADS="${VECLIB_MAXIMUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_pairwise_heatmaps_11x11}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_pairwise_heatmaps_11x11}"
+PLOT_TOP="${PLOT_TOP:-12}"
+PLOT_MAX_BLOCH_POINTS="${PLOT_MAX_BLOCH_POINTS:-6000}"
+MAX_DETECTOR_SPECTRUM_QUBITS="${MAX_DETECTOR_SPECTRUM_QUBITS:-12}"
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+COMMON_ARGS=(
+  --backend quspin
+  --bins 120
+  --tail-fraction 0.10
+  --log-bins 60
+  --energy-degeneracy-tol 1e-9
+  --workers "$BORN_WORKERS"
+  --plot-top "$PLOT_TOP"
+  --plot-max-bloch-points "$PLOT_MAX_BLOCH_POINTS"
+  --max-detector-spectrum-qubits "$MAX_DETECTOR_SPECTRUM_QUBITS"
+  --born-colormap RdYlGn
+)
+
+LONG_TIMES=(1000 10000 100000 1000000)
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="matched_ring_Jx_hz_N15_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 15
+      --connectivity ring
+      --central-coupling all
+      --hz0-mode matched
+      --J 1.0
+      --Jpm 0.05
+      --jx-unscaled 0.04
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param jx
+      --x-values 0.030 0.032 0.034 0.036 0.038 0.040 0.042 0.044 0.046 0.048 0.050
+      --y-param hz
+      --y-values 0.075 0.080 0.085 0.090 0.095 0.100 0.105 0.110 0.115 0.120 0.125
+    )
+    ;;
+  2)
+    RUN_NAME="matched_ring_Jx_hz_N16_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 16
+      --connectivity ring
+      --central-coupling all
+      --hz0-mode matched
+      --J 1.0
+      --Jpm 0.05
+      --jx-unscaled 0.04
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param jx
+      --x-values 0.030 0.032 0.034 0.036 0.038 0.040 0.042 0.044 0.046 0.048 0.050
+      --y-param hz
+      --y-values 0.075 0.080 0.085 0.090 0.095 0.100 0.105 0.110 0.115 0.120 0.125
+    )
+    ;;
+  3)
+    RUN_NAME="matched_ring_Jpm_Jx_N15_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 15
+      --connectivity ring
+      --central-coupling all
+      --hz0-mode matched
+      --J 1.0
+      --Jpm 0.05
+      --jx-unscaled 0.04
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param Jpm
+      --x-values 0.000 0.010 0.020 0.030 0.040 0.050 0.060 0.070 0.080 0.090 0.100
+      --y-param jx
+      --y-values 0.025 0.028 0.031 0.034 0.037 0.040 0.043 0.046 0.049 0.052 0.055
+    )
+    ;;
+  4)
+    RUN_NAME="matched_ring_Jpm_Jx_N16_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 16
+      --connectivity ring
+      --central-coupling all
+      --hz0-mode matched
+      --J 1.0
+      --Jpm 0.05
+      --jx-unscaled 0.04
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param Jpm
+      --x-values 0.000 0.010 0.020 0.030 0.040 0.050 0.060 0.070 0.080 0.090 0.100
+      --y-param jx
+      --y-values 0.025 0.028 0.031 0.034 0.037 0.040 0.043 0.046 0.049 0.052 0.055
+    )
+    ;;
+  5)
+    RUN_NAME="anisotropic_ring_Jxx_Jyy_N15_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 15
+      --connectivity ring
+      --central-coupling all
+      --hz0-mode matched
+      --J 1.0
+      --Jpm 0
+      --jx-unscaled 0.04
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param Jxx
+      --x-values 0.000 0.008 0.016 0.024 0.032 0.040 0.048 0.056 0.064 0.072 0.080
+      --y-param Jyy
+      --y-values 0.000 0.008 0.016 0.024 0.032 0.040 0.048 0.056 0.064 0.072 0.080
+    )
+    ;;
+  6)
+    RUN_NAME="anisotropic_ring_Jxx_Jyy_N16_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 16
+      --connectivity ring
+      --central-coupling all
+      --hz0-mode matched
+      --J 1.0
+      --Jpm 0
+      --jx-unscaled 0.04
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param Jxx
+      --x-values 0.000 0.008 0.016 0.024 0.032 0.040 0.048 0.056 0.064 0.072 0.080
+      --y-param Jyy
+      --y-values 0.000 0.008 0.016 0.024 0.032 0.040 0.048 0.056 0.064 0.072 0.080
+    )
+    ;;
+  7)
+    RUN_NAME="weak_disorder_ring_dJ_dhz_N15_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 15
+      --connectivity ring
+      --central-coupling all
+      --hz0-mode matched
+      --disorder uniform
+      --J 1.0
+      --Jpm 0.05
+      --jx-unscaled 0.04
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param disorder_strength_J
+      --x-values 0.000 0.002 0.004 0.006 0.008 0.010 0.012 0.014 0.016 0.018 0.020
+      --y-param disorder_strength_hz
+      --y-values 0.000 0.002 0.004 0.006 0.008 0.010 0.012 0.014 0.016 0.018 0.020
+    )
+    ;;
+  8)
+    RUN_NAME="all_to_all_sz_Jpm_Jcpm_N15_11x11_t1e6"
+    ARGS=(
+      --model single_pixel
+      --N 15
+      --connectivity all_to_all
+      --central-coupling all
+      --hz0-mode matched
+      --J 1.0
+      --Jpm 0.05
+      --jx-unscaled 0
+      --jy-unscaled 0
+      --Jz 0.03
+      --hz 0.1
+      --times "${LONG_TIMES[@]}"
+      --x-param Jpm
+      --x-values 0.000 0.010 0.020 0.030 0.040 0.050 0.060 0.070 0.080 0.090 0.100
+      --y-param jcpm
+      --y-values 0.000 0.005 0.010 0.015 0.020 0.025 0.030 0.035 0.040 0.045 0.050
+    )
+    ;;
+  *)
+    echo "Unknown 11x11 pairwise heatmap TASK_ID: $TASK_ID" >&2
+    echo "Valid task ids are 1 through 8." >&2
+    exit 2
+    ;;
+esac
+
+OUT_DIR="$RUN_ROOT/$RUN_NAME"
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$OUT_DIR/run.log"
+
+mkdir -p "$OUT_DIR"
+
+timestamp_stream() {
+  awk 'BEGIN { ts_re="^\[[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T" } $0 ~ ts_re { print; fflush(); next } { print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+
+exec > >(timestamp_stream | tee "$RUN_LOG") 2>&1
+
+ensure_output_log_on_exit() {
+  status=$?
+  if [ ! -s "$OUT_LOG" ] && [ -s "$RUN_LOG" ]; then
+    cp "$RUN_LOG" "$OUT_LOG"
+  fi
+  exit "$status"
+}
+trap ensure_output_log_on_exit EXIT
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Output: $OUT_DIR"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Workdir: $(pwd)"
+echo "Python command: $PYTHON_BIN"
+echo "Python version: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "MAX_DETECTOR_SPECTRUM_QUBITS: $MAX_DETECTOR_SPECTRUM_QUBITS"
+echo "BLAS/backend threads OMP/MKL/OPENBLAS/BLIS/VECLIB/NUMEXPR: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$BLIS_NUM_THREADS/$VECLIB_MAXIMUM_THREADS/$NUMEXPR_NUM_THREADS"
+echo "Diagnostic completion requirement: P(theta)+P(pi-theta), R vs Born, phi histograms, Bloch states, full/detector spectra, and unfolded spacing histograms."
+
+"$PYTHON_BIN" examples/born_pairwise_heatmap.py \
+  "${ARGS[@]}" \
+  "${COMMON_ARGS[@]}" \
+  --out-dir "$OUT_DIR" \
+  --log-file "$OUT_LOG"

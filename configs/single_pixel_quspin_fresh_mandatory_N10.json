@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "study": "fresh_single_pixel_quspin_mandatory",
+  "evidence_policy": "Only outputs created in this fresh namespace are admissible as final evidence.",
+  "mode": "focused",
+  "output": "work/single_pixel_quspin_fresh_2026-07-12/mandatory_N10",
+  "N": [10],
+  "hz": [-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0],
+  "times": [100.0, 1000.0, 10000.0, 100000.0, 1000000.0],
+  "fixed_parameters": {"J": 1.0, "Jx": 0.01, "hz0": 0.0},
+  "seed": 20260712,
+  "theta_bins": 48,
+  "solve_condition_limit": 10000000000.0,
+  "spacing_sector": {"kblock": 0, "pblock": 1, "zblock_at_hz_zero": 1}
+}

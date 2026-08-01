@@ -1,0 +1,42 @@
+#!/bin/bash
+# Array-safe PBS template. Default grid has 5 N values x 7 h_z values: -J 0-34.
+# Aggregate after all jobs succeed:
+# python examples/aggregate_resonant_hz_runs.py --input-root "$RUN_ROOT" --out "$RUN_ROOT/aggregated"
+#PBS -N sp_hz_res
+#PBS -j oe
+#PBS -l select=1:ncpus=1:mem=32gb
+#PBS -l walltime=12:00:00
+
+set -euo pipefail
+cd "${PBS_O_WORKDIR:?submit from repository root}"
+if [[ -n "${PYTHON_MODULE:-}" ]]; then module load "$PYTHON_MODULE"; fi
+VENV="${VENV:-.venv-resonant}"
+source "$VENV/bin/activate"
+export MPLBACKEND=Agg
+export MPLCONFIGDIR="$PWD/.mplconfig"
+RUN_ROOT="${RUN_ROOT:?set a unique run root}"
+LOG_ROOT="${LOG_ROOT:-$RUN_ROOT/logs}"
+CASE_INDEX="${PBS_ARRAY_INDEX:-0}"
+N_VALUES=(${N_VALUES:-10 11 12 13 14})
+HZ_VALUES=(${HZ_VALUES:--3 -2 -1 0 1 2 3})
+TIMES=(${TIMES:-100 1000 10000 100000 1000000})
+COUNT_HZ=${#HZ_VALUES[@]}
+N_INDEX=$((CASE_INDEX / COUNT_HZ))
+HZ_INDEX=$((CASE_INDEX % COUNT_HZ))
+N="${N_VALUES[$N_INDEX]:?array index exceeds N_VALUES}"
+HZ="${HZ_VALUES[$HZ_INDEX]:?array index exceeds HZ_VALUES}"
+TASK_ROOT="$RUN_ROOT/tasks/task_${CASE_INDEX}"
+CASE_DIR=$(printf "%s/N%02d/hz_%+.3f" "$TASK_ROOT" "$N" "$HZ")
+mkdir -p "$TASK_ROOT" "$LOG_ROOT" "$MPLCONFIGDIR"
+exec >"$LOG_ROOT/task_${CASE_INDEX}_N${N}_hz${HZ}.log" 2>&1
+python -m pip show quspin quspin-extensions
+python --version
+if [[ -e "$CASE_DIR/metadata.json" ]]; then echo "already complete: $CASE_DIR"; exit 0; fi
+if [[ "${DRY_RUN:-0}" == "1" ]]; then
+  printf 'python examples/run_resonant_hz_study.py --mode focused --N %s --hz-values %s --times %s --out %s\n' "$N" "$HZ" "${TIMES[*]}" "$TASK_ROOT"
+  exit 0
+fi
+if [[ "${SMOKE:-0}" == "1" ]]; then N=4; HZ=0; TIMES=(1 10); fi
+trap 'echo "interrupted" > "$TASK_ROOT/INCOMPLETE"' TERM INT
+python examples/run_resonant_hz_study.py --mode focused --N "$N" --hz-values "$HZ" --times "${TIMES[@]}" --out "$TASK_ROOT"
+rm -f "$TASK_ROOT/INCOMPLETE"

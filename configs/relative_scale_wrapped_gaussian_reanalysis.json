@@ -1,0 +1,22 @@
+{
+  "source_run": "work/zeus_relative_scale_regimes_20260724_144102",
+  "campaign_config": "configs/zeus_relative_scale_regimes_N13_N18.json",
+  "detector_atlas": "reports/relative_scale_detector_spectra_20260726_112930",
+  "primary_n": 16,
+  "period": 6.283185307179586,
+  "fourier_nmax": 32,
+  "fourier_check_nmax": [16, 64],
+  "fourier_weights": "inverse_square",
+  "sigma_bounds": [0.0001, 12.566370614359172],
+  "real_space_bins": 256,
+  "plot_bins": 128,
+  "transport_bins": 4096,
+  "phase_bins": 72,
+  "origin_shifts": [0.37, 1.0471975511965976],
+  "degeneracy_tolerances": [1e-10, 1e-9, 1e-8],
+  "primary_degeneracy_tolerance": 1e-9,
+  "matrix_nonzero_relative_tolerance": 1e-12,
+  "classification": "N=16 Fourier-discrepancy rank tertiles: ranks 1-10 close, 11-20 moderate, 21-30 strong",
+  "copy_detector_arrays": true,
+  "figure_dpi": 220
+}

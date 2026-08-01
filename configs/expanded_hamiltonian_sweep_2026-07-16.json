@@ -1,0 +1,255 @@
+{
+  "description": "Designed multi-factor sweep for joint wrapped-heavy-tail and Born-like behavior. All central couplings are unscaled inputs and are divided by sqrt(N_pixel) by born_hamiltonian_search.py.",
+  "default_times": [100, 316, 1000, 10000],
+  "local_N": 9,
+  "zeus_N": [11, 12, 13, 14, 15, 16, 17, 18],
+  "atlas_groups": [
+    {
+      "id": "matched_mixing",
+      "title": "matched-field mixing channels",
+      "cases": [
+        ["anchor_matched_x", "X only"],
+        ["matched_xy", "X/Y"],
+        ["matched_xy_anisotropic", "X/Y + XX/YY"],
+        ["matched_xy_transverse", "X/Y + hx"],
+        ["matched_xy_longitudinal", "X/Y + Jz"],
+        ["matched_xy_zx", "X/Y + Z0X"],
+        ["matched_xy_hz_disorder", "X/Y + hz disorder"]
+      ]
+    },
+    {
+      "id": "exchange_strength",
+      "title": "matched-field exchange strength",
+      "cases": [
+        ["matched_xy_jpm_005", "Jpm=0.05"],
+        ["matched_xy_jpm_01", "Jpm=0.1"],
+        ["matched_xy_jpm_03", "Jpm=0.3"],
+        ["matched_xy_jpm_1", "Jpm=1"],
+        ["matched_xy_jpm_disorder", "Jpm=0.3 + disorder"]
+      ]
+    },
+    {
+      "id": "matching_and_geometry",
+      "title": "matching and graph controls",
+      "cases": [
+        ["matched_xy_jpm_03", "matched ring"],
+        ["half_detuned_hybrid", "half matched"],
+        ["zero_detuned_hybrid", "hz0=0"],
+        ["chain_ends_hybrid", "chain ends"],
+        ["all_to_all_hybrid", "all-to-all"],
+        ["central_flipflop_hybrid", "central flip-flop"]
+      ]
+    },
+    {
+      "id": "heavy_tail_controls",
+      "title": "exchange-band heavy-tail controls",
+      "cases": [
+        ["heavy_edge_xy_disorder", "band edge hz=1"],
+        ["heavy_center_xy_disorder", "band center hz=0"],
+        ["dimerized_anisotropic_control", "dimerized control"]
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "anchor_matched_x",
+      "priority": 1,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 exact matching; single X channel tests meridional locking in B2.",
+      "hypothesis": "Reference matched Ising point with the corrected perturbative collective coupling.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy",
+      "priority": 2,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 matching; B2 independent X/Y central channels; test B3 reciprocity.",
+      "hypothesis": "A second central quadrature should weaken meridional locking without leaving the perturbative regime.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_anisotropic",
+      "priority": 3,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 matching; B2 noncommuting XX/YY detector mixing; B3 outcome test.",
+      "hypothesis": "Weak detector anisotropy broadens the resonant graph while preserving the matched Ising backbone.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--Jxx", "0.05", "--Jyy", "0.02", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_transverse",
+      "priority": 4,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 approximate matching; B2 detector transverse field breaks commuting structure.",
+      "hypothesis": "A weak hx=0.01 perturbation may improve mixing before it broadens the matching condition excessively.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hx", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_jpm_005",
+      "priority": 5,
+      "local": true,
+      "zeus": true,
+      "target": "hybrid",
+      "conditions": "B1-B2 matched mixing plus onset of HT1 exchange-band overlap.",
+      "hypothesis": "Small Jpm may broaden accessible transitions without creating the strongly locked heavy band.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.05", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_jpm_01",
+      "priority": 6,
+      "local": true,
+      "zeus": true,
+      "target": "hybrid",
+      "conditions": "B1-B2 matching plus the Zeus heavy-tail onset near Jpm=0.1.",
+      "hypothesis": "Tests the lowest Zeus Jpm window that was consistently Cauchy-preferred.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.1", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_jpm_03",
+      "priority": 7,
+      "local": true,
+      "zeus": true,
+      "target": "hybrid",
+      "conditions": "B1-B2 matching inside the strongest finite-N Jpm Born-score window; test HT4 and B3.",
+      "hypothesis": "Jpm=0.3 gave strong larger-N radial scores and may retain an intermediate heavy shoulder under X/Y mixing.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.3", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_jpm_1",
+      "priority": 8,
+      "local": true,
+      "zeus": true,
+      "target": "hybrid",
+      "conditions": "Exact Jpm=J heavy regime combined with B1 matching and B2 X/Y mixing.",
+      "hypothesis": "A stringent compatibility test for an r^-2 intermediate shoulder and any later Born crossover.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_longitudinal",
+      "priority": 9,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1-B2 with weak central longitudinal Jz channel; probes phase dephasing without flips.",
+      "hypothesis": "Small longitudinal coupling may smooth phase coherence while preserving perturbative central exchange.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--Jz", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_zx",
+      "priority": 10,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1-B2 with weak Z0-Xi mixing channel; tests an independent symmetry-breaking direction.",
+      "hypothesis": "A perturbative Jzx term may reduce residual meridional coherence without adding a large flip scale.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--Jzx", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "matched_xy_hz_disorder",
+      "priority": 11,
+      "local": true,
+      "zeus": true,
+      "target": "Born",
+      "conditions": "B1 broadened matching; B2 weak disorder smooths atoms; test B3.",
+      "hypothesis": "Uniform hz disorder of width 0.01 is smaller than the base field and may regularize finite-size resonances.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all", "--disorder", "uniform", "--disorder-strength-hz", "0.01", "--seed", "716"]
+    },
+    {
+      "id": "matched_xy_jpm_disorder",
+      "priority": 12,
+      "local": true,
+      "zeus": true,
+      "target": "hybrid",
+      "conditions": "B1-B2 plus HT exchange graph with weak bond disorder; tests stable-law versus coherent-block tails.",
+      "hypothesis": "Weak Jpm disorder should reduce repeated phase atoms while retaining the Jpm=0.3 overlap window.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.3", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all", "--disorder", "uniform", "--disorder-strength-Jpm", "0.01", "--seed", "716"]
+    },
+    {
+      "id": "half_detuned_hybrid",
+      "priority": 13,
+      "local": true,
+      "zeus": true,
+      "target": "control",
+      "conditions": "Detunes B1 while keeping Jpm and X/Y mixing fixed.",
+      "hypothesis": "Half matching should reduce the Born profile if exact energy cancellation is causal.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.3", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "half", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "zero_detuned_hybrid",
+      "priority": 14,
+      "local": true,
+      "zeus": true,
+      "target": "control",
+      "conditions": "Removes B1 central matching while retaining HT exchange and B2 perturbations.",
+      "hypothesis": "Separates exchange-driven heavy tails from matched central energy transfer.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.3", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "zero", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "chain_ends_hybrid",
+      "priority": 15,
+      "local": true,
+      "zeus": true,
+      "target": "control",
+      "conditions": "B1 matching retained; HT3/B2 graph extension weakened by end-only chain coupling.",
+      "hypothesis": "Tests whether high connectivity, rather than matching alone, drives the candidate law.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.3", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "chain", "--central-coupling", "ends"]
+    },
+    {
+      "id": "heavy_edge_xy_disorder",
+      "priority": 16,
+      "local": true,
+      "zeus": true,
+      "target": "wrapped-heavy-tail",
+      "conditions": "HT1-HT5 exchange band edge with weak field disorder and an added central Y quadrature.",
+      "hypothesis": "Combines the strongest local r^-2 screen with explicit mixing to test whether Born geometry improves.",
+      "args": ["--model", "single_pixel", "--J", "0", "--Jpm", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "1", "--hz0-modes", "zero", "--connectivity", "ring", "--central-coupling", "all", "--disorder", "uniform", "--disorder-strength-hz", "0.01", "--seed", "716"]
+    },
+    {
+      "id": "heavy_center_xy_disorder",
+      "priority": 17,
+      "local": true,
+      "zeus": true,
+      "target": "wrapped-heavy-tail",
+      "conditions": "HT exchange-band center with X/Y mixing and weak Jpm disorder.",
+      "hypothesis": "Tests whether symmetry breaking can unlock the azimuth while retaining a filled tangent pole.",
+      "args": ["--model", "single_pixel", "--J", "0", "--Jpm", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0", "--hz0-modes", "zero", "--connectivity", "ring", "--central-coupling", "all", "--disorder", "uniform", "--disorder-strength-Jpm", "0.01", "--seed", "716"]
+    },
+    {
+      "id": "all_to_all_hybrid",
+      "priority": 18,
+      "local": false,
+      "zeus": true,
+      "target": "control",
+      "conditions": "Maximal HT3 connectivity and B2 mixing; tests coherent collective modes.",
+      "hypothesis": "All-to-all coupling may either enhance self-averaging or create a low-rank collective obstruction.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.1", "--jx-unscaled", "0.01", "--jy-unscaled", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "all_to_all", "--central-coupling", "all"]
+    },
+    {
+      "id": "central_flipflop_hybrid",
+      "priority": 19,
+      "local": false,
+      "zeus": true,
+      "target": "control",
+      "conditions": "Adds perturbative Sz-conserving central exchange to matched X/Y mixing.",
+      "hypothesis": "Tests whether an additional energy-conserving channel improves reciprocity or reinforces sector locking.",
+      "args": ["--model", "single_pixel", "--J", "1", "--Jpm", "0.3", "--jx-unscaled", "0.005", "--jy-unscaled", "0.005", "--jcpm-unscaled", "0.005", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "all"]
+    },
+    {
+      "id": "dimerized_anisotropic_control",
+      "priority": 20,
+      "local": false,
+      "zeus": true,
+      "target": "control",
+      "conditions": "Exact degeneracy with fragmented geometry; tests HT2-HT3 necessity under weak anisotropy.",
+      "hypothesis": "Raw degeneracy should remain insufficient when resonant blocks do not form an extended mixing graph.",
+      "args": ["--model", "dimerized_pixel", "--J", "1", "--jx-unscaled", "0.01", "--jy-unscaled", "0", "--Jz", "0.01", "--hz", "0.1", "--hz0-modes", "matched", "--connectivity", "ring", "--central-coupling", "auto"]
+    }
+  ]
+}

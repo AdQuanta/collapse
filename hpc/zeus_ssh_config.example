@@ -1,0 +1,5 @@
+Host zeus-technion
+  HostName zeus.technion.ac.il
+  User matanhaller
+  IdentityFile ~/.ssh/zeus_collapse_ed25519
+  IdentitiesOnly yes

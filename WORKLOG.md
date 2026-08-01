@@ -1,0 +1,11 @@
+# Work log - h_z resonance study (2026-07-12)
+
+- Read `HANDOFF.md`, the 2026-07-11 progress report, the M-diagonalisation note, and the fixed-time derivation. The study uses the project ring ZZ Hamiltonian and its definitions of `M=U00^{-1}U10`, `theta=2 atan |lambda|`, and `R(theta)`.
+- The requested main parameters are fixed in code and metadata: `hz0=0`, `J=1`, physical collective `Jx=0.01`, with individual XX edge coefficient `0.01/sqrt(N)`.
+- Recreated a local Python 3.12.13 environment. The required QuSpin pair is `quspin==1.0.0`, `quspin-extensions==0.1.6`; the initial 1.0.1/0.1.8 pair failed to load its extension, while the requested pair successfully built the Hamiltonian.
+- Added QuSpin-backed `collapse/resonant_study.py`; the direct solve is used while `cond(U00)<=1e10`, otherwise a generalized-eigenvalue pencil is used. No inverse is formed in the production path.
+- Benchmarked the canonical full single-pixel route through detector `N=10` (full dimension 2048). The `h_z=0,t=100` case required 1.43 s construction, 17.64 s diagonalisation, and 39.95 s total; the full N=10 focused grid is complete. The broad N=10 grid and N>10 are Zeus targets.
+- Completed smoke N=3; broad grid N=4,6,8 at h_z=-3,-2.5,...,3; fine N=8 resolution around each resonance; and focused N=9/N=10 grids at h_z=-3,-2,-1,0,1,2,3. The principal long-time grid is t=100,10000,100000,1000000.
+- Validation: `33 passed` for the new resonant-study tests plus existing Born and level-spacing tests. The added Jx regression changes the existing single-pixel Hamiltonian and fails if the required value is ignored.
+- Important result: resonances widen the polar distribution and increase conditioning, but the eigenvalue azimuths remain a balanced two-point structure (`|<exp(2 i phi)>|=1`) rather than a uniform circle. The clean model is therefore not evidence for Born-like sphere coverage.
+- Full test suite: 102 passed, 1 failed. The sole failure is `tests/test_hpc_postprocess_runbook.py::test_anisotropic_larger_n_handoff_has_pbs_commands_and_logs`, which expects the pre-existing anisotropic PBS runbook to contain `chain_transverse_perturbative_N15`. It is unrelated to this study and was not modified.

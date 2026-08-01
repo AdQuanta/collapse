@@ -1,0 +1,149 @@
+#!/bin/bash
+# PBS array for exact matched counterparts of high-scoring detuned controls.
+#
+# This job consumes:
+#   figures/zeus_born_anisotropic_largerN/matched_counterpart_requests.csv
+#
+# It is intentionally split into metric-stability and diagnostic-plot tasks so
+# the falsifier audit can be resolved without rerunning the full larger-N scan.
+#
+#PBS -N born_match_cp
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=96gb
+#PBS -J 1-2
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+if [ -n "${PBS_NODEFILE:-}" ] && [ -r "$PBS_NODEFILE" ]; then
+  PBS_NP_DEFAULT="$(wc -l < "$PBS_NODEFILE")"
+else
+  PBS_NP_DEFAULT="${PBS_NP:-8}"
+fi
+export BORN_WORKERS="${BORN_WORKERS:-$PBS_NP_DEFAULT}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_anisotropic_largerN}"
+REQUEST_CSV="${REQUEST_CSV:-$RUN_ROOT/matched_counterpart_requests.csv}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_matched_counterparts}"
+
+if [ ! -s "$REQUEST_CSV" ]; then
+  echo "Missing or empty request CSV: $REQUEST_CSV" >&2
+  exit 2
+fi
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+COMMON_FILTERS=(
+  --source-csv "$REQUEST_CSV"
+  --mode all
+  --min-n 15
+  --max-n 16
+  --top-rows 32
+  --backend quspin
+  --max-jx-unscaled 0.05
+  --max-jy-unscaled 0.05
+  --max-jcpm-unscaled 0.05
+  --max-hx 0.05
+  --min-born-similarity -1
+  --max-atomic-fraction 1
+  --workers "$BORN_WORKERS"
+)
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="metric_stability_matched_counterparts_N15_N16"
+    COMMAND=(
+      "$PYTHON_BIN" examples/born_candidate_stability.py
+      "${COMMON_FILTERS[@]}"
+      --bins 60 80 120
+      --tail-fractions 0.05 0.10 0.20
+      --log-bins 50
+      --top 24
+    )
+    ;;
+  2)
+    RUN_NAME="diagnostics_matched_counterparts_N15_N16"
+    COMMAND=(
+      "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py
+      "${COMMON_FILTERS[@]}"
+      --bins 120
+      --tail-fraction 0.10
+      --log-bins 60
+      --pseudocount 0.5
+      --extra-distribution-plots
+    )
+    ;;
+  *)
+    echo "Unknown matched-counterpart TASK_ID: $TASK_ID" >&2
+    echo "Valid task ids are 1 and 2." >&2
+    exit 2
+    ;;
+esac
+
+OUT_DIR="$RUN_ROOT/$RUN_NAME"
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$OUT_DIR/run.log"
+
+mkdir -p "$OUT_DIR"
+
+timestamp_stream() {
+  awk 'BEGIN { ts_re="^\[[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T" } $0 ~ ts_re { print; fflush(); next } { print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+
+exec > >(timestamp_stream | tee "$RUN_LOG") 2>&1
+
+ensure_output_log_on_exit() {
+  status=$?
+  if [ ! -s "$OUT_LOG" ] && [ -s "$RUN_LOG" ]; then
+    cp "$RUN_LOG" "$OUT_LOG"
+  fi
+  exit "$status"
+}
+trap ensure_output_log_on_exit EXIT
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Request CSV: $REQUEST_CSV"
+echo "Output: $OUT_DIR"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Workdir: $(pwd)"
+echo "Python command: $PYTHON_BIN"
+echo "Python version: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
+
+"${COMMAND[@]}" --out-dir "$OUT_DIR" --log-file "$OUT_LOG"

@@ -1,0 +1,245 @@
+#!/bin/bash
+# Follow-up PBS job for the Hamiltonian Born-rule search on Zeus.
+#
+# The single-pixel tasks use --backend quspin so a missing QuSpin environment
+# fails quickly instead of silently falling back to dense NumPy at N >= 12.
+# Primary/control grids keep central qubit-detector couplings perturbative
+# (Jx_unscaled, Jcpm_unscaled, hx <= 0.05 where present) and write
+# per-output run.log files.
+#
+#PBS -N born_followup
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=64gb
+#PBS -J 1-8
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+# Optional cluster environment hooks. Prefer ZEUS_ENV_SETUP when the module or
+# conda setup requires several commands. Example:
+#   qsub -v ZEUS_ENV_SETUP=/path/to/zeus_python_env.sh ...
+if [ -n "${ZEUS_ENV_SETUP:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$ZEUS_ENV_SETUP"
+fi
+
+if [ -n "${PYTHON_MODULES:-}" ]; then
+  if ! command -v module >/dev/null 2>&1; then
+    echo "PYTHON_MODULES was set, but the module command is unavailable." >&2
+    exit 2
+  fi
+  for mod in $PYTHON_MODULES; do
+    module load "$mod"
+  done
+fi
+
+if [ -n "${VIRTUAL_ENV_PATH:-}" ]; then
+  # shellcheck source=/dev/null
+  source "$VIRTUAL_ENV_PATH/bin/activate"
+fi
+
+export PYTHONUNBUFFERED=1
+if [ -n "${PBS_NODEFILE:-}" ] && [ -r "$PBS_NODEFILE" ]; then
+  PBS_NP_DEFAULT="$(wc -l < "$PBS_NODEFILE")"
+else
+  PBS_NP_DEFAULT="${PBS_NP:-8}"
+fi
+export BORN_WORKERS="${BORN_WORKERS:-$PBS_NP_DEFAULT}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_followup}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_followup}"
+PLOT_TOP="${PLOT_TOP:-12}"
+PLOT_MAX_BLOCH_POINTS="${PLOT_MAX_BLOCH_POINTS:-6000}"
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="primary_matched_ring_N12"
+    ARGS=(
+      --model single_pixel
+      --N 12
+      --connectivity ring
+      --times 316 1000 3162 10000 31623
+      --Jpm 0 0.05 0.1
+      --jx-unscaled 0.02 0.03 0.04 0.05
+      --hz 0.08 0.1 0.12
+      --hz0-modes matched
+      --bins 100
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --top 36
+    )
+    ;;
+  2)
+    RUN_NAME="primary_matched_ring_N13"
+    ARGS=(
+      --model single_pixel
+      --N 13
+      --connectivity ring
+      --times 316 1000 3162 10000 31623
+      --Jpm 0 0.05 0.1
+      --jx-unscaled 0.02 0.03 0.04 0.05
+      --hz 0.08 0.1 0.12
+      --hz0-modes matched
+      --bins 100
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --top 36
+    )
+    ;;
+  3)
+    RUN_NAME="primary_matched_ring_N14"
+    ARGS=(
+      --model single_pixel
+      --N 14
+      --connectivity ring
+      --times 316 1000 3162 10000 31623
+      --Jpm 0 0.05 0.1
+      --jx-unscaled 0.02 0.03 0.04 0.05
+      --hz 0.08 0.1 0.12
+      --hz0-modes matched
+      --bins 100
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --top 36
+    )
+    ;;
+  4)
+    RUN_NAME="primary_matched_ring_long_time_N12_N13"
+    ARGS=(
+      --model single_pixel
+      --N 12 13
+      --connectivity ring
+      --times 100 316 1000 3162 10000 31623 100000 316228 1000000
+      --Jpm 0 0.05 0.1
+      --jx-unscaled 0.05
+      --hz 0.1
+      --hz0-modes matched
+      --bins 100
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --top 36
+    )
+    ;;
+  5)
+    RUN_NAME="detuning_control_ring_N12_N13"
+    ARGS=(
+      --model single_pixel
+      --N 12 13
+      --connectivity ring
+      --times 100 316 1000 3162 10000
+      --Jpm 0 0.1 0.2
+      --jx-unscaled 0.03 0.05
+      --hz 0.05 0.1
+      --hz0-modes matched zero minus
+      --bins 80
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --top 40
+    )
+    ;;
+  6)
+    RUN_NAME="chain_control_N12_N13"
+    ARGS=(
+      --model single_pixel
+      --N 12 13
+      --connectivity chain
+      --times 316 1000 3162 10000 31623
+      --Jpm 0 0.1
+      --jx-unscaled 0.03 0.05
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --bins 80
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --top 32
+    )
+    ;;
+  7)
+    RUN_NAME="sz_exchange_control_N12_N13"
+    ARGS=(
+      --model single_pixel
+      --N 12 13
+      --connectivity ring
+      --times 100 1000 10000 100000
+      --Jpm 0.2 1
+      --jx-unscaled 0
+      --jcpm-unscaled 0.02 0.05
+      --Jz 0.02 0.1
+      --hz 0.05 0.1
+      --hz0-modes matched
+      --bins 80
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend quspin
+      --top 32
+    )
+    ;;
+  8)
+    RUN_NAME="cnot_copier_degenerate_N8_N10_N12"
+    ARGS=(
+      --model cnot_copier
+      --N 8 10 12
+      --connectivity ring
+      --times 1
+      --bins 80
+      --tail-fraction 0.10
+      --log-bins 50
+      --backend auto
+      --top 12
+    )
+    ;;
+  *)
+    echo "Unknown follow-up TASK_ID: $TASK_ID" >&2
+    echo "Valid task ids are 1 through 8." >&2
+    exit 2
+    ;;
+esac
+
+OUT_DIR="$RUN_ROOT/$RUN_NAME"
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$OUT_DIR/run.log"
+
+timestamp_stream() {
+  awk 'BEGIN { ts_re="^\[[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T" } $0 ~ ts_re { print; fflush(); next } { print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+
+exec > >(timestamp_stream | tee "$RUN_LOG") 2>&1
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Output: $OUT_DIR"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Workdir: $(pwd)"
+echo "Python command: $PYTHON_BIN"
+echo "Python version: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
+
+"$PYTHON_BIN" examples/born_hamiltonian_search.py \
+  "${ARGS[@]}" \
+  --workers "$BORN_WORKERS" \
+  --plot-top "$PLOT_TOP" \
+  --plot-max-bloch-points "$PLOT_MAX_BLOCH_POINTS" \
+  --out-dir "$OUT_DIR" \
+  --log-file "$OUT_LOG"

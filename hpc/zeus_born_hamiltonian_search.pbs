@@ -1,0 +1,167 @@
+#!/bin/bash
+# Minimal PBS template for the Born Hamiltonian search on Zeus.
+#
+# If Zeus uses Torque-style arrays, replace "#PBS -J 1-5" with "#PBS -t 1-5".
+#
+#PBS -N born_ham_search
+# Confirm the queue/resource syntax on Zeus before submitting.
+# If Zeus wants a different memory syntax, edit this line accordingly.
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=64gb
+#PBS -J 1-5
+#PBS -j oe
+#PBS -m abe
+# Replace or remove the notification address before submission if needed.
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+PBS_O_WORKDIR="${PBS_O_WORKDIR:-$HOME/research/collapse}"
+cd "$PBS_O_WORKDIR"
+
+# Cluster-specific environment setup goes here.
+# module purge
+# source .venv/bin/activate
+
+export PYTHONUNBUFFERED=1
+if [ -n "${PBS_NODEFILE:-}" ] && [ -r "$PBS_NODEFILE" ]; then
+  PBS_NP_DEFAULT="$(wc -l < "$PBS_NODEFILE")"
+else
+  PBS_NP_DEFAULT="${PBS_NP:-8}"
+fi
+export BORN_WORKERS="${BORN_WORKERS:-$PBS_NP_DEFAULT}"
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-1}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-1}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-1}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-1}"
+
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+TASK_ID="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${TASK_ID:-1}}}"
+RUN_ROOT="${RUN_ROOT:-figures/zeus_born_hamiltonian_search}"
+LOG_ROOT="${LOG_ROOT:-logs/zeus_born_hamiltonian_search}"
+PLOT_TOP="${PLOT_TOP:-12}"
+PLOT_MAX_BLOCH_POINTS="${PLOT_MAX_BLOCH_POINTS:-6000}"
+
+mkdir -p "$RUN_ROOT" "$LOG_ROOT"
+
+case "$TASK_ID" in
+  1)
+    RUN_NAME="matched_ring_N11_N12"
+    ARGS=(
+      --N 11 12
+      --connectivity ring
+      --times 100 1000 10000 1000000
+      --Jpm 0 0.1
+      --jx-unscaled 0.05 0.1
+      --hz 0.05 0.1 0.2
+      --hz0-modes matched
+      --bins 80
+      --tail-fraction 0.10
+      --log-bins 40
+      --backend auto
+      --top 24
+    )
+    ;;
+  2)
+    RUN_NAME="detuning_ring_N11"
+    ARGS=(
+      --N 11
+      --connectivity ring
+      --times 100 1000 10000
+      --Jpm 0 0.1
+      --jx-unscaled 0.05 0.1
+      --hz 0.05 0.1 0.2
+      --hz0-modes zero half minus
+      --bins 50
+      --tail-fraction 0.20
+      --log-bins 40
+      --backend auto
+      --top 24
+    )
+    ;;
+  3)
+    RUN_NAME="jpm_ring_N11"
+    ARGS=(
+      --N 11
+      --connectivity ring
+      --times 100 1000 10000
+      --Jpm 0 0.05 0.1 0.2 0.5 1
+      --jx-unscaled 0.05 0.1 0.2
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --bins 50
+      --tail-fraction 0.20
+      --log-bins 40
+      --backend auto
+      --top 32
+    )
+    ;;
+  4)
+    RUN_NAME="chain_control_N11"
+    ARGS=(
+      --N 11
+      --connectivity chain
+      --times 100 1000 10000
+      --Jpm 0 0.1
+      --jx-unscaled 0.05 0.1
+      --hz 0.05 0.1
+      --hz0-modes matched zero
+      --bins 50
+      --tail-fraction 0.20
+      --log-bins 40
+      --backend auto
+      --top 24
+    )
+    ;;
+  5)
+    RUN_NAME="sz_conserving_exchange_N11"
+    ARGS=(
+      --N 11
+      --connectivity ring
+      --times 100 1000 10000
+      --Jpm 0.2 1
+      --jx-unscaled 0
+      --jcpm-unscaled 0 0.02 0.05 0.1
+      --Jz 0.02 0.1
+      --hz 0.05 0.1
+      --hz0-modes matched
+      --bins 50
+      --tail-fraction 0.20
+      --log-bins 40
+      --backend auto
+      --top 24
+    )
+    ;;
+  *)
+    echo "Unknown PBS array task: $TASK_ID" >&2
+    exit 2
+    ;;
+esac
+
+OUT_DIR="$RUN_ROOT/$RUN_NAME"
+RUN_LOG="$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log"
+OUT_LOG="$OUT_DIR/run.log"
+
+timestamp_stream() {
+  awk 'BEGIN { ts_re="^\[[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T" } $0 ~ ts_re { print; fflush(); next } { print strftime("[%Y-%m-%dT%H:%M:%S%z]"), $0; fflush(); }'
+}
+
+exec > >(timestamp_stream | tee "$RUN_LOG") 2>&1
+
+echo "Host: $(hostname)"
+echo "Task: $TASK_ID"
+echo "Run: $RUN_NAME"
+echo "Output: $OUT_DIR"
+echo "Scheduler-side log: $RUN_LOG"
+echo "Per-output run.log: $OUT_LOG"
+echo "Python: $("$PYTHON_BIN" --version 2>&1)"
+echo "BORN_WORKERS: $BORN_WORKERS"
+echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
+
+"$PYTHON_BIN" examples/born_hamiltonian_search.py \
+  "${ARGS[@]}" \
+  --workers "$BORN_WORKERS" \
+  --plot-top "$PLOT_TOP" \
+  --plot-max-bloch-points "$PLOT_MAX_BLOCH_POINTS" \
+  --out-dir "$OUT_DIR" \
+  --log-file "$OUT_LOG"
