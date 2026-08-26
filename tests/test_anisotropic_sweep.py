@@ -11,6 +11,7 @@ import numpy as np
 
 from collapse.anisotropic_sweep import (
     AngularDiagnosticCalculator,
+    AnisotropicCase,
     AnisotropicRepository,
     AnisotropicSample,
     AnisotropicSweepConfig,
@@ -135,6 +136,33 @@ def test_task_checkpoints_each_configuration_and_resumes(tmp_path: Path) -> None
     service.run_task(config, task)
     assert backend.calls == 2
     assert plotter.calls == 2
+
+
+def test_task_resume_repairs_metadata_without_recomputing(tmp_path: Path) -> None:
+    config = tiny_config()
+    repository = AnisotropicRepository(tmp_path)
+    backend = FakeBackend()
+    service = AnisotropicSweepService(repository, backend, FakePlotter())
+    task = config.task_for_index(1)
+    service.run_task(config, task)
+
+    case = AnisotropicCase(
+        detector_n=task.detector_n,
+        hz=task.hz,
+        j=task.j,
+        jpm=config.jpm_values[0],
+        evolution_time=config.evolution_time,
+        jx=config.jx,
+        hz0=config.hz0,
+        seed=config.seed,
+    )
+    repository.metadata_path(case).unlink()
+    assert not repository.metadata_path(case).exists()
+
+    service.run_task(config, task)
+
+    assert backend.calls == 2
+    assert repository.metadata_path(case).is_file()
 
 
 def test_real_blue_red_plot_and_complete_heatmap(tmp_path: Path) -> None:

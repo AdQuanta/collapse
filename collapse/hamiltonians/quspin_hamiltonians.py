@@ -33,12 +33,14 @@ from quspin.basis import spin_basis_1d, spin_basis_general
 from quspin.operators import hamiltonian
 
 from collapse.disorder import DisorderStrategy
+from collapse.detector_graphs import DetectorGraphSpec
 from collapse.hamiltonians.base import HamiltonianGenerator
 from collapse.hamiltonians.numpy_hamiltonians import (
     _resolve_disorder,
     _val,
     _central_targets,
     _pixel_bonds,
+    _pixel_ring_second_neighbor_bonds,
 )
 
 
@@ -493,10 +495,17 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         disorder_strength_hz: Optional[float] = None,
         seed: Optional[int] = None,
         use_symmetry: bool = True,
+        J2: float = 0.0,
+        Jpm2: float = 0.0,
+        disorder_strength_J2: Optional[float] = None,
+        disorder_strength_Jpm2: Optional[float] = None,
+        graph_spec: DetectorGraphSpec | None = None,
     ):
         self.N_pixel = N_pixel
         self.J = J
         self.Jpm = Jpm
+        self.J2 = J2
+        self.Jpm2 = Jpm2
         self.Jxx = Jxx
         self.Jyy = Jyy
         self.Jx = Jx
@@ -509,6 +518,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         self.hx0 = hx0
         self.hz0 = hz0
         self.connectivity = connectivity
+        self.graph_spec = graph_spec or DetectorGraphSpec(kind=connectivity)
         self.central_coupling = central_coupling
         self.seed = seed
         self.use_symmetry = use_symmetry
@@ -519,6 +529,12 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         )
         self.disorder_strength_Jpm = (
             disorder_strength_Jpm if disorder_strength_Jpm is not None else ds
+        )
+        self.disorder_strength_J2 = (
+            disorder_strength_J2 if disorder_strength_J2 is not None else ds
+        )
+        self.disorder_strength_Jpm2 = (
+            disorder_strength_Jpm2 if disorder_strength_Jpm2 is not None else ds
         )
         self.disorder_strength_Jx = (
             disorder_strength_Jx if disorder_strength_Jx is not None else ds
@@ -540,6 +556,14 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         )
         self._disorder = _resolve_disorder(disorder)
 
+        if self.connectivity != "ring" and (
+            self.J2 != 0.0
+            or self.Jpm2 != 0.0
+            or (self._disorder is not None and self.disorder_strength_J2 != 0.0)
+            or (self._disorder is not None and self.disorder_strength_Jpm2 != 0.0)
+        ):
+            raise ValueError("J2 and Jpm2 are defined only for ring connectivity")
+
     def _build_static(self) -> Tuple[list, int]:
         """Build static operator list and return ``(static, N)``."""
         N = self.N_pixel + 1
@@ -550,7 +574,11 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         pixel_xx = []
         pixel_yy = []
         pm_list = []
-        for i, j in _pixel_bonds(1, self.N_pixel, self.connectivity):
+        second_zz = []
+        second_pm = []
+        for i, j in _pixel_bonds(
+            1, self.N_pixel, self.connectivity, self.graph_spec
+        ):
             pixel_zz.append(
                 [-_val(self._disorder, self.J, self.disorder_strength_J), i, j]
             )
@@ -561,6 +589,18 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             jpm_val = _val(self._disorder, self.Jpm, self.disorder_strength_Jpm)
             if jpm_val != 0.0:
                 pm_list.append([-jpm_val / 4, i, j])
+        if self.connectivity == "ring":
+            for i, j in _pixel_ring_second_neighbor_bonds(1, self.N_pixel):
+                j2_val = _val(
+                    self._disorder, self.J2, self.disorder_strength_J2
+                )
+                if j2_val != 0.0:
+                    second_zz.append([-j2_val, i, j])
+                jpm2_val = _val(
+                    self._disorder, self.Jpm2, self.disorder_strength_Jpm2
+                )
+                if jpm2_val != 0.0:
+                    second_pm.append([-jpm2_val / 4, i, j])
         central_targets = _central_targets(
             1,
             self.N_pixel,
@@ -616,6 +656,11 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         if pm_list:
             static.append(["+-", pm_list])
             static.append(["-+", pm_list])
+        if second_zz:
+            static.append(["zz", second_zz])
+        if second_pm:
+            static.append(["+-", second_pm])
+            static.append(["-+", second_pm])
         if cpm_list:
             static.append(["+-", cpm_list])
             static.append(["-+", cpm_list])
@@ -659,6 +704,8 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             self._disorder,
             self.disorder_strength_J,
             self.disorder_strength_Jpm,
+            self.disorder_strength_J2,
+            self.disorder_strength_Jpm2,
             self.disorder_strength_Jx,
             self.disorder_strength_Jz,
             self.disorder_strength_Jzx,
@@ -678,8 +725,20 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             and central_preserves_shift
         )
         can_use_mag = not has_xx_x and not has_zx and not has_pairing
+        has_single_x = (
+            self.hx != 0.0
+            or (self.hx0 is not None and self.hx0 != 0.0)
+            or (
+                self._disorder is not None
+                and self.disorder_strength_hx != 0.0
+            )
+            or has_zx
+        )
+        can_use_mag_parity = not has_single_x
 
-        if not self.use_symmetry or (not can_use_shift and not can_use_mag):
+        if not self.use_symmetry or (
+            not can_use_shift and not can_use_mag and not can_use_mag_parity
+        ):
             return super().diagonalize()
 
         # Build cyclic-shift permutation for pixel sites 1..N_pixel
@@ -699,9 +758,14 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         elif can_use_shift:
             for kp in range(self.N_pixel):
                 bases.append(spin_basis_general(N, kblock=(T_pixel, kp)))
-        else:  # can_use_mag only
+        elif can_use_mag:
             for m in range(N + 1):
                 bases.append(spin_basis_general(N, Nup=m))
+        else:
+            for parity in (0, 1):
+                bases.append(
+                    spin_basis_general(N, Nup=list(range(parity, N + 1, 2)))
+                )
 
         return _diag_in_sectors(N, static, bases)
 
@@ -723,6 +787,8 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             self._disorder,
             self.disorder_strength_J,
             self.disorder_strength_Jpm,
+            self.disorder_strength_J2,
+            self.disorder_strength_Jpm2,
             self.disorder_strength_Jx,
             self.disorder_strength_Jz,
             self.disorder_strength_Jzx,
@@ -742,7 +808,19 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             and central_preserves_shift
         )
         can_use_mag = not has_xx_x and not has_zx and not has_pairing
-        if not self.use_symmetry or (not can_use_shift and not can_use_mag):
+        has_single_x = (
+            self.hx != 0.0
+            or (self.hx0 is not None and self.hx0 != 0.0)
+            or (
+                self._disorder is not None
+                and self.disorder_strength_hx != 0.0
+            )
+            or has_zx
+        )
+        can_use_mag_parity = not has_single_x
+        if not self.use_symmetry or (
+            not can_use_shift and not can_use_mag and not can_use_mag_parity
+        ):
             return _collect_full_sector_quspin(static, N)
 
         T_pixel = None
@@ -763,17 +841,24 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
                 symmetry_label="pixel_shift",
             )
 
-        # Magnetisation sectors are valid for H, but U10 couples different
-        # central-spin slices with unequal dimensions inside a fixed Nup block.
-        # The analyzer therefore reconstructs the full U00/U10 blocks by
-        # projection instead of diagonalising each sector's M independently.
-        for m in range(N + 1):
-            bases.append(spin_basis_general(N, Nup=m))
+        # Magnetisation or magnetisation-parity sectors are valid for H, but
+        # U10 connects different central-spin slices. The analyzer reconstructs
+        # the exact full U00/U10 blocks by projection.
+        if can_use_mag:
+            for m in range(N + 1):
+                bases.append(spin_basis_general(N, Nup=m))
+            label = "magnetization"
+        else:
+            for parity in (0, 1):
+                bases.append(
+                    spin_basis_general(N, Nup=list(range(parity, N + 1, 2)))
+                )
+            label = "magnetization_parity"
         return _collect_sectors(
             static,
             bases,
             relative_evolution_local=False,
-            symmetry_label="magnetization",
+            symmetry_label=label,
         )
 
 

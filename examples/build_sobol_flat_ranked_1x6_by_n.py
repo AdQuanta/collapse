@@ -75,6 +75,8 @@ class CaseRecord:
     jx: float
     jy: float
     source_dir: str
+    j2: float = 0.0
+    jpm2: float = 0.0
     rank: int = 0
     within_n_rank: int = 0
     output_path: str = ""
@@ -89,6 +91,8 @@ class CaseRecord:
             self.jpm,
             self.jx,
             self.jy,
+            self.j2,
+            self.jpm2,
         )
 
 
@@ -174,6 +178,8 @@ def inventory(source: Path) -> tuple[list[CaseRecord], list[dict[str, Any]]]:
                         jx=float(config["jx"]),
                         jy=float(config["jy"]),
                         source_dir=str(case_dir.resolve()),
+                        j2=float(config.get("j2", 0.0)),
+                        jpm2=float(config.get("jpm2", 0.0)),
                     )
                 )
     return records, unavailable
@@ -245,27 +251,104 @@ def _degenerate_groups(energies: np.ndarray, tolerance: float) -> tuple[tuple[in
     return tuple(tuple(group) for group in groups)
 
 
-def compute_spectral(record: CaseRecord) -> SpectralData:
-    """Build and fully diagonalize the ``N_D=8`` detector for one configuration."""
+def compute_spectral(
+    record: CaseRecord,
+    *,
+    detector_n: int = DETECTOR_N,
+    exploit_magnetization: bool = False,
+) -> SpectralData:
+    """Build and fully diagonalize an ``N_D=detector_n`` detector."""
 
     operators = DenseRingDetectorBuilder().build(
         DetectorSpec(
-            detector_n=DETECTOR_N,
+            detector_n=detector_n,
             hz=record.hz,
             j=record.j,
             jpm=record.jpm,
+            j2=record.j2,
+            jpm2=record.jpm2,
         )
     )
     hamiltonian = np.asarray(operators.hamiltonian, dtype=np.complex128)
     sx = np.asarray(operators.coupling, dtype=np.complex128)
-    sy = _collective_sy(DETECTOR_N)
-    energies, vectors = np.linalg.eigh(hamiltonian)
+    sy = _collective_sy(detector_n)
 
     # In the central-qubit Z basis, <0|X|1>=1 and <0|Y|1>=-i.
     # Therefore the detector operator in the 0<-1 qubit-flip block is
     # V=(Jx*Sx-i*Jy*Sy)/sqrt(N_D).  The reverse block is V^\dagger.
-    v_detector = (record.jx * sx - 1j * record.jy * sy) / math.sqrt(DETECTOR_N)
-    vab = vectors.conj().T @ v_detector @ vectors
+    v_detector = (record.jx * sx - 1j * record.jy * sy) / math.sqrt(detector_n)
+    if exploit_magnetization:
+        sectors = tuple(
+            np.asarray(
+                [state for state in range(1 << detector_n) if state.bit_count() == k],
+                dtype=np.int64,
+            )
+            for k in range(detector_n + 1)
+        )
+        block_energies: list[np.ndarray] = []
+        block_vectors: list[np.ndarray] = []
+        orthonormality_error = 0.0
+        residual_error = 0.0
+        for indices in sectors:
+            block = hamiltonian[np.ix_(indices, indices)]
+            energies_k, vectors_k = np.linalg.eigh(block)
+            block_energies.append(energies_k)
+            block_vectors.append(vectors_k)
+            identity_k = np.eye(indices.size)
+            orthonormality_error = max(
+                orthonormality_error,
+                float(
+                    np.max(
+                        np.abs(vectors_k.conj().T @ vectors_k - identity_k)
+                    )
+                ),
+            )
+            residual_error = max(
+                residual_error,
+                float(
+                    np.max(
+                        np.abs(
+                            block @ vectors_k
+                            - vectors_k * energies_k[None, :]
+                        )
+                    )
+                ),
+            )
+        offsets = np.cumsum([0, *[values.size for values in block_energies]])
+        energies_sector_order = np.concatenate(block_energies)
+        vab_sector_order = np.zeros(
+            (energies_sector_order.size, energies_sector_order.size),
+            dtype=np.complex128,
+        )
+        for row_sector, row_indices in enumerate(sectors):
+            row_slice = slice(offsets[row_sector], offsets[row_sector + 1])
+            row_vectors = block_vectors[row_sector]
+            for column_sector in range(
+                max(0, row_sector - 1), min(detector_n, row_sector + 1) + 1
+            ):
+                if abs(row_sector - column_sector) != 1:
+                    continue
+                column_indices = sectors[column_sector]
+                column_slice = slice(
+                    offsets[column_sector], offsets[column_sector + 1]
+                )
+                vab_sector_order[row_slice, column_slice] = (
+                    row_vectors.conj().T
+                    @ v_detector[np.ix_(row_indices, column_indices)]
+                    @ block_vectors[column_sector]
+                )
+        order = np.argsort(energies_sector_order, kind="stable")
+        energies = energies_sector_order[order]
+        vab = vab_sector_order[np.ix_(order, order)]
+    else:
+        energies, vectors = np.linalg.eigh(hamiltonian)
+        vab = vectors.conj().T @ v_detector @ vectors
+        identity = np.eye(energies.size)
+        residual = hamiltonian @ vectors - vectors * energies[None, :]
+        orthonormality_error = float(
+            np.max(np.abs(vectors.conj().T @ vectors - identity))
+        )
+        residual_error = float(np.max(np.abs(residual)))
 
     energy_scale = max(float(np.ptp(energies)), 1.0)
     tolerance = max(1.0e-10, 1.0e-9 * energy_scale)
@@ -293,17 +376,14 @@ def compute_spectral(record: CaseRecord) -> SpectralData:
         dtype=np.float64,
     ).reshape(-1, 3)
 
-    identity = np.eye(energies.size)
-    residual = hamiltonian @ vectors - vectors * energies[None, :]
     validation: dict[str, float | bool] = {
         "hamiltonian_hermiticity_max_abs": float(
             np.max(np.abs(hamiltonian - hamiltonian.conj().T))
         ),
-        "eigenvector_orthonormality_max_abs": float(
-            np.max(np.abs(vectors.conj().T @ vectors - identity))
-        ),
-        "eigenpair_residual_max_abs": float(np.max(np.abs(residual))),
+        "eigenvector_orthonormality_max_abs": orthonormality_error,
+        "eigenpair_residual_max_abs": residual_error,
         "eigenvalues_sorted": bool(np.all(np.diff(energies) >= -tolerance)),
+        "magnetization_sectors_exploited": exploit_magnetization,
         "vab_frobenius_consistency_rel": float(
             abs(np.sum(np.abs(vab) ** 2) - np.sum(np.abs(v_detector) ** 2))
             / max(np.sum(np.abs(v_detector) ** 2), np.finfo(float).tiny)

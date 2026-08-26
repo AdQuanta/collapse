@@ -1,0 +1,47 @@
+#!/bin/bash
+# Top/bottom 10 S_born cases per graph family at N=13,14,15.
+# One of 10 array tasks owns eight source cases and checkpoints after every N.
+#PBS -N net_extreme_N
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=16:mem=256gb
+#PBS -l walltime=120:00:00
+#PBS -J 0-9
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
+if [[ -f "$SUBMIT_DIR/examples/run_zeus_network_extremes_largerN.py" ]]; then
+  REPO_ROOT="$SUBMIT_DIR"
+elif [[ -f "$SUBMIT_DIR/../examples/run_zeus_network_extremes_largerN.py" ]]; then
+  REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
+else
+  echo "Cannot locate the larger-N network-extremes runner." >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+if [[ -n "${ZEUS_ENV_SETUP:-}" ]]; then source "$ZEUS_ENV_SETUP"; fi
+if [[ -n "${VIRTUAL_ENV_PATH:-}" ]]; then source "$VIRTUAL_ENV_PATH/bin/activate"; fi
+
+: "${RUN_ROOT:?submit through hpc/submit_zeus_network_extremes_largerN.sh}"
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:?PBS array index unavailable}}"
+CONFIG="${CONFIG:-configs/zeus_network_extremes_largerN.json}"
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX"
+export MPLCONFIGDIR="$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX"
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-16}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-16}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-16}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-16}"
+
+LOG="$RUN_ROOT/logs/task_${ARRAY_INDEX}.log"
+echo "[$(date --iso-8601=seconds)] task=$ARRAY_INDEX families=4 tails=10+10 N=13,14,15 checkpoint=each_N" | tee -a "$LOG"
+"$PYTHON_BIN" examples/run_zeus_network_extremes_largerN.py \
+  --array-index "$ARRAY_INDEX" \
+  --config "$CONFIG" \
+  --output-root "$RUN_ROOT" \
+  --resume 2>&1 | tee -a "$LOG"

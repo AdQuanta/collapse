@@ -1,0 +1,44 @@
+#!/bin/bash
+#PBS -N H_classify
+#PBS -J 0-19
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=16:mem=256gb
+#PBS -l walltime=120:00:00
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+
+SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
+if [[ -f "$SUBMIT_DIR/examples/run_zeus_hamiltonian_classification_manifest.py" ]]; then
+  REPO_ROOT="$SUBMIT_DIR"
+elif [[ -f "$SUBMIT_DIR/../examples/run_zeus_hamiltonian_classification_manifest.py" ]]; then
+  REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
+else
+  echo "Cannot locate repository root" >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+if [[ -n "${ZEUS_ENV_SETUP:-}" ]]; then source "$ZEUS_ENV_SETUP"; fi
+if [[ -n "${VIRTUAL_ENV_PATH:-}" ]]; then source "$VIRTUAL_ENV_PATH/bin/activate"; fi
+
+: "${RUN_ROOT:?submit through hpc/submit_zeus_hamiltonian_classification.sh}"
+: "${MANIFEST:?classification manifest is required}"
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:?PBS array index unavailable}}"
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/tmp/task_$ARRAY_INDEX" "$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX"
+export PYTHONUNBUFFERED=1 PYTHONHASHSEED=0 MPLBACKEND=Agg
+export TMPDIR="$RUN_ROOT/tmp/task_$ARRAY_INDEX" MPLCONFIGDIR="$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX"
+export OMP_NUM_THREADS=16 MKL_NUM_THREADS=16 OPENBLAS_NUM_THREADS=16 NUMEXPR_NUM_THREADS=16
+
+LOG="$RUN_ROOT/logs/task_${ARRAY_INDEX}_${PBS_JOBID:-manual}.log"
+echo "[$(date --iso-8601=seconds)] task=$ARRAY_INDEX array=0-19 manifest=$MANIFEST" | tee -a "$LOG"
+"$PYTHON_BIN" examples/run_zeus_hamiltonian_classification_manifest.py \
+  --manifest "$MANIFEST" \
+  --output-root "$RUN_ROOT" \
+  --array-index "$ARRAY_INDEX" \
+  --array-size 20 \
+  --resume 2>&1 | tee -a "$LOG"
+

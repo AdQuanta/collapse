@@ -1,0 +1,253 @@
+{
+  "full_sphere_figure": {
+    "binning_sensitivity": [
+      {
+        "count_weighted_rms_after_dipole_fit": 0.053427331300209144,
+        "count_weighted_rms_residual": 0.09038818907322922,
+        "empty_bins": 0,
+        "fitted_dipole_amplitude": 1.08455329039773,
+        "fitted_dipole_axis": [
+          4.034445636583873e-07,
+          -1.4157888189036511e-06,
+          0.9999999999989163
+        ],
+        "fitted_dipole_vector": [
+          4.3755712900878037e-07,
+          -1.5354984220502707e-06,
+          1.0845532903965547
+        ],
+        "minimum_positive_count": 34,
+        "mu_bins": 12,
+        "pearson_correlation_with_mu": 0.9847743066984109,
+        "phi_bins": 24
+      },
+      {
+        "count_weighted_rms_after_dipole_fit": 0.0702429495249577,
+        "count_weighted_rms_residual": 0.08908674101210683,
+        "empty_bins": 0,
+        "fitted_dipole_amplitude": 1.0622465590763177,
+        "fitted_dipole_axis": [
+          -2.140724059329369e-07,
+          8.867576114447259e-07,
+          0.9999999999995838
+        ],
+        "fitted_dipole_vector": [
+          -2.2739767659545093e-07,
+          9.419552214918944e-07,
+          1.0622465590758756
+        ],
+        "minimum_positive_count": 10,
+        "mu_bins": 18,
+        "pearson_correlation_with_mu": 0.9714977184790347,
+        "phi_bins": 36
+      },
+      {
+        "count_weighted_rms_after_dipole_fit": 0.10550897948651787,
+        "count_weighted_rms_residual": 0.11539307385319508,
+        "empty_bins": 0,
+        "fitted_dipole_amplitude": 1.0525967565465901,
+        "fitted_dipole_axis": [
+          8.477009365645846e-06,
+          -4.381386959397132e-06,
+          0.9999999999544719
+        ],
+        "fitted_dipole_vector": [
+          8.922872563493885e-06,
+          -4.611833702636948e-06,
+          1.0525967564986674
+        ],
+        "minimum_positive_count": 4,
+        "mu_bins": 24,
+        "pearson_correlation_with_mu": 0.9273036682831256,
+        "phi_bins": 48
+      },
+      {
+        "count_weighted_rms_after_dipole_fit": 0.14205809779014456,
+        "count_weighted_rms_residual": 0.14763557120986395,
+        "empty_bins": 16,
+        "fitted_dipole_amplitude": 1.0449195552336246,
+        "fitted_dipole_axis": [
+          -7.781797219869952e-07,
+          3.515709479954131e-06,
+          0.9999999999935173
+        ],
+        "fitted_dipole_vector": [
+          -8.131352089904767e-07,
+          3.6736335861243084e-06,
+          1.0449195552268506
+        ],
+        "minimum_positive_count": 1,
+        "mu_bins": 36,
+        "pearson_correlation_with_mu": 0.8514659884037816,
+        "phi_bins": 72
+      }
+    ],
+    "branch_convention": "label 0 is the production relative-evolution root cloud; label 1 is its exact Bloch antipode.  By complementary-minor duality these are the two forward outcome root locations for the inverse propagator.",
+    "finite_root_count": 65536,
+    "minimum_total_count_primary_grid": 10,
+    "parameters": {
+      "J": 1.0,
+      "Jx": 0.01,
+      "Jx_edge": 0.0025,
+      "detector_n": 16,
+      "hz": 0.1,
+      "hz0": 0.1,
+      "total_qubits": 17
+    },
+    "primary_binning": {
+      "count_weighted_rms_after_dipole_fit": 0.0702429495249577,
+      "count_weighted_rms_residual": 0.08908674101210683,
+      "empty_bins": 0,
+      "fitted_dipole_amplitude": 1.0622465590763177,
+      "fitted_dipole_axis": [
+        -2.140724059329369e-07,
+        8.867576114447259e-07,
+        0.9999999999995838
+      ],
+      "fitted_dipole_vector": [
+        -2.2739767659545093e-07,
+        9.419552214918944e-07,
+        1.0622465590758756
+      ],
+      "minimum_positive_count": 10,
+      "mu_bins": 18,
+      "pearson_correlation_with_mu": 0.9714977184790347,
+      "phi_bins": 36
+    },
+    "raw_file": "work\\zeus_single_pixel_atlas_scaling_2026-07-14\\hz0\\N16\\raw\\N16\\hz0_+0.1000\\raw_t10000.npz",
+    "raw_sha256": "e467b5efa6a5b8b7e3e7333a06555007b629a26bbeac2b21cd3da27d88313d59",
+    "spherical_harmonic_binning_sensitivity": [
+      {
+        "dipole_fraction_of_odd_power": 0.9520701237971844,
+        "even_fraction_of_total_power": 2.0060074619533216e-31,
+        "higher_odd_fraction_of_odd_power": 0.04792987620281557,
+        "l_max": 7,
+        "mu_bins": 12,
+        "phi_bins": 24,
+        "power_by_l": [
+          2.4030077351903204e-32,
+          5.500628172855963,
+          4.231583100674852e-31,
+          0.070039347170641,
+          2.262763838926344e-31,
+          0.060840863383001494,
+          4.855151067846793e-31,
+          0.1460368155906093
+        ]
+      },
+      {
+        "dipole_fraction_of_odd_power": 0.9818030721198243,
+        "even_fraction_of_total_power": 1.2545357367193193e-31,
+        "higher_odd_fraction_of_odd_power": 0.01819692788017572,
+        "l_max": 7,
+        "mu_bins": 18,
+        "phi_bins": 36,
+        "power_by_l": [
+          0.0,
+          5.492203790527435,
+          4.2802648196759895e-31,
+          0.0527272128485264,
+          7.863082602629883e-32,
+          0.029001884014314264,
+          1.9512965155241149e-31,
+          0.02006446960428289
+        ]
+      },
+      {
+        "dipole_fraction_of_odd_power": 0.9850297056762733,
+        "even_fraction_of_total_power": 1.2855248741443698e-31,
+        "higher_odd_fraction_of_odd_power": 0.014970294323726667,
+        "l_max": 7,
+        "mu_bins": 24,
+        "phi_bins": 48,
+        "power_by_l": [
+          0.0,
+          5.4579456412052245,
+          4.4677790048708385e-31,
+          0.05229309616141591,
+          9.021435762680355e-32,
+          0.018011176178772525,
+          1.7530350749250017e-31,
+          0.012644548574453117
+        ]
+      }
+    ],
+    "spherical_harmonics": {
+      "dipole_fraction_of_odd_power": 0.9818030721198243,
+      "even_fraction_of_total_power": 1.2545357367193193e-31,
+      "higher_odd_fraction_of_odd_power": 0.01819692788017572,
+      "l_max": 7,
+      "power_by_l": [
+        0.0,
+        5.492203790527435,
+        4.2802648196759895e-31,
+        0.0527272128485264,
+        7.863082602629883e-32,
+        0.029001884014314264,
+        1.9512965155241149e-31,
+        0.02006446960428289
+      ]
+    },
+    "time": 10000.0,
+    "weighted_free_dipole_fit": {
+      "amplitude": 1.0622465590763177,
+      "axis_xyz": [
+        -2.140724059329369e-07,
+        8.867576114447259e-07,
+        0.9999999999995838
+      ],
+      "coefficient_vector_xyz": [
+        -2.2739767659545093e-07,
+        9.419552214918944e-07,
+        1.0622465590758756
+      ],
+      "count_weighted_rms_residual": 0.0702429495249577,
+      "intercept_included": false
+    }
+  },
+  "generated_utc": "2026-08-14T09:01:10.338242+00:00",
+  "postprocessing_only": true,
+  "scaling_figure": {
+    "haar_ensemble_mean_score": 0.0,
+    "maximum_score": {
+      "11": 0.3196435120915212,
+      "12": 0.4663614002844113,
+      "13": 0.6199635230280351,
+      "14": 0.7528183831163284,
+      "15": 0.8030994036456389,
+      "16": 0.8395026761974198
+    },
+    "median_abs_c2": {
+      "11": 0.02830213962642831,
+      "12": 0.024386864269855917,
+      "13": 0.025203288004515607,
+      "14": 0.015261830489812443,
+      "15": 0.019036020535791495,
+      "16": 0.016722995267775945
+    },
+    "median_score": {
+      "11": 0.19154654915246544,
+      "12": 0.4110990740044449,
+      "13": 0.5714698302799643,
+      "14": 0.7151868695225623,
+      "15": 0.7883886926062849,
+      "16": 0.8074673147550908
+    },
+    "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "times": [
+      1000.0,
+      10000.0,
+      100000.0,
+      1000000.0
+    ]
+  },
+  "source_summary_csv": "reports\\zeus_single_pixel_analysis_2026-07-16\\jointly_gated_born_candidates.csv",
+  "source_summary_sha256": "9c462fde32e234f33649fb644d09656075730551162c1204f74998a051f0ecce"
+}

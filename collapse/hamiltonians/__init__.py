@@ -8,6 +8,7 @@ Re-exports all Hamiltonian generators for convenient access::
 """
 
 from collapse.hamiltonians.base import HamiltonianGenerator
+from collapse.detector_graphs import DetectorGraphSpec
 from collapse.hamiltonians.numpy_hamiltonians import (
     CentralSpinHamiltonianNumpy,
     DimerizedPixelHamiltonianNumpy,
@@ -32,6 +33,7 @@ except ImportError:
 
 __all__ = [
     "HamiltonianGenerator",
+    "DetectorGraphSpec",
     # NumPy backends (always available)
     "CentralSpinHamiltonianNumpy",
     "DimerizedPixelHamiltonianNumpy",

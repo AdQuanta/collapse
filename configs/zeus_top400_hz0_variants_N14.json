@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "source_root": "work/zeus_vab_atlas_jx_1em3_N14_20260802_162728",
+  "top_count": 400,
+  "target_detector_n": 14,
+  "hz0_additive_offsets": [-0.001, -0.0001, 0.0, 0.0001, 0.001],
+  "include_hz0_zero": true,
+  "shard_size": 100
+}

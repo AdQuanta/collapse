@@ -1,0 +1,84 @@
+#!/bin/bash
+#PBS -N sobol_net_Jx1_N13
+#PBS -J 0-15
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -l walltime=72:00:00
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+
+if [[ -f "examples/run_zeus_sobol_network_families_fixed_jx_N13.py" ]]; then
+  REPO_ROOT="$PWD"
+elif [[ -f "../examples/run_zeus_sobol_network_families_fixed_jx_N13.py" ]]; then
+  REPO_ROOT="$(cd .. && pwd)"
+else
+  echo "Cannot locate the fixed-Jx network-family runner." >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+: "${RUN_ROOT:?Submit through hpc/submit_zeus_sobol_network_families_fixed_jx_N13.sh}"
+DETECTOR_N="${DETECTOR_N:-13}"
+COUNT_PER_FAMILY="${COUNT_PER_FAMILY:-100}"
+BATCH_SIZE="${BATCH_SIZE:-25}"
+WORKERS="${WORKERS:-1}"
+if (( DETECTOR_N != 13 )); then
+  echo "This campaign is scientifically fixed at detector N=13." >&2
+  exit 2
+fi
+if (( COUNT_PER_FAMILY < 1 || BATCH_SIZE < 1 || COUNT_PER_FAMILY % BATCH_SIZE != 0 )); then
+  echo "COUNT_PER_FAMILY must be positive and divisible by BATCH_SIZE." >&2
+  exit 2
+fi
+if (( WORKERS < 1 || WORKERS > 8 )); then
+  echo "WORKERS must be in 1..8 for the requested eight-core node." >&2
+  exit 2
+fi
+
+BATCHES_PER_FAMILY=$((COUNT_PER_FAMILY / BATCH_SIZE))
+TOTAL_ARRAY_TASKS=$((4 * BATCHES_PER_FAMILY))
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-}}"
+if [[ ! "$ARRAY_INDEX" =~ ^[0-9]+$ ]] || (( ARRAY_INDEX >= TOTAL_ARRAY_TASKS )); then
+  echo "PBS array index must be in 0..$((TOTAL_ARRAY_TASKS - 1)); got '$ARRAY_INDEX'." >&2
+  exit 2
+fi
+FAMILY_INDEX=$((ARRAY_INDEX / BATCHES_PER_FAMILY))
+BATCH_INDEX=$((ARRAY_INDEX % BATCHES_PER_FAMILY))
+FAMILY_SLUGS=(erdos_renyi watts_strogatz barabasi_albert expander)
+FAMILY_SLUG="${FAMILY_SLUGS[$FAMILY_INDEX]}"
+FAMILY_ROOT="$RUN_ROOT/family_$(printf '%02d' "$FAMILY_INDEX")_${FAMILY_SLUG}"
+
+mkdir -p "$RUN_ROOT/logs" "$FAMILY_ROOT/tmp/batch${BATCH_INDEX}" "$FAMILY_ROOT/.mplconfig/batch${BATCH_INDEX}"
+export PYTHONUNBUFFERED=1 PYTHONHASHSEED=0 MPLBACKEND=Agg
+export TMPDIR="$FAMILY_ROOT/tmp/batch${BATCH_INDEX}"
+export MPLCONFIGDIR="$FAMILY_ROOT/.mplconfig/batch${BATCH_INDEX}"
+THREADS_PER_WORKER=$((8 / WORKERS))
+export OMP_NUM_THREADS="$THREADS_PER_WORKER"
+export OPENBLAS_NUM_THREADS="$THREADS_PER_WORKER"
+export MKL_NUM_THREADS="$THREADS_PER_WORKER"
+export BLIS_NUM_THREADS="$THREADS_PER_WORKER"
+export NUMEXPR_NUM_THREADS="$THREADS_PER_WORKER"
+
+LOG="$RUN_ROOT/logs/${FAMILY_SLUG}_N13_batch${BATCH_INDEX}_${PBS_JOBID:-manual}.log"
+echo "[$(date --iso-8601=seconds)] family=$FAMILY_SLUG family_index=$FAMILY_INDEX batch=$BATCH_INDEX/$((BATCHES_PER_FAMILY - 1)) N=13 configurations=$COUNT_PER_FAMILY shard=$BATCH_SIZE t=1e6 Jx_unscaled=0.01 Jx_effective=0.01/sqrt(13) sampled=J,Jpm,hz range=[1,100] max_weak_ratio=1e-2 workers=$WORKERS threads_per_worker=$THREADS_PER_WORKER" | tee -a "$LOG"
+
+python3.11 examples/run_zeus_sobol_network_families_fixed_jx_N13.py \
+  --family-index "$FAMILY_INDEX" \
+  --batch-index "$BATCH_INDEX" \
+  --output-root "$FAMILY_ROOT" \
+  --detector-n 13 \
+  --count "$COUNT_PER_FAMILY" \
+  --batch-size "$BATCH_SIZE" \
+  --lower 1 \
+  --upper 100 \
+  --kappa 1e-2 \
+  --fixed-jx 0.01 \
+  --evolution-time 1e6 \
+  --workers "$WORKERS" \
+  --graph-per-configuration \
+  --graph-require-connected \
+  --resume 2>&1 | tee -a "$LOG"

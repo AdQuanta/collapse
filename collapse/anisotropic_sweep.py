@@ -41,7 +41,10 @@ import numpy as np  # noqa: E402
 
 from collapse.analysis import DisentanglementAnalyzer
 from collapse.born import born_ratio_from_radii
-from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
+try:
+    from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
+except ImportError:  # Analysis and plotting do not require optional QuSpin.
+    SinglePixelHamiltonianQuSpin = None  # type: ignore[assignment,misc]
 
 
 BLUE = "#1677b8"
@@ -275,6 +278,8 @@ class QuSpinAnisotropicBackend:
     """QuSpin implementation using the clean-ring pixel-shift sectors."""
 
     def compute(self, case: AnisotropicCase) -> AnisotropicSample:
+        if SinglePixelHamiltonianQuSpin is None:
+            raise ImportError("QuSpin is required for simulation, but its optional backend could not be imported")
         process = multiprocessing.current_process()
         worker_name = process.name
         worker_pid = os.getpid()
@@ -720,6 +725,11 @@ class AnisotropicSweepService:
                         flush=True,
                     )
                     sample = self.repository.load_sample(case)
+                    # A killed job may leave the atomic raw sample in place before
+                    # its metadata was written. Repair that checkpoint without
+                    # repeating the expensive diagonalization.
+                    if not self.repository.metadata_path(case).is_file():
+                        self.repository.save_metadata(case, sample, config.digest)
                 diagnostic = calculator.calculate(sample)
                 metrics_path = self.repository.save_metrics(case, diagnostic)
                 figure_path = self.repository.figure_path(case)

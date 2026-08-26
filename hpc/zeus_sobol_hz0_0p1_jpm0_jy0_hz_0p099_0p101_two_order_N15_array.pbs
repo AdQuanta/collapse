@@ -1,0 +1,62 @@
+#!/bin/bash
+# N=15 fixed-Jpm/Jy narrow-hz Sobol scan with a two-order weak-Jx bound.
+#PBS -N sobol_hz099_2ord
+#PBS -J 0-3
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -l walltime=72:00:00
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+RUNNER="examples/run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_N15.py"
+if [[ -f "$RUNNER" ]]; then
+  REPO_ROOT="$PWD"
+elif [[ -f "../$RUNNER" ]]; then
+  REPO_ROOT="$(cd .. && pwd)"
+else
+  echo "Cannot locate $RUNNER from $PWD" >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+: "${RUN_ROOT:?Submit with the documented wrapper or define RUN_ROOT}"
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-}}"
+if [[ ! "$ARRAY_INDEX" =~ ^[0-3]$ ]]; then
+  echo "PBS array index must be 0..3; got '$ARRAY_INDEX'" >&2
+  exit 2
+fi
+
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/tmp/batch${ARRAY_INDEX}" \
+  "$RUN_ROOT/.mplconfig/batch${ARRAY_INDEX}"
+export PYTHONUNBUFFERED=1
+export PYTHONHASHSEED=0
+export MPLBACKEND=Agg
+export TMPDIR="$RUN_ROOT/tmp/batch${ARRAY_INDEX}"
+export MPLCONFIGDIR="$RUN_ROOT/.mplconfig/batch${ARRAY_INDEX}"
+export OMP_NUM_THREADS=4
+export OPENBLAS_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export BLIS_NUM_THREADS=4
+export NUMEXPR_NUM_THREADS=4
+
+LOG="$RUN_ROOT/logs/jy_zero_N15_batch${ARRAY_INDEX}_${PBS_JOBID:-manual}.log"
+echo "[$(date --iso-8601=seconds)] batch=$ARRAY_INDEX N=15 hz0=0.1 hz_range=[0.099,0.101] Jpm=0 Jy=0 kappa=0.01 Jx_lower=1e-5 configurations=25 workers=2" | tee -a "$LOG"
+
+python3.11 "$RUNNER" \
+  --batch-index "$ARRAY_INDEX" \
+  --output-root "$RUN_ROOT" \
+  --lower 1e-3 \
+  --upper 10 \
+  --kappa 0.01 \
+  --coupling-lower 1e-5 \
+  --evolution-time 1e6 \
+  --workers 2 \
+  --resume \
+  2>&1 | tee -a "$LOG"
+
+echo "[$(date --iso-8601=seconds)] batch=$ARRAY_INDEX status=finished" | tee -a "$LOG"
+

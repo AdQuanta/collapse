@@ -16,6 +16,18 @@ from collapse.analysis import (
     diagonalize_relative_evolution_from_unitary,
     relative_evolution_matrix,
 )
+from collapse.relative_evolution_pencil import (
+    LinearPencilRegularityAudit,
+    ProjectiveDuplicateDiagnostics,
+    ProjectiveRootAudit,
+    RelativeEvolutionPencilSpectrum,
+    audit_linear_pencil_regularity,
+    compare_direct_and_generalized,
+    diagnose_projective_duplicates,
+    generalized_relative_evolution_spectrum,
+    matched_projective_angle_error,
+    projective_chordal_distance,
+)
 
 # Visualization
 from collapse.visualization import (
@@ -120,6 +132,38 @@ from collapse.pauli import (
     build_pauli_operators,
 )
 
+# Projective root conventions
+from collapse.projective_roots import (
+    QubitFirstBlocks,
+    append_uncoupled_spectator,
+    antipodal_homogeneous_coordinates,
+    bloch_vectors_from_homogeneous,
+    direct_sum_detector_contexts,
+    forward_pole_root_spectrum,
+    matched_bloch_distance,
+    production_root_spectrum,
+    split_qubit_first_blocks,
+)
+
+# Full-sphere Gleason/Born diagnostics
+from collapse.gleason_diagnostics import (
+    EqualAreaLabeledHistogram,
+    FullSphereBornDiagnostics,
+    antipodal_equal_area_field,
+    born_density_ratio_cross_residual,
+    composition_consistency_error,
+    diagnose_asymmetry_function,
+    diagnose_labeled_bloch_histogram,
+)
+
+# Common Hamiltonian-classification workflow
+from collapse.hamiltonian_classification import (
+    ClassificationPointResult,
+    SinglePixelClassificationPoint,
+    build_single_pixel_hamiltonian,
+    classify_single_pixel_point,
+)
+
 # Spherical harmonics (SciPy-backed, optional)
 try:
     from collapse.spherical_harmonics import (
@@ -136,6 +180,16 @@ except ImportError:
 __all__ = [
     # Analysis
     "DisentanglementAnalyzer",
+    "LinearPencilRegularityAudit",
+    "ProjectiveDuplicateDiagnostics",
+    "ProjectiveRootAudit",
+    "RelativeEvolutionPencilSpectrum",
+    "audit_linear_pencil_regularity",
+    "compare_direct_and_generalized",
+    "diagnose_projective_duplicates",
+    "generalized_relative_evolution_spectrum",
+    "matched_projective_angle_error",
+    "projective_chordal_distance",
     # Visualization
     "DisentanglementVisualizer",
     "LevelSpacingPlotter",
@@ -192,6 +246,29 @@ __all__ = [
     "build_pauli_x",
     "build_pauli_z",
     "build_pauli_operators",
+    # Projective root conventions
+    "QubitFirstBlocks",
+    "append_uncoupled_spectator",
+    "antipodal_homogeneous_coordinates",
+    "bloch_vectors_from_homogeneous",
+    "direct_sum_detector_contexts",
+    "forward_pole_root_spectrum",
+    "matched_bloch_distance",
+    "production_root_spectrum",
+    "split_qubit_first_blocks",
+    # Full-sphere Gleason/Born diagnostics
+    "EqualAreaLabeledHistogram",
+    "FullSphereBornDiagnostics",
+    "antipodal_equal_area_field",
+    "born_density_ratio_cross_residual",
+    "composition_consistency_error",
+    "diagnose_asymmetry_function",
+    "diagnose_labeled_bloch_histogram",
+    # Common Hamiltonian-classification workflow
+    "ClassificationPointResult",
+    "SinglePixelClassificationPoint",
+    "build_single_pixel_hamiltonian",
+    "classify_single_pixel_point",
     # Level spacing diagnostics
     "compute_level_spacings",
     "compute_level_spacing_ratios",

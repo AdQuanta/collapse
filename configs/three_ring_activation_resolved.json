@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "detector_n_local_candidate": 12,
+  "detector_n_zeus": 17,
+  "bins": 64,
+  "activation_lower_quantile": 0.2,
+  "activation_upper_quantile": 0.8,
+  "fit_harmonics": 32,
+  "fit_grid": 720,
+  "fit_tolerance": 1e-10,
+  "cases": [
+    {
+      "case_id": "case_01_born_like_nearest_neighbor",
+      "description": "Born-like nearest-neighbor ring",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17"
+    },
+    {
+      "case_id": "case_02_non_born_exchange_only",
+      "description": "Non-Born exchange-only ring",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_04/rank_001/N17"
+    },
+    {
+      "case_id": "case_03_born_like_second_neighbor",
+      "description": "Born-like first- and second-neighbor ring",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17"
+    }
+  ]
+}

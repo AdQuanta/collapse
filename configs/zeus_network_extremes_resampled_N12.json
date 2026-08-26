@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "count_per_tail": 10,
+  "realizations_per_case": 5,
+  "cases_per_array_task": 4,
+  "target_detector_n": 12,
+  "families": [
+    {
+      "name": "erdos_renyi",
+      "source_root": "work/zeus_sobol_erdos_renyi_hz0_0_N12_20260809_150226"
+    },
+    {
+      "name": "watts_strogatz",
+      "source_root": "work/zeus_sobol_watts_strogatz_hz0_0_N12_20260809_150226"
+    },
+    {
+      "name": "barabasi_albert",
+      "source_root": "work/zeus_sobol_barabasi_albert_hz0_0_N12_20260809_150226"
+    },
+    {
+      "name": "expander",
+      "source_root": "work/zeus_sobol_expander_hz0_0_N12_20260809_150228"
+    }
+  ]
+}

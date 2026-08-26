@@ -47,6 +47,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--lower", type=float, default=1e-3)
     result.add_argument("--upper", type=float, default=10.0)
     result.add_argument("--kappa", type=float, default=0.1)
+    result.add_argument("--coupling-lower", type=float)
     result.add_argument("--evolution-time", type=float, default=1e6)
     result.add_argument("--bins", type=int, default=64)
     result.add_argument("--plot-grid", type=int, default=720)
@@ -74,6 +75,9 @@ def _copy_provenance_once(campaign: SobolCampaign) -> None:
             "hpc/zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_N15_array.pbs",
             "hpc/submit_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_N15.sh",
             "hpc/zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_N15.md",
+            "hpc/zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_two_order_N15_array.pbs",
+            "hpc/submit_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_two_order_N15.sh",
+            "hpc/zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_two_order_N15.md",
         ):
             source = Path(__file__).resolve().parents[1] / relative
             if source.is_file():
@@ -176,6 +180,7 @@ def main() -> None:
         lower=args.lower,
         upper=args.upper,
         kappa=args.kappa,
+        coupling_lower=args.coupling_lower,
         evolution_time=args.evolution_time,
         bins=args.bins,
         plot_grid=args.plot_grid,

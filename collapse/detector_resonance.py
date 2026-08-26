@@ -19,6 +19,8 @@ class DetectorSpec:
     hz: float
     j: float
     jpm: float
+    j2: float = 0.0
+    jpm2: float = 0.0
 
     def __post_init__(self) -> None:
         if self.detector_n < 3:
@@ -37,13 +39,15 @@ class DetectorOperatorBuilder(Protocol):
 
 
 class DenseRingDetectorBuilder:
-    """Build the displayed-sign ZZ plus plus-minus ring."""
+    """Build the displayed-sign first- and second-neighbor ring detector."""
 
     def build(self, spec: DetectorSpec) -> DetectorOperators:
         n = spec.detector_n
         dimension = 1 << n
         hamiltonian = np.zeros((dimension, dimension), dtype=np.float64)
         coupling = np.zeros_like(hamiltonian)
+        nearest_bonds = _ring_bonds(n, step=1)
+        second_bonds = _ring_bonds(n, step=2)
         for state in range(dimension):
             spins = np.array(
                 [1.0 if ((state >> site) & 1) == 0 else -1.0 for site in range(n)],
@@ -51,17 +55,37 @@ class DenseRingDetectorBuilder:
             )
             hamiltonian[state, state] = (
                 spec.hz * float(np.sum(spins))
-                + spec.j * float(sum(spins[i] * spins[(i + 1) % n] for i in range(n)))
+                + spec.j * float(
+                    sum(spins[left] * spins[right] for left, right in nearest_bonds)
+                )
+                + spec.j2 * float(
+                    sum(spins[left] * spins[right] for left, right in second_bonds)
+                )
             )
             for site in range(n):
                 coupling[state ^ (1 << site), state] += 1.0
-                neighbor = (site + 1) % n
-                if ((state >> site) & 1) != ((state >> neighbor) & 1):
-                    swapped = state ^ (1 << site) ^ (1 << neighbor)
+            for left, right in nearest_bonds:
+                if ((state >> left) & 1) != ((state >> right) & 1):
+                    swapped = state ^ (1 << left) ^ (1 << right)
                     hamiltonian[swapped, state] += spec.jpm
+            for left, right in second_bonds:
+                if ((state >> left) & 1) != ((state >> right) & 1):
+                    swapped = state ^ (1 << left) ^ (1 << right)
+                    hamiltonian[swapped, state] += spec.jpm2
         if not np.allclose(hamiltonian, hamiltonian.T, atol=1.0e-12):
             raise RuntimeError("detector Hamiltonian is not Hermitian")
         return DetectorOperators(hamiltonian=hamiltonian, coupling=coupling)
+
+
+def _ring_bonds(n: int, *, step: int) -> tuple[tuple[int, int], ...]:
+    """Return distinct undirected ``step``-neighbor bonds on an ``n``-ring."""
+
+    bonds = {
+        tuple(sorted((site, (site + step) % n)))
+        for site in range(n)
+        if site != (site + step) % n
+    }
+    return tuple(sorted(bonds))
 
 
 @dataclass(frozen=True)

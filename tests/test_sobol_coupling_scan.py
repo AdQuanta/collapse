@@ -6,6 +6,7 @@ from collapse.sobol_coupling_scan import (
     PERIOD,
     ParameterPoint,
     ScanSettings,
+    SobolCampaign,
     _diagnostics,
     _parameter_correlation_outputs,
     fit_distributions,
@@ -29,6 +30,23 @@ def test_jy_zero_sampling_keeps_jy_zero() -> None:
     settings = ScanSettings(name="jy_zero", jy_nonzero=False, count=12, upper=10.0)
     points, _ = generate_sobol_points(settings)
     assert all(p.jy == 0.0 for p in points)
+
+
+def test_network_sampling_manifest_can_be_reloaded(tmp_path) -> None:
+    settings = ScanSettings(
+        name="jy_zero",
+        jy_nonzero=False,
+        count=4,
+        sizes=(3,),
+        connectivity="random_regular",
+        regular_degree=2,
+        graph_per_configuration=True,
+    )
+    first, _ = SobolCampaign(tmp_path, settings).prepare()
+    resumed, _ = SobolCampaign(tmp_path, settings).prepare()
+
+    assert resumed == first
+    assert all(isinstance(point.unit, tuple) for point in resumed)
 
 
 def test_wrapped_fits_are_normalized_and_deterministic() -> None:

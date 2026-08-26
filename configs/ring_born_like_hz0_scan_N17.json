@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "study": "N=17 hz0 scan of the Born-like nearest-neighbor ring",
+  "detector_n": 17,
+  "source_hz": 0.04697737789563548,
+  "scan_variable": "hz0",
+  "scan_normalization": "hz0_over_hz",
+  "bins": 64,
+  "activation_lower_quantile": 0.2,
+  "activation_upper_quantile": 0.8,
+  "fit_harmonics": 32,
+  "fit_grid": 720,
+  "fit_tolerance": 1e-10,
+  "cases": [
+    {
+      "case_id": "hz0_scan_00_ratio_0",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.0,
+      "parameter_overrides": {"hz0": 0.0}
+    },
+    {
+      "case_id": "hz0_scan_01_ratio_0p0001",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.0001",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.0001,
+      "parameter_overrides": {"hz0": 4.6977377895635485e-06}
+    },
+    {
+      "case_id": "hz0_scan_02_ratio_0p001",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.001",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.001,
+      "parameter_overrides": {"hz0": 4.6977377895635487e-05}
+    },
+    {
+      "case_id": "hz0_scan_03_ratio_0p01",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.01",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.01,
+      "parameter_overrides": {"hz0": 0.00046977377895635487}
+    },
+    {
+      "case_id": "hz0_scan_04_ratio_0p05",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.05",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.05,
+      "parameter_overrides": {"hz0": 0.0023488688947817743}
+    },
+    {
+      "case_id": "hz0_scan_05_ratio_0p1",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.1",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.1,
+      "parameter_overrides": {"hz0": 0.0046977377895635487}
+    },
+    {
+      "case_id": "hz0_scan_06_ratio_0p25",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.25",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.25,
+      "parameter_overrides": {"hz0": 0.011744344473908871}
+    },
+    {
+      "case_id": "hz0_scan_07_ratio_0p5",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.5",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.5,
+      "parameter_overrides": {"hz0": 0.023488688947817742}
+    },
+    {
+      "case_id": "hz0_scan_08_ratio_0p75",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.75",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.75,
+      "parameter_overrides": {"hz0": 0.035233033421726609}
+    },
+    {
+      "case_id": "hz0_scan_09_ratio_0p9",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.9",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.9,
+      "parameter_overrides": {"hz0": 0.042279640106071936}
+    },
+    {
+      "case_id": "hz0_scan_10_ratio_0p99",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.99",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.99,
+      "parameter_overrides": {"hz0": 0.046507604116679126}
+    },
+    {
+      "case_id": "hz0_scan_11_ratio_0p999",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.999",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.999,
+      "parameter_overrides": {"hz0": 0.046930400517739848}
+    },
+    {
+      "case_id": "hz0_scan_12_ratio_0p99999",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=0.99999",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 0.99999,
+      "parameter_overrides": {"hz0": 0.04697690812185653}
+    },
+    {
+      "case_id": "hz0_scan_13_ratio_1",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=1",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 1.0,
+      "parameter_overrides": {"hz0": 0.046977377895635483}
+    },
+    {
+      "case_id": "hz0_scan_14_ratio_1p00001",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=1.00001",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 1.00001,
+      "parameter_overrides": {"hz0": 0.046977847669414444}
+    },
+    {
+      "case_id": "hz0_scan_15_ratio_1p001",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=1.001",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 1.001,
+      "parameter_overrides": {"hz0": 0.047024355273531111}
+    },
+    {
+      "case_id": "hz0_scan_16_ratio_1p01",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=1.01",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 1.01,
+      "parameter_overrides": {"hz0": 0.047447151674591841}
+    },
+    {
+      "case_id": "hz0_scan_17_ratio_1p1",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=1.1",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 1.1,
+      "parameter_overrides": {"hz0": 0.051675115685199037}
+    },
+    {
+      "case_id": "hz0_scan_18_ratio_1p5",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=1.5",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 1.5,
+      "parameter_overrides": {"hz0": 0.070466066843453218}
+    },
+    {
+      "case_id": "hz0_scan_19_ratio_2",
+      "description": "Born-like nearest-neighbor ring; hz0/hz=2",
+      "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17",
+      "hz0_over_hz": 2.0,
+      "parameter_overrides": {"hz0": 0.093954755791270966}
+    }
+  ]
+}

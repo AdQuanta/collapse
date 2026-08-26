@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "top_per_source": 20,
+  "cases_per_array_task": 5,
+  "target_detector_sizes": [14, 15, 16, 17],
+  "source_roots": [
+    "work/zeus_sobol_hz0_0p1_hz_0p0999_0p1001_N14_20260805_224341",
+    "work/zeus_sobol_hz0_0_N14_20260805_224341",
+    "work/zeus_sobol_second_neighbor_hz0_0_N14_20260805_224342",
+    "work/zeus_vab_atlas_jx_1em3_N14_20260802_162728",
+    "work/zeus_sobol_hz0_0p1_N15_20260731_175938"
+  ]
+}

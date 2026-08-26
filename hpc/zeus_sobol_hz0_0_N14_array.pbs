@@ -1,0 +1,29 @@
+#!/bin/bash
+#PBS -N sobol_hz0_N14
+#PBS -J 0-3
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -l walltime=72:00:00
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+RUNNER="examples/run_zeus_sobol_hz0_0_N14.py"
+if [[ -f "$RUNNER" ]]; then REPO_ROOT="$PWD"; elif [[ -f "../$RUNNER" ]]; then REPO_ROOT="$(cd .. && pwd)"; else echo "Cannot locate $RUNNER" >&2; exit 2; fi
+cd "$REPO_ROOT"
+
+: "${RUN_ROOT:?Submit with the documented wrapper or define RUN_ROOT}"
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-}}"
+if [[ ! "$ARRAY_INDEX" =~ ^[0-3]$ ]]; then echo "PBS array index must be 0..3; got '$ARRAY_INDEX'" >&2; exit 2; fi
+
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/tmp/batch${ARRAY_INDEX}" "$RUN_ROOT/.mplconfig/batch${ARRAY_INDEX}"
+export PYTHONUNBUFFERED=1 PYTHONHASHSEED=0 MPLBACKEND=Agg
+export TMPDIR="$RUN_ROOT/tmp/batch${ARRAY_INDEX}" MPLCONFIGDIR="$RUN_ROOT/.mplconfig/batch${ARRAY_INDEX}"
+export OMP_NUM_THREADS=4 OPENBLAS_NUM_THREADS=4 MKL_NUM_THREADS=4 BLIS_NUM_THREADS=4 NUMEXPR_NUM_THREADS=4
+
+LOG="$RUN_ROOT/logs/jy_zero_N14_batch${ARRAY_INDEX}_${PBS_JOBID:-manual}.log"
+echo "[$(date --iso-8601=seconds)] batch=$ARRAY_INDEX N=14 hz0=0 samples=400 shard=100 parameters=J,hz,Jpm,Jx kappa=0.1 workers=2" | tee -a "$LOG"
+python3.11 "$RUNNER" --batch-index "$ARRAY_INDEX" --output-root "$RUN_ROOT" --lower 1e-3 --upper 10 --kappa 0.1 --evolution-time 1e6 --workers 2 --resume 2>&1 | tee -a "$LOG"

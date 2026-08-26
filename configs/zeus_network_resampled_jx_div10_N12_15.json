@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "source_campaign_root": "work/zeus_network_extremes_resampled_N12_20260813_232636",
+  "expected_sample_count": 400,
+  "samples_per_array_task": 20,
+  "target_detector_sizes": [12, 13, 14, 15],
+  "target_time_averaged_sample_count": 32768,
+  "evolution_time_step": 1000000.0,
+  "jx_scale_factor": 0.1
+}

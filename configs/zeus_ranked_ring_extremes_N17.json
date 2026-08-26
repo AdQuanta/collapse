@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "study": "N=17 continuation of the exact ring configurations used in the ranked symmetry-resolved spacing study",
+  "target_detector_n": 17,
+  "count_per_tail": 10,
+  "cases_per_array_task": 2,
+  "array_size": 20,
+  "hz0_policy": "source_hz0",
+  "evolution_time_policy": "source_evolution_time",
+  "collective_scaling": "Jx/sqrt(target_detector_n) and Jy/sqrt(target_detector_n), applied once",
+  "prior_n17_root": "work/zeus_top20_last5_largerN_20260810_001532",
+  "families": [
+    {
+      "name": "nearest_neighbor",
+      "source_root": "work/zeus_sobol_hz0_0_N14_20260805_224341",
+      "expects_second_neighbor": false,
+      "prior_n17_source": "source_02",
+      "expected_highest_source_cases": [
+        "jy_zero/N14/config_111",
+        "jy_zero/N14/config_172",
+        "jy_zero/N14/config_060",
+        "jy_zero/N14/config_242",
+        "jy_zero/N14/config_053",
+        "jy_zero/N14/config_374",
+        "jy_zero/N14/config_027",
+        "jy_zero/N14/config_035",
+        "jy_zero/N14/config_390",
+        "jy_zero/N14/config_235"
+      ],
+      "expected_lowest_source_cases": [
+        "jy_zero/N14/config_040",
+        "jy_zero/N14/config_304",
+        "jy_zero/N14/config_285",
+        "jy_zero/N14/config_323",
+        "jy_zero/N14/config_018",
+        "jy_zero/N14/config_173",
+        "jy_zero/N14/config_175",
+        "jy_zero/N14/config_041",
+        "jy_zero/N14/config_098",
+        "jy_zero/N14/config_358"
+      ]
+    },
+    {
+      "name": "second_neighbor",
+      "source_root": "work/zeus_sobol_second_neighbor_hz0_0_N14_20260805_224342",
+      "expects_second_neighbor": true,
+      "prior_n17_source": "source_03",
+      "expected_highest_source_cases": [
+        "jy_zero/N14/config_166",
+        "jy_zero/N14/config_020",
+        "jy_zero/N14/config_353",
+        "jy_zero/N14/config_265",
+        "jy_zero/N14/config_289",
+        "jy_zero/N14/config_028",
+        "jy_zero/N14/config_160",
+        "jy_zero/N14/config_221",
+        "jy_zero/N14/config_019",
+        "jy_zero/N14/config_237"
+      ],
+      "expected_lowest_source_cases": [
+        "jy_zero/N14/config_311",
+        "jy_zero/N14/config_136",
+        "jy_zero/N14/config_134",
+        "jy_zero/N14/config_256",
+        "jy_zero/N14/config_274",
+        "jy_zero/N14/config_123",
+        "jy_zero/N14/config_032",
+        "jy_zero/N14/config_323",
+        "jy_zero/N14/config_068",
+        "jy_zero/N14/config_196"
+      ]
+    }
+  ]
+}

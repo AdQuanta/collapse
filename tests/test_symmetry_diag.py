@@ -218,7 +218,11 @@ def test_sp_ring_local_central_coupling_breaks_shift():
         seed=42,
     )
     _compare_eigenvalues(ham, "SP local central no-shift")
-    assert len(ham.diagonalize_sectors()) == 1
+    sectors = ham.diagonalize_sectors()
+    assert len(sectors) == 2
+    assert {sector["symmetry_label"] for sector in sectors} == {
+        "magnetization_parity"
+    }
 
 
 def test_dimerized_all_central_coupling_uses_dimer_symmetry():

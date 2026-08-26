@@ -23,6 +23,11 @@ from typing import Optional
 import numpy as np
 
 from collapse.disorder import DisorderStrategy, create_disorder_strategy
+from collapse.detector_graphs import (
+    DetectorGraphSpec,
+    VALID_CONNECTIVITIES,
+    offset_detector_edges,
+)
 from collapse.hamiltonians.base import HamiltonianGenerator
 from collapse.pauli import build_pauli_operators, build_pauli_y
 
@@ -54,12 +59,15 @@ def _val(
     return base
 
 
-_VALID_CONNECTIVITIES = {"chain", "ring", "all_to_all"}
+_VALID_CONNECTIVITIES = set(VALID_CONNECTIVITIES)
 _VALID_CENTRAL_COUPLINGS = {"auto", "all", "first", "last", "ends"}
 
 
 def _pixel_bonds(
-    pixel_start: int, n_pixel: int, connectivity: str
+    pixel_start: int,
+    n_pixel: int,
+    connectivity: str,
+    graph_spec: DetectorGraphSpec | None = None,
 ) -> list[tuple[int, int]]:
     """Return intra-pixel bond pairs ``(i, j)``.
 
@@ -69,27 +77,63 @@ def _pixel_bonds(
         Index of the first qubit in the pixel.
     n_pixel : int
         Number of qubits in the pixel.
-    connectivity : {"chain", "ring", "all_to_all"}
+    connectivity : str
         Topology of intra-pixel couplings.
+    graph_spec : DetectorGraphSpec or None
+        Random-graph realization parameters. Legacy connectivities use a
+        deterministic specification when this is omitted.
     """
     if connectivity not in _VALID_CONNECTIVITIES:
         raise ValueError(
             f"Unknown connectivity {connectivity!r}; "
             f"choose from {sorted(_VALID_CONNECTIVITIES)}"
         )
+    resolved = graph_spec or DetectorGraphSpec(kind=connectivity)
+    if resolved.kind != connectivity and not {
+        resolved.kind,
+        connectivity,
+    } <= {"expander", "random_regular"}:
+        raise ValueError(
+            f"connectivity={connectivity!r} does not match graph_spec.kind={resolved.kind!r}"
+        )
     if connectivity == "chain":
-        return [(pixel_start + k, pixel_start + k + 1) for k in range(n_pixel - 1)]
+        return [
+            (pixel_start + offset, pixel_start + offset + 1)
+            for offset in range(n_pixel - 1)
+        ]
     if connectivity == "ring":
-        bonds = [(pixel_start + k, pixel_start + k + 1) for k in range(n_pixel - 1)]
+        bonds = [
+            (pixel_start + offset, pixel_start + offset + 1)
+            for offset in range(n_pixel - 1)
+        ]
         if n_pixel > 1:
             bonds.append((pixel_start + n_pixel - 1, pixel_start))
         return bonds
-    # all_to_all
-    return [
-        (pixel_start + a, pixel_start + b)
-        for a in range(n_pixel)
-        for b in range(a + 1, n_pixel)
-    ]
+    if connectivity == "all_to_all":
+        return [
+            (pixel_start + left, pixel_start + right)
+            for left in range(n_pixel)
+            for right in range(left + 1, n_pixel)
+        ]
+    return offset_detector_edges(pixel_start, n_pixel, resolved)
+
+
+def _pixel_ring_second_neighbor_bonds(
+    pixel_start: int, n_pixel: int
+) -> list[tuple[int, int]]:
+    """Return distinct undirected second-neighbor bonds on a ring.
+
+    The bond set represents ``{{i, i + 2}: i in Z_N}``. Small rings do not
+    double count an undirected bond, and self-bonds are omitted.
+    """
+
+    bonds: set[tuple[int, int]] = set()
+    for offset in range(n_pixel):
+        left = pixel_start + offset
+        right = pixel_start + (offset + 2) % n_pixel
+        if left != right:
+            bonds.add(tuple(sorted((left, right))))
+    return sorted(bonds)
 
 
 def _central_targets(
@@ -234,6 +278,9 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         H = -J\sum_{\langle i,j\rangle_\text{pixel}} Z_i Z_j
             -J_{\pm}\sum_{\langle i,j\rangle_\text{pixel}}
                 (\sigma^+_i \sigma^-_j + \sigma^-_i \sigma^+_j)
+            -J_2\sum_{\langle\!\langle i,j\rangle\!\rangle_\text{ring}} Z_i Z_j
+            -J_{\pm2}\sum_{\langle\!\langle i,j\rangle\!\rangle_\text{ring}}
+                (\sigma^+_i \sigma^-_j + \sigma^-_i \sigma^+_j)
             -\sum_i \bigl(J_x\, X_0 X_i + J_z\, Z_0 Z_i
                          + J_{zx}\, Z_0 X_i\bigr)
             -\sum_i \bigl(h_{x,i}\, X_i + h_{z,i}\, Z_i\bigr)
@@ -245,7 +292,13 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
     J : float
         Intra-pixel ZZ coupling.
     Jpm : float
-        Intra-pixel +− (XY) coupling.
+        Intra-pixel nearest-neighbor exchange coupling.
+    J2 : float
+        Uniform second-neighbor ZZ coupling on a ring. Must be zero for
+        non-ring connectivity.
+    Jpm2 : float
+        Uniform second-neighbor exchange coupling on a ring. Must be zero for
+        non-ring connectivity.
     Jx : float
         Central–pixel XX coupling.
     Jz : float
@@ -264,10 +317,16 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
     hz0 : float or None
         Longitudinal field on the central qubit.  Falls back to *hz*
         when *None*.
-    connectivity : {"chain", "ring", "all_to_all"}
-        Intra-pixel coupling topology.  ``"chain"`` gives an open 1-D
-        chain, ``"ring"`` (default) adds a periodic closing bond, and
-        ``"all_to_all"`` couples every pair of pixel qubits.
+    connectivity : str
+        Intra-pixel coupling topology. Besides ``"chain"``, ``"ring"``, and
+        ``"all_to_all"``, single-pixel detectors accept ``"erdos_renyi"``,
+        ``"watts_strogatz"``, ``"barabasi_albert"``, ``"random_regular"``,
+        and the ``"expander"`` alias for a random regular graph.
+    graph_spec : DetectorGraphSpec or None
+        Seed and family-specific parameters for random detector graphs. Every
+        graph edge receives both the uniform ``J`` ZZ channel and the uniform
+        ``Jpm`` exchange channel. When omitted, legacy topologies retain their
+        historical bonds and random families use deterministic defaults.
     disorder, disorder_strength, disorder_strength_J, disorder_strength_Jpm,
     disorder_strength_Jx, disorder_strength_Jz, disorder_strength_Jzx,
     disorder_strength_hx, disorder_strength_hz :
@@ -305,10 +364,17 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         disorder_strength_hx: Optional[float] = None,
         disorder_strength_hz: Optional[float] = None,
         seed: Optional[int] = None,
+        J2: float = 0.0,
+        Jpm2: float = 0.0,
+        disorder_strength_J2: Optional[float] = None,
+        disorder_strength_Jpm2: Optional[float] = None,
+        graph_spec: DetectorGraphSpec | None = None,
     ):
         self.N_pixel = N_pixel
         self.J = J
         self.Jpm = Jpm
+        self.J2 = J2
+        self.Jpm2 = Jpm2
         self.Jxx = Jxx
         self.Jyy = Jyy
         self.Jx = Jx
@@ -321,6 +387,7 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         self.hx0 = hx0
         self.hz0 = hz0
         self.connectivity = connectivity
+        self.graph_spec = graph_spec or DetectorGraphSpec(kind=connectivity)
         self.central_coupling = central_coupling
         self.seed = seed
 
@@ -330,6 +397,12 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         )
         self.disorder_strength_Jpm = (
             disorder_strength_Jpm if disorder_strength_Jpm is not None else ds
+        )
+        self.disorder_strength_J2 = (
+            disorder_strength_J2 if disorder_strength_J2 is not None else ds
+        )
+        self.disorder_strength_Jpm2 = (
+            disorder_strength_Jpm2 if disorder_strength_Jpm2 is not None else ds
         )
         self.disorder_strength_Jx = (
             disorder_strength_Jx if disorder_strength_Jx is not None else ds
@@ -351,6 +424,14 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         )
         self._disorder = _resolve_disorder(disorder)
 
+        if self.connectivity != "ring" and (
+            self.J2 != 0.0
+            or self.Jpm2 != 0.0
+            or (self._disorder is not None and self.disorder_strength_J2 != 0.0)
+            or (self._disorder is not None and self.disorder_strength_Jpm2 != 0.0)
+        ):
+            raise ValueError("J2 and Jpm2 are defined only for ring connectivity")
+
     def generate(self) -> np.ndarray:
         N = self.N_pixel + 1  # qubit 0 = central, 1…N_pixel = ring
         D = 2**N
@@ -361,13 +442,24 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
             np.random.seed(self.seed)
 
         # Intra-pixel ZZ interactions
-        pixel_bonds = _pixel_bonds(1, self.N_pixel, self.connectivity)
+        pixel_bonds = _pixel_bonds(
+            1, self.N_pixel, self.connectivity, self.graph_spec
+        )
+        second_neighbor_bonds = (
+            _pixel_ring_second_neighbor_bonds(1, self.N_pixel)
+            if self.connectivity == "ring"
+            else []
+        )
         for i, j in pixel_bonds:
             j_val = _val(self._disorder, self.J, self.disorder_strength_J)
             H -= j_val * (Zs[i] @ Zs[j])
+        for i, j in second_neighbor_bonds:
+            j2_val = _val(self._disorder, self.J2, self.disorder_strength_J2)
+            H -= j2_val * (Zs[i] @ Zs[j])
 
         needs_y = (
             self.Jpm != 0.0
+            or self.Jpm2 != 0.0
             or self.Jxx != 0.0
             or self.Jyy != 0.0
             or self.Jy != 0.0
@@ -376,6 +468,7 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
                 self._disorder is not None
                 and (
                     self.disorder_strength_Jpm != 0.0
+                    or self.disorder_strength_Jpm2 != 0.0
                     or self.disorder_strength_Jcpm != 0.0
                 )
             )
@@ -390,6 +483,15 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
                 jpm = _val(self._disorder, self.Jpm, self.disorder_strength_Jpm)
                 # σ+σ- + σ-σ+ = (XX + YY) / 2
                 H -= jpm * (Xs[i] @ Xs[j] + np.real(Ys[i] @ Ys[j])) / 2
+
+        if self.Jpm2 != 0.0 or (
+            self._disorder is not None and self.disorder_strength_Jpm2 != 0.0
+        ):
+            for i, j in second_neighbor_bonds:
+                jpm2 = _val(
+                    self._disorder, self.Jpm2, self.disorder_strength_Jpm2
+                )
+                H -= jpm2 * (Xs[i] @ Xs[j] + np.real(Ys[i] @ Ys[j])) / 2
 
         if self.Jxx != 0.0:
             for i, j in pixel_bonds:

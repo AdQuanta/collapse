@@ -60,6 +60,10 @@ def multiplicity_resolved_vab_weight(spectral: SpectralData):
     return dict(sorted((m, value / total) for m, value in weights.items()))
 
 def multiplicity_panel_all_ticks(axis: plt.Axes, spectral: SpectralData):
+    detector_dimension = int(spectral.energies.size)
+    detector_n = int(round(math.log2(detector_dimension)))
+    if 1 << detector_n != detector_dimension:
+        raise ValueError("detector spectrum dimension must be a power of two")
     counts = Counter(spectral.multiplicities)
     multiplicities = np.asarray(sorted(counts), dtype=int)
     values = np.asarray([counts[m] for m in multiplicities], dtype=int)
@@ -81,11 +85,11 @@ def multiplicity_panel_all_ticks(axis: plt.Axes, spectral: SpectralData):
     axis.text(
         0.97, 0.96,
         "\n".join((
-            rf"$N_D={DETECTOR_N}$, $\dim={1 << DETECTOR_N}$",
+            rf"$N_D={detector_n}$, $\dim={detector_dimension}$",
             rf"$N_{{\rm groups}}={len(spectral.multiplicities)}$",
             rf"$N_{{m>1}}={len(degenerate)}$",
             rf"$m_{{\max}}={max(spectral.multiplicities)}$",
-            rf"$f_{{\rm deg}}={sum(degenerate)/(1 << DETECTOR_N):.3f}$",
+            rf"$f_{{\rm deg}}={sum(degenerate)/detector_dimension:.3f}$",
         )),
         transform=axis.transAxes, ha="right", va="top", fontsize=7.2,
         bbox={"facecolor": "white", "edgecolor": "0.8", "alpha": 0.90, "pad": 2},

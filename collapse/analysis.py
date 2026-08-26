@@ -259,6 +259,127 @@ def _relative_eigenvalues_from_projected_sectors(
     return spectrum.eigenvalues
 
 
+@dataclass(frozen=True)
+class _PreparedRelativeSector:
+    """Time-independent matrices for one relative-evolution sector."""
+
+    energies: np.ndarray
+    eigenvectors: np.ndarray
+    top_conjugate_transpose: np.ndarray
+    top_indices: np.ndarray | None = None
+    bottom_indices: np.ndarray | None = None
+
+
+@dataclass(frozen=True)
+class PreparedSectorRelativeEvolution:
+    """Reusable sector projection for evaluating many evolution times.
+
+    Constructing this object performs every time-independent basis projection,
+    central-qubit split, and conjugate transpose once.  Only phase formation,
+    matrix products, solves, and eigenvalue calculations remain per time.
+    """
+
+    total_qubits: int
+    local_sector_split: bool
+    sectors: tuple[_PreparedRelativeSector, ...]
+
+    def eigenvalues(self, evolution_time: float) -> np.ndarray:
+        """Return eigenvalues of ``U00(t)^(-1) U10(t)`` at one time."""
+
+        if not np.isfinite(evolution_time):
+            raise ValueError("evolution_time must be finite")
+        if self.local_sector_split:
+            all_values: list[np.ndarray] = []
+            for sector in self.sectors:
+                phase = np.exp(-1j * sector.energies * evolution_time)
+                columns = (
+                    sector.eigenvectors * phase
+                ) @ sector.top_conjugate_transpose
+                if sector.top_indices is None or sector.bottom_indices is None:
+                    raise RuntimeError("prepared local sector lacks split indices")
+                top = columns[sector.top_indices, :]
+                bottom = columns[sector.bottom_indices, :]
+                if top.shape != bottom.shape:
+                    raise ValueError("prepared sector central split is not square")
+                all_values.append(
+                    diagonalize_relative_evolution(top, bottom).eigenvalues
+                )
+            if not all_values:
+                return np.array([], dtype=np.complex128)
+            return np.concatenate(all_values)
+
+        dimension = 2**self.total_qubits
+        half = dimension // 2
+        columns = np.zeros((dimension, half), dtype=np.complex128)
+        for sector in self.sectors:
+            phase = np.exp(-1j * sector.energies * evolution_time)
+            columns += (
+                sector.eigenvectors * phase
+            ) @ sector.top_conjugate_transpose
+        return diagonalize_relative_evolution(
+            columns[:half, :],
+            columns[half:, :],
+        ).eigenvalues
+
+
+def prepare_sector_relative_evolution(
+    sectors: list,
+    total_qubits: int,
+) -> PreparedSectorRelativeEvolution:
+    """Precompute time-independent data for repeated sector evolution."""
+
+    if not sectors:
+        raise ValueError("sectors must contain at least one sector")
+    if total_qubits < 1:
+        raise ValueError("total_qubits must be positive")
+    local = all(sector.get("relative_evolution_local", True) for sector in sectors)
+    prepared: list[_PreparedRelativeSector] = []
+    if local:
+        for sector in sectors:
+            energies = np.asarray(sector["E"])
+            eigenvectors = np.asarray(sector["V"])
+            top_indices, bottom_indices = _central_top_indices(
+                sector, total_qubits
+            )
+            if len(top_indices) == 0 or len(bottom_indices) == 0:
+                continue
+            top_vectors = eigenvectors[top_indices, :]
+            prepared.append(
+                _PreparedRelativeSector(
+                    energies=energies,
+                    eigenvectors=eigenvectors,
+                    top_conjugate_transpose=top_vectors.conj().T,
+                    top_indices=top_indices,
+                    bottom_indices=bottom_indices,
+                )
+            )
+    else:
+        dimension = 2**total_qubits
+        half = dimension // 2
+        for sector in sectors:
+            energies = np.asarray(sector["E"])
+            eigenvectors = _project_sector_to_full_basis(sector, total_qubits)
+            if eigenvectors.shape[0] != dimension:
+                raise ValueError(
+                    f"Projected sector has {eigenvectors.shape[0]} rows, "
+                    f"expected {dimension}"
+                )
+            prepared.append(
+                _PreparedRelativeSector(
+                    energies=energies,
+                    eigenvectors=eigenvectors,
+                    top_conjugate_transpose=eigenvectors[:half, :].conj().T,
+                )
+            )
+    if not prepared:
+        raise ValueError("no usable relative-evolution sectors were prepared")
+    return PreparedSectorRelativeEvolution(
+        total_qubits=total_qubits,
+        local_sector_split=local,
+        sectors=tuple(prepared),
+    )
+
+
 class DisentanglementAnalyzer:
     """
     Analyse a unitary matrix *U* to extract per-qubit initial states by

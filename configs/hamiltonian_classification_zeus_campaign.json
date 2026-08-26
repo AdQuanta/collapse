@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "array_size": 20,
+  "backend": "quspin_sectors",
+  "detector_sizes": [10, 12, 14],
+  "common": {
+    "J": 1.0,
+    "Jpm": 0.0,
+    "J2": 0.0,
+    "Jpm2": 0.0,
+    "Jxx": 0.0,
+    "Jyy": 0.0,
+    "Jx": 0.01,
+    "Jy": 0.0,
+    "Jz": 0.0,
+    "Jzx": 0.0,
+    "Jcpm": 0.0,
+    "hx": 0.0,
+    "hz": 0.1,
+    "hx0": 0.0,
+    "hz0": 0.1,
+    "connectivity": "ring",
+    "central_coupling": "all",
+    "central_scale": "sqrt_n",
+    "seed": 20260815,
+    "n_phi": 16,
+    "n_mu": 8,
+    "l_max": 7
+  },
+  "campaigns": [
+    {
+      "name": "matched_qz_reproduction",
+      "times": [1000.0, 10000.0, 100000.0, 1000000.0],
+      "parameter": "fixed",
+      "values": [0.0]
+    },
+    {
+      "name": "transverse_strength",
+      "times": [10000.0],
+      "parameter": "Jx",
+      "values": [0.0, 0.003, 0.01, 0.03, 0.1, 0.3]
+    },
+    {
+      "name": "matched_detuning",
+      "times": [10000.0],
+      "parameter": "delta_source",
+      "definition": "delta_source=(hz0-hz)/Jx_source; Jx_source=0.01",
+      "values": [-10.0, -3.0, -1.0, -0.3, 0.0, 0.3, 1.0, 3.0, 10.0]
+    },
+    {
+      "name": "second_transverse_channel",
+      "times": [10000.0],
+      "parameter": "Jy_over_Jx",
+      "values": [0.0, 0.25, 0.5, 1.0, 2.0, 4.0]
+    },
+    {
+      "name": "detector_transverse_scrambling",
+      "times": [10000.0],
+      "parameter": "hx",
+      "values": [0.0, 0.01, 0.03, 0.1, 0.3, 1.0]
+    },
+    {
+      "name": "cross_network_matched",
+      "detector_sizes": [8, 10],
+      "backend": "numpy_dense",
+      "times": [10000.0],
+      "parameter": "connectivity",
+      "value_kind": "categorical",
+      "values": [
+        "erdos_renyi",
+        "watts_strogatz",
+        "barabasi_albert",
+        "expander"
+      ],
+      "seeds": [20260815, 20260816, 20260817, 20260818, 20260819],
+      "overrides": {
+        "Jpm": 0.25,
+        "Jx": 0.03,
+        "hz0": 0.1
+      }
+    },
+    {
+      "name": "cross_architecture_ring_control",
+      "detector_sizes": [8, 10],
+      "backend": "numpy_dense",
+      "times": [10000.0],
+      "parameter": "connectivity",
+      "value_kind": "categorical",
+      "values": ["ring"],
+      "seeds": [20260815],
+      "overrides": {
+        "Jpm": 0.25,
+        "Jx": 0.03,
+        "hz0": 0.1
+      }
+    },
+    {
+      "name": "cross_physical_architectures",
+      "detector_sizes": [8, 10],
+      "backend": "numpy_dense",
+      "times": [10000.0],
+      "parameter": "architecture",
+      "value_kind": "categorical",
+      "values": [
+        "noninteracting_star",
+        "interacting_ising_ring",
+        "xy_ring_collective",
+        "xy_chain_edge"
+      ],
+      "overrides": {
+        "Jx": 0.03,
+        "hz0": 0.1
+      },
+      "variant_overrides": {
+        "noninteracting_star": {
+          "J": 0.0,
+          "Jpm": 0.0,
+          "connectivity": "all_to_all",
+          "central_coupling": "all",
+          "central_scale": "sqrt_n"
+        },
+        "interacting_ising_ring": {
+          "J": 1.0,
+          "Jpm": 0.0,
+          "connectivity": "ring",
+          "central_coupling": "all",
+          "central_scale": "sqrt_n"
+        },
+        "xy_ring_collective": {
+          "J": 0.0,
+          "Jpm": 1.0,
+          "connectivity": "ring",
+          "central_coupling": "all",
+          "central_scale": "sqrt_n"
+        },
+        "xy_chain_edge": {
+          "J": 0.0,
+          "Jpm": 1.0,
+          "connectivity": "chain",
+          "central_coupling": "first",
+          "central_scale": "none"
+        }
+      }
+    },
+    {
+      "name": "haar_unitary_null",
+      "detector_sizes": [8, 10],
+      "backend": "haar_unitary",
+      "times": [0.0],
+      "parameter": "fixed",
+      "values": [0.0],
+      "seeds": [20260815, 20260816, 20260817]
+    }
+  ]
+}

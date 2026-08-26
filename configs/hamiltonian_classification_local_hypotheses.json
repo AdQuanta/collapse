@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "purpose": "Small-N pipeline validation and falsification screen; not production evidence",
+  "base": {
+    "detector_n": 6,
+    "time": 1000.0,
+    "J": 1.0,
+    "Jpm": 0.0,
+    "J2": 0.0,
+    "Jpm2": 0.0,
+    "Jxx": 0.0,
+    "Jyy": 0.0,
+    "Jx": 0.03,
+    "Jy": 0.0,
+    "Jz": 0.0,
+    "Jzx": 0.0,
+    "Jcpm": 0.0,
+    "hx": 0.0,
+    "hz": 0.1,
+    "hx0": 0.0,
+    "hz0": 0.1,
+    "connectivity": "ring",
+    "central_coupling": "all",
+    "central_scale": "sqrt_n",
+    "seed": 20260815,
+    "n_phi": 8,
+    "n_mu": 4,
+    "l_max": 3
+  },
+  "scans": [
+    {
+      "name": "transverse_strength",
+      "parameter": "Jx",
+      "values": [0.0, 0.003, 0.01, 0.03, 0.1, 0.3]
+    },
+    {
+      "name": "matched_detuning",
+      "parameter": "delta_source",
+      "definition": "delta_source=(hz0-hz)/Jx_source with Jx_source fixed at 0.03",
+      "values": [-10.0, -3.0, -1.0, 0.0, 1.0, 3.0, 10.0]
+    },
+    {
+      "name": "second_transverse_channel",
+      "parameter": "Jy_over_Jx",
+      "values": [0.0, 0.25, 0.5, 1.0, 2.0]
+    },
+    {
+      "name": "detector_transverse_scrambling",
+      "parameter": "hx",
+      "values": [0.0, 0.01, 0.03, 0.1, 0.3, 1.0]
+    }
+  ]
+}

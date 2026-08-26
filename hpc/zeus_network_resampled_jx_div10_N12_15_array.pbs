@@ -1,0 +1,58 @@
+#!/bin/bash
+# All 400 saved (configuration, graph sample) pairs at N=12,13,14,15.
+# The time count is chosen so every sample/N pools exactly 2^15 angles:
+# 8, 4, 2, and 1 times for N=12,13,14,15, respectively, with t_k=k*1e6.
+# Each Hamiltonian is diagonalized once per sample/N.
+# Collective Jx is divided by 10 before the usual Jx/sqrt(N) edge scaling.
+# One of 20 array tasks owns 20 graph samples (80 Hamiltonian/N cases and
+# 300 time evaluations) and
+# checkpoints every sample plus the completion of each detector size.
+#PBS -N net_jx10_tavg
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=16:mem=256gb
+#PBS -l walltime=120:00:00
+#PBS -J 0-19
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
+if [[ -f "$SUBMIT_DIR/examples/run_zeus_network_resampled_jx_div10_N12_15.py" ]]; then
+  REPO_ROOT="$SUBMIT_DIR"
+elif [[ -f "$SUBMIT_DIR/../examples/run_zeus_network_resampled_jx_div10_N12_15.py" ]]; then
+  REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
+else
+  echo "Cannot locate the Jx/10 resampled-network runner." >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+if [[ -n "${ZEUS_ENV_SETUP:-}" ]]; then source "$ZEUS_ENV_SETUP"; fi
+if [[ -n "${VIRTUAL_ENV_PATH:-}" ]]; then source "$VIRTUAL_ENV_PATH/bin/activate"; fi
+
+: "${RUN_ROOT:?submit through hpc/submit_zeus_network_resampled_jx_div10_N12_15.sh}"
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:?PBS array index unavailable}}"
+CONFIG="${CONFIG:-configs/zeus_network_resampled_jx_div10_N12_15.json}"
+SOURCE_ROOT="${SOURCE_ROOT:-$REPO_ROOT/work/zeus_network_extremes_resampled_N12_20260813_232636}"
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+[[ -d "$SOURCE_ROOT" ]] || { echo "Missing source campaign: $SOURCE_ROOT" >&2; exit 2; }
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX" "$RUN_ROOT/.cache/task_$ARRAY_INDEX"
+export MPLCONFIGDIR="$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX"
+export XDG_CACHE_HOME="$RUN_ROOT/.cache/task_$ARRAY_INDEX"
+export MPLBACKEND=Agg
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-16}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-16}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-16}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-16}"
+
+LOG="$RUN_ROOT/logs/task_${ARRAY_INDEX}.log"
+echo "[$(date --iso-8601=seconds)] task=$ARRAY_INDEX samples=20 N=12,13,14,15 pooled_samples=32768 time_counts=8,4,2,1 Jx_factor=0.1 checkpoint=each_sample_and_N" | tee -a "$LOG"
+"$PYTHON_BIN" examples/run_zeus_network_resampled_jx_div10_N12_15.py \
+  --array-index "$ARRAY_INDEX" \
+  --config "$CONFIG" \
+  --source-root "$SOURCE_ROOT" \
+  --output-root "$RUN_ROOT" \
+  --resume 2>&1 | tee -a "$LOG"

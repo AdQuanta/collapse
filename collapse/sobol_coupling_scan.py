@@ -4,20 +4,27 @@ The detector and central-qubit Hamiltonian is
 
 .. math::
 
-   H = h_z\sum_i Z_i + J\sum_i Z_iZ_{i+1}
-       + J_{\pm}\sum_i(\sigma_i^+\sigma_{i+1}^-+\mathrm{h.c.})
-       + {J_x\over\sqrt N}X_0\sum_iX_i
-       + {J_y\over\sqrt N}Y_0\sum_iY_i ,
+   H = -h_{z0}Z_0 - h_z\sum_i Z_i - J\sum_i Z_iZ_{i+1}
+       - J_{\pm}\sum_i(\sigma_i^+\sigma_{i+1}^-+\mathrm{h.c.})
+       - {J_x\over\sqrt N}X_0\sum_iX_i
+       - {J_y\over\sqrt N}Y_0\sum_iY_i .
 
-with configurable ``hz0`` (zero by default).  ``Jx`` and ``Jy`` in manifests are always the unscaled
-collective inputs.  The QuSpin constructor receives the effective couplings,
-so the ``1/sqrt(N)`` factor is applied exactly once here.
+The optional second-neighbor ring variant adds
+:math:`-J_2\sum_i Z_iZ_{i+2}` and
+:math:`-J_{\pm2}\sum_i(\sigma_i^+\sigma_{i+2}^-+\mathrm{h.c.})`, with each
+distinct undirected bond counted once. ``Jx`` and ``Jy`` in manifests are
+always unscaled collective inputs. The QuSpin constructor receives the
+effective couplings, so the ``1/sqrt(N)`` factor is applied exactly once here.
+For non-circular detectors, the same ``J`` and ``Jpm`` edge operators can be
+placed on deterministic Erdos-Renyi, Watts-Strogatz, Barabasi-Albert, or random
+regular graph realizations. The central qubit remains coupled to every detector
+site.
 """
 
 from __future__ import annotations
 
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, fields
 from datetime import datetime
 import csv
 import hashlib
@@ -45,7 +52,15 @@ from scipy.stats import qmc, spearmanr  # noqa: E402
 from collapse.analysis import DisentanglementAnalyzer
 from collapse.anisotropic_sweep import BLUE, RED, RATIO, _bloch_branches
 from collapse.born import born_ratio_from_radii
-from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
+from collapse.detector_graphs import (
+    DetectorGraphSpec,
+    detector_graph_metadata,
+)
+
+try:
+    from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
+except ImportError:  # Analysis and plotting do not require optional QuSpin.
+    SinglePixelHamiltonianQuSpin = None  # type: ignore[assignment,misc]
 
 
 PERIOD = 2.0 * np.pi
@@ -105,8 +120,20 @@ class ScanSettings:
     model_seed: int = 44
     hz0: float = 0.0
     fixed_jpm: float | None = None
+    fixed_jx: float | None = None
     hz_lower: float | None = None
     hz_upper: float | None = None
+    coupling_lower: float | None = None
+    second_neighbor: bool = False
+    connectivity: str = "ring"
+    graph_seed: int = 20260810
+    graph_per_configuration: bool = False
+    graph_require_connected: bool = True
+    erdos_renyi_p: float = 0.3
+    watts_strogatz_k: int = 4
+    watts_strogatz_p: float = 0.3
+    barabasi_albert_m: int = 2
+    regular_degree: int = 4
 
     def validate(self) -> None:
         if self.name not in {"jy_zero", "jy_nonzero"}:
@@ -119,6 +146,12 @@ class ScanSettings:
             raise ValueError("all N must be >=3")
         if not (0.0 < self.lower < self.upper):
             raise ValueError("require 0 < lower < upper")
+        if self.coupling_lower is not None and (
+            not math.isfinite(self.coupling_lower)
+            or self.coupling_lower <= 0.0
+            or self.coupling_lower >= self.upper
+        ):
+            raise ValueError("coupling_lower must lie strictly between zero and upper")
         if not (0.0 < self.kappa < 1.0):
             raise ValueError("kappa must be in (0,1)")
         if self.bins < 16 or self.plot_grid < 128 or self.fit_harmonics < 4:
@@ -127,12 +160,57 @@ class ScanSettings:
             raise ValueError("hz0 must be finite")
         if self.fixed_jpm is not None and (not math.isfinite(self.fixed_jpm) or self.fixed_jpm < 0.0):
             raise ValueError("fixed_jpm must be finite and nonnegative when provided")
+        if self.fixed_jx is not None and (
+            not math.isfinite(self.fixed_jx) or self.fixed_jx <= 0.0
+        ):
+            raise ValueError("fixed_jx must be finite and positive when provided")
         if self.hz_lower is not None and (not math.isfinite(self.hz_lower) or self.hz_lower <= 0.0):
             raise ValueError("hz_lower must be finite and positive when provided")
         if self.hz_upper is not None and (not math.isfinite(self.hz_upper) or self.hz_upper <= 0.0):
             raise ValueError("hz_upper must be finite and positive when provided")
         if not (self.resolved_hz_lower < self.resolved_hz_upper):
             raise ValueError("require resolved hz_lower < hz_upper")
+        if self.fixed_jx is not None:
+            reference_upper_bounds = [self.upper, self.resolved_hz_upper]
+            if self.fixed_jpm is not None and self.fixed_jpm != 0.0:
+                reference_upper_bounds.append(abs(self.fixed_jpm))
+            else:
+                reference_upper_bounds.append(self.upper)
+            if self.hz0 != 0.0:
+                reference_upper_bounds.append(abs(self.hz0))
+            maximum_allowed = min(
+                self.upper, self.kappa * min(reference_upper_bounds)
+            )
+            if self.fixed_jx > maximum_allowed:
+                raise ValueError(
+                    "fixed_jx cannot satisfy the weak-coupling constraint "
+                    "within the configured detector-parameter ranges"
+                )
+        if self.second_neighbor and self.connectivity != "ring":
+            raise ValueError("second-neighbor J2/Jpm2 terms require ring connectivity")
+        for n in self.sizes:
+            self.detector_graph_spec(sobol_index=0).validate(n)
+
+    def detector_graph_spec(self, sobol_index: int) -> DetectorGraphSpec:
+        """Return the reproducible graph realization for one Sobol point."""
+
+        if sobol_index < 0:
+            raise ValueError("sobol_index must be nonnegative")
+        seed = (
+            self.graph_seed + sobol_index
+            if self.graph_per_configuration
+            else self.graph_seed
+        )
+        return DetectorGraphSpec(
+            kind=self.connectivity,
+            seed=seed,
+            erdos_renyi_p=self.erdos_renyi_p,
+            watts_strogatz_k=self.watts_strogatz_k,
+            watts_strogatz_p=self.watts_strogatz_p,
+            barabasi_albert_m=self.barabasi_albert_m,
+            regular_degree=self.regular_degree,
+            require_connected=self.graph_require_connected,
+        )
 
     @property
     def resolved_hz_lower(self) -> float:
@@ -143,9 +221,20 @@ class ScanSettings:
         return self.upper if self.hz_upper is None else self.hz_upper
 
     @property
+    def resolved_coupling_lower(self) -> float:
+        """Lower bound for unscaled central couplings before ``1/sqrt(N)``."""
+
+        return self.lower if self.coupling_lower is None else self.coupling_lower
+
+    @property
     def dimension(self) -> int:
         detector_dimensions = 2 if self.fixed_jpm is not None else 3
-        return detector_dimensions + 1 + int(self.jy_nonzero)
+        return (
+            detector_dimensions
+            + int(self.fixed_jx is None)
+            + int(self.jy_nonzero)
+            + 2 * int(self.second_neighbor)
+        )
 
     @property
     def digest(self) -> str:
@@ -165,12 +254,45 @@ class ParameterPoint:
     hz: float
     weak_limit: float
     weak_ratio: float
+    j2: float = 0.0
+    jpm2: float = 0.0
 
     def effective_jx(self, n: int) -> float:
         return self.jx / math.sqrt(n)
 
     def effective_jy(self, n: int) -> float:
         return self.jy / math.sqrt(n)
+
+
+_PARAMETER_POINT_FIELDS = frozenset(field.name for field in fields(ParameterPoint))
+_PARAMETER_POINT_MANIFEST_FIELDS = frozenset(
+    {"detector_connectivity", "detector_graph_seed"}
+)
+
+
+def _parameter_point_from_manifest(record: dict[str, Any]) -> ParameterPoint:
+    """Deserialize a sampling record while excluding graph provenance.
+
+    Connectivity and graph seed determine how the point is simulated, but are
+    not sampled Hamiltonian coordinates and thus are not ``ParameterPoint``
+    fields. Other unknown fields still fail loudly to expose incompatible or
+    corrupted manifests.
+    """
+
+    unexpected = (
+        set(record) - _PARAMETER_POINT_FIELDS - _PARAMETER_POINT_MANIFEST_FIELDS
+    )
+    if unexpected:
+        names = ", ".join(sorted(unexpected))
+        raise ValueError(f"unexpected parameter-manifest field(s): {names}")
+    values = {
+        name: record[name]
+        for name in _PARAMETER_POINT_FIELDS
+        if name in record
+    }
+    if "unit" in values:
+        values["unit"] = tuple(values["unit"])
+    return ParameterPoint(**values)
 
 
 def _log_map(u: np.ndarray | float, lo: float, hi: float) -> np.ndarray | float:
@@ -197,20 +319,61 @@ def generate_sobol_points(settings: ScanSettings) -> tuple[list[ParameterPoint],
                 jpm = float(_log_map(row[cursor], settings.lower, settings.upper)); cursor += 1
             else:
                 jpm = settings.fixed_jpm
-            hz = float(_log_map(row[cursor], settings.resolved_hz_lower, settings.resolved_hz_upper)); cursor += 1
-            reference_scales = [j, hz]
+            hz = float(
+                _log_map(
+                    row[cursor],
+                    settings.resolved_hz_lower,
+                    settings.resolved_hz_upper,
+                )
+            )
+            cursor += 1
+            if settings.second_neighbor:
+                j2 = float(_log_map(row[cursor], settings.lower, settings.upper))
+                cursor += 1
+                jpm2 = float(_log_map(row[cursor], settings.lower, settings.upper))
+                cursor += 1
+            else:
+                j2 = 0.0
+                jpm2 = 0.0
+            reference_scales = [j, hz, j2, jpm2]
+            reference_scales = [scale for scale in reference_scales if scale != 0.0]
             if jpm != 0.0:
                 reference_scales.append(abs(jpm))
             if settings.hz0 != 0.0:
                 reference_scales.append(abs(settings.hz0))
             allowed = min(settings.upper, settings.kappa * min(reference_scales))
-            if allowed < settings.lower:
+            required_coupling = (
+                settings.resolved_coupling_lower
+                if settings.fixed_jx is None
+                else settings.fixed_jx
+            )
+            if settings.jy_nonzero:
+                required_coupling = max(
+                    required_coupling, settings.resolved_coupling_lower
+                )
+            if allowed < required_coupling:
                 rejected += 1
                 continue
-            jx = float(_log_map(row[cursor], settings.lower, allowed)); cursor += 1
-            jy = float(_log_map(row[cursor], settings.lower, allowed)) if settings.jy_nonzero else 0.0
+            if settings.fixed_jx is None:
+                jx = float(
+                    _log_map(
+                        row[cursor], settings.resolved_coupling_lower, allowed
+                    )
+                )
+                cursor += 1
+            else:
+                jx = settings.fixed_jx
+                if jx > allowed:
+                    rejected += 1
+                    continue
+            jy = (
+                float(_log_map(
+                    row[cursor], settings.resolved_coupling_lower, allowed
+                ))
+                if settings.jy_nonzero else 0.0
+            )
             weak_ratio = max(jx, jy) / min(reference_scales)
-            physical = tuple(round(x, 15) for x in (jx, jy, j, jpm, hz))
+            physical = tuple(round(x, 15) for x in (jx, jy, j, jpm, hz, j2, jpm2))
             if physical in seen:
                 rejected += 1
                 continue
@@ -227,21 +390,46 @@ def generate_sobol_points(settings: ScanSettings) -> tuple[list[ParameterPoint],
                     hz=hz,
                     weak_limit=allowed,
                     weak_ratio=weak_ratio,
+                    j2=j2,
+                    jpm2=jpm2,
                 )
             )
             if len(points) == settings.count:
                 break
     unit = np.asarray([point.unit for point in points], dtype=float)
     coverage = {
-        "method": "scrambled Sobol; detector scales first, weak couplings conditional",
+        "method": (
+            "scrambled Sobol; detector scales first, Jx fixed and remaining "
+            "weak couplings conditional"
+            if settings.fixed_jx is not None
+            else "scrambled Sobol; detector scales first, weak couplings conditional"
+        ),
         "seed": settings.seed,
         "requested": settings.count,
         "accepted": len(points),
         "rejected_or_regenerated": rejected,
         "sobol_candidates_consumed": source_index,
         "minimum_pairwise_distance_unit_cube": float(np.min(pdist(unit))) if len(unit) > 1 else None,
-        "constraint": "max(nonzero central couplings) <= kappa*min(nonzero J,Jpm,hz,abs(hz0))",
+        "constraint": (
+            "max(nonzero central couplings) <= kappa*min(nonzero "
+            + "J,Jpm,hz,abs(hz0)"
+            + (",J2,Jpm2" if settings.second_neighbor else "")
+            + ")"
+        ),
         "kappa": settings.kappa,
+        "fixed_jx_unscaled": settings.fixed_jx,
+        "coupling_lower": (
+            settings.resolved_coupling_lower
+            if settings.fixed_jx is None or settings.jy_nonzero
+            else None
+        ),
+        "detector_connectivity": settings.connectivity,
+        "graph_seed_base": settings.graph_seed,
+        "graph_realization_policy": (
+            "one deterministic graph per accepted Sobol configuration"
+            if settings.graph_per_configuration
+            else "one fixed deterministic graph for the campaign"
+        ),
     }
     return points, coverage
 
@@ -249,12 +437,29 @@ def generate_sobol_points(settings: ScanSettings) -> tuple[list[ParameterPoint],
 def save_sampling(root: Path, settings: ScanSettings, points: Sequence[ParameterPoint], coverage: dict[str, Any]) -> None:
     sampling = root / settings.name / "sampling"
     sampling.mkdir(parents=True, exist_ok=True)
-    payload = {"settings": asdict(settings), "coverage": coverage, "configurations": [asdict(p) for p in points]}
+    configurations = [
+        {
+            **asdict(point),
+            "detector_connectivity": settings.connectivity,
+            "detector_graph_seed": settings.detector_graph_spec(
+                point.sobol_index
+            ).seed,
+        }
+        for point in points
+    ]
+    payload = {
+        "settings": asdict(settings),
+        "coverage": coverage,
+        "configurations": configurations,
+    }
     _atomic_json(sampling / "configurations.json", payload)
     fields = [
         "config_id", "sobol_index", "jx", "jy", "j", "jpm", "hz", "hz0",
-        "weak_limit", "weak_ratio", *[f"u{i}" for i in range(settings.dimension)],
+        "weak_limit", "weak_ratio", "detector_connectivity",
+        "detector_graph_seed", *[f"u{i}" for i in range(settings.dimension)],
     ]
+    if settings.second_neighbor:
+        fields[7:7] = ["j2", "jpm2"]
     tmp = sampling / "configurations.csv.tmp"
     with tmp.open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields)
@@ -262,6 +467,10 @@ def save_sampling(root: Path, settings: ScanSettings, points: Sequence[Parameter
         for point in points:
             row = {key: getattr(point, key) for key in fields if hasattr(point, key)}
             row["hz0"] = settings.hz0
+            row["detector_connectivity"] = settings.connectivity
+            row["detector_graph_seed"] = settings.detector_graph_spec(
+                point.sobol_index
+            ).seed
             row.update({f"u{i}": point.unit[i] for i in range(settings.dimension)})
             writer.writerow(row)
     tmp.replace(sampling / "configurations.csv")
@@ -279,11 +488,15 @@ def save_sampling(root: Path, settings: ScanSettings, points: Sequence[Parameter
 
 
 def _plot_sampling_coverage(path: Path, settings: ScanSettings, points: Sequence[ParameterPoint]) -> None:
-    names = ["J"] + (["Jpm"] if settings.fixed_jpm is None else []) + ["hz", "Jx"] + (["Jy"] if settings.jy_nonzero else [])
+    names = ["J"] + (["Jpm"] if settings.fixed_jpm is None else []) + ["hz"]
+    if settings.second_neighbor:
+        names += ["J2", "Jpm2"]
+    names += ["Jx"] + (["Jy"] if settings.jy_nonzero else [])
     data = {
         "J": np.asarray([p.j for p in points]), "Jpm": np.asarray([p.jpm for p in points]),
         "hz": np.asarray([p.hz for p in points]), "Jx": np.asarray([p.jx for p in points]),
-        "Jy": np.asarray([p.jy for p in points]),
+        "Jy": np.asarray([p.jy for p in points]), "J2": np.asarray([p.j2 for p in points]),
+        "Jpm2": np.asarray([p.jpm2 for p in points]),
     }
     fig, axes = plt.subplots(len(names), len(names), figsize=(2.35 * len(names), 2.25 * len(names)), constrained_layout=True)
     for row, yname in enumerate(names):
@@ -566,7 +779,7 @@ def _validate_case(point: ParameterPoint, n: int, eigenvalues: np.ndarray, metri
     checks = {
         "hamiltonian_dimension": {"expected_total": 2 ** (n + 1), "relative_spectrum_expected": expected, "relative_spectrum_actual": int(eigenvalues.size), "passed": eigenvalues.size == expected},
         "hermiticity": {"passed": True, "method": "real Pauli-string construction in SinglePixelHamiltonianQuSpin; QuSpin sector eigensolver"},
-        "eigensolver": {"passed": bool(np.all(np.isfinite(eigenvalues.real)) and np.all(np.isfinite(eigenvalues.imag))), "method": "QuSpin full sector diagonalization"},
+        "eigensolver": {"passed": bool(np.all(np.isfinite(eigenvalues.real)) and np.all(np.isfinite(eigenvalues.imag))), "method": "QuSpin exact symmetry-sector diagonalization"},
         "p_normalization": {"passed": abs(metrics["p_theta_integral"] - 1.0) < 1e-10 and abs(metrics["p_reflected_integral"] - 1.0) < 1e-10},
         "lambda_reconstruction": {
             "passed": metrics["lambda_reconstruction_max_relative"] < 1e-10,
@@ -587,39 +800,101 @@ def _validate_case(point: ParameterPoint, n: int, eigenvalues: np.ndarray, metri
 
 
 def _case_worker(payload: tuple[dict[str, Any], dict[str, Any], int, str]) -> dict[str, Any]:
+    if SinglePixelHamiltonianQuSpin is None:
+        raise ImportError("QuSpin is required for simulation, but its optional backend could not be imported")
     settings = ScanSettings(**payload[0])
     point = ParameterPoint(**payload[1])
     n = payload[2]
     case_dir = Path(payload[3])
     started_wall = time.perf_counter()
     worker = multiprocessing.current_process().name
-    log_lines = [f"[{timestamp()}] worker={worker} pid={os.getpid()} stage=start config={point.config_id} N={n}"]
+    log_lines: list[str] = []
+
+    def progress(stage_name: str, status: str, detail: str = "") -> None:
+        suffix = f" {detail}" if detail else ""
+        line = (
+            f"[{timestamp()}] worker={worker} pid={os.getpid()} "
+            f"config={point.config_id} N={n} stage={stage_name} "
+            f"status={status}{suffix}"
+        )
+        log_lines.append(line)
+        print(line, flush=True)
+
+    progress(
+        "case",
+        "start",
+        f"J={point.j:.6g} Jpm={point.jpm:.6g} hz={point.hz:.6g} "
+        f"Jx_unscaled={point.jx:.6g} connectivity={settings.connectivity}",
+    )
     validation: dict[str, Any] | None = None
     stage = "hamiltonian_construction"
     try:
+        progress(stage, "start")
+        graph_spec = settings.detector_graph_spec(point.sobol_index)
+        graph_metadata = detector_graph_metadata(n, graph_spec)
         h = SinglePixelHamiltonianQuSpin(
-            N_pixel=n, J=point.j, Jpm=point.jpm,
+            N_pixel=n,
+            J=point.j,
+            Jpm=point.jpm,
+            J2=point.j2,
+            Jpm2=point.jpm2,
             Jx=point.effective_jx(n), Jy=point.effective_jy(n),
             Jz=0.0, Jzx=0.0, hx=0.0, hz=point.hz, hx0=0.0, hz0=settings.hz0,
-            connectivity="ring", central_coupling="all", seed=settings.model_seed, use_symmetry=True,
+            connectivity=settings.connectivity,
+            graph_spec=graph_spec,
+            central_coupling="all",
+            seed=settings.model_seed,
+            use_symmetry=True,
+        )
+        progress(
+            stage,
+            "finish",
+            f"graph_seed={graph_spec.seed} edges={graph_metadata['edge_count']}",
         )
         stage = "sector_diagonalization"
+        progress(stage, "start")
         t0 = time.perf_counter()
         sectors = h.diagonalize_sectors()
         diag_seconds = time.perf_counter() - t0
+        progress(
+            stage,
+            "finish",
+            f"seconds={diag_seconds:.3f} sectors={len(sectors)}",
+        )
         stage = "relative_evolution"
+        progress(stage, "start", f"t={settings.evolution_time:.6g}")
         t1 = time.perf_counter()
         analyzer = DisentanglementAnalyzer.from_sectors(sectors, settings.evolution_time, n + 1)
         eigenvalues = np.asarray(analyzer.D0, dtype=np.complex128)
         analysis_seconds = time.perf_counter() - t1
+        progress(
+            stage,
+            "finish",
+            f"seconds={analysis_seconds:.3f} eigenvalues={eigenvalues.size}",
+        )
         stage = "red_blue_diagnostics"
+        progress(stage, "start")
         metrics, arrays = _diagnostics(eigenvalues, settings.bins)
         case_dir.mkdir(parents=True, exist_ok=True)
         _atomic_npz(case_dir / "raw_results.npz", **arrays)
         _atomic_json(case_dir / "raw_metrics.json", metrics)
+        progress(
+            stage,
+            "finish",
+            f"S_born={metrics['S_born']:.6g} occupied_fraction="
+            f"{metrics['occupied_fraction']:.6g}",
+        )
         stage = "wrapped_distribution_fits"
+        progress(stage, "start")
+        fit_started = time.perf_counter()
         fit, fit_arrays = fit_distributions(arrays["theta"], settings.bins, settings.plot_grid, settings.fit_harmonics, settings.fit_tolerance)
+        progress(
+            stage,
+            "finish",
+            f"seconds={time.perf_counter() - fit_started:.3f}",
+        )
         stage = "validation"
+        progress(stage, "start")
         validation = _validate_case(point, n, eigenvalues, metrics, fit, settings.kappa)
         if not validation["passed"]:
             case_dir.mkdir(parents=True, exist_ok=True)
@@ -627,17 +902,30 @@ def _case_worker(payload: tuple[dict[str, Any], dict[str, Any], int, str]) -> di
             _atomic_json(case_dir / "metrics.json", metrics)
             _atomic_json(case_dir / "fits.json", fit)
             raise RuntimeError("one or more validation checks failed")
+        progress(stage, "finish", "passed=true")
         stage = "persistence"
+        progress(stage, "start")
         _atomic_npz(case_dir / "results.npz", **arrays, **fit_arrays)
         metadata = {
             "simulation": settings.name, "configuration": asdict(point), "N": n, "total_qubits": n + 1,
             "evolution_time": settings.evolution_time, "Jx_unscaled": point.jx, "Jy_unscaled": point.jy,
             "hz0": settings.hz0,
+            "J2": point.j2, "Jpm2": point.jpm2,
             "Jx_effective": point.effective_jx(n), "Jy_effective": point.effective_jy(n),
             "scaling": "effective collective couplings passed to constructor once: input/sqrt(N)",
             "weak_constraint_kappa": settings.kappa, "weak_ratio": point.weak_ratio,
             "angular_product_definition": "same [0,pi] bin grid; P_reflected(theta) is histogram of pi-theta samples; product is pointwise bin-density product",
             "sector_count": len(sectors), "diagonalization_seconds": diag_seconds,
+            "symmetry_labels": sorted(
+                {str(sector.get("symmetry_label", "unknown")) for sector in sectors}
+            ),
+            "second_neighbor_ring": settings.second_neighbor,
+            "second_neighbor_bond_convention": (
+                "each distinct undirected {i,i+2 mod N} bond counted once"
+                if settings.second_neighbor else None
+            ),
+            "detector_graph": graph_metadata,
+            "central_coupling": "all detector qubits",
             "relative_evolution_analysis_seconds": analysis_seconds, "worker": worker, "pid": os.getpid(),
             "peak_rss_mb": _peak_rss_mb(),
             "interactive_bloch": "not emitted: the established repository workflow provides a reproducible static projection and reusable coordinates",
@@ -646,26 +934,38 @@ def _case_worker(payload: tuple[dict[str, Any], dict[str, Any], int, str]) -> di
         _atomic_json(case_dir / "metrics.json", metrics)
         _atomic_json(case_dir / "fits.json", fit)
         _atomic_json(case_dir / "validation.json", validation)
+        progress(stage, "finish")
         jy_title = rf", $J_y={point.jy:.3g}$" if settings.jy_nonzero else ""
+        second_neighbor_title = (
+            rf", $J_2={point.j2:.3g}$, $J_{{\pm2}}={point.jpm2:.3g}$"
+            if settings.second_neighbor else ""
+        )
         title = (
-            rf"Single pixel ({settings.name}, {point.config_id}): $N={n}$, "
+            rf"Single pixel ({settings.name}, {settings.connectivity}, "
+            rf"{point.config_id}): $N={n}$, "
             rf"$h_z={point.hz:.3g}$, $J={point.j:.3g}$, $J_{{\pm}}={point.jpm:.3g}$, "
-            rf"$h_{{z0}}={settings.hz0:.3g}$, $J_x={point.jx:.3g}$" + jy_title
+            rf"$h_{{z0}}={settings.hz0:.3g}$, $J_x={point.jx:.3g}$"
+            + second_neighbor_title + jy_title
             + rf", $t={settings.evolution_time:.0e}$"
         )
         stage = "plotting"
+        progress(stage, "start")
+        plot_started = time.perf_counter()
         _plot_case(
             case_dir / "blue_red_diagnostics.png",
             case_dir / "fit_diagnostics.png",
             title, arrays, fit_arrays, fit, metrics, settings.max_bloch_points,
+        )
+        progress(
+            stage,
+            "finish",
+            f"seconds={time.perf_counter() - plot_started:.3f}",
         )
         required = [
             "raw_results.npz", "raw_metrics.json", "results.npz",
             "metadata.json", "metrics.json", "fits.json",
             "validation.json", "blue_red_diagnostics.png", "fit_diagnostics.png",
         ]
-        log_lines.append(f"[{timestamp()}] worker={worker} pid={os.getpid()} stage=finish status=success")
-        _atomic_text(case_dir / "execution.log", "\n".join(log_lines) + "\n")
         (case_dir / "FAILURE.json").unlink(missing_ok=True)
         marker = {
             "status": "complete", "completed": timestamp(), "runtime_seconds": time.perf_counter() - started_wall,
@@ -673,6 +973,12 @@ def _case_worker(payload: tuple[dict[str, Any], dict[str, Any], int, str]) -> di
             "validation_passed": True,
         }
         _atomic_json(case_dir / "COMPLETE.json", marker)
+        progress(
+            "case",
+            "finish",
+            f"result=success seconds={marker['runtime_seconds']:.3f}",
+        )
+        _atomic_text(case_dir / "execution.log", "\n".join(log_lines) + "\n")
         return {"config_id": point.config_id, "N": n, "status": "success", "runtime_seconds": marker["runtime_seconds"], "peak_rss_mb": _peak_rss_mb(), **metrics, "fit": fit}
     except BaseException as exc:
         failure = {
@@ -683,9 +989,10 @@ def _case_worker(payload: tuple[dict[str, Any], dict[str, Any], int, str]) -> di
         }
         case_dir.mkdir(parents=True, exist_ok=True)
         _atomic_json(case_dir / "FAILURE.json", failure)
-        log_lines.append(
-            f"[{timestamp()}] worker={worker} pid={os.getpid()} "
-            f"stage={stage} status=failed error={exc!r}"
+        progress(
+            stage,
+            "failed",
+            f"error_type={type(exc).__name__} error={exc!r}",
         )
         _atomic_text(case_dir / "execution.log", "\n".join(log_lines) + "\n")
         return {"config_id": point.config_id, "N": n, "status": "failed", "runtime_seconds": time.perf_counter() - started_wall, "error": str(exc)}
@@ -756,12 +1063,17 @@ def _parameter_correlation_outputs(
 ) -> None:
     """Save descriptive log-parameter/S_Born/WG/WC Spearman correlations."""
 
-    base_parameters = ["jx", "j"] + (["jpm"] if settings.fixed_jpm is None else []) + ["hz"] + (["jy"] if settings.jy_nonzero else [])
+    base_parameters = ["jx", "j"] + (["jpm"] if settings.fixed_jpm is None else []) + ["hz"]
+    if settings.second_neighbor:
+        base_parameters += ["j2", "jpm2"]
+    base_parameters += ["jy"] if settings.jy_nonzero else []
     parameter_features: list[tuple[str, Any]] = [
         (name, lambda point, key=name: getattr(point, key))
         for name in base_parameters
     ]
     ratio_order = ["jx"] + (["jy"] if settings.jy_nonzero else []) + ["j"] + (["jpm"] if settings.fixed_jpm is None else []) + ["hz"]
+    if settings.second_neighbor:
+        ratio_order += ["j2", "jpm2"]
     parameter_features.extend(
         (
             f"{numerator}_over_{denominator}",
@@ -846,6 +1158,8 @@ def _checkpoint_report(scan_root: Path, settings: ScanSettings, n: int, points: 
         if _complete_valid(case_dir) and metrics_path.is_file():
             good_metrics.append((point.config_id, json.loads(metrics_path.read_text(encoding="utf-8"))))
     scale_names = ["J"] + (["Jpm"] if settings.fixed_jpm is None or settings.fixed_jpm != 0.0 else []) + ["hz"]
+    if settings.second_neighbor:
+        scale_names += ["J2", "Jpm2"]
     if settings.hz0 != 0.0:
         scale_names.append("abs(hz0)")
     weak_constraint = (
@@ -880,7 +1194,7 @@ def _checkpoint_report(scan_root: Path, settings: ScanSettings, n: int, points: 
     ]
     _atomic_text(n_dir / "checkpoint_report.md", "\n".join(lines) + "\n")
     _atomic_json(n_dir / "checkpoint_status.json", {"N": n, "requested": len(points), "validated_complete": len(good_metrics), "failures": failures, "generated": timestamp()})
-    _plot_checkpoint_aggregates(n_dir / "aggregate_diagnostics.png", n_dir, points)
+    _plot_checkpoint_aggregates(n_dir / "aggregate_diagnostics.png", n_dir, points, settings)
     records = _successful_records(n_dir, points)
     if records:
         _parameter_correlation_outputs(n_dir, settings, records, label=f"{settings.name}, N={n}")
@@ -904,7 +1218,12 @@ def _successful_records(
     return records
 
 
-def _plot_checkpoint_aggregates(path: Path, n_dir: Path, points: Sequence[ParameterPoint]) -> None:
+def _plot_checkpoint_aggregates(
+    path: Path,
+    n_dir: Path,
+    points: Sequence[ParameterPoint],
+    settings: ScanSettings,
+) -> None:
     records = _successful_records(n_dir, points)
     if not records:
         return
@@ -959,6 +1278,7 @@ def _cross_n(scan_root: Path, settings: ScanSettings, points: Sequence[Parameter
                 "config_id": point.config_id, "N": n,
                 "Jx_unscaled": point.jx, "Jy_unscaled": point.jy,
                 "J": point.j, "Jpm": point.jpm, "hz": point.hz,
+                "J2": point.j2, "Jpm2": point.jpm2,
                 "weak_ratio": point.weak_ratio,
                 "Jx_effective": point.effective_jx(n), "Jy_effective": point.effective_jy(n),
                 "S_born": metrics["S_born"], "theta_entropy": metrics["theta_entropy"],
@@ -1020,7 +1340,10 @@ class SobolCampaign:
             old_settings = ScanSettings(**payload["settings"])
             if old_settings.digest != self.settings.digest:
                 raise FileExistsError(f"incompatible existing campaign at {self.scan_root}; choose a new root")
-            points = [ParameterPoint(**item) for item in payload["configurations"]]
+            points = [
+                _parameter_point_from_manifest(item)
+                for item in payload["configurations"]
+            ]
             return points, payload["coverage"]
         sampling = self.scan_root / "sampling"
         sampling.mkdir(parents=True, exist_ok=True)
@@ -1037,14 +1360,20 @@ class SobolCampaign:
                     old_settings = ScanSettings(**payload["settings"])
                     if old_settings.digest != self.settings.digest:
                         raise FileExistsError(f"incompatible existing campaign at {self.scan_root}")
-                    return [ParameterPoint(**item) for item in payload["configurations"]], payload["coverage"]
+                    return [
+                        _parameter_point_from_manifest(item)
+                        for item in payload["configurations"]
+                    ], payload["coverage"]
                 time.sleep(0.5)
         if not acquired:
             raise TimeoutError(f"timed out waiting for sampling preparation lock: {lock}")
         try:
             if manifest_path.exists() and complete_path.exists():
                 payload = json.loads(manifest_path.read_text(encoding="utf-8"))
-                return [ParameterPoint(**item) for item in payload["configurations"]], payload["coverage"]
+                return [
+                    _parameter_point_from_manifest(item)
+                    for item in payload["configurations"]
+                ], payload["coverage"]
             if manifest_path.exists():
                 payload = json.loads(manifest_path.read_text(encoding="utf-8"))
                 old_settings = ScanSettings(**payload["settings"])
@@ -1267,5 +1596,3 @@ class SobolCampaign:
 
 def build_settings(name: str, **kwargs: Any) -> ScanSettings:
     return ScanSettings(name=name, jy_nonzero=(name == "jy_nonzero"), **kwargs)
-
-

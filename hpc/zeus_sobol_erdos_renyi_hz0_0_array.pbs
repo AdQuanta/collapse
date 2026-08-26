@@ -1,0 +1,17 @@
+#!/bin/bash
+#PBS -N sobol_er_N12
+#PBS -J 0-3
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=128gb
+#PBS -l walltime=72:00:00
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+RUNNER="examples/run_zeus_sobol_erdos_renyi_hz0_0.py"
+CAMPAIGN_SLUG="sobol_erdos_renyi_hz0_0"
+GRAPH_SEED="${GRAPH_SEED:-2026081101}"
+GRAPH_ARGS=(--connectivity erdos_renyi --erdos-renyi-p "${ERDOS_RENYI_P:-0.3}")
+if [[ -f "hpc/zeus_sobol_network_array_common.sh" ]]; then source "hpc/zeus_sobol_network_array_common.sh"; else source "../hpc/zeus_sobol_network_array_common.sh"; fi
