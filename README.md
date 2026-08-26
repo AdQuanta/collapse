@@ -24,15 +24,15 @@ roots extracted from the time-evolution operator.
 The principal numerical observable is the angular distribution of these
 roots. In particular, the reflected-density ratio
 
-$$
+```math
 R(\theta)=\frac{P(\theta)}{P(\theta)+P(\pi-\theta)}
-$$
+```
 
 is compared with the qubit Born curve
 
-$$
+```math
 R_{\mathrm{Born}}(\theta)=\cos^2(\theta/2).
-$$
+```
 
 The repository also studies whether Born-like behavior correlates with
 detector level statistics, near-degenerate couplings, resonance conditions,
@@ -82,7 +82,7 @@ system size, evolution time, and graph connectivity.
 
 A representative single-pixel Hamiltonian is
 
-$$
+```math
 \begin{aligned}
 H={}&H_Q+H_D+H_{QD},\\[2mm]
 H_Q={}&-h_{x0}X_0-h_{z0}Z_0,\\
@@ -97,7 +97,7 @@ H_{QD}={}&-\sum_i\left(
        J_xX_0X_i+J_yY_0Y_i+J_zZ_0Z_i+J_{zx}Z_0X_i
        \right).
 \end{aligned}
-$$
+```
 
 Here, site $0$ is the central qubit, $E$ is the detector interaction graph,
 and $E_2$ is the second-nearest-neighbor edge set used by the corresponding
@@ -107,9 +107,9 @@ parameterization and operator conventions.
 
 Many collective-coupling campaigns use
 
-$$
+```math
 J_{x,\mathrm{eff}}=\frac{J_{x,\mathrm{source}}}{\sqrt{N_D}},
-$$
+```
 
 and analogously for $J_y$. This scaling is a campaign-level convention: the
 Hamiltonian constructor receives the effective coupling. Results must record
@@ -120,27 +120,27 @@ both the source and effective values whenever this convention is used.
 With the central qubit first in the tensor-product basis, time evolution is
 partitioned as
 
-$$
+```math
 U(t)=e^{-iHt}=\begin{pmatrix}A&B\\C&D\end{pmatrix}.
-$$
+```
 
 For the production fixed-input-pole convention, projective roots are obtained
 from the generalized linear pencil
 
-$$
+```math
 Cv=\lambda Av.
-$$
+```
 
 A finite root $\lambda$ defines the normalized qubit state
 
-$$
+```math
 |\phi_0(\lambda)\rangle=
 \frac{|0\rangle+\lambda|1\rangle}{\sqrt{1+|\lambda|^2}},
 \qquad
 \theta=2\arctan|\lambda|,
 \qquad
 \phi=\arg\lambda.
-$$
+```
 
 [`collapse/relative_evolution_pencil.py`](collapse/relative_evolution_pencil.py)
 implements the homogeneous generalized-eigenvalue calculation. It retains
@@ -152,11 +152,11 @@ comparison but are unreliable when $A$ is singular or poorly conditioned.
 
 The main scalar similarity score is
 
-$$
+```math
 S_{\mathrm{Born}}
 =1-2\int_0^\pi
 \left|R(\theta)-\cos^2(\theta/2)\right|\sin\theta\,d\theta.
-$$
+```
 
 `S_Born` is a finite-sample screening diagnostic. A high value means that the
 measured angular ratio is close to the Born curve under the stated binning and
