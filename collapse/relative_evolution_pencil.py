@@ -58,6 +58,12 @@ class RelativeEvolutionPencilSpectrum:
     root_audits: tuple["ProjectiveRootAudit", ...]
     duplicate_diagnostics: "ProjectiveDuplicateDiagnostics"
     solver: str = "scipy.linalg.eig-homogeneous"
+    # False when the caller passed ``compute_left_eigenvectors=False``.  The
+    # left-defined diagnostics are then NaN because they were never computed,
+    # which is a different statement from "NaN because every root was
+    # indeterminate".  Consumers that gate on those diagnostics must branch on
+    # this flag rather than on ``isnan``, which cannot distinguish the two.
+    left_diagnostics_available: bool = True
 
 
 @dataclass(frozen=True)
@@ -322,7 +328,7 @@ def generalized_relative_evolution_spectrum(
     compute_left_eigenvectors:
         Whether to solve for left eigenvectors as well as right ones.  The
         default is *True*, which preserves the full diagnostic set.  Setting it
-        to *False* saves one ``d x d`` complex array and roughly 15% of the QZ
+        to *False* saves one ``d x d`` complex array and 33-36% of the QZ
         time, which is the difference between fitting and not fitting a fixed
         memory budget at large detector dimension.  It is a diagnostic
         reduction, not a different spectrum: ``alpha``, ``beta``, the angles and
@@ -541,6 +547,7 @@ def generalized_relative_evolution_spectrum(
         regularity_audit=regularity,
         root_audits=tuple(root_audits),
         duplicate_diagnostics=duplicates,
+        left_diagnostics_available=compute_left_eigenvectors,
     )
 
 

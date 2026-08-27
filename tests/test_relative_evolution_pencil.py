@@ -205,3 +205,50 @@ def test_local_coordinate_labels_survive_the_opt_out_for_infinite_roots() -> Non
         full.local_condition_coordinate, lean.local_condition_coordinate
     )
     assert "mu=1/lambda" in set(lean.local_condition_coordinate)
+
+
+def test_spectrum_records_whether_left_diagnostics_were_computed() -> None:
+    """NaN from "not computed" must be distinguishable from NaN from "singular".
+
+    ``qz_valid`` gates on the left backward residual, and ``NaN < 1e-10`` is
+    False.  Without an explicit flag a reduced-diagnostic run and a genuinely
+    failed one are indistinguishable in the record.
+    """
+
+    import pytest
+
+    from collapse.hamiltonian_classification import _require_left_diagnostics
+
+    u00 = np.array([[2.0, 0.4], [0.0, 1.5]], dtype=np.complex128)
+    u10 = u00 @ np.diag([0.25, 3.0j])
+
+    full = generalized_relative_evolution_spectrum(u00, u10)
+    lean = generalized_relative_evolution_spectrum(
+        u00, u10, compute_left_eigenvectors=False
+    )
+
+    assert full.left_diagnostics_available is True
+    assert lean.left_diagnostics_available is False
+
+    _require_left_diagnostics(full.left_diagnostics_available)
+    with pytest.raises(ValueError, match="compute_left_eigenvectors=False"):
+        _require_left_diagnostics(lean.left_diagnostics_available)
+
+
+def test_singular_pencil_keeps_left_diagnostics_flag_true() -> None:
+    """An all-indeterminate pencil yields a NaN residual for a real reason.
+
+    That case must keep flowing through the classification gate as it always
+    has, rather than being mistaken for a reduced-diagnostic run.
+    """
+
+    from collapse.hamiltonian_classification import _require_left_diagnostics
+
+    zero = np.zeros((3, 3), dtype=np.complex128)
+
+    spectrum = generalized_relative_evolution_spectrum(zero, zero)
+
+    assert np.all(spectrum.indeterminate)
+    assert np.isnan(spectrum.maximum_left_homogeneous_residual)
+    assert spectrum.left_diagnostics_available is True
+    _require_left_diagnostics(spectrum.left_diagnostics_available)
