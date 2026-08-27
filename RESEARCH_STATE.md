@@ -308,6 +308,66 @@ These are hypotheses, not validated sufficiency results.
 
 ---
 
+# 10a. First direct test of the WD conjecture: it survives, against expectation
+
+**PRELIMINARY_NUMERIC (Claude Code, 2026-08-27).** Not production pipeline output,
+single time, single size. Do not cite as finite-size evidence.
+
+Before committing to the four-size scan of section 15, the conjecture was attacked
+directly and cheaply: put a WD-like detector and an integrable clean ring through
+the *same* classification pipeline at the same size and ask which produces better
+Born-like geometry. The prior expectation, stated before running, was that the
+clean matched ring would win, which would have bracketed the conjecture between an
+integrable best case and a Haar worst case. **That expectation was wrong.**
+
+`N_D = 9`, `t = 100`, `J = 1`, `hz = 0.1`, `hz0 = 0.1`, `Jx = 0.2` with `1/sqrt(N)`
+scaling, `16 x 8` equal-area grid, `l_max = 5`. Gap ratios are taken inside the
+largest resolved detector magnetization sector (dimension 126), never across
+sectors. Poisson reference `0.386`, GOE reference `0.531`.
+
+| family | sector `<r>` | coverage | polar `S_born` | harmonic leakage | dipole sharpness |
+|---|---:|---:|---:|---:|---:|
+| clean matched ring (`Jpm = 0`) | degenerate | 1.000 | 0.179 | 0.126 | 1.049 |
+| exchange ring (`Jpm = 0.7`) | 0.420 | 0.969 | 0.205 | gated out | gated out |
+| Erdos-Renyi `p = 0.4` (`Jpm = 0.7`) | 0.482 - 0.539 | 1.000 | 0.402 - 0.435 | 0.025 - 0.070 | 0.840 - 0.953 |
+| Haar unitary | n/a | 1.000 | -0.045 | 0.939 | 0.029 |
+
+The Erdos-Renyi row spans seeds 3, 11, 29 and 47. The ordering is stable across all
+four: the WD-like detector beats the clean ring on `S_born` by roughly a factor of
+two and has roughly half its harmonic leakage, with no seed overlap.
+
+**Reading.**
+
+1. The WD-like detector is the best Born-like case here, not the integrable ring.
+   This is the first direct evidence *for* the direction of the section 10
+   conjecture rather than against it.
+2. The relation is **not monotonic in randomness**. Haar is maximally random and is
+   decisively the worst: `S_born` at zero and 94% of the angular power outside the
+   dipole. Section 7 stands unchanged; "more random" is still not "more Born."
+3. The clean ring wins on *dipole sharpness* while losing on `S_born` and leakage.
+   The scalar diagnostics disagree about which family is better, which is exactly
+   the situation the repository's rule against single-score Born claims exists for.
+4. The exchange ring fell below full coverage (`0.969`) and its full-sphere
+   diagnostics were correctly refused rather than reported. The coverage gate works.
+
+**What this does not show.** The two families differ in connectivity *and* in `Jpm`,
+so level statistics are confounded with everything else that changed. This is a
+correlation across two points, not a controlled test of WD sufficiency.
+
+**OPEN, and the natural next experiment:** tune level statistics while holding the
+rest of the Hamiltonian fixed, so `<r>` is the only thing that moves, and check
+whether `S_born` tracks it. That isolates what this test could not.
+
+**Note on the clean-ring gap ratio.** Its detector spectrum is massively degenerate,
+so the adjacent-gap ratio is not a meaningful WD/Poisson diagnostic there and is
+recorded as "degenerate" rather than as the `1.0000` the estimator returns.
+
+Script: `work/wd_discriminator_2026-08-27/run_discriminator.py` (under gitignored
+`work/`, so it is not in the repository; rerun to regenerate).
+
+
+---
+
 # 11. Correct rule for level-spacing sectors
 
 For random-matrix/level-spacing diagnostics:
