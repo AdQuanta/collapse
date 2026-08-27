@@ -23,6 +23,13 @@ ATLAS = (
     ROOT / "reports" / "vab_coupling_group_atlas_2026-07-28"
     / "data" / "case_index.csv"
 )
+
+from conftest import requires_paths
+
+pytestmark = requires_paths(
+    "reports/vab_coupling_group_atlas_2026-07-28/data/case_index.csv",
+)
+
 PBS = ROOT / "hpc" / "zeus_vab_atlas_jx_1em3_N14_array.pbs"
 SUBMIT = ROOT / "hpc" / "submit_zeus_vab_atlas_jx_1em3_N14.sh"
 

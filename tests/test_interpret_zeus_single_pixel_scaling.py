@@ -12,6 +12,13 @@ from examples.interpret_zeus_single_pixel_scaling import (
     ScalingAnalyzer,
 )
 
+from conftest import requires_paths
+
+pytestmark = requires_paths(
+    "reports/zeus_single_pixel_analysis_2026-07-16/spectrum_metrics.csv",
+)
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ANALYSIS = ROOT / "reports" / "zeus_single_pixel_analysis_2026-07-16"

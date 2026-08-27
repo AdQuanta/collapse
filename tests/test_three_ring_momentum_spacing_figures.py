@@ -12,7 +12,12 @@ from examples.build_three_ring_momentum_spacing_figures import (
     select_largest_sectors,
 )
 
+from conftest import requires_paths
 
+
+# Only this test reads stored campaign output; the sector-decomposition test
+# below is self-contained and must keep running in a bare checkout.
+@requires_paths("work/zeus_top20_last5_largerN_20260810_001532")
 def test_attached_n17_diagnostics_are_identified_exactly() -> None:
     loaded = [_load_case(case) for case in DEFAULT_CASES]
     scores = [provenance["N17_S_born"] for _, provenance in loaded]

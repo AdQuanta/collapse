@@ -347,8 +347,17 @@ class DegeneracyConjectureAssessment:
                     / len(by_size[size]),
                 }
             )
-        pooled = Counter(row.logical_category for row in self.targeted_complete())
-        total = len(self.targeted_complete())
+        complete_rows = self.targeted_complete()
+        total = len(complete_rows)
+        if total == 0:
+            # Fail closed.  An empty set means the referenced Zeus checkpoints are
+            # absent or no size completed, not that the truth table agrees 0/0.
+            raise ValueError(
+                "no complete targeted rows are available, so the activation/broadness "
+                "truth table cannot be summarized; check that the transferred Zeus "
+                "checkpoint directories exist and contain at least one complete size"
+            )
+        pooled = Counter(row.logical_category for row in complete_rows)
         output.append(
             {
                 "detector_n": "pooled_complete",

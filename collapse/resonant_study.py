@@ -40,9 +40,17 @@ from collapse.born import born_ratio_from_radii
 try:  # QuSpin is preferred; its compiled extension is unavailable on some Windows installs.
     from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin as _SinglePixelHamiltonian
     HAMILTONIAN_BACKEND = "quspin"
+    # ``use_symmetry`` exists only on the QuSpin generator.  This study needs the
+    # full basis so that the central-qubit slices of ``(U00, U10)`` stay local to
+    # the relative-evolution pencil.
+    _FULL_BASIS_KWARGS: dict[str, Any] = {"use_symmetry": False}
 except ImportError:
     from collapse.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy as _SinglePixelHamiltonian
     HAMILTONIAN_BACKEND = "numpy_fallback_quspin_extension_unavailable"
+    # The dense NumPy generator has no sector machinery, so it already *is* the
+    # full-basis construction that ``use_symmetry=False`` selects on QuSpin.
+    # Passing the flag would raise TypeError and kill this fallback path.
+    _FULL_BASIS_KWARGS: dict[str, Any] = {}
 from collapse.level_spacing import (
     compute_unfolded_spacings,
     mean_level_spacing_ratio,
@@ -360,7 +368,7 @@ def run_case(config: StudyConfig, output_dir: Path) -> dict[str, Any]:
         hz0=0.0,
         connectivity="ring",
         central_coupling="all",
-        use_symmetry=False,
+        **_FULL_BASIS_KWARGS,
     ).generate()
     build_seconds = time.perf_counter() - started
     t_diag = time.perf_counter()

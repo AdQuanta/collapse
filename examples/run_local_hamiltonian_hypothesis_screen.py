@@ -37,6 +37,22 @@ DEFAULT_OUTPUT = (
 )
 
 
+def _recorded_path(path: Path) -> str:
+    """Return *path* relative to the repository root when it lies inside it.
+
+    Provenance records should avoid embedding machine-specific absolute paths,
+    but ``--config`` and ``--output-dir`` may legitimately point outside the
+    repository.  ``Path.relative_to`` raises ``ValueError`` in that case, so fall
+    back to the resolved absolute path instead of aborting a completed run.
+    """
+
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT))
+    except ValueError:
+        return str(resolved)
+
+
 def _point_payload(base: dict[str, object], scan: dict[str, object], value: float):
     payload = dict(base)
     name = str(scan["name"])
@@ -123,7 +139,7 @@ def main() -> None:
                     "axis_fidelity": summary["axis_fidelity"],
                     "P1_over_Podd": summary["P1_over_Podd"],
                     "polar_S_born": summary["polar_S_born"],
-                    "result_path": str(result_path.relative_to(ROOT)),
+                    "result_path": _recorded_path(result_path),
                     "status": "LOCAL SMALL-N SCREEN",
                 }
             )
@@ -135,7 +151,7 @@ def main() -> None:
     manifest = {
         "schema_version": 1,
         "generated_utc": datetime.now(timezone.utc).isoformat(),
-        "config": str(config_path.relative_to(ROOT)),
+        "config": _recorded_path(config_path),
         "row_count": len(rows),
         "scientific_status": (
             "LOCAL SMALL-N SCREEN: validates pipeline and informs HPC design; "

@@ -293,6 +293,7 @@ def generalized_relative_evolution_spectrum(
     assess_regularity: bool = False,
     duplicate_tolerance: float | None = None,
     maximum_duplicate_roots: int = 512,
+    compute_left_eigenvectors: bool = True,
 ) -> RelativeEvolutionPencilSpectrum:
     """Solve ``U10 v = lambda U00 v`` without forming ``U00**(-1)``.
 
@@ -318,6 +319,17 @@ def generalized_relative_evolution_spectrum(
         Chordal distance used to cluster repeated projective roots. Defaults
         to ``sqrt(eps)``. Pairwise work is skipped when the spectrum exceeds
         ``maximum_duplicate_roots``.
+    compute_left_eigenvectors:
+        Whether to solve for left eigenvectors as well as right ones.  The
+        default is *True*, which preserves the full diagnostic set.  Setting it
+        to *False* saves one ``d x d`` complex array and roughly 15% of the QZ
+        time, which is the difference between fitting and not fitting a fixed
+        memory budget at large detector dimension.  It is a diagnostic
+        reduction, not a different spectrum: ``alpha``, ``beta``, the angles and
+        the right eigenvectors are unchanged, but
+        ``left_homogeneous_residuals``, ``maximum_left_homogeneous_residual``
+        and ``local_coordinate_condition_numbers`` are then reported as ``NaN``
+        because they are defined through the left eigenvectors.
 
     Returns
     -------
@@ -338,25 +350,43 @@ def generalized_relative_evolution_spectrum(
         raise ValueError("condition_warning_threshold must exceed one")
     if duplicate_tolerance is None:
         duplicate_tolerance = float(np.sqrt(eps))
-    homogeneous, left_vectors, right_vectors = eig(
-        c,
-        a,
-        right=True,
-        left=True,
-        homogeneous_eigvals=True,
-        check_finite=True,
-    )
+
+    # The denominator spectrum and both spectral norms are each needed several
+    # times below.  Compute the two O(d^3) factorizations exactly once: the
+    # spectral norm of a matrix *is* its largest singular value, so ``svd(a)``
+    # supplies ``norm_a``, the numerical rank, and the condition number together.
+    singular_values = np.linalg.svd(a, compute_uv=False)
+    sigma_max = float(singular_values[0])
+    sigma_min = float(singular_values[-1])
+    norm_a = sigma_max
+    norm_c = float(np.linalg.norm(c, ord=2))
+
+    if compute_left_eigenvectors:
+        homogeneous, left_vectors, right_vectors = eig(
+            c,
+            a,
+            right=True,
+            left=True,
+            homogeneous_eigvals=True,
+            check_finite=True,
+        )
+        left_vectors = np.asarray(left_vectors, dtype=np.complex128)
+    else:
+        homogeneous, right_vectors = eig(
+            c,
+            a,
+            right=True,
+            left=False,
+            homogeneous_eigvals=True,
+            check_finite=True,
+        )
+        left_vectors = np.empty((n, 0), dtype=np.complex128)
     alpha = np.asarray(homogeneous[0], dtype=np.complex128)
     beta = np.asarray(homogeneous[1], dtype=np.complex128)
-    left_vectors = np.asarray(left_vectors, dtype=np.complex128)
     right_vectors = np.asarray(right_vectors, dtype=np.complex128)
 
     pair_scale = np.maximum(np.abs(alpha), np.abs(beta))
-    absolute_floor = projective_tolerance * max(
-        float(np.linalg.norm(a, ord=2)),
-        float(np.linalg.norm(c, ord=2)),
-        1.0,
-    )
+    absolute_floor = projective_tolerance * max(norm_a, norm_c, 1.0)
     indeterminate = pair_scale <= absolute_floor
     infinite = (~indeterminate) & (np.abs(beta) <= projective_tolerance * pair_scale)
     finite = ~(indeterminate | infinite)
@@ -374,9 +404,6 @@ def generalized_relative_evolution_spectrum(
         np.abs(beta[determined]),
     )
 
-    singular_values = np.linalg.svd(a, compute_uv=False)
-    sigma_max = float(singular_values[0])
-    sigma_min = float(singular_values[-1])
     if rank_tolerance is None:
         rank_tolerance = n * eps * sigma_max
     if rank_tolerance < 0.0:
@@ -384,8 +411,6 @@ def generalized_relative_evolution_spectrum(
     numerical_rank = int(np.count_nonzero(singular_values > rank_tolerance))
     condition_number = np.inf if sigma_min == 0.0 else sigma_max / sigma_min
 
-    norm_a = float(np.linalg.norm(a, ord=2))
-    norm_c = float(np.linalg.norm(c, ord=2))
     residual_norms = np.full(n, np.nan, dtype=float)
     residuals = np.full(n, np.nan, dtype=float)
     left_residuals = np.full(n, np.nan, dtype=float)
@@ -395,7 +420,6 @@ def generalized_relative_evolution_spectrum(
         if indeterminate[index]:
             continue
         vector = right_vectors[:, index]
-        left_vector = left_vectors[:, index]
         numerator = np.linalg.norm(
             beta[index] * (c @ vector) - alpha[index] * (a @ vector)
         )
@@ -404,6 +428,21 @@ def generalized_relative_evolution_spectrum(
             abs(beta[index]) * norm_c + abs(alpha[index]) * norm_a
         ) * np.linalg.norm(vector)
         residuals[index] = float(numerator / denominator) if denominator else float(numerator)
+
+        # The local coordinate label describes the root itself, so it is recorded
+        # whether or not left eigenvectors were requested.
+        if finite[index]:
+            local_coordinates[index] = "lambda"
+        elif infinite[index]:
+            local_coordinates[index] = "mu=1/lambda"
+
+        if not compute_left_eigenvectors:
+            # The left residual and the local condition estimate are defined
+            # through the left eigenvector.  They stay NaN rather than being
+            # silently approximated from the right eigenvector alone.
+            continue
+
+        left_vector = left_vectors[:, index]
         left_numerator = np.linalg.norm(
             np.conj(beta[index]) * (c.conj().T @ left_vector)
             - np.conj(alpha[index]) * (a.conj().T @ left_vector)
@@ -424,7 +463,6 @@ def generalized_relative_evolution_spectrum(
             local_conditions[index] = (
                 float(numerator_condition / overlap) if overlap > 0.0 else np.inf
             )
-            local_coordinates[index] = "lambda"
         elif infinite[index]:
             inverse_value = beta[index] / alpha[index]
             overlap = abs(np.vdot(left_vector, c @ vector))
@@ -434,7 +472,6 @@ def generalized_relative_evolution_spectrum(
             local_conditions[index] = (
                 float(numerator_condition / overlap) if overlap > 0.0 else np.inf
             )
-            local_coordinates[index] = "mu=1/lambda"
     finite_residuals = residuals[np.isfinite(residuals)]
     maximum_residual = (
         float(np.max(finite_residuals)) if finite_residuals.size else np.nan
