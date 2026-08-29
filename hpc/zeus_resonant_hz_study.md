@@ -1,11 +1,11 @@
 # Zeus/PBS runbook: resonant h_z study
 
-This repository uses PBS on Zeus. No account, queue, module, or filesystem value is assumed. Set `PYTHON_MODULE` only if the site requires one; otherwise arrange for `python3.12` to be on `PATH`.
+This repository uses PBS on Zeus. No account, queue, module, or filesystem value is assumed. Set `PYTHON_MODULE` only if the site requires one; otherwise arrange for `python3.11` to be on `PATH`.
 
 Create the exact environment once:
 
 ```bash
-VENV=.venv-resonant PYTHON_BIN=python3.12 bash hpc/create_resonant_env.sh
+VENV=.venv-resonant PYTHON_BIN=python3.11 bash hpc/create_resonant_env.sh
 ```
 
 Dry-run one array task, then smoke-test it:

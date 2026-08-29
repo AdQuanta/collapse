@@ -54,7 +54,7 @@ each N independently.
 ```bash
 python3.11 -m venv .venv-zeus-anisotropic
 source .venv-zeus-anisotropic/bin/activate
-python -m pip install -r requirements-local-study.txt
+python -m pip install -r requirements.txt
 ```
 
 The PBS scripts require Python 3.11, `quspin==1.0.0`, and

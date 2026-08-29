@@ -1,4 +1,8 @@
-# Project-generated files
+# -----------------------------------------------------------------------------
+# Project-generated research data
+# -----------------------------------------------------------------------------
+# These root-level directories contain local, derived, or production-scale
+# artifacts. Curated manuscript assets under manuscript/ remain trackable.
 /work/
 /figures/
 /reports/
@@ -6,63 +10,166 @@
 /presentations/
 /proofs/
 /tmp/
+/scratch/
+/logs/
+/scripts/logs/
 
-# Python bytecode and caches
+# -----------------------------------------------------------------------------
+# Python bytecode, caches, and tooling state
+# -----------------------------------------------------------------------------
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyi.bak
+.cache/
 .pytest_cache/
+.hypothesis/
 .mypy_cache/
+.pyre/
+.pyright/
 .ruff_cache/
 .pytype/
 .tox/
 .nox/
+dmypy.json
+dmypy.json.*
+
+# Coverage and profiling output
 .coverage
 .coverage.*
+coverage.xml
 htmlcov/
+junit.xml
+*.cover
+*.prof
+*.pstats
 
-# Virtual environments
-.venv/
-venv/
-env/
-ENV/
+# -----------------------------------------------------------------------------
+# Virtual environments and local interpreters
+# -----------------------------------------------------------------------------
+/.venv/
+/.venv-*/
+/venv/
+/venv-*/
+/env/
+/ENV/
+.Python
+pythonenv*
+__pypackages__/
 
-# Packaging and build artifacts
+# -----------------------------------------------------------------------------
+# Packaging, native extensions, and build artifacts
+# -----------------------------------------------------------------------------
 build/
 dist/
+wheels/
 *.egg-info/
 .eggs/
 *.egg
 pip-wheel-metadata/
+*.whl
+*.so
+*.dylib
+*.dll
+*.pyd
+*.o
+*.a
 
-# Jupyter
+# -----------------------------------------------------------------------------
+# Jupyter and interactive scientific tools
+# -----------------------------------------------------------------------------
 .ipynb_checkpoints/
-
-# Matplotlib runtime caches
+.jupyter/
+.ipython/
 .matplotlib/
 .mpl-cache/
 .mplconfig*/
 
-# Environment variables and local secrets
-.env
-.env.*
-!.env.example
+# -----------------------------------------------------------------------------
+# Documentation and LaTeX build intermediates
+# -----------------------------------------------------------------------------
+site/
+docs/_build/
+*.aux
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
 
-# Logs and temporary files
+# Keep source bibliographies and intentional compiled manuscript PDFs tracked.
+
+# -----------------------------------------------------------------------------
+# HPC, logs, and temporary process files
+# -----------------------------------------------------------------------------
 *.log
+*.pid
+*.pid.lock
 *.tmp
 *.temp
+*.bak
+*.orig
+*.rej
 *.swp
 *.swo
 *~
 
-# IDE and editor metadata
+# Common PBS/Torque scheduler output names, without ignoring .pbs scripts.
+*.o[0-9]*
+*.e[0-9]*
+
+# -----------------------------------------------------------------------------
+# Local configuration and secrets
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.template
+*.pem
+*.key
+credentials*.json
+
+# -----------------------------------------------------------------------------
+# Editors and IDEs
+# -----------------------------------------------------------------------------
 .idea/
 .vscode/
+.fleet/
+.settings/
+.project
+.classpath
 *.code-workspace
+*.iml
+*.sublime-project
+*.sublime-workspace
 
+# -----------------------------------------------------------------------------
 # Operating-system metadata
+# -----------------------------------------------------------------------------
+# macOS
 .DS_Store
-Thumbs.db
-Desktop.ini
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
 
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux desktop and removable-media metadata
+.directory
+.Trash-*
+lost+found/

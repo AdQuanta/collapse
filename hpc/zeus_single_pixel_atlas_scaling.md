@@ -21,7 +21,7 @@ the pinned numerical packages, then supply its path when needed:
 ```bash
 python3.11 -m venv .venv-zeus-atlas
 source .venv-zeus-atlas/bin/activate
-python -m pip install -r requirements-local-study.txt
+python -m pip install -r requirements.txt
 ```
 
 All four PBS headers target `zeus_new_q`, request `8` CPUs and `128gb`, and

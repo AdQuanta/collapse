@@ -210,6 +210,8 @@ collapse/
 ├── figures/                  # Local generated figures; excluded from Git
 ├── work/                     # Zeus results and intermediate data; excluded
 ├── archive/                  # Legacy code; not imported by active modules
+├── requirements.txt         # Pinned scientific runtime
+├── requirements-dev.txt     # Tests, figures, and report builders
 ├── AGENTS.md                 # Scientific and engineering contribution rules
 └── README.md
 ```
@@ -231,11 +233,12 @@ and `tmp/` are reserved in `.gitignore` and may not exist in a fresh checkout.
 - A working compiler/runtime compatible with QuSpin if running the optional
   symmetry-aware calculations
 
-The current repository does not contain packaging metadata or a dependency
-lock/requirements file. Run commands from the repository root so the local
-`core` package is on Python's import path. The commands below install the
-core libraries used by the package and test suite; reproduce archival results
-only with the environment recorded in the corresponding result metadata.
+The repository is not installed as a package, so run commands from its root to
+keep the local `core` package on Python's import path. `requirements.txt` pins
+the scientific runtime, including QuSpin and its compiled dependencies;
+`requirements-dev.txt` extends it with pytest and the figure/PDF report tools.
+The pins reproduce the verified Python 3.11 environment, but archival results
+must still retain the environment recorded in their result metadata.
 
 ### Setup
 
@@ -248,29 +251,35 @@ cd collapse
 python3.11 -m venv .venv
 source .venv/bin/activate
 
-# Install the core numerical and test dependencies
+# Install the complete development and analysis environment
 python -m pip install --upgrade pip
-python -m pip install numpy scipy matplotlib pytest
-
-# Optional: symmetry-aware Hamiltonians
-python -m pip install quspin
+python -m pip install -r requirements-dev.txt
 
 # Verify the installation
 python -m pytest -q
 ```
 
-### Core Dependencies
+For a runtime-only Zeus or analysis environment, install
+`requirements.txt` instead. Do not submit a production campaign until the
+configuration and small-system smoke checks in [`AGENTS.md`](AGENTS.md) pass.
 
-| Package | Purpose |
-| --- | --- |
-| **NumPy** | Dense arrays and small-system reference calculations |
-| **SciPy** | Linear algebra, statistics, fitting, and sparse numerics |
-| **Matplotlib** | Diagnostic and publication-quality figures |
-| **pytest** | Unit, regression, and integration tests |
-| **QuSpin** | Optional symmetry-aware many-body Hamiltonians |
+### Pinned Dependencies
 
-Some report and PDF-building scripts additionally import Pillow, pypdf, or
-ReportLab. Install those only when using the corresponding workflow.
+| Package | Version | File | Purpose |
+| --- | ---: | --- | --- |
+| **NumPy** | 2.4.6 | Runtime | Dense arrays and small-system reference calculations |
+| **SciPy** | 1.17.1 | Runtime | Linear algebra, statistics, fitting, and sparse numerics |
+| **Matplotlib** | 3.11.0 | Runtime | Diagnostic and publication-quality figures |
+| **QuSpin** | 1.0.0 | Runtime | Symmetry-aware many-body Hamiltonians |
+| **quspin-extensions** | 0.1.6 | Runtime | Compiled QuSpin extensions |
+| **parallel-sparse-tools** | 0.2.5 | Runtime | QuSpin sparse-matrix support |
+| **pytest** | 9.1.1 | Development | Unit, regression, and integration tests |
+| **Pillow** | 12.3.0 | Development | Figure inspection and image composition |
+| **pypdf** | 6.16.2 | Development | PDF verification and inspection |
+| **ReportLab** | 5.0.1 | Development | Programmatic PDF report generation |
+
+When changing a pin, rerun the full test suite and record the effective package
+versions with any new scientific result.
 
 ---
 

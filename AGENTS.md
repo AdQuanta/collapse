@@ -43,7 +43,7 @@ Typical macOS setup:
 ```bash
 python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install numpy scipy matplotlib pytest
+python -m pip install -r requirements-dev.txt
 python -m pytest -q
 ```
 
