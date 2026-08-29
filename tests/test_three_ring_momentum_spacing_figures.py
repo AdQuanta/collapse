@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from examples.build_three_ring_momentum_spacing_figures import (
+from scripts.build_three_ring_momentum_spacing_figures import (
     DEFAULT_CASES,
     HamiltonianParameters,
     _detector_static,

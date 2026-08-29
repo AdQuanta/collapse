@@ -5,7 +5,7 @@ Tests for Born follow-up shortlist ordering.
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "examples"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from shortlist_born_followup_candidates import _off_resonance_controls  # noqa: E402
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.single_pixel_atlas import (
+from core.single_pixel_atlas import (
     AngularDiagnosticCalculator,
     DetectorSpectralVarianceProvider,
     FieldRunMetadata,

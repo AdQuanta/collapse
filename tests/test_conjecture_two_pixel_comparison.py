@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.conjecture_two_pixel_comparison import (
+from core.conjecture_two_pixel_comparison import (
     all_specs,
     conjecture_families,
     pair_specs,
     paired_distance_records,
 )
-from collapse.two_pixel_study import AngularDiagnosticService, ComparisonSimulator
+from core.two_pixel_study import AngularDiagnosticService, ComparisonSimulator
 
 
 def test_conjecture_families_reproduce_all_four_evidence_grids():

@@ -5,15 +5,15 @@ from __future__ import annotations
 from argparse import Namespace
 from pathlib import Path
 
-from collapse.sobol_coupling_scan import generate_sobol_points
-from collapse.zeus_sobol_array import batch_bounds, build_scan_settings
-from examples.run_zeus_sobol_hz0_0_N14 import SPEC as HZ0_SPEC
-from examples.run_zeus_sobol_hz0_0p1_hz_0p0999_0p1001_N14 import (
+from core.sobol_coupling_scan import generate_sobol_points
+from core.zeus_sobol_array import batch_bounds, build_scan_settings
+from scripts.run_zeus_sobol_hz0_0_N14 import SPEC as HZ0_SPEC
+from scripts.run_zeus_sobol_hz0_0p1_hz_0p0999_0p1001_N14 import (
     HZ_LOWER,
     HZ_UPPER,
     SPEC as NEAR_HZ_SPEC,
 )
-from examples.run_zeus_sobol_second_neighbor_hz0_0_N14 import SPEC as SECOND_SPEC
+from scripts.run_zeus_sobol_second_neighbor_hz0_0_N14 import SPEC as SECOND_SPEC
 
 
 ROOT = Path(__file__).resolve().parents[1]

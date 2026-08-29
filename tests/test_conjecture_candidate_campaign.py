@@ -8,7 +8,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "conjecture_candidate_campaign_2026-07-16.json"
-RUNNER = ROOT / "examples" / "run_conjecture_candidate_campaign.py"
+RUNNER = ROOT / "scripts" / "run_conjecture_candidate_campaign.py"
 PBS = ROOT / "hpc" / "zeus_conjecture_candidate_campaign_N11_N18.pbs"
 
 
@@ -71,5 +71,5 @@ def test_pbs_matches_zeus_requirements_and_saves_case_checkpoints():
     assert "#PBS -m abe" in text
     assert "#PBS -M matanhaller@campus.technion.ac.il" in text
     assert 'PYTHON_BIN="${PYTHON_BIN:-python3.11}"' in text
-    assert '"$PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py"' in text
+    assert '"$PROJECT_ROOT/scripts/run_conjecture_candidate_campaign.py"' in text
     assert "Each case has its own results.csv, run.log" in text

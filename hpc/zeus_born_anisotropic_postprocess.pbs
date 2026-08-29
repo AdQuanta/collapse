@@ -137,12 +137,12 @@ echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENB
 
 case "$TASK_ID" in
   1)
-    "$PYTHON_BIN" examples/summarize_born_search_results.py \
+    "$PYTHON_BIN" scripts/summarize_born_search_results.py \
       --root "$RUN_ROOT" \
       --top 40 \
       --out-md "$RUN_ROOT/summary.md" \
       --out-csv "$SUMMARY_CSV"
-    "$PYTHON_BIN" examples/shortlist_born_followup_candidates.py \
+    "$PYTHON_BIN" scripts/shortlist_born_followup_candidates.py \
       --source-csv "$SUMMARY_CSV" \
       --out-dir "$RUN_ROOT" \
       --top 40 \
@@ -150,14 +150,14 @@ case "$TASK_ID" in
       --primary-triplet-n 15 16 \
       --pair-label n15_n16 \
       --triplet-label n15_n16
-    "$PYTHON_BIN" examples/audit_born_followup_resonance.py \
+    "$PYTHON_BIN" scripts/audit_born_followup_resonance.py \
       --root "$RUN_ROOT" \
       --summary-csv "$SUMMARY_CSV" \
       --primary-csv "$PRIMARY_QUEUE_CSV" \
       --off-controls-csv "$OFF_RESONANCE_CSV"
     ;;
   2)
-    "$PYTHON_BIN" examples/born_candidate_stability.py \
+    "$PYTHON_BIN" scripts/born_candidate_stability.py \
       --source-csv "$SUMMARY_CSV" \
       --queue-csv "$PRIMARY_QUEUE_CSV" \
       --mode primary \
@@ -176,7 +176,7 @@ case "$TASK_ID" in
       --log-file "$OUT_LOG"
     ;;
   3)
-    "$PYTHON_BIN" examples/born_candidate_stability.py \
+    "$PYTHON_BIN" scripts/born_candidate_stability.py \
       --source-csv "$SUMMARY_CSV" \
       --mode controls \
       --min-n 13 \
@@ -193,7 +193,7 @@ case "$TASK_ID" in
       --log-file "$OUT_LOG"
     ;;
   4)
-    "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py \
+    "$PYTHON_BIN" scripts/plot_born_candidate_diagnostics.py \
       --source-csv "$SUMMARY_CSV" \
       --queue-csv "$PRIMARY_QUEUE_CSV" \
       --mode primary \
@@ -213,7 +213,7 @@ case "$TASK_ID" in
       --log-file "$OUT_LOG"
     ;;
   5)
-    "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py \
+    "$PYTHON_BIN" scripts/plot_born_candidate_diagnostics.py \
       --source-csv "$SUMMARY_CSV" \
       --mode controls \
       --min-n 13 \

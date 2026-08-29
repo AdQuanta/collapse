@@ -33,7 +33,7 @@ directory` failure. If you submit from elsewhere, supply the project root:
 
 ```bash
 qsub -v PROJECT_ROOT="$HOME/research/collapse" \
-  "$HOME/research/collapse/hpc/zeus_conjecture_candidate_campaign_N11_N18.pbs"
+  "$HOME/research/core/hpc/zeus_conjecture_candidate_campaign_N11_N18.pbs"
 ```
 
 ## Outputs and restart behavior

@@ -70,7 +70,7 @@ hpc/zeus_sector_weak_kernel_slide8.pbs
 Python script:
 
 ```bash
-examples/sector_weak_kernel_diagnostics.py
+scripts/sector_weak_kernel_diagnostics.py
 ```
 
 Each task writes:
@@ -197,7 +197,7 @@ combine the sector summaries and generate overview plots with:
 ```bash
 cd "$HOME/research/collapse"
 mkdir -p figures/zeus_sector_weak_kernel_slide8_summary
-python examples/summarize_sector_weak_kernel_results.py \
+python scripts/summarize_sector_weak_kernel_results.py \
   figures/zeus_sector_weak_kernel_slide8 \
   --out-dir figures/zeus_sector_weak_kernel_slide8_summary \
   | tee figures/zeus_sector_weak_kernel_slide8_summary/postprocess.log
@@ -208,7 +208,7 @@ If you also want to compare the Zeus rows against the local N10/N12/N14 probes:
 ```bash
 cd "$HOME/research/collapse"
 mkdir -p figures/sector_weak_kernel_summary_with_zeus_2026-06-20
-python examples/summarize_sector_weak_kernel_results.py \
+python scripts/summarize_sector_weak_kernel_results.py \
   figures/sector_weak_kernel_compare_N10_2026-06-20 \
   figures/sector_weak_kernel_scaling_probe_N12_2026-06-20 \
   figures/sector_weak_kernel_scaling_probe_N14_2026-06-20 \

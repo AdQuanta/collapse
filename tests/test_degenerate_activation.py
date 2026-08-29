@@ -5,8 +5,8 @@ import math
 import numpy as np
 import pytest
 
-from collapse.degenerate_activation import ActivationConfig, DegenerateActivationAnalyzer
-from collapse.detector_resonance import DenseRingDetectorBuilder, DetectorSpec, SpectralProjectorAnalyzer
+from core.degenerate_activation import ActivationConfig, DegenerateActivationAnalyzer
+from core.detector_resonance import DenseRingDetectorBuilder, DetectorSpec, SpectralProjectorAnalyzer
 
 
 def test_exact_weight_matches_projector_invariant_summary() -> None:

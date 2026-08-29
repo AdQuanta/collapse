@@ -7,10 +7,10 @@ from pathlib import Path
 
 import numpy as np
 
-from collapse.resonant_study import wrapped_variance
+from core.resonant_study import wrapped_variance
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "plot_single_pixel_hz0_diagnostic_atlas.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "plot_single_pixel_hz0_diagnostic_atlas.py"
 SPEC = importlib.util.spec_from_file_location("hz0_atlas", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

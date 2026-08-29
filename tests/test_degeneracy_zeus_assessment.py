@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from collapse.degeneracy_zeus_assessment import AssessmentPaths, run_assessment
+from core.degeneracy_zeus_assessment import AssessmentPaths, run_assessment
 
 
 ROOT = Path(__file__).resolve().parent.parent

@@ -81,7 +81,7 @@ The job itself aborts before simulation unless these versions are exactly
 ```bash
 cd "$HOME/research/collapse"
 
-python3.11 examples/run_degeneracy_heavy_tail_campaign.py \
+python3.11 scripts/run_degeneracy_heavy_tail_campaign.py \
   --config configs/zeus_degeneracy_heavy_tail_iff_N13_N18.json \
   describe
 

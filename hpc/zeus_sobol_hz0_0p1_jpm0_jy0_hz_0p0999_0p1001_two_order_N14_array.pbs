@@ -12,7 +12,7 @@
 set -euo pipefail
 
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
-RUNNER="examples/run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p0999_0p1001_two_order_N14.py"
+RUNNER="scripts/run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p0999_0p1001_two_order_N14.py"
 if [[ -f "$RUNNER" ]]; then
   REPO_ROOT="$PWD"
 elif [[ -f "../$RUNNER" ]]; then

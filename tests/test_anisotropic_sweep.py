@@ -9,7 +9,7 @@ import time
 import matplotlib.image as mpimg
 import numpy as np
 
-from collapse.anisotropic_sweep import (
+from core.anisotropic_sweep import (
     AngularDiagnosticCalculator,
     AnisotropicCase,
     AnisotropicRepository,

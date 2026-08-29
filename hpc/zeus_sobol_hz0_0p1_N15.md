@@ -54,6 +54,6 @@ bash hpc/submit_zeus_sobol_hz0_0p1_N15.sh
 For a local sampling-only check, run any batch with `--dry-run`, for example:
 
 ```bash
-python3.11 examples/run_zeus_sobol_hz0_0p1_N15.py \
+python3.11 scripts/run_zeus_sobol_hz0_0p1_N15.py \
   --family jy_zero --batch-index 0 --output-root work/hz0_0p1_dry_run --dry-run
 ```

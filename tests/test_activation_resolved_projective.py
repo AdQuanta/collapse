@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.activation_resolved_projective import (
+from core.activation_resolved_projective import (
     RingActivationParameters,
     activation_quantile_partition,
     all_detector_activation_channels,

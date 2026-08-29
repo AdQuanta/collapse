@@ -17,7 +17,7 @@ post-processing command blocks for the user to run manually.
 ## Files
 
 - PBS script: `hpc/zeus_born_followup.pbs`
-- Search entry point: `examples/born_hamiltonian_search.py`
+- Search entry point: `scripts/born_hamiltonian_search.py`
 - Existing Zeus results used to choose the grid:
   `figures/zeus_born_hamiltonian_search`
 
@@ -95,7 +95,7 @@ Every follow-up task writes two progress logs:
 ```
 
 The first log is the PBS-side stream captured with `tee`; the second log is
-written by `examples/born_hamiltonian_search.py` and travels with the result
+written by `scripts/born_hamiltonian_search.py` and travels with the result
 directory.  Use the PBS-side log for live monitoring and the result-side
 `run.log` for archived provenance.
 
@@ -133,7 +133,7 @@ activate `VIRTUAL_ENV_PATH`, but those exact module names are currently unknown.
 Run this locally before copying code to Zeus, or on Zeus after updating code:
 
 ```bash
-python -m py_compile examples/born_hamiltonian_search.py collapse/born.py
+python -m py_compile scripts/born_hamiltonian_search.py core/born.py
 ```
 
 The follow-up script deliberately uses `--backend quspin` for single-pixel
@@ -167,7 +167,7 @@ ZEUS_TARGET="<YOUR_ZEUS_SSH_ALIAS_OR_USER_AT_HOST>"
 REMOTE_ROOT="research/collapse"
 
 ssh "${ZEUS_TARGET}" "mkdir -p '${REMOTE_ROOT}'"
-scp -r collapse examples hpc "${ZEUS_TARGET}:${REMOTE_ROOT}/"
+scp -r core scripts hpc "${ZEUS_TARGET}:${REMOTE_ROOT}/"
 ```
 
 If Zeus requires a nonstandard port, bastion, VPN, or SSH alias, encode that in
@@ -198,7 +198,7 @@ cd "$HOME/research/collapse"
 RUN_TAG="followup_$(date +%Y%m%d_%H%M%S)_born"
 RUN_ROOT="figures/zeus_born_followup_${RUN_TAG}"
 LOG_ROOT="logs/zeus_born_followup_${RUN_TAG}"
-ZEUS_ENV_SETUP="$HOME/research/collapse/hpc/zeus_env.sh"
+ZEUS_ENV_SETUP="$HOME/research/core/hpc/zeus_env.sh"
 mkdir -p "$RUN_ROOT" "$LOG_ROOT"
 
 qsub -v RUN_ROOT="$RUN_ROOT",LOG_ROOT="$LOG_ROOT",ZEUS_ENV_SETUP="$ZEUS_ENV_SETUP" \
@@ -345,7 +345,7 @@ RUN_TAG="<RUN_TAG_USED_FOR_THE_JOB>"
 RUN_ROOT="figures/zeus_born_followup_${RUN_TAG}"
 LOG_ROOT="logs/zeus_born_followup_${RUN_TAG}"
 
-python examples/check_zeus_followup_import.py \
+python scripts/check_zeus_followup_import.py \
   --root "$RUN_ROOT" \
   --logs-root "$LOG_ROOT" \
   --json-out "$RUN_ROOT/import_check.json"
@@ -466,18 +466,18 @@ finite-size scaling summary for the follow-up root from the local repository:
 RUN_TAG="<RUN_TAG_USED_FOR_THE_JOB>"
 RUN_ROOT="figures/zeus_born_followup_${RUN_TAG}"
 
-python examples/summarize_born_search_results.py \
+python scripts/summarize_born_search_results.py \
   --root "$RUN_ROOT" \
   --top 40 \
   --out-md "$RUN_ROOT/summary.md" \
   --out-csv "$RUN_ROOT/summary_rows.csv"
 
-python examples/compare_born_followup_scaling.py \
+python scripts/compare_born_followup_scaling.py \
   --source-csv "$RUN_ROOT/summary_rows.csv" \
   --out-md "$RUN_ROOT/scaling_summary.md" \
   --top 40
 
-python examples/shortlist_born_followup_candidates.py \
+python scripts/shortlist_born_followup_candidates.py \
   --source-csv "$RUN_ROOT/summary_rows.csv" \
   --out-dir "$RUN_ROOT" \
   --top 20
@@ -487,7 +487,7 @@ Then run the multiscale metric-stability screen on the retrieved rows.  This
 checks whether the best rows survive theta-bin and tail-fraction changes:
 
 ```bash
-python examples/born_candidate_stability.py \
+python scripts/born_candidate_stability.py \
   --source-csv "$RUN_ROOT/summary_rows.csv" \
   --queue-csv "$RUN_ROOT/shortlist_primary_n13_n14.csv" \
   --mode primary \
@@ -580,7 +580,7 @@ stability screen with `--mode controls` into a separate output directory before
 interpreting them as real candidates.
 
 ```bash
-python examples/born_candidate_stability.py \
+python scripts/born_candidate_stability.py \
   --source-csv "$RUN_ROOT/summary_rows.csv" \
   --mode controls \
   --top-rows 12 \

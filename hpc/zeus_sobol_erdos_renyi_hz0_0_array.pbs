@@ -10,7 +10,7 @@
 
 set -euo pipefail
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
-RUNNER="examples/run_zeus_sobol_erdos_renyi_hz0_0.py"
+RUNNER="scripts/run_zeus_sobol_erdos_renyi_hz0_0.py"
 CAMPAIGN_SLUG="sobol_erdos_renyi_hz0_0"
 GRAPH_SEED="${GRAPH_SEED:-2026081101}"
 GRAPH_ARGS=(--connectivity erdos_renyi --erdos-renyi-p "${ERDOS_RENYI_P:-0.3}")

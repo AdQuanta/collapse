@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.two_pixel_study import (
+from core.two_pixel_study import (
     AngularDiagnosticService,
     ComparisonSimulator,
     default_specs,

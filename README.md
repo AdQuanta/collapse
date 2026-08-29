@@ -5,8 +5,9 @@ projective disentanglement roots, Born-like angular statistics, and
 symmetry-resolved spectral chaos.
 
 This repository supports an ongoing theoretical and numerical research
-project. It does **not** currently accompany a paper, and no manuscript is
-under preparation at this stage.
+project. A PRL-style manuscript package, including its sources, generated
+figures, provenance records, and compiled PDFs, is maintained in
+[`manuscript/`](manuscript/).
 
 The codebase includes small-system NumPy reference implementations,
 symmetry-aware QuSpin calculations, parameter-space studies, diagnostic
@@ -142,7 +143,7 @@ A finite root $\lambda$ defines the normalized qubit state
 \phi=\arg\lambda.
 ```
 
-[`collapse/relative_evolution_pencil.py`](collapse/relative_evolution_pencil.py)
+[`core/relative_evolution_pencil.py`](core/relative_evolution_pencil.py)
 implements the homogeneous generalized-eigenvalue calculation. It retains
 finite, infinite, and indeterminate projective pairs and reports numerical
 regularity checks. Direct $A^{-1}C$-style calculations remain available for
@@ -185,8 +186,11 @@ and Wigner–Dyson reference statistics.
 
 ```text
 collapse/
-├── collapse/                 # Reusable physics and numerical library
-│   ├── hamiltonians.py       # NumPy and QuSpin Hamiltonian families
+├── core/                     # Reusable physics and numerical library
+│   ├── hamiltonians/         # NumPy and QuSpin Hamiltonian families
+│   │   ├── base.py
+│   │   ├── numpy_hamiltonians.py
+│   │   └── quspin_hamiltonians.py
 │   ├── analysis.py           # Relative-evolution analysis
 │   ├── relative_evolution_pencil.py
 │   ├── born.py               # Polar Born-like diagnostics
@@ -197,23 +201,24 @@ collapse/
 │   ├── detector_graphs.py    # Seeded detector-network construction
 │   ├── sobol_coupling_scan.py
 │   └── visualization.py
-├── examples/                 # Study runners, analyses, and figure builders
+├── scripts/                  # Study runners, analyses, and figure builders
 ├── configs/                  # Versioned research and Zeus configurations
 ├── hpc/                      # PBS jobs, submission wrappers, and runbooks
 ├── tests/                    # Unit, regression, invariant, and smoke tests
-├── reports/                  # Generated reports; excluded from Git
-├── figures/                  # Generated figures; excluded from Git
+├── manuscript/               # PRL Letter, supplement, figures, and audits
+├── reports/                  # Local research reports; excluded from Git
+├── figures/                  # Local generated figures; excluded from Git
 ├── work/                     # Zeus results and intermediate data; excluded
-├── output/                   # Generated output; excluded from Git
 ├── archive/                  # Legacy code; not imported by active modules
-├── requirements-local-study.txt
-├── CODEBASE_MAP.md
-└── THEORETICAL_CONCLUSIONS.md
+├── AGENTS.md                 # Scientific and engineering contribution rules
+└── README.md
 ```
 
-Reusable physics belongs in `collapse/`; executable orchestration belongs in
-`examples/`; scientifically meaningful parameter sets belong in `configs/`.
+Reusable physics belongs in `core/`; executable orchestration belongs in
+`scripts/`; scientifically meaningful parameter sets belong in `configs/`.
 Active code must not import from generated-data or legacy directories.
+Additional generated locations such as `output/`, `presentations/`, `proofs/`,
+and `tmp/` are reserved in `.gitignore` and may not exist in a fresh checkout.
 
 ---
 
@@ -223,11 +228,14 @@ Active code must not import from generated-data or legacy directories.
 
 - Python **3.11**, matching the Zeus environment
 - A virtual environment is strongly recommended
-- A working compiler/runtime compatible with the pinned QuSpin wheels
+- A working compiler/runtime compatible with QuSpin if running the optional
+  symmetry-aware calculations
 
-The repository does not currently contain `pyproject.toml` or `setup.py`.
-Run commands from the repository root so the local `collapse` package is on
-Python's import path.
+The current repository does not contain packaging metadata or a dependency
+lock/requirements file. Run commands from the repository root so the local
+`core` package is on Python's import path. The commands below install the
+core libraries used by the package and test suite; reproduce archival results
+only with the environment recorded in the corresponding result metadata.
 
 ### Setup
 
@@ -236,18 +244,16 @@ Python's import path.
 git clone <repository-url>
 cd collapse
 
-# Create a virtual environment
-python -m venv .venv
-
-# Windows PowerShell
-.venv\Scripts\Activate.ps1
-
-# macOS / Linux
+# Create and activate a Python 3.11 virtual environment (macOS / Linux)
+python3.11 -m venv .venv
 source .venv/bin/activate
 
-# Install the pinned environment
+# Install the core numerical and test dependencies
 python -m pip install --upgrade pip
-python -m pip install -r requirements-local-study.txt
+python -m pip install numpy scipy matplotlib pytest
+
+# Optional: symmetry-aware Hamiltonians
+python -m pip install quspin
 
 # Verify the installation
 python -m pytest -q
@@ -255,14 +261,16 @@ python -m pytest -q
 
 ### Core Dependencies
 
-| Package | Pinned version | Purpose |
-| --- | ---: | --- |
-| **NumPy** | 2.4.6 | Dense arrays and small-system reference calculations |
-| **SciPy** | 1.18.0 | Linear algebra, statistics, fitting, and sparse numerics |
-| **Matplotlib** | 3.11.0 | Diagnostic and publication-quality figures |
-| **pytest** | 9.1.1 | Unit, regression, and integration tests |
-| **QuSpin** | 1.0.0 | Symmetry-aware many-body Hamiltonians |
-| **quspin-extensions** | 0.1.6 | Compiled QuSpin extensions |
+| Package | Purpose |
+| --- | --- |
+| **NumPy** | Dense arrays and small-system reference calculations |
+| **SciPy** | Linear algebra, statistics, fitting, and sparse numerics |
+| **Matplotlib** | Diagnostic and publication-quality figures |
+| **pytest** | Unit, regression, and integration tests |
+| **QuSpin** | Optional symmetry-aware many-body Hamiltonians |
+
+Some report and PDF-building scripts additionally import Pillow, pypdf, or
+ReportLab. Install those only when using the corresponding workflow.
 
 ---
 
@@ -274,7 +282,7 @@ detector qubits, checks Hermiticity, and diagonalizes the Hamiltonian:
 ```python
 import numpy as np
 
-from collapse import SinglePixelHamiltonianNumpy
+from core import SinglePixelHamiltonianNumpy
 
 model = SinglePixelHamiltonianNumpy(
     N_pixel=3,
@@ -303,25 +311,23 @@ Production-scale scripts are not suitable as local smoke tests.
 
 ### Local demonstrations
 
-- [`examples/born_sampling_demo.py`](examples/born_sampling_demo.py) — basic
+- [`scripts/born_sampling_demo.py`](scripts/born_sampling_demo.py) — basic
   sampling and Born-diagnostic workflow.
-- [`examples/level_spacing_demo.py`](examples/level_spacing_demo.py) — compact
+- [`scripts/level_spacing_demo.py`](scripts/level_spacing_demo.py) — compact
   level-spacing analysis example.
-- [`examples/single_pixel_ring_grid.py`](examples/single_pixel_ring_grid.py) —
+- [`scripts/single_pixel_ring_grid.py`](scripts/single_pixel_ring_grid.py) —
   parameter-grid study for the periodic single-pixel detector.
-- [`examples/spherical_harmonics_demo.py`](examples/spherical_harmonics_demo.py)
-  — full-sphere harmonic diagnostics.
 
 ### Analysis and figure generation
 
-- [`examples/plot_born_candidate_diagnostics.py`](examples/plot_born_candidate_diagnostics.py)
+- [`scripts/plot_born_candidate_diagnostics.py`](scripts/plot_born_candidate_diagnostics.py)
   — diagnostic $P(\theta)$ and $R(\theta)$ figures.
-- [`examples/analyze_network_sobol_born_relations.py`](examples/analyze_network_sobol_born_relations.py)
+- [`scripts/analyze_network_sobol_born_relations.py`](scripts/analyze_network_sobol_born_relations.py)
   — relations between graph-family parameters, spectral characteristics, and
   Born-like similarity.
-- [`examples/build_ranked_ring_momentum_spacing_figures.py`](examples/build_ranked_ring_momentum_spacing_figures.py)
+- [`scripts/build_ranked_ring_momentum_spacing_figures.py`](scripts/build_ranked_ring_momentum_spacing_figures.py)
   — momentum-resolved ring level-spacing figures.
-- [`examples/build_network_sobol_graph_ranked_2x3.py`](examples/build_network_sobol_graph_ranked_2x3.py)
+- [`scripts/build_network_sobol_graph_ranked_2x3.py`](scripts/build_network_sobol_graph_ranked_2x3.py)
   — ranked random-network diagnostics with graph visualization.
 
 ### Zeus campaigns
@@ -329,7 +335,7 @@ Production-scale scripts are not suitable as local smoke tests.
 Zeus studies normally combine three files:
 
 1. a JSON parameter set in `configs/`;
-2. a Python campaign runner in `examples/`;
+2. a Python campaign runner in `scripts/`;
 3. a PBS array and submission wrapper in `hpc/`.
 
 Submit from the repository root on Zeus and use a unique `RUN_ROOT` for every
@@ -428,12 +434,11 @@ A visually plausible figure is not sufficient validation.
 
 ## Further Documentation
 
-- [`CODEBASE_MAP.md`](CODEBASE_MAP.md) — map of active physics and numerical
-  components.
-- [`THEORETICAL_CONCLUSIONS.md`](THEORETICAL_CONCLUSIONS.md) — current
-  theoretical conclusions and limitations.
-- [`GLEASON_BORN_CLASSIFICATION.md`](GLEASON_BORN_CLASSIFICATION.md) — logical
-  separation between Hamiltonian root geometry and probability assignments.
+- [`manuscript/README.md`](manuscript/README.md) — contents of the manuscript
+  package and its evidence trail.
+- [`manuscript/BUILD.md`](manuscript/BUILD.md) — manuscript build and verification
+  instructions.
+- [`hpc/README.md`](hpc/README.md) — Zeus campaign layout and operating notes.
 - [`AGENTS.md`](AGENTS.md) — scientific and engineering standards for
   contributions.
 
@@ -441,11 +446,12 @@ A visually plausible figure is not sufficient validation.
 
 ## Research Status and Citation
 
-This is active research software. There is currently no associated manuscript
-and no preferred publication citation. Until a formal software release or
-paper exists, collaborators citing results from this repository should record
-the repository URL, Git commit hash, configuration file, and result provenance,
-and coordinate attribution with the project maintainers.
+This is active research software. A manuscript draft exists under
+`manuscript/`, but there is not yet a preferred publication citation. Until a
+formal software release or paper exists, collaborators citing results from
+this repository should record the repository URL, Git commit hash,
+configuration file, and result provenance, and coordinate attribution with
+the project maintainers.
 
 Claims in exploratory scripts or generated reports should not be interpreted
 as peer-reviewed conclusions.

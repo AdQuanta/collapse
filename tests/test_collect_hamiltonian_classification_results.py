@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "examples" / "collect_hamiltonian_classification_results.py"
+SCRIPT = ROOT / "scripts" / "collect_hamiltonian_classification_results.py"
 SPEC = importlib.util.spec_from_file_location("classification_collect", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

@@ -3,8 +3,8 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
-from collapse.anisotropic_sweep import AnisotropicSweepConfig
-from examples.run_zeus_vab_atlas_hz0_0p1_N14 import (
+from core.anisotropic_sweep import AnisotropicSweepConfig
+from scripts.run_zeus_vab_atlas_hz0_0p1_N14 import (
     SHARD_COUNT,
     _configuration_payloads,
     build_batch_plan,
@@ -59,7 +59,7 @@ def test_pbs_and_submit_wrapper_encode_the_nine_shards() -> None:
     submit = SUBMIT.read_text(encoding="utf-8")
     assert "#PBS -J 0-8" in pbs
     assert "#PBS -l select=1:ncpus=8:mem=128gb" in pbs
-    assert "python3.11 examples/run_zeus_vab_atlas_hz0_0p1_N14.py" in pbs
+    assert "python3.11 scripts/run_zeus_vab_atlas_hz0_0p1_N14.py" in pbs
     assert "--workers 2" in pbs
     assert "--resume" in pbs
     assert "activate" not in pbs.lower()

@@ -271,7 +271,7 @@ echo "MAX_DETECTOR_SPECTRUM_QUBITS: $MAX_DETECTOR_SPECTRUM_QUBITS"
 echo "BLAS/backend threads OMP/MKL/OPENBLAS/BLIS/VECLIB/NUMEXPR: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$BLIS_NUM_THREADS/$VECLIB_MAXIMUM_THREADS/$NUMEXPR_NUM_THREADS"
 echo "Diagnostic completion requirement: P(theta)+P(pi-theta), R vs Born, phi histograms, Bloch states, full/detector spectra, and unfolded spacing histograms."
 
-"$PYTHON_BIN" examples/born_pairwise_heatmap.py \
+"$PYTHON_BIN" scripts/born_pairwise_heatmap.py \
   "${ARGS[@]}" \
   "${COMMON_ARGS[@]}" \
   --out-dir "$OUT_DIR" \

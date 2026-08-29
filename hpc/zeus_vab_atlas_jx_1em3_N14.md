@@ -35,7 +35,7 @@ RUN_ROOT="$PWD/work/my_jx_1em3_atlas" \
 Sampling-only validation of one shard:
 
 ```bash
-python3.11 examples/run_zeus_vab_atlas_jx_1em3_N14.py \
+python3.11 scripts/run_zeus_vab_atlas_jx_1em3_N14.py \
   --batch-index 0 --output-root work/jx_1em3_dry_run --dry-run
 ```
 

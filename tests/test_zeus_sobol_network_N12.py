@@ -5,13 +5,13 @@ from __future__ import annotations
 from argparse import Namespace
 from pathlib import Path
 
-from collapse.detector_graphs import detector_graph_metadata
-from collapse.sobol_coupling_scan import generate_sobol_points
-from collapse.zeus_sobol_array import build_scan_settings, resolve_array_spec
-from examples.run_zeus_sobol_barabasi_albert_hz0_0 import SPEC as BA_SPEC
-from examples.run_zeus_sobol_erdos_renyi_hz0_0 import SPEC as ER_SPEC
-from examples.run_zeus_sobol_expander_hz0_0 import SPEC as EXPANDER_SPEC
-from examples.run_zeus_sobol_watts_strogatz_hz0_0 import SPEC as WS_SPEC
+from core.detector_graphs import detector_graph_metadata
+from core.sobol_coupling_scan import generate_sobol_points
+from core.zeus_sobol_array import build_scan_settings, resolve_array_spec
+from scripts.run_zeus_sobol_barabasi_albert_hz0_0 import SPEC as BA_SPEC
+from scripts.run_zeus_sobol_erdos_renyi_hz0_0 import SPEC as ER_SPEC
+from scripts.run_zeus_sobol_expander_hz0_0 import SPEC as EXPANDER_SPEC
+from scripts.run_zeus_sobol_watts_strogatz_hz0_0 import SPEC as WS_SPEC
 
 
 ROOT = Path(__file__).resolve().parents[1]

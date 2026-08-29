@@ -6,7 +6,7 @@ from pathlib import Path
 import numpy as np
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "reproduce_matched_ring_full_sphere.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "reproduce_matched_ring_full_sphere.py"
 SPEC = importlib.util.spec_from_file_location("reproduce_matched", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

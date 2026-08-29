@@ -39,7 +39,7 @@ def test_verify_helper_checks_all_required_postprocess_outputs():
         "diagnostics_primary_N13_N14/run.log",
         "diagnostics_off_resonance_controls/index.md",
         "diagnostics_off_resonance_controls/run.log",
-        "examples/evaluate_born_postprocess_gate.py",
+        "scripts/evaluate_born_postprocess_gate.py",
     ]
     for item in required:
         assert item in text
@@ -57,7 +57,7 @@ def test_runbook_keeps_helper_and_exact_qsub_paths_visible():
     assert "bash hpc/verify_zeus_born_postprocess.sh" in text
     assert "qsub -v RUN_ROOT=\"$RUN_ROOT\",LOG_ROOT=\"$STABILITY_LOG_ROOT\"" in text
     assert "qsub -v RUN_ROOT=\"$RUN_ROOT\",LOG_ROOT=\"$DIAGNOSTICS_LOG_ROOT\"" in text
-    assert "examples/evaluate_born_postprocess_gate.py" in text
+    assert "scripts/evaluate_born_postprocess_gate.py" in text
     assert "metric_stability_primary_N13_N14.<PBS_JOBID>.1.log" in text
     assert "diagnostics_off_resonance_controls.<PBS_JOBID>.2.log" in text
 

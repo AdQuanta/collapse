@@ -159,6 +159,6 @@ if [ -n "$DIAGNOSTICS_LOG_ROOT" ]; then
   eval_args+=(--scheduler-log-root "$DIAGNOSTICS_LOG_ROOT")
 fi
 
-"$PYTHON_CMD" examples/evaluate_born_postprocess_gate.py "${eval_args[@]}"
+"$PYTHON_CMD" scripts/evaluate_born_postprocess_gate.py "${eval_args[@]}"
 
 echo "All required postprocess files are present."

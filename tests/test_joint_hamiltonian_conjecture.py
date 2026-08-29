@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.joint_hamiltonian_conjecture import (
+from core.joint_hamiltonian_conjecture import (
     FiniteTimeKernelBalance,
     HamiltonianPoint,
     JointProfileClassifier,

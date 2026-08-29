@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from examples.interpret_zeus_single_pixel_scaling import (
+from scripts.interpret_zeus_single_pixel_scaling import (
     AnalysisConfig,
     CsvRowRepository,
     ScalingAnalyzer,

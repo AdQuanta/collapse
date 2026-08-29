@@ -9,14 +9,14 @@
 set -euo pipefail
 
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
-if [[ -f examples/run_zeus_sobol_jy_zero_scan.py ]]; then
+if [[ -f scripts/run_zeus_sobol_jy_zero_scan.py ]]; then
   REPO_ROOT="$PWD"
-elif [[ -f ../examples/run_zeus_sobol_jy_zero_scan.py ]]; then
+elif [[ -f ../scripts/run_zeus_sobol_jy_zero_scan.py ]]; then
   REPO_ROOT="$(cd .. && pwd)"
-elif [[ -f hpc/../examples/run_zeus_sobol_jy_zero_scan.py ]]; then
+elif [[ -f hpc/../scripts/run_zeus_sobol_jy_zero_scan.py ]]; then
   REPO_ROOT="$(cd hpc/.. && pwd)"
 else
-  echo "Cannot locate examples/run_zeus_sobol_jy_zero_scan.py from $PWD" >&2
+  echo "Cannot locate scripts/run_zeus_sobol_jy_zero_scan.py from $PWD" >&2
   exit 2
 fi
 cd "$REPO_ROOT"
@@ -38,7 +38,7 @@ export MKL_NUM_THREADS="$NUMERIC_THREADS"
 export BLIS_NUM_THREADS="$NUMERIC_THREADS"
 export NUMEXPR_NUM_THREADS="$NUMERIC_THREADS"
 
-python3.11 examples/run_zeus_sobol_jy_zero_scan.py \
+python3.11 scripts/run_zeus_sobol_jy_zero_scan.py \
   --output-root "$RUN_ROOT" \
   --seed 20260726 --count 100 \
   --sizes 13 14 15 16 --only-N "$N" \

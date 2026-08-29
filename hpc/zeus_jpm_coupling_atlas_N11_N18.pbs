@@ -14,7 +14,7 @@ set -euo pipefail
 SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
 if [[ -f "$SUBMIT_DIR/hpc/zeus_single_pixel_atlas_common.sh" ]]; then
   REPO_ROOT="$SUBMIT_DIR"
-elif [[ -f "$SUBMIT_DIR/zeus_single_pixel_atlas_common.sh" && -d "$SUBMIT_DIR/../examples" ]]; then
+elif [[ -f "$SUBMIT_DIR/zeus_single_pixel_atlas_common.sh" && -d "$SUBMIT_DIR/../scripts" ]]; then
   REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
 else
   echo "Cannot locate the repository from PBS_O_WORKDIR=$SUBMIT_DIR." >&2

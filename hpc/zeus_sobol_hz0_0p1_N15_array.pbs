@@ -10,12 +10,12 @@
 set -euo pipefail
 
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
-if [[ -f examples/run_zeus_sobol_hz0_0p1_N15.py ]]; then
+if [[ -f scripts/run_zeus_sobol_hz0_0p1_N15.py ]]; then
   REPO_ROOT="$PWD"
-elif [[ -f ../examples/run_zeus_sobol_hz0_0p1_N15.py ]]; then
+elif [[ -f ../scripts/run_zeus_sobol_hz0_0p1_N15.py ]]; then
   REPO_ROOT="$(cd .. && pwd)"
 else
-  echo "Cannot locate examples/run_zeus_sobol_hz0_0p1_N15.py from $PWD" >&2
+  echo "Cannot locate scripts/run_zeus_sobol_hz0_0p1_N15.py from $PWD" >&2
   exit 2
 fi
 cd "$REPO_ROOT"
@@ -44,7 +44,7 @@ export NUMEXPR_NUM_THREADS=4
 LOG="$RUN_ROOT/logs/${FAMILY}_N15_batch${BATCH_INDEX}_${PBS_JOBID:-manual}.log"
 echo "[$(date --iso-8601=seconds)] array_index=$ARRAY_INDEX family=$FAMILY batch=$BATCH_INDEX N=15 hz0=0.1 workers=2" | tee -a "$LOG"
 
-python3.11 examples/run_zeus_sobol_hz0_0p1_N15.py \
+python3.11 scripts/run_zeus_sobol_hz0_0p1_N15.py \
   --family "$FAMILY" \
   --batch-index "$BATCH_INDEX" \
   --output-root "$RUN_ROOT" \

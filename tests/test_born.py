@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 
-from collapse import (
+from core import (
     born_ratio_from_radii,
     born_ratio_from_theta,
     born_ratio_from_z,

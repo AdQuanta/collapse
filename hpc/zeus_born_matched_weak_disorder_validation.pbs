@@ -128,7 +128,7 @@ run_search() {
   echo "=== Search: $run_name ==="
   echo "Output: $out_dir"
   echo "Output run.log: $out_dir/run.log"
-  "$PYTHON_BIN" examples/born_hamiltonian_search.py \
+  "$PYTHON_BIN" scripts/born_hamiltonian_search.py \
     "$@" \
     "${COMMON_ARGS[@]}" \
     --out-dir "$out_dir" \

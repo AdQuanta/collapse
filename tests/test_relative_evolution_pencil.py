@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from collapse.relative_evolution_pencil import (
+from core.relative_evolution_pencil import (
     audit_linear_pencil_regularity,
     compare_direct_and_generalized,
     diagnose_projective_duplicates,

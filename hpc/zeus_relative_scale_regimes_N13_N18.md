@@ -30,7 +30,7 @@ do not activate a virtual environment.
 ```bash
 cd "$HOME/research/collapse"
 
-python3.11 examples/run_relative_scale_regime_campaign.py \
+python3.11 scripts/run_relative_scale_regime_campaign.py \
   --config configs/zeus_relative_scale_regimes_N13_N18.json \
   describe
 

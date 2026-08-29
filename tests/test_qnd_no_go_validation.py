@@ -4,7 +4,7 @@ import importlib.util
 from pathlib import Path
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "run_qnd_no_go_validation.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "run_qnd_no_go_validation.py"
 SPEC = importlib.util.spec_from_file_location("qnd_no_go", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

@@ -17,8 +17,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import time
 import numpy as np
 
-from collapse.analysis import DisentanglementAnalyzer
-from collapse.hamiltonians.quspin_hamiltonians import (
+from core.analysis import DisentanglementAnalyzer
+from core.hamiltonians.quspin_hamiltonians import (
     CentralSpinHamiltonianQuSpin,
     DimerizedPixelHamiltonianQuSpin,
     MixedFieldIsingHamiltonianQuSpin,
@@ -68,7 +68,7 @@ def _compare_z_distributions(ham, t, label):
     # Standard path
     H = ham.generate()
     E_full, V_full = np.linalg.eigh(H)
-    from collapse.quantum_utils import time_evolution_from_eigenbasis
+    from core.quantum_utils import time_evolution_from_eigenbasis
 
     U = time_evolution_from_eigenbasis(E_full, V_full, t)
     analyzer_std = DisentanglementAnalyzer(U)

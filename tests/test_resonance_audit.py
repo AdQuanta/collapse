@@ -6,7 +6,7 @@ import math
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "examples"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from audit_born_followup_resonance import _json_safe, classify_row, csv_gate_pass, resonance_check  # noqa: E402
 from summarize_born_search_results import local_resonance_distance, local_resonance_label  # noqa: E402

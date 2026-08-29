@@ -1,12 +1,12 @@
 from pathlib import Path
 
-from examples.build_ranked_ring_momentum_spacing_figures import (
+from scripts.build_ranked_ring_momentum_spacing_figures import (
     HamiltonianParameters,
     RankedCase,
     _analysis_digest,
     select_ranked_tails,
 )
-from examples.build_ranked_ring_diagnostics_spacing_figures import (
+from scripts.build_ranked_ring_diagnostics_spacing_figures import (
     ROOT,
     _resolve_repo_path,
     _sector_key,

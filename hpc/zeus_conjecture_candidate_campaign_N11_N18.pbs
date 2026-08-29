@@ -12,9 +12,9 @@ set -euo pipefail
 PROJECT_ROOT="${PROJECT_ROOT:-${PBS_O_WORKDIR:-$HOME/research/collapse}}"
 cd "$PROJECT_ROOT"
 
-if [ ! -f "$PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py" ]; then
+if [ ! -f "$PROJECT_ROOT/scripts/run_conjecture_candidate_campaign.py" ]; then
   echo "ERROR: submit from the repository root or set PROJECT_ROOT." >&2
-  echo "Missing: $PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py" >&2
+  echo "Missing: $PROJECT_ROOT/scripts/run_conjecture_candidate_campaign.py" >&2
   exit 2
 fi
 
@@ -53,7 +53,7 @@ echo "Run root: $RUN_ROOT"
 echo "Figure root: $FIGURE_ROOT"
 echo "Log: $LOG_FILE"
 
-"$PYTHON_BIN" "$PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py" \
+"$PYTHON_BIN" "$PROJECT_ROOT/scripts/run_conjecture_candidate_campaign.py" \
   --config "$PROJECT_ROOT/configs/conjecture_candidate_campaign_2026-07-16.json" \
   --N "$TASK_N" \
   --scope zeus \

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from collapse.hamiltonian_classification import (
+from core.hamiltonian_classification import (
     SinglePixelClassificationPoint,
     build_single_pixel_hamiltonian,
     classify_single_pixel_point,
@@ -14,7 +14,7 @@ from collapse.hamiltonian_classification import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "examples" / "generate_hamiltonian_classification_manifest.py"
+SCRIPT = ROOT / "scripts" / "generate_hamiltonian_classification_manifest.py"
 SPEC = importlib.util.spec_from_file_location("classification_manifest", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

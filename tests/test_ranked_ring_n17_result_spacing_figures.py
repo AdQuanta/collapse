@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from examples.build_ranked_ring_n17_result_spacing_figures import (
+from scripts.build_ranked_ring_n17_result_spacing_figures import (
     _runtime_provenance,
     fresh_result_dir,
     validate_detector_parameters,

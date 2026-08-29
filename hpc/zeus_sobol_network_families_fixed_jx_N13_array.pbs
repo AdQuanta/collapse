@@ -11,9 +11,9 @@
 set -euo pipefail
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
 
-if [[ -f "examples/run_zeus_sobol_network_families_fixed_jx_N13.py" ]]; then
+if [[ -f "scripts/run_zeus_sobol_network_families_fixed_jx_N13.py" ]]; then
   REPO_ROOT="$PWD"
-elif [[ -f "../examples/run_zeus_sobol_network_families_fixed_jx_N13.py" ]]; then
+elif [[ -f "../scripts/run_zeus_sobol_network_families_fixed_jx_N13.py" ]]; then
   REPO_ROOT="$(cd .. && pwd)"
 else
   echo "Cannot locate the fixed-Jx network-family runner." >&2
@@ -66,7 +66,7 @@ export NUMEXPR_NUM_THREADS="$THREADS_PER_WORKER"
 LOG="$RUN_ROOT/logs/${FAMILY_SLUG}_N13_batch${BATCH_INDEX}_${PBS_JOBID:-manual}.log"
 echo "[$(date --iso-8601=seconds)] family=$FAMILY_SLUG family_index=$FAMILY_INDEX batch=$BATCH_INDEX/$((BATCHES_PER_FAMILY - 1)) N=13 configurations=$COUNT_PER_FAMILY shard=$BATCH_SIZE t=1e6 Jx_unscaled=0.01 Jx_effective=0.01/sqrt(13) sampled=J,Jpm,hz range=[1,100] max_weak_ratio=1e-2 workers=$WORKERS threads_per_worker=$THREADS_PER_WORKER" | tee -a "$LOG"
 
-python3.11 examples/run_zeus_sobol_network_families_fixed_jx_N13.py \
+python3.11 scripts/run_zeus_sobol_network_families_fixed_jx_N13.py \
   --family-index "$FAMILY_INDEX" \
   --batch-index "$BATCH_INDEX" \
   --output-root "$FAMILY_ROOT" \

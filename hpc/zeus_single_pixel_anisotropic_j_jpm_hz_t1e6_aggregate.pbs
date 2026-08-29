@@ -13,12 +13,12 @@
 set -euo pipefail
 
 SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
-if [[ -f "$SUBMIT_DIR/examples/run_single_pixel_anisotropic_sweep.py" ]]; then
+if [[ -f "$SUBMIT_DIR/scripts/run_single_pixel_anisotropic_sweep.py" ]]; then
   REPO_ROOT="$SUBMIT_DIR"
-elif [[ -f "$SUBMIT_DIR/../examples/run_single_pixel_anisotropic_sweep.py" ]]; then
+elif [[ -f "$SUBMIT_DIR/../scripts/run_single_pixel_anisotropic_sweep.py" ]]; then
   REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
 else
-  echo "Cannot locate examples/run_single_pixel_anisotropic_sweep.py from PBS_O_WORKDIR=$SUBMIT_DIR." >&2
+  echo "Cannot locate scripts/run_single_pixel_anisotropic_sweep.py from PBS_O_WORKDIR=$SUBMIT_DIR." >&2
   exit 2
 fi
 cd "$REPO_ROOT"
@@ -61,7 +61,7 @@ AGGREGATE_ARGS=(aggregate --N "$AGGREGATE_N")
 if [[ "${ALLOW_PARTIAL:-0}" == "1" ]]; then AGGREGATE_ARGS+=(--allow-partial); fi
 
 echo "[$(date --iso-8601=seconds)] aggregating N=$AGGREGATE_N"
-"$PYTHON_BIN" examples/run_single_pixel_anisotropic_sweep.py "${GLOBAL_ARGS[@]}" "${AGGREGATE_ARGS[@]}"
+"$PYTHON_BIN" scripts/run_single_pixel_anisotropic_sweep.py "${GLOBAL_ARGS[@]}" "${AGGREGATE_ARGS[@]}"
 echo "[$(date --iso-8601=seconds)] finished N=$AGGREGATE_N"
 echo "Outputs: $RUN_ROOT/aggregates/N$(printf '%02d' "$AGGREGATE_N")"
 echo "Log: $TASK_LOG"

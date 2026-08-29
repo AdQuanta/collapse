@@ -7,8 +7,8 @@ import numpy as np
 
 matplotlib.use("Agg")
 
-from examples.build_sobol_flat_ranked_1x6_by_n import CaseRecord, compute_spectral
-from examples.build_vab_coupling_level_spacing_sample import (
+from scripts.build_sobol_flat_ranked_1x6_by_n import CaseRecord, compute_spectral
+from scripts.build_vab_coupling_level_spacing_sample import (
     level_spacing_data,
     log_gap_weight_data,
     log_resonance_weight_data,

@@ -4,17 +4,17 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.detector_resonance import (
+from core.detector_resonance import (
     DenseRingDetectorBuilder,
     DetectorSpec,
     _ring_bonds,
 )
-from examples.build_second_neighbor_mean_spacing_sample_2x3 import (
+from scripts.build_second_neighbor_mean_spacing_sample_2x3 import (
     mean_spacing_gap_weight_data,
     mean_spacing_resonance_weight_data,
 )
-from examples.build_sobol_flat_ranked_1x6_by_n import SpectralData
-from examples.build_sobol_flat_ranked_1x6_by_n import CaseRecord, compute_spectral
+from scripts.build_sobol_flat_ranked_1x6_by_n import SpectralData
+from scripts.build_sobol_flat_ranked_1x6_by_n import CaseRecord, compute_spectral
 
 
 def test_second_neighbor_detector_bonds_are_not_double_counted() -> None:

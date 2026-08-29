@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from collapse.scaling_campaign import (
+from core.scaling_campaign import (
     COLLECTIVE_JX,
     DEFAULT_SIZES,
     STUDIES,
@@ -150,5 +150,5 @@ def test_four_pbs_arrays_cover_n11_through_n18_and_use_shared_logging():
     assert "EDGE_COUPLING_FORMULA=0.01/sqrt(N)" in common
     assert "PBS_LOG=" in common
     assert "DONE.json" in common
-    assert "Missing collapse/scaling_campaign.py" in common
+    assert "Missing core/scaling_campaign.py" in common
     assert "synchronize the study launchers to Zeus" in common

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.relative_unitary_theory import (
+from core.relative_unitary_theory import (
     cayley_matrix,
     exact_relative_objects,
     finite_time_filter,

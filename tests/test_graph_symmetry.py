@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collapse.graph_symmetry import graph_automorphisms
+from core.graph_symmetry import graph_automorphisms
 
 
 def test_path_and_cycle_automorphism_counts() -> None:

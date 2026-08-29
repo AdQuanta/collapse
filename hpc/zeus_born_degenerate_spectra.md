@@ -244,7 +244,7 @@ rsync -av "$PACKAGE_ROOT/postprocess_scheduler_logs/" \
 After import, regenerate the local summary index if desired:
 
 ```bash
-python examples/summarize_born_search_results.py \
+python scripts/summarize_born_search_results.py \
   --root figures/zeus_born_degenerate_spectra \
   --out-md figures/zeus_born_degenerate_spectra/summary.local.md \
   --out-csv figures/zeus_born_degenerate_spectra/summary_rows.local.csv \

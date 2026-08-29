@@ -10,7 +10,7 @@ import pytest
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
-    / "examples"
+    / "scripts"
     / "plot_zeus_hamiltonian_classification.py"
 )
 SPEC = importlib.util.spec_from_file_location("classification_figures", SCRIPT)

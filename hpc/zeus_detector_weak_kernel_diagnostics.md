@@ -83,7 +83,7 @@ hpc/zeus_sector_weak_kernel_slide8.md
 ```
 
 The exact N15/N16 \(M(t)\) simulations should continue using
-`examples/born_hamiltonian_search.py` with QuSpin sectors.
+`scripts/born_hamiltonian_search.py` with QuSpin sectors.
 
 ## Recommended manual submission
 

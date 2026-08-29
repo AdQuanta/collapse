@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import math
 
-from collapse.graph_spectral_sectors import largest_detector_symmetry_sectors
+from core.graph_spectral_sectors import largest_detector_symmetry_sectors
 
 
 def test_asymmetric_graph_sectors_reduce_only_by_hamming_weight() -> None:

@@ -128,7 +128,7 @@ run_sector() {
   echo "=== Sector weak-kernel diagnostic: $run_name ==="
   echo "Output: $out_dir"
   echo "Output run.log: $out_dir/run.log"
-  "$PYTHON_BIN" examples/sector_weak_kernel_diagnostics.py \
+  "$PYTHON_BIN" scripts/sector_weak_kernel_diagnostics.py \
     "${COMMON_ARGS[@]}" \
     "$@" \
     --out-dir "$out_dir" \

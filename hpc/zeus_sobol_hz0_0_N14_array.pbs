@@ -11,7 +11,7 @@
 set -euo pipefail
 
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
-RUNNER="examples/run_zeus_sobol_hz0_0_N14.py"
+RUNNER="scripts/run_zeus_sobol_hz0_0_N14.py"
 if [[ -f "$RUNNER" ]]; then REPO_ROOT="$PWD"; elif [[ -f "../$RUNNER" ]]; then REPO_ROOT="$(cd .. && pwd)"; else echo "Cannot locate $RUNNER" >&2; exit 2; fi
 cd "$REPO_ROOT"
 

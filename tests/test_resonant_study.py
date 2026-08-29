@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.analysis import evolution_subblocks_from_eigenbasis
-from collapse.resonant_study import REQUIRED_JX, StudyConfig, _SinglePixelHamiltonian, folded_wrapped_gaussian, folded_wrapped_gaussian_bin_density, relative_data, run_case, wrapped_variance
+from core.analysis import evolution_subblocks_from_eigenbasis
+from core.resonant_study import REQUIRED_JX, StudyConfig, _SinglePixelHamiltonian, folded_wrapped_gaussian, folded_wrapped_gaussian_bin_density, relative_data, run_case, wrapped_variance
 from scipy.linalg import eigh
 import json
-from collapse.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
+from core.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
 
 
 def _hamiltonian(jx: float) -> np.ndarray:

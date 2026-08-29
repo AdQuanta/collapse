@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.detector_gap_matrix import DetectorGapMatrixAnalyzer, GapMatrixCase
+from core.detector_gap_matrix import DetectorGapMatrixAnalyzer, GapMatrixCase
 
 
 def _case() -> GapMatrixCase:

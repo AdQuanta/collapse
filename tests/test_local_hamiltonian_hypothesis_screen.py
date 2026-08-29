@@ -6,7 +6,7 @@ from pathlib import Path
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
-    / "examples"
+    / "scripts"
     / "run_local_hamiltonian_hypothesis_screen.py"
 )
 SPEC = importlib.util.spec_from_file_location("local_hypothesis_screen", SCRIPT)

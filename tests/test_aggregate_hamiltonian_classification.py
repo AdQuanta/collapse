@@ -6,7 +6,7 @@ from pathlib import Path
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
-    / "examples"
+    / "scripts"
     / "aggregate_hamiltonian_classification.py"
 )
 SPEC = importlib.util.spec_from_file_location("classification_aggregate", SCRIPT)

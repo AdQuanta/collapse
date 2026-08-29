@@ -10,7 +10,7 @@ CONFIG="${CONFIG:-configs/zeus_network_top_hz0_variants_N12.json}"
 PYTHON_BIN="${PYTHON_BIN:-python3.11}"
 mkdir -p "$RUN_ROOT/logs"
 DESCRIPTION="$RUN_ROOT/campaign_description.json"
-"$PYTHON_BIN" examples/run_zeus_network_top_hz0_variants_N12.py \
+"$PYTHON_BIN" scripts/run_zeus_network_top_hz0_variants_N12.py \
   --config "$CONFIG" --describe | tee "$DESCRIPTION"
 ARRAY_TASKS="$("$PYTHON_BIN" -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["array_tasks"])' "$DESCRIPTION")"
 if [[ "$ARRAY_TASKS" -lt 1 ]]; then

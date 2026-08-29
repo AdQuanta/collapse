@@ -6,14 +6,14 @@ from dataclasses import replace
 import json
 from pathlib import Path
 
-from collapse.detector_graphs import DetectorGraphSpec, detector_graph_edges
-from collapse.network_ranked_followup import (
+from core.detector_graphs import DetectorGraphSpec, detector_graph_edges
+from core.network_ranked_followup import (
     resampled_graph_spec,
     select_extreme_cases,
     select_top_cases,
 )
-from collapse.ranked_born_campaign import hz0_variants
-from examples.run_zeus_network_top_hz0_variants_N12 import _exact_source_graph
+from core.ranked_born_campaign import hz0_variants
+from scripts.run_zeus_network_top_hz0_variants_N12 import _exact_source_graph
 
 
 ROOT = Path(__file__).resolve().parents[1]

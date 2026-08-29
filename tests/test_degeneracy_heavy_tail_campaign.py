@@ -6,8 +6,8 @@ from pathlib import Path
 
 import numpy as np
 
-from collapse.anisotropic_sweep import AnisotropicSample
-from collapse.degeneracy_heavy_tail_campaign import (
+from core.anisotropic_sweep import AnisotropicSample
+from core.degeneracy_heavy_tail_campaign import (
     ActivationCertifier,
     CampaignConfig,
     CampaignRepository,

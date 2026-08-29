@@ -1,7 +1,7 @@
 #!/bin/bash
 # PBS pilot for detector-basis resonant-coupling diagnostics at detector N=11.
 #
-# This runs examples/detector_resonant_coupling_diagnostic.py on selected
+# This runs scripts/detector_resonant_coupling_diagnostic.py on selected
 # high-S_born, phi-covered rows from imported Zeus pairwise summaries.  The
 # diagnostic is dense in the detector Hilbert space, so keep this pilot at
 # N=11 unless the implementation is replaced by a sector/sampled estimator.
@@ -106,7 +106,7 @@ echo "OUT_CSV=$OUT_CSV"
 read -r -a SOURCE_CSV_ARRAY <<< "$SOURCE_CSVS"
 
 CMD=(
-  "$PYTHON_BIN" examples/detector_resonant_coupling_diagnostic.py
+  "$PYTHON_BIN" scripts/detector_resonant_coupling_diagnostic.py
   --source-csv "${SOURCE_CSV_ARRAY[@]}"
   --out-csv "$OUT_CSV"
   --min-n "$MIN_N"

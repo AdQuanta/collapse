@@ -3,7 +3,7 @@
 import numpy as np
 from scipy.special import sph_harm_y
 
-from collapse.gleason_diagnostics import (
+from core.gleason_diagnostics import (
     _equal_area_geometry,
     _least_squares_harmonic_expansion,
     _power_by_degree,

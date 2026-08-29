@@ -14,7 +14,7 @@ INWARD_TICK_PATTERN = re.compile(
 
 def test_project_plotting_code_does_not_force_inward_ticks() -> None:
     offenders: list[str] = []
-    for directory in (ROOT / "collapse", ROOT / "examples", ROOT / "archive"):
+    for directory in (ROOT / "core", ROOT / "scripts", ROOT / "archive"):
         for path in directory.rglob("*.py"):
             if INWARD_TICK_PATTERN.search(path.read_text(encoding="utf-8")):
                 offenders.append(str(path.relative_to(ROOT)))
