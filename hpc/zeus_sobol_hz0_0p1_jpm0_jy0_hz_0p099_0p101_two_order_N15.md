@@ -40,7 +40,7 @@ RUN_ROOT="$PWD/work/my_two_order_scan" \
 Sampling-only check of the first shard:
 
 ```bash
-python3.11 examples/run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_N15.py \
+python3.11 scripts/run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_N15.py \
   --batch-index 0 --output-root work/two_order_dry_run \
   --kappa 0.01 --coupling-lower 1e-5 --dry-run
 ```

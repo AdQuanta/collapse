@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from collapse.degeneracy_zeus_assessment import (
+from core.degeneracy_zeus_assessment import (
     AssessmentPaths,
     DegeneracyConjectureAssessment,
     run_assessment,

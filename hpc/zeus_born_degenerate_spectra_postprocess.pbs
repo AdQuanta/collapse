@@ -119,14 +119,14 @@ fi
 
 case "$TASK_ID" in
   1)
-    "$PYTHON_BIN" examples/summarize_born_search_results.py \
+    "$PYTHON_BIN" scripts/summarize_born_search_results.py \
       --root "$RUN_ROOT" \
       --out-md "$RUN_ROOT/summary.md" \
       --out-csv "$SUMMARY_CSV" \
       --top 30
     ;;
   2)
-    "$PYTHON_BIN" examples/born_candidate_stability.py \
+    "$PYTHON_BIN" scripts/born_candidate_stability.py \
       --source-csv "$SUMMARY_CSV" \
       --mode all \
       --min-n 8 \
@@ -147,7 +147,7 @@ case "$TASK_ID" in
       --log-file "$OUT_LOG"
     ;;
   3)
-    "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py \
+    "$PYTHON_BIN" scripts/plot_born_candidate_diagnostics.py \
       --source-csv "$SUMMARY_CSV" \
       --mode all \
       --min-n 8 \

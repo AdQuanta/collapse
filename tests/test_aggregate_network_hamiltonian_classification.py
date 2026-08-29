@@ -9,7 +9,7 @@ import numpy as np
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
-    / "examples"
+    / "scripts"
     / "aggregate_network_hamiltonian_classification.py"
 )
 SPEC = importlib.util.spec_from_file_location("network_classification", SCRIPT)

@@ -5,10 +5,10 @@ sizes `N=11,12,13,14,15,16,17,18`. No Zeus job was submitted by Codex.
 
 | Campaign | Fixed model | Single-N launcher | PBS array |
 |---|---|---|---|
-| central field | `J=1, hz=0.1`, seven `hz0` values | `examples/run_hz0_atlas_scaling.py` | `hpc/zeus_hz0_atlas_N11_N18.pbs` |
-| Ising field neighborhoods | `J=1, hz0=0`, near `hz=-2,0,+2` | `examples/run_hz_resonance_atlas_scaling.py` | `hpc/zeus_hz_resonance_atlas_N11_N18.pbs` |
-| plus-minus field neighborhoods | `J=0, Jpm=1, hz0=0`, near `hz=-2,-1,0,+1,+2` | `examples/run_jpm_hz_atlas_scaling.py` | `hpc/zeus_jpm_hz_atlas_N11_N18.pbs` |
-| plus-minus coupling | `J=1, hz=0.1, hz0=0`, twelve `Jpm` values including `Jpm=J` | `examples/run_jpm_coupling_atlas_scaling.py` | `hpc/zeus_jpm_coupling_atlas_N11_N18.pbs` |
+| central field | `J=1, hz=0.1`, seven `hz0` values | `scripts/run_hz0_atlas_scaling.py` | `hpc/zeus_hz0_atlas_N11_N18.pbs` |
+| Ising field neighborhoods | `J=1, hz0=0`, near `hz=-2,0,+2` | `scripts/run_hz_resonance_atlas_scaling.py` | `hpc/zeus_hz_resonance_atlas_N11_N18.pbs` |
+| plus-minus field neighborhoods | `J=0, Jpm=1, hz0=0`, near `hz=-2,-1,0,+1,+2` | `scripts/run_jpm_hz_atlas_scaling.py` | `hpc/zeus_jpm_hz_atlas_N11_N18.pbs` |
+| plus-minus coupling | `J=1, hz=0.1, hz0=0`, twelve `Jpm` values including `Jpm=J` | `scripts/run_jpm_coupling_atlas_scaling.py` | `hpc/zeus_jpm_coupling_atlas_N11_N18.pbs` |
 
 Every command explicitly passes collective `Jx=0.01`. The Hamiltonian edge
 coefficient is verified after every completed size to be `0.01/sqrt(N)`.
@@ -21,7 +21,7 @@ the pinned numerical packages, then supply its path when needed:
 ```bash
 python3.11 -m venv .venv-zeus-atlas
 source .venv-zeus-atlas/bin/activate
-python -m pip install -r requirements-local-study.txt
+python -m pip install -r requirements.txt
 ```
 
 All four PBS headers target `zeus_new_q`, request `8` CPUs and `128gb`, and
@@ -71,8 +71,8 @@ Zeus—not only the four small PBS files:
 
 ```bash
 test -f hpc/zeus_single_pixel_atlas_common.sh
-test -f collapse/scaling_campaign.py
-test -f examples/run_hz0_atlas_scaling.py
+test -f core/scaling_campaign.py
+test -f scripts/run_hz0_atlas_scaling.py
 ```
 
 If submitting while inside `hpc/`, use `qsub zeus_hz0_atlas_N11_N18.pbs`.
@@ -156,10 +156,10 @@ algorithmic change or hardware unavailable on Zeus.
 Each launcher defaults to all eight requested sizes and saves after every N:
 
 ```bash
-python3.11 examples/run_hz0_atlas_scaling.py --workers 1
-python3.11 examples/run_hz_resonance_atlas_scaling.py --workers 1
-python3.11 examples/run_jpm_hz_atlas_scaling.py --workers 1
-python3.11 examples/run_jpm_coupling_atlas_scaling.py --workers 1
+python3.11 scripts/run_hz0_atlas_scaling.py --workers 1
+python3.11 scripts/run_hz_resonance_atlas_scaling.py --workers 1
+python3.11 scripts/run_jpm_hz_atlas_scaling.py --workers 1
+python3.11 scripts/run_jpm_coupling_atlas_scaling.py --workers 1
 ```
 
 For a small parallel pilot, use a restricted grid such as

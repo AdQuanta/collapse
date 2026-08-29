@@ -9,18 +9,18 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from collapse.detector_graphs import DetectorGraphSpec, detector_graph_edges
-from collapse.network_resampled_scaling_campaign import (
+from core.detector_graphs import DetectorGraphSpec, detector_graph_edges
+from core.network_resampled_scaling_campaign import (
     graph_spec_and_provenance,
     load_resampled_network_cases,
 )
-from collapse.ranked_born_time_average import (
+from core.ranked_born_time_average import (
     _time_average_complete_valid,
     average_time_diagnostics,
     simulate_ranked_case_time_average,
     validate_evolution_times,
 )
-from collapse.ranked_born_campaign import RankedHamiltonianCase
+from core.ranked_born_campaign import RankedHamiltonianCase
 
 
 ROOT = Path(__file__).resolve().parents[1]

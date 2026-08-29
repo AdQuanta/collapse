@@ -1,11 +1,11 @@
 # Zeus/PBS runbook: resonant h_z study
 
-This repository uses PBS on Zeus. No account, queue, module, or filesystem value is assumed. Set `PYTHON_MODULE` only if the site requires one; otherwise arrange for `python3.12` to be on `PATH`.
+This repository uses PBS on Zeus. No account, queue, module, or filesystem value is assumed. Set `PYTHON_MODULE` only if the site requires one; otherwise arrange for `python3.11` to be on `PATH`.
 
 Create the exact environment once:
 
 ```bash
-VENV=.venv-resonant PYTHON_BIN=python3.12 bash hpc/create_resonant_env.sh
+VENV=.venv-resonant PYTHON_BIN=python3.11 bash hpc/create_resonant_env.sh
 ```
 
 Dry-run one array task, then smoke-test it:
@@ -29,8 +29,8 @@ Override resources by copying the PBS template and changing only the `#PBS -l` l
 Each task has an isolated output root and can be safely resumed. After every task has `metadata.json` and no `INCOMPLETE` marker, aggregate without recomputation:
 
 ```bash
-python examples/aggregate_resonant_hz_runs.py --input-root "$RUN_ROOT/tasks" --out "$RUN_ROOT/aggregated"
-python examples/complete_resonant_hz_analysis.py --mandatory "$RUN_ROOT/aggregated" --near-resonance work/single_pixel_quspin_fresh_2026-07-12/near_resonance_N8 --long-average work/single_pixel_quspin_fresh_2026-07-12/long_average_N8_v2 --out "$RUN_ROOT/figures"
+python scripts/aggregate_resonant_hz_runs.py --input-root "$RUN_ROOT/tasks" --out "$RUN_ROOT/aggregated"
+python scripts/complete_resonant_hz_analysis.py --mandatory "$RUN_ROOT/aggregated" --near-resonance work/single_pixel_quspin_fresh_2026-07-12/near_resonance_N8 --long-average work/single_pixel_quspin_fresh_2026-07-12/long_average_N8_v2 --out "$RUN_ROOT/figures"
 ```
 
 Logs are deterministic under `$LOG_ROOT`. A nonzero PBS exit, missing `metadata.json`, or an `INCOMPLETE` marker is a failed task. This runbook has been syntax-reviewed locally but no Zeus job was submitted by Codex.

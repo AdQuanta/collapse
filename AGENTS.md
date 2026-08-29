@@ -18,18 +18,19 @@ Do not invent results, references, parameter values, conventions, validation out
 
 Use the existing layout consistently:
 
-- `collapse/`: reusable physics models, analytical helpers, numerical algorithms, analysis utilities, serialization, and plotting code;
-- `examples/`: executable studies, parameter sweeps, report-building entry points, and thin orchestration scripts;
+- `core/`: reusable physics models, analytical helpers, numerical algorithms, analysis utilities, serialization, and plotting code;
+- `scripts/`: executable studies, parameter sweeps, report-building entry points, and thin orchestration scripts;
 - `configs/`: versioned parameter sets and run configurations;
 - `hpc/`: PBS job scripts, submission wrappers, and Zeus campaign utilities;
 - `tests/`: pytest unit, regression, integration, and smoke tests;
+- `manuscript/`: PRL-style manuscript, supplement, figures, provenance, and audits;
 - `reports/`: research reports and manuscript-related sources;
 - `figures/`: curated figures intended for reports or presentations;
 - `presentations/`: presentation sources and assets;
 - `work/`, `output/`, `tmp/`: generated, intermediate, or scratch data;
 - `archive/`: legacy material, not active source code.
 
-Place reusable logic in `collapse/`, not in notebooks or large entry-point scripts. Keep `examples/` scripts thin: parse configuration, call library functions, save outputs, and report provenance. Do not import active code from `archive/`, `work/`, `output/`, or `tmp/`.
+Place reusable logic in `core/`, not in notebooks or large entry-point scripts. Keep `scripts/` scripts thin: parse configuration, call library functions, save outputs, and report provenance. Do not import active code from `archive/`, `work/`, `output/`, or `tmp/`.
 
 Before adding a new module, inspect nearby modules and tests. Extend an established abstraction when it fits; do not create a parallel framework for the same concept.
 
@@ -37,21 +38,22 @@ Before adding a new module, inspect nearby modules and tests. Extend an establis
 
 Use Python 3.11, matching the Zeus environment.
 
-Typical Windows setup:
+Typical macOS setup:
 
-```powershell
-python -m venv .venv
-.venv\Scripts\python.exe -m pip install -r requirements-local-study.txt
-.venv\Scripts\python.exe -m pytest -q
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
 ```
 
 Useful focused checks:
 
-```powershell
-.venv\Scripts\python.exe -m pytest -q tests/test_detector_resonance.py
-.venv\Scripts\python.exe -m pytest -q tests/test_<feature>.py
-.venv\Scripts\python.exe -m py_compile path\to\script.py
-.venv\Scripts\python.exe examples\<script>.py --help
+```bash
+.venv/bin/python -m pytest -q tests/test_detector_resonance.py
+.venv/bin/python -m pytest -q tests/test_<feature>.py
+.venv/bin/python -m py_compile path/to/script.py
+.venv/bin/python scripts/<script>.py --help
 ```
 
 Use documented scripts in `hpc/` for Zeus campaigns. Do not bypass established submission wrappers unless the task explicitly requires changing them.

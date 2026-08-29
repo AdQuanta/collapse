@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "plot_single_pixel_jpm_sweep_atlas.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "plot_single_pixel_jpm_sweep_atlas.py"
 SPEC = importlib.util.spec_from_file_location("jpm_sweep_atlas", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

@@ -1,6 +1,6 @@
 # Zeus Born Hamiltonian Search Handoff
 
-This is the first-pass Zeus runbook for `examples/born_hamiltonian_search.py`.
+This is the first-pass Zeus runbook for `scripts/born_hamiltonian_search.py`.
 The search entry point writes `results.json`, `results.csv`,
 `top_candidates.md`, and `run.log` under `--out-dir`.
 
@@ -85,7 +85,7 @@ ZEUS_TARGET="<YOUR_ZEUS_SSH_ALIAS_OR_USER_AT_HOST>"
 REMOTE_ROOT="research/collapse"
 
 ssh "${ZEUS_TARGET}" "mkdir -p '${REMOTE_ROOT}'"
-scp -r examples collapse hpc "${ZEUS_TARGET}:${REMOTE_ROOT}/"
+scp -r core scripts hpc "${ZEUS_TARGET}:${REMOTE_ROOT}/"
 ```
 
 ## Submit From Zeus Login Shell

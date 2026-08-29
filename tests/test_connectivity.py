@@ -12,8 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 
-from collapse.pauli import build_pauli_z
-from collapse.hamiltonians.numpy_hamiltonians import (
+from core.pauli import build_pauli_z
+from core.hamiltonians.numpy_hamiltonians import (
     _central_targets,
     _pixel_bonds,
     DimerizedPixelHamiltonianNumpy,
@@ -22,7 +22,7 @@ from collapse.hamiltonians.numpy_hamiltonians import (
 )
 
 try:
-    from collapse.hamiltonians.quspin_hamiltonians import (
+    from core.hamiltonians.quspin_hamiltonians import (
         SinglePixelHamiltonianQuSpin,
         DimerizedPixelHamiltonianQuSpin,
         TwoPixelHamiltonianQuSpin,

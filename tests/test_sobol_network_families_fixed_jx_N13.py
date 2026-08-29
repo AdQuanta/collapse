@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pytest
 
-from collapse.sobol_coupling_scan import ScanSettings, generate_sobol_points
-from collapse import zeus_sobol_array
-from collapse.zeus_sobol_array import build_scan_settings
-from examples.run_zeus_sobol_network_families_fixed_jx_N13 import (
+from core.sobol_coupling_scan import ScanSettings, generate_sobol_points
+from core import zeus_sobol_array
+from core.zeus_sobol_array import build_scan_settings
+from scripts.run_zeus_sobol_network_families_fixed_jx_N13 import (
     BATCH_SIZE,
     CONFIGURATIONS_PER_FAMILY,
     DETECTOR_LOWER,

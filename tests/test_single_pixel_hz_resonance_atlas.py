@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "examples" / "plot_single_pixel_hz_resonance_atlas.py"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "plot_single_pixel_hz_resonance_atlas.py"
 SPEC = importlib.util.spec_from_file_location("hz_resonance_atlas", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None

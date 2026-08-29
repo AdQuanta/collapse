@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from examples.run_zeus_ranked_ring_extremes_N17 import (
+from scripts.run_zeus_ranked_ring_extremes_N17 import (
     _prior_result_matches,
     output_dir_for_case,
     select_cases,

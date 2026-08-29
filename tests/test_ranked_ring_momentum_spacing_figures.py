@@ -1,12 +1,16 @@
 from pathlib import Path
 
-from examples.build_ranked_ring_momentum_spacing_figures import (
+from scripts.build_ranked_ring_momentum_spacing_figures import (
     HamiltonianParameters,
     RankedCase,
     _analysis_digest,
     select_ranked_tails,
 )
-from examples.build_ranked_ring_diagnostics_spacing_figures import _sector_key
+from scripts.build_ranked_ring_diagnostics_spacing_figures import (
+    ROOT,
+    _resolve_repo_path,
+    _sector_key,
+)
 
 
 def _case(config_id: str, score: float) -> RankedCase:
@@ -69,3 +73,13 @@ def test_combined_figure_sector_keys_match_spacing_archive_convention() -> None:
     assert _sector_key(
         {"momentum": 7, "n_up": 6, "reflection_parity": None}
     ) == "k07_q06_pnone"
+
+
+def test_combined_figure_resolves_transferred_windows_paths() -> None:
+    resolved = _resolve_repo_path(
+        r"reports\ranked_ring_spacings\case_N17_spectra.npz"
+    )
+
+    assert resolved == (
+        ROOT / "reports" / "ranked_ring_spacings" / "case_N17_spectra.npz"
+    )

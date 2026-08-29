@@ -1,7 +1,7 @@
 # Zeus Pairwise Born-Stability Heatmaps
 
 This runbook submits `hpc/zeus_born_pairwise_heatmaps.pbs`, which runs
-`examples/born_pairwise_heatmap.py` for two-parameter stability checks around
+`scripts/born_pairwise_heatmap.py` for two-parameter stability checks around
 current successful points and degeneracy controls.
 
 The script writes:

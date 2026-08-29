@@ -85,7 +85,7 @@ case "$TASK_ID" in
   1)
     RUN_NAME="metric_stability_matched_counterparts_N15_N16"
     COMMAND=(
-      "$PYTHON_BIN" examples/born_candidate_stability.py
+      "$PYTHON_BIN" scripts/born_candidate_stability.py
       "${COMMON_FILTERS[@]}"
       --bins 60 80 120
       --tail-fractions 0.05 0.10 0.20
@@ -96,7 +96,7 @@ case "$TASK_ID" in
   2)
     RUN_NAME="diagnostics_matched_counterparts_N15_N16"
     COMMAND=(
-      "$PYTHON_BIN" examples/plot_born_candidate_diagnostics.py
+      "$PYTHON_BIN" scripts/plot_born_candidate_diagnostics.py
       "${COMMON_FILTERS[@]}"
       --bins 120
       --tail-fraction 0.10

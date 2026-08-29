@@ -2,9 +2,9 @@
 
 import numpy as np
 
-from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
-from collapse.relative_evolution_pencil import matched_projective_angle_error
-from collapse.relative_evolution_sector import (
+from core.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
+from core.relative_evolution_pencil import matched_projective_angle_error
+from core.relative_evolution_sector import (
     generalized_relative_evolution_from_eigenbasis,
     generalized_relative_evolution_from_sectors,
 )

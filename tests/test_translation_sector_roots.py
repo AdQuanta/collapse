@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.translation_sector_roots import (
+from core.translation_sector_roots import (
     cyclic_translation_multiplicities,
     nonredundant_momentum_roots,
     split_concatenated_translation_roots,

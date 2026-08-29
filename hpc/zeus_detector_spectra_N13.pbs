@@ -11,12 +11,12 @@
 set -euo pipefail
 
 SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
-if [[ -f "$SUBMIT_DIR/examples/run_detector_spectra_zeus_N13.py" ]]; then
+if [[ -f "$SUBMIT_DIR/scripts/run_detector_spectra_zeus_N13.py" ]]; then
   REPO_ROOT="$SUBMIT_DIR"
-elif [[ -f "$SUBMIT_DIR/../examples/run_detector_spectra_zeus_N13.py" ]]; then
+elif [[ -f "$SUBMIT_DIR/../scripts/run_detector_spectra_zeus_N13.py" ]]; then
   REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
 else
-  echo "Cannot locate examples/run_detector_spectra_zeus_N13.py." >&2
+  echo "Cannot locate scripts/run_detector_spectra_zeus_N13.py." >&2
   echo "Submit from the repository root or hpc/ after synchronizing the new files." >&2
   exit 2
 fi
@@ -58,7 +58,7 @@ echo "EXECUTION_POLICY=one_dense_regime_at_a_time"
 echo "CHECKPOINT_POLICY=save_arrays_metadata_and_block_table_after_each_regime"
 
 "$PYTHON_BIN" -c \
-  'import sys, numpy, matplotlib; assert sys.version_info[:2] == (3, 11), sys.version; from collapse.detector_resonance import DenseRingDetectorBuilder; print(sys.version); print("numpy", numpy.__version__); print("matplotlib", matplotlib.__version__)'
+  'import sys, numpy, matplotlib; assert sys.version_info[:2] == (3, 11), sys.version; from core.detector_resonance import DenseRingDetectorBuilder; print(sys.version); print("numpy", numpy.__version__); print("matplotlib", matplotlib.__version__)'
 
 ARGS=(
   --config "$CONFIG_PATH"
@@ -70,7 +70,7 @@ if [[ "${DRY_RUN:-0}" == "1" ]]; then
 fi
 
 trap 'echo "event=INTERRUPTED N=13"; exit 143' TERM INT
-"$PYTHON_BIN" examples/run_detector_spectra_zeus_N13.py "${ARGS[@]}"
+"$PYTHON_BIN" scripts/run_detector_spectra_zeus_N13.py "${ARGS[@]}"
 
 echo "event=FINISH N=13"
 echo "Report: $RUN_ROOT/REPORT.md"

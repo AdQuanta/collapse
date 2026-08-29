@@ -55,13 +55,13 @@ cd "$HOME/research/collapse"
 
 RUN_ROOT="figures/zeus_born_weak_disorder_collective"
 
-python3.11 examples/summarize_born_search_results.py \
+python3.11 scripts/summarize_born_search_results.py \
   --root "$RUN_ROOT" \
   --out-md "$RUN_ROOT/summary.md" \
   --out-csv "$RUN_ROOT/summary_rows.csv" \
   --top 40
 
-python3.11 examples/born_candidate_stability.py \
+python3.11 scripts/born_candidate_stability.py \
   --source-csv "$RUN_ROOT/summary_rows.csv" \
   --out-dir "$RUN_ROOT/stability_top24" \
   --mode all \
@@ -81,7 +81,7 @@ python3.11 examples/born_candidate_stability.py \
   --top 24 \
   --log-file "$RUN_ROOT/stability_top24/run.log"
 
-python3.11 examples/plot_born_candidate_diagnostics.py \
+python3.11 scripts/plot_born_candidate_diagnostics.py \
   --source-csv "$RUN_ROOT/summary_rows.csv" \
   --out-dir "$RUN_ROOT/diagnostics_top24" \
   --mode all \

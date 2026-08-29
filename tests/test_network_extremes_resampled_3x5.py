@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from examples.build_network_extremes_resampled_all_3x5 import (
+from scripts.build_network_extremes_resampled_all_3x5 import (
     discover_selections,
     output_path,
 )
-from examples.build_network_extremes_resampled_sample_3x5 import _realization_dirs
+from scripts.build_network_extremes_resampled_sample_3x5 import _realization_dirs
 
 
 def test_realization_dirs_require_five_complete_results(tmp_path: Path) -> None:

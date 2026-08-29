@@ -17,4 +17,4 @@ JOB_ID="$(qsub -J "$ARRAY_RANGE" -v "RUN_ROOT=$RUN_ROOT,CONFIG=$CONFIG" "$REPO_R
 printf '%s job_id=%s array=%s configurations=20 N=17 checkpoint=each_momentum run_root=%s\n' \
   "$(date --iso-8601=seconds)" "$JOB_ID" "$ARRAY_RANGE" "$RUN_ROOT" | tee -a "$RUN_ROOT/submitted_jobs.txt"
 printf 'After the array completes, run:\n%s\n' \
-  "python3.11 examples/summarize_ring_hz0_activation_scan.py --run-root \"$RUN_ROOT\""
+  "python3.11 scripts/summarize_ring_hz0_activation_scan.py --run-root \"$RUN_ROOT\""

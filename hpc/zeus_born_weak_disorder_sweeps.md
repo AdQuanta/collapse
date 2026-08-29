@@ -132,7 +132,7 @@ rsync -av "$PACKAGE_ROOT/scheduler_logs/" \
 ## Post-Return Commands
 
 ```bash
-python examples/summarize_born_search_results.py \
+python scripts/summarize_born_search_results.py \
   --root figures/zeus_born_weak_disorder_sweeps \
   --out-md figures/zeus_born_weak_disorder_sweeps/summary.local.md \
   --out-csv figures/zeus_born_weak_disorder_sweeps/summary_rows.local.csv \

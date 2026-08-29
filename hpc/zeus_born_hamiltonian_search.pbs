@@ -158,7 +158,7 @@ echo "Python: $("$PYTHON_BIN" --version 2>&1)"
 echo "BORN_WORKERS: $BORN_WORKERS"
 echo "OMP/MKL/OPENBLAS/NUMEXPR threads: $OMP_NUM_THREADS/$MKL_NUM_THREADS/$OPENBLAS_NUM_THREADS/$NUMEXPR_NUM_THREADS"
 
-"$PYTHON_BIN" examples/born_hamiltonian_search.py \
+"$PYTHON_BIN" scripts/born_hamiltonian_search.py \
   "${ARGS[@]}" \
   --workers "$BORN_WORKERS" \
   --plot-top "$PLOT_TOP" \

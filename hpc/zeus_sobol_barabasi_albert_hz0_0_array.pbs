@@ -10,7 +10,7 @@
 
 set -euo pipefail
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
-RUNNER="examples/run_zeus_sobol_barabasi_albert_hz0_0.py"
+RUNNER="scripts/run_zeus_sobol_barabasi_albert_hz0_0.py"
 CAMPAIGN_SLUG="sobol_barabasi_albert_hz0_0"
 GRAPH_SEED="${GRAPH_SEED:-2026081301}"
 GRAPH_ARGS=(--connectivity barabasi_albert --barabasi-albert-m "${BARABASI_ALBERT_M:-2}")

@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import replace
 from pathlib import Path
 
-from collapse.sobol_coupling_scan import generate_sobol_points
-from examples.run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_two_order_N14 import (
+from core.sobol_coupling_scan import generate_sobol_points
+from scripts.run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_two_order_N14 import (
     BATCH_SIZE,
     COUPLING_LOWER,
     DETECTOR_N,

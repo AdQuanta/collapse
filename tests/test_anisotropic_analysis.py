@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from collapse.anisotropic_analysis import (
+from core.anisotropic_analysis import (
     DetectorDegeneracyCalculator,
     ParameterRegimeSummarizer,
     SpectrumMetricCalculator,
@@ -14,8 +14,8 @@ from collapse.anisotropic_analysis import (
     fit_periodic_power_law,
     wrapped_heavy_score,
 )
-from collapse.detector_resonance import DetectorSpec
-from collapse.distribution_fit import (
+from core.detector_resonance import DetectorSpec
+from core.distribution_fit import (
     fit_folded_circular_models,
     folded_wrapped_cauchy_bin_probabilities,
     folded_wrapped_gaussian_bin_probabilities,

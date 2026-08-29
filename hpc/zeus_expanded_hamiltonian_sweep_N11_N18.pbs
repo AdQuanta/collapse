@@ -13,9 +13,9 @@ PROJECT_ROOT="${PROJECT_ROOT:-${PBS_O_WORKDIR:-$HOME/research/collapse}}"
 cd "$PROJECT_ROOT"
 
 PYTHON_BIN="${PYTHON_BIN:-python3.11}"
-RUNNER="$PROJECT_ROOT/examples/run_conjecture_candidate_campaign.py"
-ANALYZER="$PROJECT_ROOT/examples/analyze_expanded_hamiltonian_sweep.py"
-ATLAS="$PROJECT_ROOT/examples/plot_expanded_hamiltonian_atlases.py"
+RUNNER="$PROJECT_ROOT/scripts/run_conjecture_candidate_campaign.py"
+ANALYZER="$PROJECT_ROOT/scripts/analyze_expanded_hamiltonian_sweep.py"
+ATLAS="$PROJECT_ROOT/scripts/plot_expanded_hamiltonian_atlases.py"
 CONFIG="$PROJECT_ROOT/configs/expanded_hamiltonian_sweep_2026-07-16.json"
 for required in "$RUNNER" "$ANALYZER" "$ATLAS" "$CONFIG"; do
   if [ ! -f "$required" ]; then

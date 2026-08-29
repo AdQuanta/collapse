@@ -1,7 +1,7 @@
 import numpy as np
 
-from collapse.relative_evolution_pencil import matched_projective_angle_error
-from collapse.relative_evolution_study import (
+from core.relative_evolution_pencil import matched_projective_angle_error
+from core.relative_evolution_study import (
     RelativeEvolutionCase,
     angular_histogram,
     build_sector_eigenbases,

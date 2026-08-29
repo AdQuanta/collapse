@@ -31,21 +31,21 @@ Upload these new files together with the existing repository code:
 
 ```text
 configs/zeus_vab_atlas_hz0_0p1_N14.json
-examples/run_zeus_vab_atlas_hz0_0p1_N14.py
+scripts/run_zeus_vab_atlas_hz0_0p1_N14.py
 hpc/zeus_vab_atlas_hz0_0p1_N14_array.pbs
 hpc/submit_zeus_vab_atlas_hz0_0p1_N14.sh
 hpc/zeus_vab_atlas_hz0_0p1_N14.md
 ```
 
-The runner uses the existing `collapse/anisotropic_sweep.py` implementation.
+The runner uses the existing `core/anisotropic_sweep.py` implementation.
 
 ## Validate before submission
 
 From the repository root on Zeus:
 
 ```bash
-python3.11 examples/run_zeus_vab_atlas_hz0_0p1_N14.py --help
-python3.11 examples/run_zeus_vab_atlas_hz0_0p1_N14.py \
+python3.11 scripts/run_zeus_vab_atlas_hz0_0p1_N14.py --help
+python3.11 scripts/run_zeus_vab_atlas_hz0_0p1_N14.py \
   --batch-index 0 --output-root work/vab_hz0_dry_run --dry-run
 ```
 

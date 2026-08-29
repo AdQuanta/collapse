@@ -11,8 +11,8 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "expanded_hamiltonian_sweep_2026-07-16.json"
-ANALYZER = ROOT / "examples" / "analyze_expanded_hamiltonian_sweep.py"
-ATLAS = ROOT / "examples" / "plot_expanded_hamiltonian_atlases.py"
+ANALYZER = ROOT / "scripts" / "analyze_expanded_hamiltonian_sweep.py"
+ATLAS = ROOT / "scripts" / "plot_expanded_hamiltonian_atlases.py"
 PBS = ROOT / "hpc" / "zeus_expanded_hamiltonian_sweep_N11_N18.pbs"
 
 

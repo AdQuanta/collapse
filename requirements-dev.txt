@@ -1,0 +1,7 @@
+# Complete local development, testing, figure, and report-building environment.
+-r requirements.txt
+
+pytest==9.1.1
+Pillow==12.3.0
+pypdf==6.16.2
+reportlab==5.0.1

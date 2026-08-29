@@ -13,7 +13,7 @@ figures/zeus_born_anisotropic_largerN/matched_counterpart_requests.csv
 It currently contains the missing same-parameter matched rows identified by:
 
 ```bash
-python examples/compare_born_falsifier_challenges.py \
+python scripts/compare_born_falsifier_challenges.py \
   --root figures/zeus_born_anisotropic_largerN
 ```
 
@@ -137,7 +137,7 @@ After importing the package under `figures/zeus_born_anisotropic_largerN`, run
 the audit command with the returned matched-counterpart stability table:
 
 ```bash
-python examples/compare_born_falsifier_challenges.py \
+python scripts/compare_born_falsifier_challenges.py \
   --root figures/zeus_born_anisotropic_largerN \
   --extra-primary-csv figures/zeus_born_anisotropic_largerN/metric_stability_matched_counterparts_N15_N16/stability_summary.csv \
   > figures/zeus_born_anisotropic_largerN/falsifier_challenge_after_matched_counterparts.md

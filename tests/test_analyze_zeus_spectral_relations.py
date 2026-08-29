@@ -9,7 +9,7 @@ import numpy as np
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
-    / "examples"
+    / "scripts"
     / "analyze_zeus_spectral_relations.py"
 )
 SPEC = importlib.util.spec_from_file_location("zeus_spectral_relations", SCRIPT)

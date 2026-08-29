@@ -1,6 +1,6 @@
 # Zeus Sobol weak-coupling campaigns
 
-Run from the repository root (the directory containing `examples/`, `collapse/`,
+Run from the repository root (the directory containing `scripts/`, `core/`,
 and `hpc/`). Python 3.11 is invoked directly; no virtual environment is
 activated.
 
@@ -73,8 +73,8 @@ detector scales.
 To inspect the exact samples before submitting:
 
 ```bash
-python3.11 examples/run_zeus_sobol_jy_zero_scan.py --output-root "$RUN_ROOT" --dry-run
-python3.11 examples/run_zeus_sobol_jy_nonzero_scan.py --output-root "$RUN_ROOT" --dry-run
+python3.11 scripts/run_zeus_sobol_jy_zero_scan.py --output-root "$RUN_ROOT" --dry-run
+python3.11 scripts/run_zeus_sobol_jy_nonzero_scan.py --output-root "$RUN_ROOT" --dry-run
 ```
 
 The expensive production jobs may safely reuse that prepared root because the

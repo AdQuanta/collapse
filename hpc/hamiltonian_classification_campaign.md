@@ -103,7 +103,7 @@ tail -f "$RUN_ROOT"/logs/task_*.log
 After the array finishes:
 
 ```bash
-python3.11 examples/collect_hamiltonian_classification_results.py \
+python3.11 scripts/collect_hamiltonian_classification_results.py \
   --manifest "$RUN_ROOT/scan_manifest.csv" \
   --output-root "$RUN_ROOT"
 ```
@@ -117,10 +117,10 @@ Only when the summary reports all 149 points complete and zero missing/corrupt
 rows, build Figures A--D and their source tables:
 
 ```bash
-python3.11 examples/plot_zeus_hamiltonian_classification.py \
+python3.11 scripts/plot_zeus_hamiltonian_classification.py \
   --run-root "$RUN_ROOT"
 
-python3.11 examples/analyze_zeus_spectral_relations.py \
+python3.11 scripts/analyze_zeus_spectral_relations.py \
   --run-root "$RUN_ROOT"
 ```
 

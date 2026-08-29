@@ -235,7 +235,7 @@ RUN_ROOT="figures/zeus_born_followup"
 STABILITY_LOG_ROOT="<STABILITY_LOG_ROOT_FROM_SUBMISSION>"
 DIAGNOSTICS_LOG_ROOT="<DIAGNOSTICS_LOG_ROOT_FROM_SUBMISSION>"
 
-python examples/evaluate_born_postprocess_gate.py \
+python scripts/evaluate_born_postprocess_gate.py \
   --root "$RUN_ROOT" \
   --scheduler-log-root "$STABILITY_LOG_ROOT" \
   --scheduler-log-root "$DIAGNOSTICS_LOG_ROOT" \

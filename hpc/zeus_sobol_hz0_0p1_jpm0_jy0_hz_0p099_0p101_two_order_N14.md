@@ -27,7 +27,7 @@ environment is activated.
 Sampling-only validation:
 
 ```bash
-python3.11 examples/run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_two_order_N14.py \
+python3.11 scripts/run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p099_0p101_two_order_N14.py \
   --batch-index 0 --output-root work/two_order_N14_dry_run --dry-run
 ```
 

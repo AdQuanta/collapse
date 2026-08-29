@@ -1,6 +1,6 @@
 """Small-system tests for the unified classification point workflow."""
 
-from collapse.hamiltonian_classification import (
+from core.hamiltonian_classification import (
     SinglePixelClassificationPoint,
     classify_single_pixel_point,
 )
@@ -70,7 +70,7 @@ def test_quspin_translation_sectors_match_dense_classification_roots() -> None:
         SinglePixelClassificationPoint(**shared, backend="quspin_sectors")
     )
 
-    from collapse.projective_roots import matched_bloch_distance
+    from core.projective_roots import matched_bloch_distance
 
     maximum, rms = matched_bloch_distance(
         dense.bloch_vectors_0,
@@ -120,7 +120,7 @@ def test_haar_unitary_null_is_reproducible_and_qz_valid() -> None:
     first = classify_single_pixel_point(point)
     second = classify_single_pixel_point(point)
 
-    from collapse.projective_roots import matched_bloch_distance
+    from core.projective_roots import matched_bloch_distance
 
     maximum, rms = matched_bloch_distance(
         first.bloch_vectors_0,

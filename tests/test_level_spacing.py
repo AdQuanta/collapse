@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import numpy as np
 from scipy.integrate import quad
 
-from collapse import (
+from core import (
     MEAN_R_POISSON,
     compute_level_spacing_ratios,
     compute_level_spacings,

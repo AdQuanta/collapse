@@ -12,9 +12,9 @@
 set -euo pipefail
 
 cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
-if [[ -f examples/run_zeus_vab_atlas_jx_1em3_N14.py ]]; then
+if [[ -f scripts/run_zeus_vab_atlas_jx_1em3_N14.py ]]; then
   REPO_ROOT="$PWD"
-elif [[ -f ../examples/run_zeus_vab_atlas_jx_1em3_N14.py ]]; then
+elif [[ -f ../scripts/run_zeus_vab_atlas_jx_1em3_N14.py ]]; then
   REPO_ROOT="$(cd .. && pwd)"
 else
   echo "Cannot locate the Jx=1e-3 atlas runner from $PWD" >&2
@@ -53,7 +53,7 @@ if [[ "$ARRAY_INDEX" == "8" ]]; then CONFIGURATION_COUNT=80; fi
 LOG="$RUN_ROOT/logs/N14_batch${ARRAY_INDEX}_${PBS_JOBID:-manual}.log"
 echo "[$(date --iso-8601=seconds)] array_index=$ARRAY_INDEX N=14 hz0=0 Jx_unscaled=1e-3 Jx_edge=1e-3/sqrt(14) Jy=0 t=1e6 configurations=$CONFIGURATION_COUNT row_workers=2" | tee -a "$LOG"
 
-python3.11 examples/run_zeus_vab_atlas_jx_1em3_N14.py \
+python3.11 scripts/run_zeus_vab_atlas_jx_1em3_N14.py \
   --batch-index "$ARRAY_INDEX" \
   --config "$CONFIG_PATH" \
   --output-root "$RUN_ROOT" \

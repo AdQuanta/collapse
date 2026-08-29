@@ -2,7 +2,7 @@ from pathlib import Path
 
 import numpy as np
 
-from examples.plot_resonant_diagnostic_atlas import _bloch_branches, _density, _raw_path
+from scripts.plot_resonant_diagnostic_atlas import _bloch_branches, _density, _raw_path
 
 
 def test_bloch_branches_are_unit_and_antipodal() -> None:

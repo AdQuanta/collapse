@@ -275,4 +275,4 @@ if [ "${BACKUP_EXISTING_OUTPUTS:-0}" = "1" ]; then
   fi
 fi
 
-"$PYTHON_BIN" examples/born_hamiltonian_search.py "${ARGS[@]}" "${COMMON_ARGS[@]}" --out-dir "$OUT_DIR" --log-file "$OUT_LOG"
+"$PYTHON_BIN" scripts/born_hamiltonian_search.py "${ARGS[@]}" "${COMMON_ARGS[@]}" --out-dir "$OUT_DIR" --log-file "$OUT_LOG"

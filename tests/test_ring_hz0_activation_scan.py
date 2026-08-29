@@ -8,9 +8,9 @@ from pathlib import Path
 
 import pytest
 
-from collapse.activation_resolved_projective import RingActivationParameters
-from examples.run_three_ring_activation_resolved import _apply_parameter_overrides
-from examples.summarize_ring_hz0_activation_scan import collect_scan_rows
+from core.activation_resolved_projective import RingActivationParameters
+from scripts.run_three_ring_activation_resolved import _apply_parameter_overrides
+from scripts.summarize_ring_hz0_activation_scan import collect_scan_rows
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -129,7 +129,7 @@ def test_zeus_scan_array_shape_resources_and_race_free_status_files() -> None:
         ROOT / "hpc/submit_zeus_ring_born_like_hz0_scan_N17.sh"
     ).read_text()
     runner = (
-        ROOT / "examples/run_three_ring_activation_resolved.py"
+        ROOT / "scripts/run_three_ring_activation_resolved.py"
     ).read_text()
     assert "#PBS -J 0-19" in pbs
     assert "#PBS -q zeus_new_q" in pbs

@@ -25,18 +25,16 @@ label and never silently promote a conjecture to a result.
 
 1. `AGENTS.md`
 2. `RESEARCH_STATE.md`
-3. `CODEBASE_MAP.md`
-4. `GLEASON_BORN_CLASSIFICATION.md`
-5. `THEORETICAL_CONCLUSIONS.md`
-6. `HANDOFF.md`
-7. `prl_draft/EVIDENCE_REGISTRY.md`
-8. `prl_draft/NUMERICAL_PROVENANCE.md`
-9. `prl_draft/RESULTS_NEEDED.md`
-10. this overlay: `research/PROJECT_STATE.md`, `research/CODE_GUIDE.md`,
-    `research/CLAIM_LEDGER.md`, `research/OPEN_QUESTIONS.md`.
+3. `README.md`
+4. `manuscript/EVIDENCE_REGISTRY.md`
+5. `manuscript/NUMERICAL_PROVENANCE.md`
+6. `manuscript/RESULTS_NEEDED.md`
+7. `manuscript/audits/NUMERICAL_AUDIT.md`
+8. `manuscript/audits/THEORY_AUDIT.md`
 
-The overlay was produced against commit `76f1f3672c835727e7cbe5655ad77a9efd2ed990`. If HEAD differs, inspect the intervening commits
-before assuming the overlay is current.
+If HEAD is newer than the last update recorded in `RESEARCH_STATE.md`, inspect
+the intervening commits and recent validated results before assuming the memory
+file is current.
 
 ## Scientific rules
 
@@ -68,8 +66,8 @@ before assuming the overlay is current.
 - Preserve projective roots at infinity and singular/indeterminate-pencil diagnostics.
 - Never concatenate symmetry sectors for level-spacing statistics.
 - Production-size runs are not unit tests.
-- New claims need an evidence record using `schemas/evidence_record.schema.json`.
-- New campaigns should emit a manifest compatible with `schemas/experiment_result.schema.json`.
+- Record new claims and campaigns in the existing evidence/provenance
+  registries and follow the metadata contract in `AGENTS.md`.
 
 ## Research loop
 

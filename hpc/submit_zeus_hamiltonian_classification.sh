@@ -9,7 +9,7 @@ RUN_ROOT="${RUN_ROOT:-$REPO_ROOT/work/zeus_hamiltonian_classification_$(date +%Y
 case "$RUN_ROOT" in /*) ;; *) RUN_ROOT="$REPO_ROOT/$RUN_ROOT" ;; esac
 mkdir -p "$RUN_ROOT/logs"
 MANIFEST="$RUN_ROOT/scan_manifest.csv"
-python3.11 examples/generate_hamiltonian_classification_manifest.py \
+python3.11 scripts/generate_hamiltonian_classification_manifest.py \
   --config configs/hamiltonian_classification_zeus_campaign.json \
   --output "$MANIFEST"
 JOB_ID="$(qsub -v "RUN_ROOT=$RUN_ROOT,MANIFEST=$MANIFEST" "$REPO_ROOT/hpc/zeus_hamiltonian_classification_array.pbs")"

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.distribution_fit import (
+from core.distribution_fit import (
     fit_folded_circular_models,
     folded_wrapped_cauchy_bin_probabilities,
     folded_wrapped_gaussian_bin_probabilities,

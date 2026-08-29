@@ -4,7 +4,7 @@ import math
 
 import numpy as np
 
-from examples.analyze_three_sobol_born_relations import (
+from scripts.analyze_three_sobol_born_relations import (
     _benjamini_hochberg,
     _histogram_cdf_at,
     _weighted_histogram_features,

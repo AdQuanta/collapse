@@ -3,8 +3,8 @@
 import numpy as np
 from scipy.linalg import expm
 
-from collapse.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
-from collapse.projective_roots import (
+from core.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
+from core.projective_roots import (
     append_uncoupled_spectator,
     antipodal_homogeneous_coordinates,
     bloch_vectors_from_homogeneous,
@@ -14,7 +14,7 @@ from collapse.projective_roots import (
     production_root_spectrum,
     split_qubit_first_blocks,
 )
-from collapse.quantum_utils import generate_random_unitary
+from core.quantum_utils import generate_random_unitary
 
 
 def _bloch(spectrum):
@@ -186,7 +186,7 @@ def test_uncoupled_spectator_repeats_roots_without_changing_normalized_density()
     assert maximum < 3.0e-12
     assert rms < 1.0e-12
 
-    from collapse.gleason_diagnostics import diagnose_labeled_bloch_histogram
+    from core.gleason_diagnostics import diagnose_labeled_bloch_histogram
 
     base_histogram = diagnose_labeled_bloch_histogram(
         base_vectors,

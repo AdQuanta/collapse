@@ -6,17 +6,17 @@ import numpy as np
 import pytest
 from scipy.optimize import linear_sum_assignment
 
-from collapse.analysis import (
+from core.analysis import (
     DisentanglementAnalyzer,
     prepare_sector_relative_evolution,
 )
-from collapse.detector_graphs import (
+from core.detector_graphs import (
     DetectorGraphSpec,
     detector_graph_edges,
     detector_graph_metadata,
 )
-from collapse.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
-from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
+from core.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
+from core.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
 
 
 @pytest.mark.parametrize(

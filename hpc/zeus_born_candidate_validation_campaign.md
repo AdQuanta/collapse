@@ -4,7 +4,7 @@ Manual handoff only.  Do not SSH from Codex, do not submit jobs from Codex, and
 do not handle credentials.  Run the blocks below manually on Zeus from the
 repository root.
 
-All PBS scripts in this campaign call `examples/born_hamiltonian_search.py`
+All PBS scripts in this campaign call `scripts/born_hamiltonian_search.py`
 directly and enable simulation-time diagnostics through:
 
 ```text

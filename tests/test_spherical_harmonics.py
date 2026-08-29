@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import numpy as np
 from scipy.special import sph_harm_y
 
-from collapse import (
+from core import (
     SphericalHarmonicProjector,
     evaluate_spherical_harmonic,
     project_onto_spherical_harmonics,

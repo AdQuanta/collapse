@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from examples.build_jx_1em3_level_spacing_atlas import (
+from scripts.build_jx_1em3_level_spacing_atlas import (
     AtlasCase,
     _local_raw_path,
     summarize_scores,

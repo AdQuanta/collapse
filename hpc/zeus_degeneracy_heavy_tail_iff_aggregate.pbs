@@ -11,12 +11,12 @@
 set -euo pipefail
 
 SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
-if [[ -f "$SUBMIT_DIR/examples/run_degeneracy_heavy_tail_campaign.py" ]]; then
+if [[ -f "$SUBMIT_DIR/scripts/run_degeneracy_heavy_tail_campaign.py" ]]; then
   REPO_ROOT="$SUBMIT_DIR"
-elif [[ -f "$SUBMIT_DIR/../examples/run_degeneracy_heavy_tail_campaign.py" ]]; then
+elif [[ -f "$SUBMIT_DIR/../scripts/run_degeneracy_heavy_tail_campaign.py" ]]; then
   REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
 else
-  echo "Cannot locate examples/run_degeneracy_heavy_tail_campaign.py from $SUBMIT_DIR." >&2
+  echo "Cannot locate scripts/run_degeneracy_heavy_tail_campaign.py from $SUBMIT_DIR." >&2
   exit 2
 fi
 cd "$REPO_ROOT"
@@ -44,7 +44,7 @@ TASK_LOG="$LOG_ROOT/aggregate_${JOB_TAG}.log"
 exec >"$TASK_LOG" 2>&1
 
 echo "[$(date --iso-8601=seconds)] event=START aggregate-all"
-"$PYTHON_BIN" examples/run_degeneracy_heavy_tail_campaign.py \
+"$PYTHON_BIN" scripts/run_degeneracy_heavy_tail_campaign.py \
   --config "$CONFIG_PATH" \
   --run-root "$RUN_ROOT" \
   aggregate-all

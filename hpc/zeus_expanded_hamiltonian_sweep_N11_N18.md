@@ -24,7 +24,7 @@ If submitting outside the repository root:
 
 ```bash
 qsub -v PROJECT_ROOT="$HOME/research/collapse" \
-  "$HOME/research/collapse/hpc/zeus_expanded_hamiltonian_sweep_N11_N18.pbs"
+  "$HOME/research/core/hpc/zeus_expanded_hamiltonian_sweep_N11_N18.pbs"
 ```
 
 ## Checkpoints and logs

@@ -54,7 +54,7 @@ each N independently.
 ```bash
 python3.11 -m venv .venv-zeus-anisotropic
 source .venv-zeus-anisotropic/bin/activate
-python -m pip install -r requirements-local-study.txt
+python -m pip install -r requirements.txt
 ```
 
 The PBS scripts require Python 3.11, `quspin==1.0.0`, and
@@ -64,7 +64,7 @@ The PBS scripts require Python 3.11, `quspin==1.0.0`, and
 ## Dry run and smoke test
 
 ```bash
-python3.11 examples/run_single_pixel_anisotropic_sweep.py describe
+python3.11 scripts/run_single_pixel_anisotropic_sweep.py describe
 qsub -J 11 -v DRY_RUN=1 hpc/zeus_single_pixel_anisotropic_j_jpm_hz_t1e6.pbs
 qsub -J 11 -v SMOKE=1,CONFIG_WORKERS=2 hpc/zeus_single_pixel_anisotropic_j_jpm_hz_t1e6.pbs
 ```

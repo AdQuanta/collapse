@@ -7,13 +7,13 @@ from pathlib import Path
 
 import numpy as np
 
-from collapse.ranked_born_campaign import (
+from core.ranked_born_campaign import (
     RankedHamiltonianCase,
     hz0_variants,
     load_ranked_cases,
     simulate_ranked_case,
 )
-from collapse.detector_graphs import DetectorGraphSpec
+from core.detector_graphs import DetectorGraphSpec
 
 
 ROOT = Path(__file__).resolve().parents[1]

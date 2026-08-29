@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.analysis import evolution_subblocks_from_eigenbasis
-from collapse.resonant_study import REQUIRED_JX, StudyConfig, _SinglePixelHamiltonian, folded_wrapped_gaussian, folded_wrapped_gaussian_bin_density, relative_data, run_case, wrapped_variance
+from core.analysis import evolution_subblocks_from_eigenbasis
+from core.resonant_study import REQUIRED_JX, StudyConfig, _SinglePixelHamiltonian, folded_wrapped_gaussian, folded_wrapped_gaussian_bin_density, relative_data, run_case, wrapped_variance
 from scipy.linalg import eigh
 import json
-from collapse.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
+from core.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
 
 
 def _hamiltonian(jx: float) -> np.ndarray:
@@ -131,8 +131,8 @@ def test_numpy_fallback_constructs_when_quspin_is_unavailable():
         return (
             name == "quspin"
             or name.startswith("quspin.")
-            or name == "collapse.resonant_study"
-            or name == "collapse.hamiltonians.quspin_hamiltonians"
+            or name == "core.resonant_study"
+            or name == "core.hamiltonians.quspin_hamiltonians"
         )
 
     saved_modules = {
@@ -144,7 +144,7 @@ def test_numpy_fallback_constructs_when_quspin_is_unavailable():
         for name in list(sys.modules):
             if _is_affected(name):
                 del sys.modules[name]
-        fallback = importlib.import_module("collapse.resonant_study")
+        fallback = importlib.import_module("core.resonant_study")
 
         assert fallback.HAMILTONIAN_BACKEND.startswith("numpy_fallback")
         assert "use_symmetry" not in fallback._FULL_BASIS_KWARGS
@@ -189,7 +189,7 @@ def test_numpy_fallback_constructs_when_quspin_is_unavailable():
 def test_quspin_backend_still_requests_the_full_basis():
     """With QuSpin present the study must keep asking for the full basis."""
 
-    import collapse.resonant_study as rs
+    import core.resonant_study as rs
 
     if rs.HAMILTONIAN_BACKEND == "quspin":
         assert rs._FULL_BASIS_KWARGS == {"use_symmetry": False}

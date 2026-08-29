@@ -5,8 +5,8 @@ from pathlib import Path
 
 import numpy as np
 
-from collapse.anisotropic_sweep import AnisotropicSample
-from collapse.relative_scale_campaign import (
+from core.anisotropic_sweep import AnisotropicSample
+from core.relative_scale_campaign import (
     RelativeScaleCampaignService,
     RelativeScaleConfig,
     RelativeScaleRepository,

@@ -140,7 +140,7 @@ run_diag() {
   echo "=== Weak-kernel diagnostic: $run_name ==="
   echo "Output: $out_dir"
   echo "Output run.log: $out_dir/run.log"
-  "$PYTHON_BIN" examples/detector_spectral_response.py \
+  "$PYTHON_BIN" scripts/detector_spectral_response.py \
     "${COMMON_ARGS[@]}" \
     "$@" \
     --out-dir "$out_dir" \

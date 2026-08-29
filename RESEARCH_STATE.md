@@ -1,6 +1,6 @@
 # RESEARCH_STATE.md — Canonical Shared Research Memory
 
-Last updated: 2026-08-27 (section 14a added; see also sections 15 and 17)
+Last updated: 2026-08-29 (section 10b added; see also sections 14a, 15, and 17)
 
 This is the **single canonical research-memory file** for this project. It is intended to transfer context between Ido, Claude Code, ChatGPT/Codex, and future agents.
 
@@ -93,10 +93,10 @@ with Bloch polar angle
 The production solver uses homogeneous generalized eigenvalues / QZ so that finite, infinite, and indeterminate projective roots are treated correctly.
 
 Key implementation:
-- `collapse/relative_evolution_pencil.py`
-- `collapse/analysis.py`
-- `collapse/projective_roots.py`
-- `collapse/hamiltonian_classification.py`
+- `core/relative_evolution_pencil.py`
+- `core/analysis.py`
+- `core/projective_roots.py`
+- `core/hamiltonian_classification.py`
 
 The relevant observable is the distribution of these special/disentangling states on the Bloch sphere and, in particular, whether the relative abundance of the two output branches approximates the qubit Born rule.
 
@@ -203,7 +203,7 @@ Be cautious about claims such as “Schulman retains full vector-space superposi
 
 # 6. Important exact / robust results already in the repository
 
-Consult `THEORETICAL_CONCLUSIONS.md` for the validated version.
+Consult `manuscript/audits/THEORY_AUDIT.md` for the manuscript-facing audit.
 
 Current strong results include:
 
@@ -281,16 +281,17 @@ The codebase supports several detector architectures, including:
 - anisotropic central couplings.
 
 Important implementation files:
-- `collapse/hamiltonians/numpy_hamiltonians.py`
-- `collapse/hamiltonians/quspin_hamiltonians.py`
-- `collapse/detector_graphs.py`
-- `collapse/hamiltonian_classification.py`
+- `core/hamiltonians/numpy_hamiltonians.py`
+- `core/hamiltonians/quspin_hamiltonians.py`
+- `core/detector_graphs.py`
+- `core/hamiltonian_classification.py`
 
 ---
 
 # 10. Current best conjecture about level statistics
 
-This is the highest-priority research direction as of 2026-08-27.
+This was the highest-priority research direction as of 2026-08-27. Section
+10b records the later N=17 evidence and narrows the conjecture.
 
 **CONJECTURE (Ido):**
 After resolving all exact detector symmetries and examining one irreducible sector at a time, a detector with **Wigner–Dyson level-spacing statistics** may be sufficient for Born-like root statistics.
@@ -366,6 +367,51 @@ Script: `work/wd_discriminator_2026-08-27/run_discriminator.py` (under gitignore
 `work/`, so it is not in the repository; rerun to regenerate).
 
 
+## 10b. N=17 spacing/Born comparison: detector statistics are not sufficient
+
+**VERIFIED_NUMERICALLY (Codex, 2026-08-29).** Finite-size, symmetry-resolved
+evidence; not an asymptotic universality statement.
+
+The recent N=17 paired study resolves fixed `N_up`, momentum, and reflection
+parity at `k=0`, merges exact numerical degeneracies, and compares both the
+unfolding-free adjacent-gap ratio and unfolded-spacing KS distances. Its main
+result is that detector level statistics alone do not determine the Born
+profile.
+
+- In 20 nearest-neighbor `hz0=0` cases, all gap-ratio classifications are
+  Poisson-like while `S_born` spans `0.020` to `0.938`. The within-family
+  Spearman correlation between `S_born` and pooled mean gap ratio is `-0.125`
+  (`p=0.60`).
+- In 20 second-neighbor `hz0=0` cases, stronger Born similarity is associated
+  with more GOE-like statistics: Spearman `rho=+0.696`
+  (`p=6.5e-4`). This is a selected finite sample and a family-level
+  association, not a sufficiency result.
+- Pooled across both families, the rank association is weak: `rho=+0.212`
+  (`p=0.189`).
+- The decisive control varies only the central field. A fixed Poisson-like
+  detector (`mean r=0.3843`, KS Poisson/GOE `0.007/0.215`) spans
+  `S_born=0.015..0.932`; a fixed GOE-like detector (`mean r=0.5264`, KS
+  Poisson/GOE `0.207/0.015`) spans `S_born=0.055..0.930`. The detector spectra
+  are unchanged throughout each scan.
+
+**Consequence.** A detector-only claim that Wigner-Dyson statistics are
+sufficient is falsified at finite N, and Wigner-Dyson statistics are not
+necessary for a high polar Born score. The narrower conjecture still worth
+testing is that, under fixed compatible dynamical conditions and full-sphere
+coverage, moving a detector family toward Wigner-Dyson statistics improves
+Born-like geometry. That requires tuning detector statistics while holding
+the qubit field, coupling operators, time protocol, and other microscopic
+ratios fixed.
+
+Primary records:
+
+- `reports/ranked_ring_symmetry_resolved_spacings_N17_2026-08-25/summary_N17.json`
+- `reports/ranked_ring_N17_fresh_diagnostics_and_symmetry_spacings_2026-08-27/render_manifest.json`
+- `reports/ring_activation_hz0_diagnostics_2026-08-24/hz0_scan_summary.json`
+- `reports/ring_second_neighbor_wd_hz0_scan_N17_2026-08-26/hz0_scan_summary.json`
+- `reports/N17_hz0_0_spacing_born_quadrants_2026-08-29/manifest.json`
+
+
 ---
 
 # 11. Correct rule for level-spacing sectors
@@ -378,7 +424,7 @@ For random-matrix/level-spacing diagnostics:
 
 Mixing independent spectra can make a chaotic Hamiltonian look artificially Poissonian.
 
-The modern detector analysis in `examples/analyze_zeus_spectral_relations.py` follows the correct sector-by-sector rule.
+The modern detector analysis in `scripts/analyze_zeus_spectral_relations.py` follows the correct sector-by-sector rule.
 
 Some older atlas/diagnostic code uses full detector spectra with mixed sectors and explicitly labels the RMT comparison as descriptive only. Those plots must **not** be used to establish WD/Poisson universality.
 
@@ -475,8 +521,8 @@ For central-X-only coupling with `hz0 = hx0 = 0` the Hamiltonian commutes with `
 and every root lies on the `y-z` great circle. The qubit gap `Delta_Q` in this family *is* `hz0`.
 Therefore taking `Delta_Q -> 0` does not just close the gap: it re-imposes an exact symmetry that
 forbids full-sphere support. Any "Born" score measured there is a polar statistic on a one-dimensional
-circle, which section 13 of `GLEASON_BORN_CLASSIFICATION.md` explicitly warns is not evidence of
-Born-compatible sphere geometry.
+circle. The full-sphere requirements in `manuscript/audits/THEORY_AUDIT.md`
+make clear that this is not evidence of Born-compatible sphere geometry.
 
 Reproduced on the section 14 detector (`N_D = 8`, Erdos-Renyi `p = 0.4`, seed 3, `J = 1`, `Jpm = 0.7`,
 `hz = 0.1`, `Jx = 0.2` with `1/sqrt(N)` scaling, `t = 100`), on the `8 x 4` equal-area grid:
@@ -512,6 +558,16 @@ the question section 13 actually intends to ask, and it has not yet been asked.
 
 # 15. Immediate computational program
 
+**RESOURCE/VALIDATION DECISION (Matan, 2026-08-29):** keep the canonical
+transverse-chain anisotropic control at `N=13,14`. The branch lacks the sector
+reductions used by the larger ring cases, and `N=15` would require the full
+dense/QZ path on the current 96 GB workflow. The memory-saving mode without
+left eigenvectors cannot establish the repository's `qz_valid` diagnostic, so
+it is not a substitute for a validated run. Summary tooling may retain the
+legacy `chain_transverse_perturbative_N15` label, but current PBS jobs use
+`chain_transverse_perturbative_N13_N14`. Treat comparisons with the primary
+`N=15,16` ring families as finite-size-confounded.
+
 ## Priority 1 — WD family: finite-size qubit-gap scaling
 
 Choose a detector family that is demonstrably WD-like after exact symmetry resolution.
@@ -536,7 +592,7 @@ Produce:
 - detector sector-resolved \(\langle\tilde r\rangle\) at each \(N\).
 
 Memory note: the production QZ path cannot reach `N = 16` on a 128 GB node, and `N = 15` fits only
-with `compute_left_eigenvectors=False` in `collapse/relative_evolution_pencil.py`. Plan the size
+with `compute_left_eigenvectors=False` in `core/relative_evolution_pencil.py`. Plan the size
 sequence accordingly.
 
 A useful candidate size sequence is around
@@ -601,29 +657,29 @@ These are currently secondary.
 
 Relevant scripts/modules already present:
 
-- `examples/sp_ring_hz0_sweep.py`
+- `scripts/sp_ring_hz0_sweep.py`
   - already supports multiple sizes in one run;
   - sweeps `hz0`;
   - uses symmetry sectors.
 
-- `examples/analyze_zeus_spectral_relations.py`
+- `scripts/analyze_zeus_spectral_relations.py`
   - modern symmetry-resolved detector spectral analysis.
 
-- `collapse/level_spacing.py`
+- `core/level_spacing.py`
   - adjacent-gap ratios;
   - unfolded spacings;
   - Poisson / GOE / GUE reference distributions.
 
-- `collapse/hamiltonians/quspin_hamiltonians.py`
+- `core/hamiltonians/quspin_hamiltonians.py`
   - symmetry-aware exact diagonalization.
 
-- `collapse/hamiltonian_classification.py`
+- `core/hamiltonian_classification.py`
   - root classification and modern diagnostics.
 
-- `collapse/relative_evolution_pencil.py`
+- `core/relative_evolution_pencil.py`
   - production projective-root QZ solver.
 
-- `collapse/relative_unitary_theory.py`
+- `core/relative_unitary_theory.py`
   - useful later for analytic mechanism studies.
 
 Before writing new infrastructure, reuse these.

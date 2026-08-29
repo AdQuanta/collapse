@@ -5,11 +5,11 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from collapse.hamiltonians.numpy_hamiltonians import (
+from core.hamiltonians.numpy_hamiltonians import (
     SinglePixelHamiltonianNumpy,
     _pixel_ring_second_neighbor_bonds,
 )
-from collapse.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
+from core.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
 
 
 def test_second_neighbor_ring_bonds_are_distinct_and_undirected() -> None:

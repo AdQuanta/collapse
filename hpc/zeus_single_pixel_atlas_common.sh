@@ -7,8 +7,8 @@ set -euo pipefail
 : "${STUDY:?set STUDY before sourcing zeus_single_pixel_atlas_common.sh}"
 REPO_ROOT="${REPO_ROOT:-${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}}"
 cd "$REPO_ROOT"
-if [[ ! -f "collapse/scaling_campaign.py" ]]; then
-  echo "Missing collapse/scaling_campaign.py under REPO_ROOT=$REPO_ROOT; synchronize the new campaign files to Zeus." >&2
+if [[ ! -f "core/scaling_campaign.py" ]]; then
+  echo "Missing core/scaling_campaign.py under REPO_ROOT=$REPO_ROOT; synchronize the new campaign files to Zeus." >&2
   exit 2
 fi
 
@@ -40,10 +40,10 @@ if [[ -z "$TASK_N" || ! "$TASK_N" =~ ^(11|12|13|14|15|16|17|18)$ ]]; then
 fi
 
 case "$STUDY" in
-  hz0)          LAUNCHER="examples/run_hz0_atlas_scaling.py" ;;
-  hz_resonance) LAUNCHER="examples/run_hz_resonance_atlas_scaling.py" ;;
-  jpm_hz)       LAUNCHER="examples/run_jpm_hz_atlas_scaling.py" ;;
-  jpm_coupling) LAUNCHER="examples/run_jpm_coupling_atlas_scaling.py" ;;
+  hz0)          LAUNCHER="scripts/run_hz0_atlas_scaling.py" ;;
+  hz_resonance) LAUNCHER="scripts/run_hz_resonance_atlas_scaling.py" ;;
+  jpm_hz)       LAUNCHER="scripts/run_jpm_hz_atlas_scaling.py" ;;
+  jpm_coupling) LAUNCHER="scripts/run_jpm_coupling_atlas_scaling.py" ;;
   *) echo "Unknown STUDY=$STUDY" >&2; exit 2 ;;
 esac
 if [[ ! -f "$LAUNCHER" ]]; then

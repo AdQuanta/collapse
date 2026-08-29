@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from collapse.sobol_coupling_scan import (
+from core.sobol_coupling_scan import (
     PERIOD,
     ParameterPoint,
     ScanSettings,

@@ -12,9 +12,9 @@
 set -euo pipefail
 
 SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
-if [[ -f "$SUBMIT_DIR/examples/compare_two_pixel_conjecture_families.py" ]]; then
+if [[ -f "$SUBMIT_DIR/scripts/compare_two_pixel_conjecture_families.py" ]]; then
   REPO_ROOT="$SUBMIT_DIR"
-elif [[ -f "$SUBMIT_DIR/../examples/compare_two_pixel_conjecture_families.py" ]]; then
+elif [[ -f "$SUBMIT_DIR/../scripts/compare_two_pixel_conjecture_families.py" ]]; then
   REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
 else
   echo "Cannot locate the repository from PBS_O_WORKDIR=$SUBMIT_DIR." >&2
@@ -73,7 +73,7 @@ echo "EDGE_COUPLING_FORMULA=0.01/sqrt(N_D)"
 "$PYTHON_BIN" -c 'import sys; assert sys.version_info[:2] == (3, 11), sys.version; import importlib.metadata as m; expected={"quspin":"1.0.0","quspin-extensions":"0.1.6"}; actual={k:m.version(k) for k in expected}; assert actual == expected, actual; print(sys.version); print(actual)'
 
 COMMAND=(
-  "$PYTHON_BIN" examples/compare_two_pixel_conjecture_families.py
+  "$PYTHON_BIN" scripts/compare_two_pixel_conjecture_families.py
   --detector-spins "$RUN_N"
   --workers "${MODEL_WORKERS:-1}"
   --raw-out "$RAW_ROOT"

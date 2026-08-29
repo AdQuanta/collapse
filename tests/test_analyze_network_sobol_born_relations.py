@@ -4,7 +4,7 @@ import math
 
 import numpy as np
 
-from examples.analyze_network_sobol_born_relations import (
+from scripts.analyze_network_sobol_born_relations import (
     graph_features,
     level_features,
 )

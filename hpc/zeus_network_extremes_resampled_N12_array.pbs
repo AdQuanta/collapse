@@ -13,9 +13,9 @@
 set -euo pipefail
 
 SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
-if [[ -f "$SUBMIT_DIR/examples/run_zeus_network_extremes_resampled_N12.py" ]]; then
+if [[ -f "$SUBMIT_DIR/scripts/run_zeus_network_extremes_resampled_N12.py" ]]; then
   REPO_ROOT="$SUBMIT_DIR"
-elif [[ -f "$SUBMIT_DIR/../examples/run_zeus_network_extremes_resampled_N12.py" ]]; then
+elif [[ -f "$SUBMIT_DIR/../scripts/run_zeus_network_extremes_resampled_N12.py" ]]; then
   REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
 else
   echo "Cannot locate the N=12 network-resampling runner." >&2
@@ -40,7 +40,7 @@ export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-16}"
 
 LOG="$RUN_ROOT/logs/task_${ARRAY_INDEX}.log"
 echo "[$(date --iso-8601=seconds)] task=$ARRAY_INDEX families=4 tails=10+10 realizations=5 N=12 checkpoint=each_realization" | tee -a "$LOG"
-"$PYTHON_BIN" examples/run_zeus_network_extremes_resampled_N12.py \
+"$PYTHON_BIN" scripts/run_zeus_network_extremes_resampled_N12.py \
   --array-index "$ARRAY_INDEX" \
   --config "$CONFIG" \
   --output-root "$RUN_ROOT" \

@@ -1,0 +1,9 @@
+# Scientific runtime tested with Python 3.11.16 on macOS.
+# Keep the QuSpin binary dependencies explicit because their versions affect
+# numerical behavior and wheel compatibility across local and Zeus runs.
+numpy==2.4.6
+scipy==1.17.1
+matplotlib==3.11.0
+quspin==1.0.0
+quspin-extensions==0.1.6
+parallel-sparse-tools==0.2.5

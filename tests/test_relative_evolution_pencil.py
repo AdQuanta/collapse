@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from collapse.relative_evolution_pencil import (
+from core.relative_evolution_pencil import (
     audit_linear_pencil_regularity,
     compare_direct_and_generalized,
     diagnose_projective_duplicates,
@@ -217,7 +217,7 @@ def test_spectrum_records_whether_left_diagnostics_were_computed() -> None:
 
     import pytest
 
-    from collapse.hamiltonian_classification import _require_left_diagnostics
+    from core.hamiltonian_classification import _require_left_diagnostics
 
     u00 = np.array([[2.0, 0.4], [0.0, 1.5]], dtype=np.complex128)
     u10 = u00 @ np.diag([0.25, 3.0j])
@@ -242,7 +242,7 @@ def test_singular_pencil_keeps_left_diagnostics_flag_true() -> None:
     has, rather than being mistaken for a reduced-diagnostic run.
     """
 
-    from collapse.hamiltonian_classification import _require_left_diagnostics
+    from core.hamiltonian_classification import _require_left_diagnostics
 
     zero = np.zeros((3, 3), dtype=np.complex128)
 

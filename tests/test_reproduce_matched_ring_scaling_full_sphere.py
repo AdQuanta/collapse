@@ -6,7 +6,7 @@ from pathlib import Path
 
 SCRIPT = (
     Path(__file__).resolve().parents[1]
-    / "examples"
+    / "scripts"
     / "reproduce_matched_ring_scaling_full_sphere.py"
 )
 SPEC = importlib.util.spec_from_file_location("matched_scaling", SCRIPT)

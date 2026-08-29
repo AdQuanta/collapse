@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import math
 
-from collapse.detector_resonance import (
+from core.detector_resonance import (
     DenseRingDetectorBuilder,
     DetectorSpec,
     SpectralProjectorAnalyzer,

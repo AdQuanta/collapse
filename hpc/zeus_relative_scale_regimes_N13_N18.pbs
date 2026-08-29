@@ -12,12 +12,12 @@
 set -euo pipefail
 
 SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
-if [[ -f "$SUBMIT_DIR/examples/run_relative_scale_regime_campaign.py" ]]; then
+if [[ -f "$SUBMIT_DIR/scripts/run_relative_scale_regime_campaign.py" ]]; then
   REPO_ROOT="$SUBMIT_DIR"
-elif [[ -f "$SUBMIT_DIR/../examples/run_relative_scale_regime_campaign.py" ]]; then
+elif [[ -f "$SUBMIT_DIR/../scripts/run_relative_scale_regime_campaign.py" ]]; then
   REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
 else
-  echo "Cannot locate examples/run_relative_scale_regime_campaign.py." >&2
+  echo "Cannot locate scripts/run_relative_scale_regime_campaign.py." >&2
   echo "Submit from the repository root or hpc/." >&2
   exit 2
 fi
@@ -103,7 +103,7 @@ if [[ "${DRY_RUN:-0}" == "1" ]]; then TASK_ARGS+=(--dry-run); fi
 if [[ "${FORCE:-0}" == "1" ]]; then TASK_ARGS+=(--force); fi
 
 trap 'echo "[$(date --iso-8601=seconds)] event=INTERRUPTED task=N'"$TASK_ID"'"; exit 143' TERM INT
-"$PYTHON_BIN" examples/run_relative_scale_regime_campaign.py \
+"$PYTHON_BIN" scripts/run_relative_scale_regime_campaign.py \
   "${GLOBAL_ARGS[@]}" "${TASK_ARGS[@]}"
 
 echo "[$(date --iso-8601=seconds)] event=FINISH task=N$RUN_N"

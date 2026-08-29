@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from collapse.sobol_coupling_scan import ScanSettings, generate_sobol_points
-from examples.run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p05_0p5_N15 import (
+from core.sobol_coupling_scan import ScanSettings, generate_sobol_points
+from scripts.run_zeus_sobol_hz0_0p1_jpm0_jy0_hz_0p05_0p5_N15 import (
     BATCH_SIZE,
     DETECTOR_N,
     FIXED_JPM,
