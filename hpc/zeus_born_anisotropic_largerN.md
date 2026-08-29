@@ -83,6 +83,14 @@ Task map:
 | 8 | `all_to_all_sz_conserving_N15_N16` | all-to-all Sz-conserving connectivity control |
 | 9 | `ring_detuned_controls_N15_N16` | detuned `hz0` falsifier controls |
 
+The transverse-chain control intentionally remains at `N=13,14`. Without
+translation or magnetization sectors, an `N=15` transverse-chain run requires
+the full dense/QZ path and does not fit the validated 96 GB workflow with left
+eigenvector diagnostics enabled. This makes the chain comparison a
+reduced-size control; do not present it as a same-size comparison with the
+primary `N=15,16` ring families. Legacy `chain_transverse_perturbative_N15`
+rows remain readable by the summary tooling but are not scheduled here.
+
 ### 1a. Rerun task 6 at reduced chain size
 
 Current priority: replace the incomplete `chain_sz_conserving_N15_N16` branch

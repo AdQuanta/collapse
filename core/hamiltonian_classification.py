@@ -165,6 +165,24 @@ def build_single_pixel_hamiltonian(point: SinglePixelClassificationPoint) -> np.
     ).generate()
 
 
+def _require_left_diagnostics(available: bool) -> None:
+    """Refuse to classify a spectrum whose left diagnostics were skipped.
+
+    ``qz_valid`` gates on ``maximum_left_homogeneous_residual < 1e-10``, and a
+    NaN fails that comparison silently.  A spectrum built with
+    ``compute_left_eigenvectors=False`` would therefore be reported invalid for
+    a reason that never appears in the record, which is indistinguishable from a
+    genuine solver failure.  Fail closed and say so instead.
+    """
+
+    if not available:
+        raise ValueError(
+            "this spectrum was computed with compute_left_eigenvectors=False, so "
+            "the left backward residual is unavailable and qz_valid cannot be "
+            "established; rerun the pencil with left eigenvectors enabled"
+        )
+
+
 def classify_single_pixel_point(
     point: SinglePixelClassificationPoint,
     *,
@@ -215,6 +233,7 @@ def classify_single_pixel_point(
         infinite = spectrum.infinite
         indeterminate = spectrum.indeterminate
         maximum_residual = spectrum.maximum_homogeneous_residual
+        _require_left_diagnostics(spectrum.left_diagnostics_available)
         maximum_left_residual = spectrum.maximum_left_homogeneous_residual
         condition_number = spectrum.condition_number_u00
         near_singular = spectrum.near_singular_u00_warning
@@ -259,6 +278,7 @@ def classify_single_pixel_point(
         infinite = spectrum.infinite
         indeterminate = spectrum.indeterminate
         maximum_residual = spectrum.maximum_homogeneous_residual
+        _require_left_diagnostics(spectrum.left_diagnostics_available)
         maximum_left_residual = spectrum.maximum_left_homogeneous_residual
         condition_number = spectrum.condition_number_u00
         near_singular = spectrum.near_singular_u00_warning
@@ -330,8 +350,18 @@ def classify_single_pixel_point(
         infinite = aggregate.infinite
         indeterminate = aggregate.indeterminate
         maximum_residual = aggregate.maximum_homogeneous_residual
-        maximum_left_residual = max(
-            item.maximum_left_homogeneous_residual for item in aggregate.spectra
+        _require_left_diagnostics(
+            all(item.left_diagnostics_available for item in aggregate.spectra)
+        )
+        # np.max, not the builtin: max() over a generator containing NaN returns
+        # a different answer depending on which element comes first.
+        maximum_left_residual = float(
+            np.max(
+                [
+                    item.maximum_left_homogeneous_residual
+                    for item in aggregate.spectra
+                ]
+            )
         )
         condition_number = aggregate.maximum_condition_number_u00
         near_singular = any(item.near_singular_u00_warning for item in aggregate.spectra)

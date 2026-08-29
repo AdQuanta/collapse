@@ -134,3 +134,121 @@ def test_duplicate_diagnostics_skip_quadratic_work_above_limit() -> None:
 
     assert not result.performed
     assert result.distinct_root_count == -1
+
+
+def test_left_eigenvector_opt_out_preserves_the_projective_spectrum() -> None:
+    """Disabling left eigenvectors is a diagnostic reduction, not a new spectrum.
+
+    The opt-out exists so that production-size runs can trade the left-vector
+    diagnostics for one fewer ``d x d`` complex array.  It must not perturb the
+    roots, angles, or right-hand backward residuals by even one ulp.
+    """
+
+    rng = np.random.default_rng(20260827)
+    dimension = 24
+    unitary, _ = np.linalg.qr(
+        rng.normal(size=(2 * dimension, 2 * dimension))
+        + 1j * rng.normal(size=(2 * dimension, 2 * dimension))
+    )
+    u00 = unitary[:dimension, :dimension].copy()
+    u10 = unitary[dimension:, :dimension].copy()
+
+    full = generalized_relative_evolution_spectrum(u00, u10)
+    lean = generalized_relative_evolution_spectrum(
+        u00, u10, compute_left_eigenvectors=False
+    )
+
+    for field in ("alpha", "beta", "eigenvalues", "radii", "theta"):
+        np.testing.assert_array_equal(
+            np.asarray(getattr(full, field)), np.asarray(getattr(lean, field))
+        )
+    np.testing.assert_array_equal(full.finite, lean.finite)
+    np.testing.assert_array_equal(full.infinite, lean.infinite)
+    np.testing.assert_array_equal(full.indeterminate, lean.indeterminate)
+    np.testing.assert_array_equal(
+        full.homogeneous_residuals, lean.homogeneous_residuals
+    )
+    assert full.maximum_homogeneous_residual == lean.maximum_homogeneous_residual
+    assert full.condition_number_u00 == lean.condition_number_u00
+    assert full.numerical_rank_u00 == lean.numerical_rank_u00
+
+
+def test_left_eigenvector_opt_out_reports_nan_instead_of_guessing() -> None:
+    """Left-defined diagnostics must be NaN, never approximated from the right."""
+
+    u00 = np.array([[2.0, 0.4], [0.0, 1.5]], dtype=np.complex128)
+    u10 = u00 @ np.diag([0.25, 3.0j])
+
+    lean = generalized_relative_evolution_spectrum(
+        u00, u10, compute_left_eigenvectors=False
+    )
+
+    assert lean.left_eigenvectors.shape == (2, 0)
+    assert np.all(np.isnan(lean.left_homogeneous_residuals))
+    assert np.isnan(lean.maximum_left_homogeneous_residual)
+    assert np.all(np.isnan(lean.local_coordinate_condition_numbers))
+    # The coordinate label describes the root, not the left eigenvector, so it
+    # must still be recorded rather than left at the indeterminate default.
+    assert np.all(lean.local_condition_coordinate == "lambda")
+
+
+def test_local_coordinate_labels_survive_the_opt_out_for_infinite_roots() -> None:
+    u00 = np.diag([1.0, 0.0]).astype(np.complex128)
+    u10 = np.diag([0.5, 1.0]).astype(np.complex128)
+
+    full = generalized_relative_evolution_spectrum(u00, u10)
+    lean = generalized_relative_evolution_spectrum(
+        u00, u10, compute_left_eigenvectors=False
+    )
+
+    np.testing.assert_array_equal(
+        full.local_condition_coordinate, lean.local_condition_coordinate
+    )
+    assert "mu=1/lambda" in set(lean.local_condition_coordinate)
+
+
+def test_spectrum_records_whether_left_diagnostics_were_computed() -> None:
+    """NaN from "not computed" must be distinguishable from NaN from "singular".
+
+    ``qz_valid`` gates on the left backward residual, and ``NaN < 1e-10`` is
+    False.  Without an explicit flag a reduced-diagnostic run and a genuinely
+    failed one are indistinguishable in the record.
+    """
+
+    import pytest
+
+    from core.hamiltonian_classification import _require_left_diagnostics
+
+    u00 = np.array([[2.0, 0.4], [0.0, 1.5]], dtype=np.complex128)
+    u10 = u00 @ np.diag([0.25, 3.0j])
+
+    full = generalized_relative_evolution_spectrum(u00, u10)
+    lean = generalized_relative_evolution_spectrum(
+        u00, u10, compute_left_eigenvectors=False
+    )
+
+    assert full.left_diagnostics_available is True
+    assert lean.left_diagnostics_available is False
+
+    _require_left_diagnostics(full.left_diagnostics_available)
+    with pytest.raises(ValueError, match="compute_left_eigenvectors=False"):
+        _require_left_diagnostics(lean.left_diagnostics_available)
+
+
+def test_singular_pencil_keeps_left_diagnostics_flag_true() -> None:
+    """An all-indeterminate pencil yields a NaN residual for a real reason.
+
+    That case must keep flowing through the classification gate as it always
+    has, rather than being mistaken for a reduced-diagnostic run.
+    """
+
+    from core.hamiltonian_classification import _require_left_diagnostics
+
+    zero = np.zeros((3, 3), dtype=np.complex128)
+
+    spectrum = generalized_relative_evolution_spectrum(zero, zero)
+
+    assert np.all(spectrum.indeterminate)
+    assert np.isnan(spectrum.maximum_left_homogeneous_residual)
+    assert spectrum.left_diagnostics_available is True
+    _require_left_diagnostics(spectrum.left_diagnostics_available)

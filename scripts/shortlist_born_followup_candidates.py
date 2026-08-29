@@ -354,7 +354,9 @@ def _negative_control_counts(rows: list[dict[str, Any]]) -> list[str]:
             "chain_control_N12_N13",
             "sz_exchange_control_N12_N13",
             "cnot_copier_degenerate_N8_N10_N12",
+            "chain_sz_conserving_N13_N14",
             "chain_sz_conserving_N15_N16",
+            "chain_transverse_perturbative_N13_N14",
             "chain_transverse_perturbative_N15",
             "all_to_all_sz_conserving_N15_N16",
         }:

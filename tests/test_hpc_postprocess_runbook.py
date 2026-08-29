@@ -75,7 +75,7 @@ def test_anisotropic_larger_n_handoff_has_pbs_commands_and_logs():
     assert "--Jxx" in scan_pbs
     assert "--Jyy" in scan_pbs
     assert "--jy-unscaled" in scan_pbs
-    assert "chain_transverse_perturbative_N15" in scan_pbs
+    assert "chain_transverse_perturbative_N13_N14" in scan_pbs
     assert "RUN_LOG=\"$LOG_ROOT/${RUN_NAME}.${PBS_JOBID:-local}.${TASK_ID}.log\"" in scan_pbs
     assert "--extra-distribution-plots" in post_pbs
     assert "shortlist_primary_n15_n16.csv" in post_pbs

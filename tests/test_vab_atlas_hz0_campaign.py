@@ -11,6 +11,13 @@ from scripts.run_zeus_vab_atlas_hz0_0p1_N14 import (
     validate_production_config,
 )
 
+from conftest import requires_paths
+
+pytestmark = requires_paths(
+    "reports/vab_coupling_group_atlas_2026-07-28/data/case_index.csv",
+)
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "zeus_vab_atlas_hz0_0p1_N14.json"

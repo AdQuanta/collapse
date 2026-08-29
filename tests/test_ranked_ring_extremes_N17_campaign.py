@@ -11,6 +11,15 @@ from scripts.run_zeus_ranked_ring_extremes_N17 import (
     select_cases,
 )
 
+from conftest import requires_paths
+
+pytestmark = requires_paths(
+    "work/zeus_sobol_hz0_0_N14_20260805_224341",
+    "work/zeus_sobol_second_neighbor_hz0_0_N14_20260805_224342",
+    "work/zeus_top20_last5_largerN_20260810_001532",
+)
+
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "configs" / "zeus_ranked_ring_extremes_N17.json"

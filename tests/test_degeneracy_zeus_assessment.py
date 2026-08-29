@@ -3,12 +3,24 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from core.degeneracy_zeus_assessment import AssessmentPaths, run_assessment
+import pytest
+
+from core.degeneracy_zeus_assessment import (
+    AssessmentPaths,
+    DegeneracyConjectureAssessment,
+    run_assessment,
+)
+
+from conftest import requires_paths
 
 
 ROOT = Path(__file__).resolve().parent.parent
 
 
+@requires_paths(
+    "work/zeus_degeneracy_heavy_tail_iff_N13_N18",
+    "work/zeus_relative_scale_regimes_20260724_144102",
+)
 def test_transferred_zeus_results_falsify_both_directions(tmp_path: Path) -> None:
     paths = AssessmentPaths.defaults(ROOT, tmp_path / "assessment")
     summary = run_assessment(paths)
@@ -42,3 +54,25 @@ def test_transferred_zeus_results_falsify_both_directions(tmp_path: Path) -> Non
         (paths.output_root / "analysis_summary.json").read_text(encoding="utf-8")
     )
     assert persisted["verdict"] == summary["verdict"]
+
+
+def test_empty_truth_table_fails_closed_instead_of_dividing_by_zero() -> None:
+    """An absent checkpoint set must not be summarized as a 0/0 agreement.
+
+    The pooled agreement fraction previously divided by the number of complete
+    rows, so a missing or incomplete transfer surfaced as a bare
+    ``ZeroDivisionError`` deep in the analysis rather than as a statement about
+    the data.  This is the repository's fail-closed convention, matching
+    ``reproduce_matched_ring_full_sphere.py``.
+    """
+
+    assessment = DegeneracyConjectureAssessment(
+        targeted_rows=[],
+        relative_rows=[],
+        complete_target_sizes=[],
+        complete_relative_sizes=[],
+        project_root=ROOT,
+    )
+
+    with pytest.raises(ValueError, match="no complete targeted rows"):
+        assessment.truth_table_rows()

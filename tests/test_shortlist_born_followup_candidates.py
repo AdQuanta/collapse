@@ -7,7 +7,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-from shortlist_born_followup_candidates import _off_resonance_controls  # noqa: E402
+from shortlist_born_followup_candidates import (  # noqa: E402
+    _negative_control_counts,
+    _off_resonance_controls,
+)
 
 
 def _off_row(score: float, similarity: float, reciprocity: float, label: str) -> dict:
@@ -51,6 +54,26 @@ def test_off_resonance_shortlist_prioritizes_scalar_gate_passes():
     selected = _off_resonance_controls([high_score_bad_reciprocity, lower_score_gate_pass])
 
     assert [row["label"] for row in selected] == ["gate_pass", "bad_recip"]
+
+
+def test_negative_control_table_accepts_current_and_legacy_chain_names():
+    rows = [
+        {
+            "family": "chain_transverse_perturbative_N13_N14",
+            "N": 14,
+            "target_like": True,
+        },
+        {
+            "family": "chain_transverse_perturbative_N15",
+            "N": 15,
+            "target_like": False,
+        },
+    ]
+
+    table = "\n".join(_negative_control_counts(rows))
+
+    assert "chain_transverse_perturbative_N13_N14 | 14 | 1 | 1" in table
+    assert "chain_transverse_perturbative_N15 | 15 | 0 | 1" in table
 
 
 if __name__ == "__main__":
