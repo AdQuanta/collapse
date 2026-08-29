@@ -70,7 +70,10 @@ def _sha256(path: Path) -> str:
 
 
 def _resolve_repo_path(value: str | Path) -> Path:
-    path = Path(value)
+    # Manifests may have been written on Windows before being transferred to
+    # macOS/Linux.  Backslashes are separators in those manifests, but would
+    # otherwise be interpreted as literal filename characters on POSIX.
+    path = Path(os.fspath(value).replace("\\", "/"))
     return path if path.is_absolute() else ROOT / path
 
 
@@ -403,12 +406,16 @@ def render_case(
     tail_label = (
         "most Born-like" if case_info["tail"] == "highest" else "least Born-like"
     )
+    selection_label = case_info.get(
+        "selection_label",
+        f"{tail_label} rank {int(case_info['rank_within_tail'])}",
+    )
     figure.suptitle(
         "\n".join(
             (
-                f"{case_info['family_description']}: {tail_label} rank "
-                f"{int(case_info['rank_within_tail'])}, {case_info['config_id']}",
-                rf"source $N={int(case_info['source_n'])}$: "
+                f"{case_info['family_description']}: {selection_label}, "
+                f"{case_info['config_id']}",
+                rf"diagnostic $N={int(case_info['source_n'])}$: "
                 rf"$S_{{\rm Born}}={float(case_info['s_born']):.6f}$; "
                 rf"$h_z={float(parameters['hz']):.6g}$, "
                 rf"$J={float(parameters['j']):.6g}$, "
@@ -425,7 +432,7 @@ def render_case(
     figure.text(
         0.165,
         0.88,
-        rf"Dynamical diagnostics (source $N={int(case_info['source_n'])}$)",
+        rf"Dynamical diagnostics ($N={int(case_info['source_n'])}$)",
         ha="center",
         fontsize=12.5,
         fontweight="bold",
