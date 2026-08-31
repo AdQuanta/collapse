@@ -1,395 +1,269 @@
 # AGENTS.md — Theoretical and Numerical Physics Research
 
-## Purpose and Priority
+## Mission and authority
 
-This repository contains Python research code for theoretical and numerical physics. Work in this repository must prioritize, in order:
+Prioritize, in order: physical correctness, reproducibility, numerical
+reliability, maintainable Python, then performance. Never invent results,
+parameters, citations, validation, or command output. Label exact,
+approximate, fitted, numerical, heuristic, and conjectural claims distinctly.
 
-1. physical and mathematical correctness;
-2. reproducibility and traceability;
-3. numerical reliability and explicit validation;
-4. clear, maintainable Python that follows pragmatic SOLID design;
-5. computational efficiency after correctness is established.
+Interpret requests by outcome:
 
-Repository-specific instructions in this file take precedence over generic preferences. A more deeply nested `AGENTS.md` may refine these rules for its subtree, but should not silently weaken scientific-integrity, safety, or reproducibility requirements.
+- For explanation, review, diagnosis, or status, inspect and report; do not
+  change files or external state unless asked.
+- For change, build, or fix requests, make the smallest complete in-scope
+  change, validate it, then commit and push it under **Git delivery**.
+- For production computation, follow **Zeus and expensive computation**.
+- Stop for user input only when a missing choice materially changes the
+  scientific result, cost, destructive effect, or scope. State assumptions
+  that permit safe progress.
 
-Do not invent results, references, parameter values, conventions, validation outcomes, or successful command output. Distinguish clearly between exact statements, approximations, numerical evidence, conjectures, and implementation choices.
+Deeper `AGENTS.md` files may specialize a subtree but must not weaken these
+scientific-integrity, data-safety, or reproducibility requirements.
 
-## Repository Structure
+## Repository map
 
-Use the existing layout consistently:
+- `core/`: reusable models, equations, solvers, analysis, serialization, plots
+- `scripts/`: thin study, sweep, report, and orchestration entry points
+- `configs/`: versioned, validated scientific parameters
+- `hpc/`: Zeus PBS files, submission wrappers, and campaign runbooks
+- `tests/`: pytest unit, regression, integration, and smoke tests
+- `manuscript/`, `reports/`, `figures/`, `presentations/`: research outputs
+- `work/`, `output/`, `tmp/`: generated or intermediate data
+- `archive/`: legacy material; never import it as active code
 
-- `core/`: reusable physics models, analytical helpers, numerical algorithms, analysis utilities, serialization, and plotting code;
-- `scripts/`: executable studies, parameter sweeps, report-building entry points, and thin orchestration scripts;
-- `configs/`: versioned parameter sets and run configurations;
-- `hpc/`: PBS job scripts, submission wrappers, and Zeus campaign utilities;
-- `tests/`: pytest unit, regression, integration, and smoke tests;
-- `manuscript/`: PRL-style manuscript, supplement, figures, provenance, and audits;
-- `reports/`: research reports and manuscript-related sources;
-- `figures/`: curated figures intended for reports or presentations;
-- `presentations/`: presentation sources and assets;
-- `work/`, `output/`, `tmp/`: generated, intermediate, or scratch data;
-- `archive/`: legacy material, not active source code.
+Put reusable logic in `core/`. Keep `scripts/` responsible for configuration,
+calls into reusable code, persistence, and provenance. Do not import active
+code from generated-output directories. Inspect nearby modules, tests, and
+call sites before introducing a new abstraction.
 
-Place reusable logic in `core/`, not in notebooks or large entry-point scripts. Keep `scripts/` scripts thin: parse configuration, call library functions, save outputs, and report provenance. Do not import active code from `archive/`, `work/`, `output/`, or `tmp/`.
+## Environment and routine checks
 
-Before adding a new module, inspect nearby modules and tests. Extend an established abstraction when it fits; do not create a parallel framework for the same concept.
+Use Python 3.11, matching Zeus. On the primary macOS workstation, prefer
+`~/.venvs/collapse-py311/bin/python` when present; otherwise use an activated
+Python 3.11 environment documented in `README.md`.
 
-## Environment and Standard Commands
-
-Use Python 3.11, matching the Zeus environment.
-
-Typical macOS setup:
+Run the narrowest relevant checks first, then broaden in proportion to risk:
 
 ```bash
-python3.11 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements-dev.txt
+python -m py_compile path/to/script.py
+python scripts/<script>.py --help
+python -m pytest -q tests/test_<feature>.py
 python -m pytest -q
 ```
 
-Useful focused checks:
+Inspect exit status and output before claiming a check passed. Do not install
+or change dependencies merely to satisfy optional development tooling without
+a project need.
 
-```bash
-.venv/bin/python -m pytest -q tests/test_detector_resonance.py
-.venv/bin/python -m pytest -q tests/test_<feature>.py
-.venv/bin/python -m py_compile path/to/script.py
-.venv/bin/python scripts/<script>.py --help
-```
+## Scientific contract
 
-Use documented scripts in `hpc/` for Zeus campaigns. Do not bypass established submission wrappers unless the task explicitly requires changing them.
+For substantive theory or numerical work:
 
-Run the narrowest relevant checks first, then broaden validation. Never claim a command passed unless it was actually run and its exit status and output were inspected.
-
-## Scientific Workflow
-
-For substantive physics changes, follow this sequence:
-
-1. State the physical question and observable.
-2. Record assumptions, approximations, conventions, and validity regime.
-3. Derive or identify the governing equations independently of implementation details.
-4. Identify exact checks, limiting cases, symmetries, conservation laws, and expected scaling.
-5. Choose a numerical representation and explain its error sources.
+1. State the physical question, observable, units, and validity regime.
+2. Record relevant conventions: basis and tensor ordering, signs and phases,
+   normalization, boundaries, gauge, branches, degeneracies, and zero modes.
+3. Identify the governing equations independently of implementation and mark
+   the approximation order and neglected terms.
+4. Identify exact limits, symmetries, conservation laws, scaling, and other
+   checks before implementation.
+5. Choose a numerical representation and name its error sources.
 6. Implement the smallest testable change.
-7. Validate against analytical results, independent formulations, or trusted benchmarks.
-8. Perform convergence, stability, or sensitivity checks appropriate to the method.
-9. Save enough metadata to reproduce the result.
-10. Report unresolved limitations honestly.
+7. Validate against exact limits, invariants, an independent formulation, or a
+   trusted benchmark; add convergence or sensitivity evidence when relevant.
+8. Save sufficient provenance and report unresolved limitations.
 
-Do not tune code merely to reproduce a desired plot or conclusion. When evidence contradicts an expectation, preserve and report the contradiction.
+Do not change conventions or tune code to obtain a preferred conclusion.
+Preserve and report evidence that contradicts the hypothesis. Do not apply
+non-degenerate perturbation theory across a vanishing denominator or infer a
+continuum identity from finite-size agreement alone.
 
-## Theoretical Physics Standards
+Maintain traceability between equations, operators, basis states, parameters,
+arrays, and figures. Separate analytical definitions from discretizations.
+Use symbolic algebra to verify reasoning, recording its assumptions; spot-check
+identities numerically at nonsingular points when practical.
 
-### Conventions and assumptions
+## Numerical reliability
 
-Every derivation or theory-facing implementation must make relevant conventions explicit, including as applicable:
+Numerical output is evidence only after the material error sources have been
+checked. Choose checks relevant to the method:
 
-- units and whether quantities are dimensional or nondimensionalized;
-- metric, Fourier-transform, phase, and sign conventions;
-- basis ordering, tensor-index ordering, and matrix layout;
-- boundary and initial conditions;
-- normalization of states, distributions, transforms, and observables;
-- gauge choice and residual gauge freedom;
-- operator domains, Hermiticity assumptions, and inner products;
-- branch choices for logarithms, roots, phases, and inverse functions;
-- treatment of degeneracies, resonances, zero modes, and singular limits.
+- basis, grid, cutoff, size, timestep, tolerance, and tail convergence;
+- finite-volume, boundary, precision, cancellation, and conditioning effects;
+- residuals, backward error, orthogonality, symmetry sectors, degeneracies,
+  and spectral matching;
+- quadrature, regularization, optimization branch, and initialization
+  sensitivity;
+- Monte Carlo uncertainty, autocorrelation, burn-in, and seed dependence.
 
-Do not silently change conventions to make an equation or test pass. If existing code uses inconsistent conventions, isolate the inconsistency, document it, and fix it with regression tests.
+Do not claim convergence from one resolution. When establishing an order or
+extrapolation, prefer at least three systematic refinements; if cost prevents
+this, label the result provisional.
 
-### Exact versus approximate statements
+Preserve matrix structure. Prefer Hermitian routines for Hermitian problems,
+factorizations or `solve` over explicit inversion, sparse or matrix-free
+operators over unnecessary dense matrices, and residual checks over solver
+status alone. Treat near-degeneracy and eigenvector phase ambiguity explicitly.
 
-Label expressions as exact, asymptotic, perturbative, heuristic, fitted, or numerical. For approximations, state:
+Pass `numpy.random.Generator` objects explicitly. Save the actual seeds and
+quantify stochastic uncertainty; use multiple seeds when conclusions depend
+on a realization.
 
-- the small or large parameter;
-- the retained order;
-- the neglected terms or expected remainder;
-- the regime in which the approximation is controlled;
-- known failure modes, especially near resonances or singular points.
+Validation evidence is strongest in this order: exact identities and
+invariants; solvable limits; independent methods; trusted benchmarks;
+convergence and sensitivity; qualitative behavior. A plausible plot is not a
+validation by itself.
 
-Do not use perturbation theory across a vanishing denominator without an explicit degenerate, resonant, resummed, or regularized treatment. Do not infer a continuum identity solely from finite-size agreement.
+## Python design and interfaces
 
-### Derivation checks
+Use pragmatic SOLID design without ceremonial abstractions:
 
-Whenever applicable, verify:
+- Give functions and modules one coherent responsibility. Separate models,
+  solvers, configuration, I/O, plotting, CLI orchestration, and HPC submission.
+- Prefer composition, pure functions, and frozen validated dataclasses. Add an
+  interface only when real alternative implementations need it.
+- Preserve subtype contracts, including accepted domains, units,
+  normalization, shapes, and numerical guarantees.
+- Inject solvers, RNGs, optimizers, and storage dependencies when doing so
+  enables scientific comparison or testing.
+- Avoid global mutable state, import-time computation, and hidden caches. A
+  scientific cache key must include every output-affecting parameter.
 
-- dimensional consistency;
-- symmetry transformations and selection rules;
-- conservation laws and Ward-like identities;
-- Hermiticity, positivity, unitarity, or normalization;
-- limiting cases and exactly solvable regimes;
-- equivalence under relabeling of dummy indices;
-- consistency between component, matrix, operator, and spectral forms;
-- asymptotic scaling and expected parameter dependence.
+Follow PEP 8 and surrounding style; no formatter is enforced. Use type hints
+for public and nontrivial interfaces, `pathlib.Path`, explicit keyword
+arguments for tolerances and conventions, clear exceptions, and domain-aware
+docstrings. Never use mutable defaults or wildcard imports. Prefer separate
+functions or strategies to boolean flags that select substantially different
+algorithms. Optimize only after profiling, with accuracy-preserving regression
+tests and a clear reference implementation where useful.
 
-Use symbolic algebra as a verification aid, not as a substitute for reasoning. Record assumptions supplied to symbolic simplifiers. Numerically spot-check symbolic identities at nonsingular parameter points when practical.
+## Configuration, provenance, and outputs
 
-### Theory-to-code correspondence
+Keep scientifically relevant parameters in validated, human-readable files
+under `configs/`; changing an output-affecting default is a research-method and
+API change requiring documentation and regression coverage.
 
-A numerical object must be traceable to the mathematical object it represents. Use names and docstrings that connect code variables to equations, operators, basis states, parameters, and observables. When implementing a published or report-specific formula, cite the local equation, section, or source in the docstring or nearby comment where useful.
+Saved results should include, as applicable:
 
-Keep analytical definitions separate from numerical discretizations. For example, distinguish a continuum operator from its finite-dimensional matrix representation and distinguish the physical model from a particular solver.
-
-## Numerical Physics Standards
-
-### Numerical validity
-
-Numerical output is evidence only after relevant error sources have been assessed. Depending on the calculation, examine:
-
-- grid, basis, truncation, cutoff, or system-size convergence;
-- timestep or solver-tolerance convergence;
-- finite-volume and boundary effects;
-- quadrature error and tail truncation;
-- residual norms and backward error;
-- condition numbers or sensitivity to perturbations;
-- Monte Carlo sampling error, autocorrelation, burn-in, and seed dependence;
-- optimizer initialization and local-minimum sensitivity;
-- floating-point precision and cancellation;
-- regularization and extrapolation dependence.
-
-Do not claim convergence from a single resolution. Prefer at least three systematically refined values when establishing an order or extrapolating a limit. If cost prevents a full study, state that the result is provisional.
-
-### Stable linear algebra
-
-- Prefer `numpy.linalg.solve` or an appropriate factorization over explicit matrix inversion.
-- Use Hermitian/symmetric routines such as `eigh` when their assumptions hold.
-- Check residuals, not only returned status flags.
-- Preserve structure such as sparsity, Hermiticity, block form, or positive definiteness.
-- Avoid forming dense matrices when a matrix-free operator is sufficient.
-- Treat near-degeneracy and eigenvector phase/sign ambiguity explicitly.
-- Sort or match spectra by a physically justified rule, not by fragile raw indices.
-
-### Method-specific expectations
-
-For ODEs and time evolution, document solver, tolerances, conserved quantities, stiffness considerations, and timestep sensitivity. For PDEs, document discretization, boundary conditions, stability restrictions, resolution, and continuum checks. For eigenproblems, validate residuals, orthogonality, symmetry sectors, degeneracies, and spectral ordering. For quadrature, inspect convergence, singular points, oscillatory tails, and domain truncation. For root finding and optimization, inspect residuals, constraints, initialization sensitivity, and alternative branches. For Monte Carlo or stochastic methods, pass explicit generators, save seeds, quantify uncertainty, and use more than one seed when conclusions depend on stochastic variation.
-
-### Validation hierarchy
-
-Prefer several independent checks rather than one elaborate check:
-
-1. exact identities and invariants;
-2. analytically solvable limits;
-3. independent formulations or algorithms;
-4. published or previously validated benchmarks;
-5. convergence and sensitivity studies;
-6. qualitative physical behavior.
-
-A visually plausible figure is not sufficient validation.
-
-## Python Design and SOLID Principles
-
-Use pragmatic SOLID design to improve scientific clarity and testability. SOLID does not mean turning every function into a class or introducing factories without a concrete need. Prefer the simplest design that separates responsibilities and supports verification.
-
-### Single Responsibility Principle
-
-A module, class, or function should have one coherent reason to change. Separate, where practical:
-
-- physical model definitions;
-- analytical formulae and derived quantities;
-- numerical solvers and discretizations;
-- configuration parsing and validation;
-- data loading and serialization;
-- plotting and presentation;
-- command-line orchestration;
-- HPC submission logic.
-
-A function that constructs a Hamiltonian should not also submit a PBS job, write figures, and mutate global configuration. Break long research scripts into importable functions before adding more behavior.
-
-### Open/Closed Principle
-
-Design stable core behavior so new models, observables, solvers, boundary conditions, or output formats can often be added through composition, callables, configuration, or small interfaces rather than repeated edits to a central conditional block.
-
-Do not force extensibility prematurely. Introduce an abstraction after at least one real variation exists or when a second implementation is part of the current task.
-
-### Liskov Substitution Principle
-
-Subtypes and implementations must preserve the documented contract of the abstraction they implement. They must not silently narrow accepted domains, change units, alter normalization, weaken numerical guarantees, or return incompatible shapes and types.
-
-If two solvers have materially different assumptions or guarantees, express those differences in separate interfaces or explicit capabilities rather than hiding them behind a misleading common base class.
-
-### Interface Segregation Principle
-
-Prefer small, role-specific interfaces. Use `typing.Protocol`, callables, or narrow abstract base classes only when multiple implementations benefit from a shared contract. Do not require a physics model to implement plotting, persistence, optimization, and time evolution merely to supply an operator or right-hand side.
-
-### Dependency Inversion Principle
-
-Keep high-level scientific workflows independent of concrete I/O, random-number sources, optimizers, solvers, and storage backends. Inject these dependencies as arguments or configuration where substitution improves testing or scientific comparison.
-
-Pass `numpy.random.Generator` objects explicitly. Allow core calculations to receive callables or protocol-typed dependencies rather than constructing global singletons internally.
-
-### Composition and functional core
-
-Prefer composition over deep inheritance. Use:
-
-- pure functions for equations, kernels, transformations, and observables;
-- frozen dataclasses for validated immutable parameter sets;
-- small stateful objects only when genuine lifecycle or cached state exists;
-- explicit orchestration at the repository boundary.
-
-Avoid global mutable state, import-time computation, hidden caches, and implicit environment-dependent behavior. Any cache that affects scientific output must include all relevant parameters in its key and have a clear invalidation rule.
-
-## Python Style and API Conventions
-
-Follow PEP 8 with four-space indentation. Match surrounding code because no formatter is currently enforced, and avoid unrelated reformatting.
-
-Use:
-
-- `snake_case` for modules, functions, variables, and filenames;
-- `PascalCase` for classes and dataclasses;
-- `UPPER_SNAKE_CASE` for constants;
-- type hints for public APIs and nontrivial internal interfaces;
-- `pathlib.Path` for filesystem paths;
-- NumPy-style array shape and dtype documentation where ambiguity is possible;
-- explicit keyword arguments for tolerances, conventions, units, and algorithm choices.
-
-Public functions should document physical meaning, parameter units or nondimensionalization, accepted shapes, return values, conventions, and important failure modes. Prefer domain-specific exceptions or clear `ValueError` messages over silent clipping or fallback behavior.
-
-Do not use mutable default arguments. Avoid wildcard imports. Avoid boolean flags that produce substantially different algorithms; use separate functions, enums, or strategy objects when clearer.
-
-Vectorize only when it improves clarity or measured performance. Do not replace a transparent correct implementation with an opaque optimization without benchmarks and regression tests.
-
-## Configuration and Reproducibility
-
-Version research parameters in `configs/`. Configuration files should be human-readable, validated, and sufficient to identify the calculation. Do not bury scientifically relevant constants inside scripts.
-
-Every saved result should include, as applicable:
-
-- configuration or a complete copy of effective parameters;
-- code version or Git commit when available;
-- Python and relevant dependency versions;
-- random seeds;
-- solver and tolerance settings;
-- discretization, basis, cutoff, and system size;
+- effective configuration and schema version;
+- Git commit or defining source hashes;
+- Python and dependency versions;
+- seed, solver, tolerance, discretization, basis, cutoff, and size;
 - units and normalization conventions;
-- timestamp and output schema version.
+- timestamp and validation summary.
 
-A default seed is not a substitute for recording the seed actually used. Do not rely on iteration order, unspecified parallel scheduling, or ambient environment variables for reproducibility.
+Do not rely on unspecified iteration or parallel scheduling order. Avoid local
+absolute paths in shareable source, configs, reports, and metadata.
 
-Changing a default that can alter scientific results is an API and research-method change. Document it and add regression coverage.
+Treat downloaded Zeus data, prior reports, and curated results as immutable
+unless replacement is explicitly requested. Write new derived outputs to a
+descriptive or timestamped directory. Do not commit ignored bulk data, caches,
+logs, virtual environments, temporary files, or secrets.
 
-## Testing Requirements
+Figures must be traceable to code and data, with axes, units, parameters, and
+normalization labeled. Record any smoothing, filtering, cropping, aggregation,
+or selection that could affect interpretation. Keep presentation styling
+separate from numerical computation where practical.
 
-Tests use pytest. Follow `tests/test_<feature>.py`, with test names describing expected behavior.
+Use consistent notation across code, reports, and manuscripts. Verify sources
+before citing them, and distinguish repository results from published results.
 
-For scientific changes, add the most relevant combination of:
+## Tests and change discipline
 
-- unit tests for formulas, transformations, and edge cases;
-- regression tests for corrected equations or previous failures;
-- invariant/property tests for symmetry, normalization, conservation, Hermiticity, positivity, or reversibility;
-- comparison tests against exact limits or independent implementations;
-- serialization round-trip tests;
-- deterministic plotting-data tests when visual output changes;
-- job-array partitioning tests for HPC changes;
-- small-system integration or smoke tests.
+Use pytest files named `tests/test_<feature>.py`, deterministic seeds, and
+tolerances justified by the numerical method. Select applicable tests:
 
-Use deterministic seeds and explicit floating-point tolerances. Choose tolerances from numerical error analysis or method behavior, not merely large enough to pass. Prefer `numpy.testing` helpers and state whether comparisons are absolute, relative, or norm-based.
+- formula, edge-case, and regression tests;
+- symmetry, conservation, Hermiticity, normalization, or positivity checks;
+- exact-limit or independent-implementation comparisons;
+- serialization round trips and deterministic plotting-data tests;
+- HPC array-partitioning tests and reduced integration smoke tests.
 
-Tests must not require production-scale Zeus jobs. Validate expensive campaigns with dry runs or small systems locally, but do not present those as production-scale scientific evidence.
+For a bug, add a failing regression test first when practical. Never weaken a
+valid test to fit a change. Tests must not require a production Zeus run.
 
-When fixing a bug, first add a test that fails for the bug when practical. Do not weaken or delete a valid test to accommodate a code change.
+Before editing, inspect the scientific contract, relevant call sites, existing
+outputs, and serialized formats. Avoid unrelated refactoring or formatting.
+After editing, inspect the diff, run focused checks, broaden when feasible, and
+state unperformed validation and remaining uncertainty.
 
-## HPC and Performance Safety
+Backward compatibility does not justify preserving a scientific error. Make a
+necessary break explicit and provide a migration path when practical.
 
-Production computation is expensive and potentially destructive. Unless explicitly requested:
+## Zeus and expensive computation
 
-- do not submit PBS jobs;
-- do not cancel or alter existing jobs;
-- do not launch large local simulations or parameter sweeps;
-- do not overwrite campaign outputs;
-- do not change queue, walltime, memory, array size, or resource requests speculatively.
+For any request to prepare, synchronize, submit, monitor, recover, collect, or
+post-process a production Zeus campaign, invoke and follow `$zeus-hpc` from
+`.agents/skills/zeus-hpc/SKILL.md` before remote mutation. Large simulations
+belong on Zeus; local execution is limited to validation and reduced smoke
+cases.
 
-Before a new Zeus campaign:
+Production submission requires explicit user authorization. Use the documented
+`hpc/` wrapper and a fresh output root. Never cancel, resubmit, change resources,
+or overwrite a campaign without authorization for that action. Production code
+and configuration should be committed and pushed before submission so results
+can name a commit; when the remote tree is not Git-backed, record verified
+source hashes instead.
 
-1. validate configuration parsing;
-2. run `--help`, dry-run, or equivalent inspection;
-3. run a small-system smoke test;
-4. estimate memory, runtime, output volume, and array size;
-5. verify output paths and checkpoint behavior;
-6. verify each array index maps to a unique parameter shard;
-7. use the documented `hpc/` wrapper.
+## Git delivery
 
-Checkpoint long runs after each requested system size or other natural unit of work. Make restart behavior idempotent and ensure partial results are not mistaken for completed results.
+This section is standing authorization to commit and push successfully
+completed, in-scope change/build/fix work and to integrate its task branch into
+the default branch with a non-fast-forward merge. It does not authorize
+creating or merging a pull request, rewriting shared history, force-pushing,
+publishing a release, or including unrelated user changes.
 
-Optimize only after profiling representative workloads. Preserve a clear reference implementation when introducing complex acceleration. Benchmark with fixed inputs and report accuracy changes as well as speed changes.
+1. At task start, inspect branch, upstream, remotes, and `git status --short`.
+   Identify pre-existing changes and preserve their ownership.
+2. On the default branch, create a focused `codex/<topic>` branch for
+   substantive work unless the user explicitly requests a direct default-branch
+   update. Reuse an existing task branch when it clearly owns the work.
+3. Keep commits cohesive and reviewable. Separate unrelated prior work from the
+   current task, and separate scientific implementation from instruction-only
+   maintenance when that improves review.
+4. Stage explicit paths, inspect `git diff --cached`, and check for secrets,
+   local paths, generated bulk data, and accidental edits. Do not use a broad
+   staging command when the worktree contains unrelated changes.
+5. Commit only after applicable validation passes. Use a concise imperative
+   subject such as `Add hz0 resonance atlas` or `Validate detector response`.
+6. Push the current task branch with its upstream (`git push -u origin HEAD`).
+   Never force-push. If the push is rejected or the remote advanced, fetch and
+   inspect; do not silently rebase or discard work.
+7. For a completed task branch, update the local default branch with
+   fast-forward-only pull, merge the task branch using `git merge --no-ff`, and
+   push the default branch. Preserve the merge commit even when a fast-forward
+   would be possible. Stop before resolving unexpected conflicts or overwriting
+   remote work; report the conflicting paths and request direction.
+8. Report the task and default branches, commit and merge hashes, pushed
+   remote, validations, generated but uncommitted outputs, and limitations.
 
-## Results, Figures, and Data Safety
+Do not create an empty commit. Do not commit incomplete or failing work merely
+to satisfy this policy; explain the blocker instead. Read-only tasks do not
+produce a commit. Create or merge a pull request only when the user asks; the
+default delivery path is the explicit local `--no-ff` integration above.
 
-Preserve downloaded Zeus data, previous reports, and curated results. Treat existing outputs as immutable unless the task explicitly authorizes replacement.
+Pull-request descriptions should include the scientific objective, changed
+equations or conventions, implementation choices, exact validation commands
+and results, convergence or sensitivity evidence, generated-output paths,
+Zeus resource implications, and unresolved limitations. Pair representative
+figures with quantitative evidence.
 
-Write derived outputs to a new descriptive or timestamped directory. Never silently reuse an output directory whose contents could be confused with a different configuration. Avoid embedding local absolute paths in source, configuration, reports, or metadata intended for sharing.
+## Definition of done
 
-Do not commit caches, virtual environments, logs, temporary files, or bulk generated data excluded by `.gitignore`. Never commit credentials, tokens, private keys, or secrets.
+A task is done when the applicable conditions hold:
 
-Figures must be generated from traceable data and scripts. Label axes, units, parameters, and normalization. Do not smooth, crop, filter, or select data in a way that changes interpretation without recording the operation. Keep presentation-only styling separate from the numerical computation where practical.
+- requested behavior is implemented in the correct location;
+- equations, conventions, approximations, and validity regime are explicit;
+- focused tests and numerical checks pass;
+- provenance and stochastic seeds are recorded;
+- expensive computation stayed within its authorization boundary;
+- prior data are preserved and new outputs are uniquely identified;
+- the diff excludes secrets, machine-specific clutter, and unrelated changes;
+- exact, approximate, numerical, and conjectural conclusions remain distinct;
+- completed changes are organized into scoped commits, pushed, and integrated
+  with a non-fast-forward merge;
+- the final report names what was and was not validated.
 
-## Reports, Mathematics, and Citations
-
-Maintain notation consistently across code, reports, figures, and presentations. When changing an equation in code, inspect related tests, reports, captions, and configuration documentation.
-
-Do not fabricate citations or claim that a paper supports a statement without checking it. Mark unpublished reasoning, conjectures, and heuristic arguments as such. Preserve distinctions between results derived in this repository and results taken from external sources.
-
-Generated tables and figures should be reproducible from committed code and recorded configurations, even when the large raw data remain outside Git.
-
-## Change Discipline
-
-Make the smallest coherent change that solves the task. Do not refactor unrelated code, rename broad APIs, rewrite configurations, or reformat entire files without a clear need.
-
-Before editing:
-
-- inspect relevant modules, tests, configurations, and call sites;
-- identify the scientific contract and existing conventions;
-- check whether outputs or serialized formats are relied upon elsewhere.
-
-After editing:
-
-- inspect the diff for accidental changes;
-- run focused tests and syntax checks;
-- run broader tests when feasible;
-- state exactly what was and was not validated;
-- record any remaining numerical or scientific uncertainty.
-
-Do not preserve backward compatibility blindly if it would preserve a scientific error. When a correction breaks compatibility, make the change explicit, document the reason, and provide a migration path when practical.
-
-## Git and Pull Requests
-
-This repository has no established commit-history convention. Use concise imperative commit subjects, for example:
-
-```text
-Add hz0 resonance atlas
-Fix eigenvalue matching near degeneracy
-Validate detector response convergence
-```
-
-Keep commits scoped. Do not commit generated bulk data or unrelated edits.
-
-Pull requests should state:
-
-- the scientific objective;
-- equations, assumptions, parameters, or conventions changed;
-- implementation and design choices;
-- validation commands and observed results;
-- convergence or sensitivity evidence;
-- generated-output paths;
-- Zeus resource implications;
-- limitations and unresolved questions.
-
-Include representative figures when visual behavior changes, but accompany them with quantitative validation.
-
-## Definition of Done
-
-A task is complete only when the applicable items below are satisfied:
-
-- the requested behavior is implemented in the correct repository location;
-- the implementation matches stated equations, conventions, and validity assumptions;
-- code follows pragmatic SOLID principles without unnecessary abstraction;
-- public interfaces are typed and documented appropriately;
-- relevant regression, invariant, and edge-case tests exist;
-- focused tests and syntax checks pass;
-- numerical claims include appropriate residual, convergence, stability, or sensitivity evidence;
-- stochastic results record seeds and uncertainty;
-- expensive computation was not launched without authorization;
-- prior data and reports were preserved;
-- outputs are written to unique, traceable paths with sufficient provenance;
-- the diff contains no credentials, local paths, generated clutter, or unrelated changes;
-- exact, approximate, numerical, and conjectural conclusions are clearly distinguished;
-- any unperformed validation or unresolved limitation is stated explicitly.
-
-When these conditions cannot all be met, provide the best verified partial result and explain precisely what remains unverified.
+If a condition is inapplicable, do not create work merely to satisfy the list.
+If completion is blocked, deliver the best verified partial result and name the
+precise blocker.
