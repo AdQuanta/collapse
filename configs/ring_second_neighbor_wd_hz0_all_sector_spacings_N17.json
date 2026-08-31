@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "study": "N=17 full-Hamiltonian all-sector level spacings across the WD-ring hz0 scan",
+  "detector_n": 17,
+  "scan_variable": "hz0",
+  "scan_normalization": "hz0_over_hz",
+  "base_parameters": {
+    "hz": 0.014352746605732818,
+    "hz0": 0.0,
+    "j": 0.02418712918852393,
+    "jpm": 0.06097649699948394,
+    "jx_unscaled": 0.001200423510786095,
+    "evolution_time": 1000000.0,
+    "j2": 0.16899859316711222,
+    "jpm2": 0.26453375989687394
+  },
+  "source_provenance": {
+    "source_case": "jy_zero/N14/config_166",
+    "source_target_n": 17,
+    "source_result": "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17",
+    "note": "Parameters are copied inline so the spectral campaign does not depend on ignored source-result files."
+  },
+  "cases": [
+    {
+      "case_id": "wd2_hz0_scan_00_ratio_0",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0",
+      "hz0_over_hz": 0.0,
+      "parameter_overrides": {"hz0": 0.0}
+    },
+    {
+      "case_id": "wd2_hz0_scan_01_ratio_0p0001",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.0001",
+      "hz0_over_hz": 0.0001,
+      "parameter_overrides": {"hz0": 1.4352746605732819e-06}
+    },
+    {
+      "case_id": "wd2_hz0_scan_02_ratio_0p001",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.001",
+      "hz0_over_hz": 0.001,
+      "parameter_overrides": {"hz0": 1.4352746605732818e-05}
+    },
+    {
+      "case_id": "wd2_hz0_scan_03_ratio_0p01",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.01",
+      "hz0_over_hz": 0.01,
+      "parameter_overrides": {"hz0": 0.00014352746605732818}
+    },
+    {
+      "case_id": "wd2_hz0_scan_04_ratio_0p05",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.05",
+      "hz0_over_hz": 0.05,
+      "parameter_overrides": {"hz0": 0.00071763733028664095}
+    },
+    {
+      "case_id": "wd2_hz0_scan_05_ratio_0p1",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.1",
+      "hz0_over_hz": 0.1,
+      "parameter_overrides": {"hz0": 0.0014352746605732819}
+    },
+    {
+      "case_id": "wd2_hz0_scan_06_ratio_0p25",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.25",
+      "hz0_over_hz": 0.25,
+      "parameter_overrides": {"hz0": 0.0035881866514332044}
+    },
+    {
+      "case_id": "wd2_hz0_scan_07_ratio_0p5",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.5",
+      "hz0_over_hz": 0.5,
+      "parameter_overrides": {"hz0": 0.0071763733028664088}
+    },
+    {
+      "case_id": "wd2_hz0_scan_08_ratio_0p75",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.75",
+      "hz0_over_hz": 0.75,
+      "parameter_overrides": {"hz0": 0.010764559954299613}
+    },
+    {
+      "case_id": "wd2_hz0_scan_09_ratio_0p9",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.9",
+      "hz0_over_hz": 0.9,
+      "parameter_overrides": {"hz0": 0.012917471945159536}
+    },
+    {
+      "case_id": "wd2_hz0_scan_10_ratio_0p99",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.99",
+      "hz0_over_hz": 0.99,
+      "parameter_overrides": {"hz0": 0.014209219139675489}
+    },
+    {
+      "case_id": "wd2_hz0_scan_11_ratio_0p999",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.999",
+      "hz0_over_hz": 0.999,
+      "parameter_overrides": {"hz0": 0.014338393859127085}
+    },
+    {
+      "case_id": "wd2_hz0_scan_12_ratio_0p99999",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=0.99999",
+      "hz0_over_hz": 0.99999,
+      "parameter_overrides": {"hz0": 0.014352603078266761}
+    },
+    {
+      "case_id": "wd2_hz0_scan_13_ratio_1",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=1",
+      "hz0_over_hz": 1.0,
+      "parameter_overrides": {"hz0": 0.014352746605732818}
+    },
+    {
+      "case_id": "wd2_hz0_scan_14_ratio_1p00001",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=1.00001",
+      "hz0_over_hz": 1.00001,
+      "parameter_overrides": {"hz0": 0.014352890133198876}
+    },
+    {
+      "case_id": "wd2_hz0_scan_15_ratio_1p001",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=1.001",
+      "hz0_over_hz": 1.001,
+      "parameter_overrides": {"hz0": 0.014367099352338548}
+    },
+    {
+      "case_id": "wd2_hz0_scan_16_ratio_1p01",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=1.01",
+      "hz0_over_hz": 1.01,
+      "parameter_overrides": {"hz0": 0.014496274071790147}
+    },
+    {
+      "case_id": "wd2_hz0_scan_17_ratio_1p1",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=1.1",
+      "hz0_over_hz": 1.1,
+      "parameter_overrides": {"hz0": 0.015788021266306101}
+    },
+    {
+      "case_id": "wd2_hz0_scan_18_ratio_1p5",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=1.5",
+      "hz0_over_hz": 1.5,
+      "parameter_overrides": {"hz0": 0.021529119908599226}
+    },
+    {
+      "case_id": "wd2_hz0_scan_19_ratio_2",
+      "description": "Born-like second-neighbor WD ring; hz0/hz=2",
+      "hz0_over_hz": 2.0,
+      "parameter_overrides": {"hz0": 0.028705493211465635}
+    }
+  ]
+}

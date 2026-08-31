@@ -1,0 +1,68 @@
+#!/bin/bash
+# Full qubit-detector level spacings for all 20 unique N=17 symmetry sectors.
+# One array task owns one sector and checkpoints after every hz0 value.
+#PBS -N ring_hz0_secs
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=4:mem=16gb
+#PBS -l walltime=01:00:00
+#PBS -J 0-19
+#PBS -j oe
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+
+set -euo pipefail
+
+SUBMIT_DIR="${PBS_O_WORKDIR:?PBS_O_WORKDIR is unavailable}"
+if [[ -f "$SUBMIT_DIR/scripts/run_ring_hz0_all_sector_spacings.py" ]]; then
+  REPO_ROOT="$SUBMIT_DIR"
+elif [[ -f "$SUBMIT_DIR/../scripts/run_ring_hz0_all_sector_spacings.py" ]]; then
+  REPO_ROOT="$(cd "$SUBMIT_DIR/.." && pwd)"
+else
+  echo "Cannot locate the all-sector spacing worker. Submit from repository root or hpc/." >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+if [[ -n "${ZEUS_ENV_SETUP:-}" ]]; then source "$ZEUS_ENV_SETUP"; fi
+if [[ -n "${VIRTUAL_ENV_PATH:-}" ]]; then source "$VIRTUAL_ENV_PATH/bin/activate"; fi
+
+: "${RUN_ROOT:?submit through hpc/submit_zeus_ring_hz0_all_sector_spacings_N17.sh}"
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:?PBS array index unavailable}}"
+if [[ ! "$ARRAY_INDEX" =~ ^([0-9]|1[0-9])$ ]]; then
+  echo "PBS array index must lie in 0..19; got '$ARRAY_INDEX'." >&2
+  exit 2
+fi
+CONFIG="${CONFIG:-configs/ring_second_neighbor_wd_hz0_all_sector_spacings_N17.json}"
+PYTHON_BIN="${PYTHON_BIN:-python3.11}"
+
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX"
+export MPLCONFIGDIR="$RUN_ROOT/.mplconfig/task_$ARRAY_INDEX"
+export PYTHONUNBUFFERED=1
+export OMP_NUM_THREADS="${OMP_NUM_THREADS:-4}"
+export MKL_NUM_THREADS="${MKL_NUM_THREADS:-4}"
+export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-4}"
+export NUMEXPR_NUM_THREADS="${NUMEXPR_NUM_THREADS:-4}"
+
+EXTRA_ARGS=()
+MODE="production"
+EIGENVALUE_COUNT=512
+if [[ "${SMOKE:-0}" == "1" ]]; then
+  EXTRA_ARGS+=(--max-cases 1)
+  EIGENVALUE_COUNT=64
+  MODE="smoke:first_hz0:64_eigenvalues"
+fi
+if [[ "${DRY_RUN:-0}" == "1" ]]; then
+  EXTRA_ARGS+=(--dry-run)
+  MODE="dry_run"
+fi
+
+LOG="$RUN_ROOT/logs/task_${ARRAY_INDEX}.log"
+echo "[$(date --iso-8601=seconds)] task=$ARRAY_INDEX mode=$MODE Ndet=17 checkpoint=each_hz0 eigenvalues=$EIGENVALUE_COUNT mem=16gb ncpus=4" | tee -a "$LOG"
+"$PYTHON_BIN" scripts/run_ring_hz0_all_sector_spacings.py \
+  --array-index "$ARRAY_INDEX" \
+  --config "$CONFIG" \
+  --output-root "$RUN_ROOT" \
+  --eigenvalue-count "$EIGENVALUE_COUNT" \
+  --solver-tolerance 1e-10 \
+  "${EXTRA_ARGS[@]}" 2>&1 | tee -a "$LOG"
+echo "[$(date --iso-8601=seconds)] task=$ARRAY_INDEX status=finished mode=$MODE" | tee -a "$LOG"
