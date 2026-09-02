@@ -17,7 +17,7 @@ shift-invert diagonalization and checkpointed independently for every ``hz0``.
 from __future__ import annotations
 
 import argparse
-from dataclasses import asdict, fields, replace
+from dataclasses import asdict
 import hashlib
 import json
 import math
@@ -70,7 +70,9 @@ from core.sobol_coupling_scan import (  # noqa: E402
     _sha256,
     timestamp,
 )
-from scripts.run_three_ring_activation_resolved import _load_case  # noqa: E402
+from scripts.run_three_ring_activation_resolved import (  # noqa: E402
+    load_case_parameters,
+)
 from scripts.summarize_ring_hz0_activation_scan import (  # noqa: E402
     BLUE,
     MODEL_BLUE,
@@ -123,42 +125,7 @@ def load_spectrum_case(
 ) -> tuple[RingActivationParameters, dict[str, Any]]:
     """Load one case from inline parameters or a legacy result reference."""
 
-    raw_base = config.get("base_parameters")
-    if raw_base is None:
-        return _load_case(case)
-    if not isinstance(raw_base, dict):
-        raise ValueError("base_parameters must be a JSON object")
-    allowed = {item.name for item in fields(RingActivationParameters)}
-    missing = allowed - set(raw_base)
-    unknown = set(raw_base) - allowed
-    if missing or unknown:
-        raise ValueError(
-            f"invalid base_parameters: missing={sorted(missing)}, "
-            f"unknown={sorted(unknown)}"
-        )
-    parameters = RingActivationParameters(
-        **{name: float(value) for name, value in raw_base.items()}
-    )
-    if not all(math.isfinite(value) for value in asdict(parameters).values()):
-        raise ValueError("all base parameters must be finite")
-    raw_overrides = case.get("parameter_overrides", {})
-    if not isinstance(raw_overrides, dict):
-        raise ValueError("parameter_overrides must be a JSON object")
-    unknown_overrides = set(raw_overrides) - allowed
-    if unknown_overrides:
-        raise ValueError(f"unknown parameter override(s): {sorted(unknown_overrides)}")
-    overrides = {name: float(value) for name, value in raw_overrides.items()}
-    if not all(math.isfinite(value) for value in overrides.values()):
-        raise ValueError("all parameter overrides must be finite")
-    parameters = replace(parameters, **overrides)
-    if parameters.evolution_time <= 0.0:
-        raise ValueError("evolution_time must be positive")
-    provenance = {
-        **dict(config.get("source_provenance", {})),
-        "parameter_overrides": overrides,
-        "parameter_source": "inline_base_parameters",
-    }
-    return parameters, provenance
+    return load_case_parameters(config, case)
 
 
 def build_combined_sector_operator(

@@ -9,7 +9,10 @@ from pathlib import Path
 import pytest
 
 from core.activation_resolved_projective import RingActivationParameters
-from scripts.run_three_ring_activation_resolved import _apply_parameter_overrides
+from scripts.run_three_ring_activation_resolved import (
+    _apply_parameter_overrides,
+    load_case_parameters,
+)
 from scripts.summarize_ring_hz0_activation_scan import collect_scan_rows
 
 
@@ -49,6 +52,37 @@ def test_second_neighbor_wd_scan_uses_same_exact_relative_grid() -> None:
         assert "source_03/rank_001/N17" in case["source_result"]
         hz0 = float(case["parameter_overrides"]["hz0"])
         assert math.isclose(hz0, ratio * hz, rel_tol=2.0e-16, abs_tol=1.0e-18)
+
+
+def test_pure_ising_ablation_preserves_wd_grid_and_nonexchange_parameters() -> None:
+    wd_scan = json.loads(
+        (ROOT / "configs/ring_second_neighbor_wd_hz0_scan_N17.json").read_text()
+    )
+    wd_parameters = json.loads(
+        (
+            ROOT
+            / "configs/ring_second_neighbor_wd_hz0_all_sector_spacings_N17.json"
+        ).read_text()
+    )
+    ising = json.loads(
+        (ROOT / "configs/ring_pure_ising_wd_ablation_hz0_scan_N17.json").read_text()
+    )
+    assert ising["detector_n"] == 17
+    assert [case["hz0_over_hz"] for case in ising["cases"]] == [
+        case["hz0_over_hz"] for case in wd_scan["cases"]
+    ]
+    assert [case["parameter_overrides"]["hz0"] for case in ising["cases"]] == [
+        case["parameter_overrides"]["hz0"] for case in wd_scan["cases"]
+    ]
+    base = ising["base_parameters"]
+    assert base["jpm"] == base["j2"] == base["jpm2"] == 0.0
+    for name in ("hz", "j", "jx_unscaled", "evolution_time"):
+        assert base[name] == wd_parameters["base_parameters"][name]
+    for case in ising["cases"]:
+        parameters, provenance = load_case_parameters(ising, case)
+        assert parameters.jpm == parameters.j2 == parameters.jpm2 == 0.0
+        assert parameters.hz0 == case["parameter_overrides"]["hz0"]
+        assert provenance["parameter_source"] == "inline_base_parameters"
 
 
 def test_parameter_overrides_are_explicit_and_reject_unknown_names() -> None:

@@ -52,3 +52,18 @@ def test_versioned_campaign_config_is_self_contained() -> None:
     validate_scan_config(config)
     assert len(config["cases"]) == 20
     assert all("source_result" not in case for case in config["cases"])
+
+
+def test_pure_ising_ablation_config_is_valid_for_all_sector_campaign() -> None:
+    config_path = (
+        Path(__file__).resolve().parents[1]
+        / "configs/ring_pure_ising_wd_ablation_hz0_scan_N17.json"
+    )
+    with config_path.open("r", encoding="utf-8") as stream:
+        config = json.load(stream)
+    validate_scan_config(config)
+    assert len(config["cases"]) == 20
+    assert all("source_result" not in case for case in config["cases"])
+    assert config["base_parameters"]["jpm"] == 0.0
+    assert config["base_parameters"]["j2"] == 0.0
+    assert config["base_parameters"]["jpm2"] == 0.0

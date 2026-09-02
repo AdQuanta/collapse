@@ -23,3 +23,8 @@ symmetry sectors is documented in
 `zeus_ring_hz0_all_sector_spacings_N17.md`. Submit it with
 `submit_zeus_ring_hz0_all_sector_spacings_N17.sh`; every sector/`hz0` result is
 checkpointed independently.
+
+The controlled N=17 pure-Ising ablation of the WD-ring central-field scan is
+documented in `zeus_ring_pure_ising_wd_ablation_hz0_N17.md`. It reuses the
+validated activation and all-sector wrappers with a self-contained config and
+defines the completion gates for the matching 3x20 diagnostic figure.
