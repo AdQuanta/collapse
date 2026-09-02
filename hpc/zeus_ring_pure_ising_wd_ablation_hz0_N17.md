@@ -11,7 +11,7 @@ The final 3x20 figure has the same layout as the WD-ring atlas:
 
 1. global `P(theta)` and its reflected distribution;
 2. global `R(theta)` against `cos(theta/2)^2`;
-3. full-Hamiltonian level spacings from all 20 nonduplicated exact sectors.
+3. full-Hamiltonian level spacings from every nonduplicated maximal sector.
 
 ## Local and remote validation
 
@@ -34,9 +34,10 @@ python3.11 -m pytest -q \
   tests/test_ring_hz0_full_spacing_3x20.py
 ```
 
-The 20 array indices of the spacing campaign are defined in
-`zeus_ring_hz0_all_sector_spacings_N17.md`. Each index owns exactly one
-translation/parity/reflection sector.
+The 30 array indices of the spacing campaign are defined in
+`zeus_ring_hz0_all_sector_spacings_N17.md`. Ten `X0=+1` spatial shards own the
+symmetry-enhanced `hz0=0` case; twenty total-parity spatial shards own the 19
+nonzero cases.
 
 ## Production submission
 
@@ -49,8 +50,8 @@ RUN_ROOT="$PWD/work/zeus_ring_pure_ising_wd_ablation_activation_N17_$(date +%Y%m
   hpc/submit_zeus_ring_born_like_hz0_scan_N17.sh
 ```
 
-The all-sector spacing array has one exact sector per task and checkpoints
-every `hz0` case:
+The all-sector spacing array has one exact case-family shard per task and
+checkpoints every compatible `hz0` case:
 
 ```bash
 CONFIG=configs/ring_pure_ising_wd_ablation_hz0_scan_N17.json \
@@ -59,7 +60,7 @@ RUN_ROOT="$PWD/work/zeus_ring_pure_ising_wd_ablation_all_sector_spacings_N17_$(d
 ```
 
 The activation request is 20 array tasks at 16 CPUs, 256 GB, and at most 120
-hours each. The spacing request is 20 array tasks at 4 CPUs, 16 GB, and at
+hours each. The spacing request is 30 array tasks at 4 CPUs, 16 GB, and at
 most one hour each. The corresponding completed WD campaigns occupied about
 232 MB and 9 MB and had median per-task compute times of about 7.3 hours and
 52 minutes, respectively. These measurements are planning estimates, not
@@ -71,7 +72,7 @@ Do not collect partial output. Require:
 
 - activation: 20 valid case `COMPLETE.json` markers and 340 NPZ plus 340 JSON
   momentum checkpoints, with every marker-listed artifact present and hashed;
-- spacings: 20 valid sector `COMPLETE.json` markers and 400 NPZ checkpoints,
+- spacings: 30 valid sector `COMPLETE.json` markers and 390 NPZ checkpoints,
   with every completion-file hash verified;
 - no traceback, memory, walltime, or failure marker in either campaign;
 - numerical validation fields within their documented tolerances.
@@ -85,10 +86,11 @@ python3.11 scripts/build_ring_hz0_full_spacing_3x20.py \
   --run-root work/<collected_activation_campaign> \
   --all-sector-root work/<collected_all_sector_spacing_campaign> \
   --output-dir reports/<new_pure_ising_report_directory> \
-  --output-name hz0_scan_global_diagnostics_full_spacing_all_20_sectors_3x20.png
+  --output-name hz0_scan_global_diagnostics_full_spacing_all_sectors_3x20.png
 ```
 
 Each exact sector is unfolded independently before its spacing histogram is
 drawn. Raw levels from independent sectors must never be merged before
 spacing calculation. The pooled dark curve combines already-unfolded sector
-spacings with equal level weight; omitted `k/-k` copies are not duplicated.
+spacings with equal level weight. At `hz0=0`, the isospectral `X0=-1` partner
+is also omitted; at nonzero `hz0`, both total-excitation parities are retained.

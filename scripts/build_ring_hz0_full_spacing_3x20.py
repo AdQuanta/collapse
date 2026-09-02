@@ -4,14 +4,14 @@
 Rows one and two reproduce the saved global ``P(theta)`` and ``R(theta)``
 diagnostics.  Row three shows unfolded level-spacing distributions of the
 fully symmetry-resolved full qubit-detector Hamiltonian.  It can either show
-one selected sector or aggregate a completed 20-sector Zeus campaign.
+one selected sector or aggregate a completed maximal-symmetry Zeus campaign.
 
-The combined Hamiltonian preserves detector translation and total excitation
-parity.  For the odd-length ring, nonzero momenta occur in reflection-related
-``k``/``-k`` pairs with identical spectra.  The default ``k=1`` and even total
-excitation parity therefore selects one nonduplicated large sector (dimension
-7710 at ``N_D=17``).  A central eigenvalue window is obtained with sparse
-shift-invert diagonalization and checkpointed independently for every ``hz0``.
+The combined Hamiltonian preserves detector translation and, at nonzero
+``hz0``, total excitation parity.  At exactly ``hz0=0``, the additional exact
+central-``X_0`` symmetry is used instead.  For the odd-length ring, nonzero
+momenta occur in reflection-related ``k``/``-k`` pairs with identical spectra.
+A central eigenvalue window is obtained with sparse shift-invert
+diagonalization and checkpointed independently for every compatible ``hz0``.
 """
 
 from __future__ import annotations
@@ -53,6 +53,8 @@ from scipy.sparse.linalg import eigsh  # noqa: E402
 
 from core.activation_resolved_projective import (  # noqa: E402
     RingActivationParameters,
+    detector_static_terms,
+    detector_translation,
     full_pixel_translation,
 )
 from core.hamiltonians.quspin_hamiltonians import (  # noqa: E402
@@ -89,8 +91,9 @@ DEFAULT_RUN_ROOT = ROOT / "work" / "zeus_ring_second_neighbor_wd_hz0_scan_N17_20
 DEFAULT_OUTPUT_DIR = ROOT / "reports" / "ring_second_neighbor_wd_hz0_scan_N17_2026-08-26"
 DEFAULT_OUTPUT_NAME = "hz0_scan_global_diagnostics_full_spacing_3x20.png"
 SCHEMA_VERSION = 1
-SPECTRUM_METHOD_VERSION = 1
-ALL_SECTOR_COUNT = 20
+SPECTRUM_METHOD_VERSION = 2
+GENERIC_SECTOR_COUNT = 20
+CENTRAL_X_SECTOR_COUNT = 10
 
 
 def excitation_parity_nups(total_qubits: int, parity: int) -> list[int]:
@@ -119,6 +122,44 @@ def full_pixel_reflection(detector_n: int) -> np.ndarray:
     return permutation
 
 
+def detector_reflection(detector_n: int) -> np.ndarray:
+    """Return reflection about detector site zero on the isolated ring."""
+
+    if detector_n < 2:
+        raise ValueError("detector_n must be at least two")
+    return np.asarray([(-site) % detector_n for site in range(detector_n)])
+
+
+def _validate_spatial_sector(
+    detector_n: int,
+    momentum: int,
+    reflection_parity: int | None,
+) -> None:
+    if detector_n < 2:
+        raise ValueError("detector_n must be at least two")
+    if not 0 <= momentum < detector_n:
+        raise ValueError("momentum must satisfy 0 <= momentum < detector_n")
+    if reflection_parity not in (None, -1, 1):
+        raise ValueError("reflection_parity must be None, -1, or +1")
+    if reflection_parity is not None and momentum != 0:
+        raise ValueError("reflection parity can only be resolved at momentum k=0")
+
+
+def _validated_csr_operator(operator: Any, *, label: str) -> csr_matrix:
+    result = operator.tocsr()
+    antihermitian = result - result.getH()
+    hermiticity_error = (
+        float(np.max(np.abs(antihermitian.data)))
+        if antihermitian.nnz
+        else 0.0
+    )
+    if hermiticity_error > 1.0e-12:
+        raise RuntimeError(
+            f"{label} is not Hermitian: max error={hermiticity_error:.3e}"
+        )
+    return result
+
+
 def load_spectrum_case(
     config: dict[str, Any],
     case: dict[str, Any],
@@ -143,14 +184,7 @@ def build_combined_sector_operator(
     physical eigenvalues ``+1`` and ``-1``.
     """
 
-    if detector_n < 2:
-        raise ValueError("detector_n must be at least two")
-    if not 0 <= momentum < detector_n:
-        raise ValueError("momentum must satisfy 0 <= momentum < detector_n")
-    if reflection_parity not in (None, -1, 1):
-        raise ValueError("reflection_parity must be None, -1, or +1")
-    if reflection_parity is not None and momentum != 0:
-        raise ValueError("reflection parity can only be resolved at momentum k=0")
+    _validate_spatial_sector(detector_n, momentum, reflection_parity)
     total_qubits = detector_n + 1
     basis_blocks: dict[str, Any] = {
         "Nup": excitation_parity_nups(total_qubits, excitation_parity),
@@ -204,18 +238,105 @@ def build_combined_sector_operator(
         check_symm=False,
         check_herm=False,
         check_pcon=False,
-    ).tocsr()
-    antihermitian = operator - operator.getH()
-    hermiticity_error = (
-        float(np.max(np.abs(antihermitian.data)))
-        if antihermitian.nnz
-        else 0.0
     )
-    if hermiticity_error > 1.0e-12:
-        raise RuntimeError(
-            f"combined sector is not Hermitian: max error={hermiticity_error:.3e}"
+    return basis, _validated_csr_operator(operator, label="combined sector")
+
+
+def build_central_x_sector_operator(
+    detector_n: int,
+    parameters: RingActivationParameters,
+    *,
+    momentum: int,
+    central_x: int,
+    reflection_parity: int | None = None,
+) -> tuple[Any, csr_matrix]:
+    """Construct one maximally resolved sector at exactly ``hz0=0``.
+
+    When the central field vanishes, ``X_0`` is conserved.  Fixing its physical
+    eigenvalue ``central_x`` reduces the full Hamiltonian to the detector ring
+    plus a uniform transverse field ``-central_x * Jx * sum_i X_i``.  The two
+    central-X blocks are isospectral under the detector operator
+    ``prod_i Z_i``; production aggregation therefore keeps only ``central_x=+1``.
+    """
+
+    _validate_spatial_sector(detector_n, momentum, reflection_parity)
+    if central_x not in (-1, 1):
+        raise ValueError("central_x must be the physical eigenvalue -1 or +1")
+    if parameters.hz0 != 0.0:
+        raise ValueError("central-X sectors are exact only when hz0 is exactly zero")
+    basis_blocks: dict[str, Any] = {
+        "kblock": (detector_translation(detector_n), momentum),
+    }
+    if reflection_parity is not None:
+        basis_blocks["pblock"] = (
+            detector_reflection(detector_n),
+            0 if reflection_parity == 1 else 1,
         )
-    return basis, operator
+    with warnings.catch_warnings():
+        if reflection_parity is not None:
+            warnings.filterwarnings(
+                "ignore",
+                message=r"using non-commuting symmetries.*",
+                category=GeneralBasisWarning,
+            )
+        basis = spin_basis_general(detector_n, **basis_blocks)
+    static = list(detector_static_terms(detector_n, parameters))
+    effective_jx = parameters.effective_jx(detector_n)
+    if effective_jx:
+        static.append(
+            [
+                "x",
+                [
+                    [-float(central_x) * effective_jx, site]
+                    for site in range(detector_n)
+                ],
+            ]
+        )
+    operator = hamiltonian(
+        static,
+        [],
+        basis=basis,
+        dtype=np.complex128,
+        check_symm=False,
+        check_herm=False,
+        check_pcon=False,
+    )
+    return basis, _validated_csr_operator(operator, label="central-X sector")
+
+
+def _rayleigh_ritz_refine(
+    operator: csr_matrix,
+    eigenvectors: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, dict[str, float]]:
+    """Orthonormalize an approximate invariant subspace and refine its pairs.
+
+    ARPACK can return individually accurate but mutually nonorthogonal vectors
+    when the requested window contains exact or near degeneracies.  A reduced
+    QR followed by diagonalization of ``Q^H H Q`` preserves the computed
+    invariant subspace while producing a basis-independent Hermitian Ritz
+    representation.
+    """
+
+    vectors = np.asarray(eigenvectors, dtype=np.complex128)
+    raw_gram = vectors.conj().T @ vectors
+    raw_orthogonality_error = float(
+        np.max(np.abs(raw_gram - np.eye(vectors.shape[1], dtype=np.complex128)))
+    )
+    orthonormal, triangular = np.linalg.qr(vectors, mode="reduced")
+    diagonal = np.abs(np.diag(triangular))
+    qr_diagonal_ratio = float(
+        np.min(diagonal) / max(float(np.max(diagonal)), np.finfo(float).eps)
+    )
+    applied_orthonormal = operator @ orthonormal
+    projected = orthonormal.conj().T @ applied_orthonormal
+    projected = 0.5 * (projected + projected.conj().T)
+    energies, rotation = np.linalg.eigh(projected)
+    ritz_vectors = orthonormal @ rotation
+    diagnostics = {
+        "raw_orthogonality_error": raw_orthogonality_error,
+        "minimum_qr_diagonal_ratio": qr_diagonal_ratio,
+    }
+    return np.asarray(energies, dtype=float), ritz_vectors, diagnostics
 
 
 def central_sector_spectrum(
@@ -226,8 +347,10 @@ def central_sector_spectrum(
 ) -> dict[str, Any]:
     """Compute and validate a contiguous central eigenvalue window.
 
-    Shift-invert targets the mean diagonal energy.  Returned eigenpairs are
-    sorted, checked for orthonormality, and checked by relative residuals.
+    Shift-invert targets the mean diagonal energy.  The returned invariant
+    subspace is QR-orthonormalized and Rayleigh--Ritz refined before its
+    orthogonality and relative residuals are checked.  This is essential for
+    symmetry-resolved spectra containing exact or near-degenerate clusters.
     """
 
     dimension = int(operator.shape[0])
@@ -247,7 +370,7 @@ def central_sector_spectrum(
         max(float(solver_tolerance) * 1.0e-2, np.finfo(float).eps),
     )
     for attempt, effective_tolerance in enumerate(attempted_tolerances):
-        energies, eigenvectors = eigsh(
+        raw_energies, raw_eigenvectors = eigsh(
             operator,
             k=int(eigenvalue_count),
             sigma=sigma,
@@ -256,9 +379,21 @@ def central_sector_spectrum(
             v0=initial_vector,
             return_eigenvectors=True,
         )
+        raw_order = np.argsort(raw_energies)
+        raw_energies = np.asarray(raw_energies[raw_order], dtype=float)
+        raw_eigenvectors = np.asarray(
+            raw_eigenvectors[:, raw_order], dtype=np.complex128
+        )
+        energies, eigenvectors, refinement = _rayleigh_ritz_refine(
+            operator,
+            raw_eigenvectors,
+        )
         order = np.argsort(energies)
         energies = np.asarray(energies[order], dtype=float)
         eigenvectors = np.asarray(eigenvectors[:, order], dtype=np.complex128)
+        maximum_ritz_energy_correction = float(
+            np.max(np.abs(energies - raw_energies))
+        )
         applied = operator @ eigenvectors
         residual_norms = np.linalg.norm(
             applied - eigenvectors * energies[None, :], axis=0
@@ -305,6 +440,10 @@ def central_sector_spectrum(
         "runtime_seconds": time.perf_counter() - started,
         "maximum_relative_residual": maximum_residual,
         "orthogonality_error": orthogonality_error,
+        "raw_orthogonality_error": refinement["raw_orthogonality_error"],
+        "minimum_qr_diagonal_ratio": refinement["minimum_qr_diagonal_ratio"],
+        "maximum_ritz_energy_correction": maximum_ritz_energy_correction,
+        "eigenpair_refinement": "reduced QR plus Hermitian Rayleigh-Ritz",
         "degeneracy_tolerance": degeneracy_tolerance,
         "resolved_level_count": int(raw_spacings.size + 1),
         "mean_r": float(np.mean(ratios)),
@@ -317,7 +456,8 @@ def _case_digest(
     *,
     detector_n: int,
     momentum: int,
-    excitation_parity: int,
+    excitation_parity: int | None,
+    central_x: int | None,
     reflection_parity: int | None,
     eigenvalue_count: int,
     solver_tolerance: float,
@@ -330,6 +470,7 @@ def _case_digest(
         "detector_n": detector_n,
         "momentum": momentum,
         "excitation_parity": excitation_parity,
+        "central_x": central_x,
         "eigenvalue_count": eigenvalue_count,
         "solver_tolerance": solver_tolerance,
     }
@@ -400,26 +541,52 @@ def compute_scan_spectra(
     cache_dir: Path,
     *,
     momentum: int,
-    excitation_parity: int,
+    excitation_parity: int | None,
+    central_x: int | None = None,
     reflection_parity: int | None = None,
     eigenvalue_count: int,
     solver_tolerance: float,
     resume: bool,
+    case_indices: list[int] | tuple[int, ...] | None = None,
 ) -> tuple[list[dict[str, np.ndarray]], list[dict[str, Any]]]:
-    """Compute or load one combined-sector spectrum for every scan case."""
+    """Compute or load one maximally resolved sector for selected scan cases."""
 
     detector_n = int(config["detector_n"])
+    if (excitation_parity is None) == (central_x is None):
+        raise ValueError("select exactly one of excitation_parity and central_x")
+    if excitation_parity is not None and excitation_parity not in (0, 1):
+        raise ValueError("excitation_parity must be 0 or 1")
+    if central_x is not None and central_x not in (-1, 1):
+        raise ValueError("central_x must be -1 or +1")
+    cases = config.get("cases")
+    if not isinstance(cases, list):
+        raise ValueError("config cases must be a list")
+    selected_indices = (
+        tuple(range(len(cases)))
+        if case_indices is None
+        else tuple(int(index) for index in case_indices)
+    )
+    if len(set(selected_indices)) != len(selected_indices):
+        raise ValueError("case_indices must not contain duplicates")
+    if any(index < 0 or index >= len(cases) for index in selected_indices):
+        raise ValueError("case_indices contain an out-of-range index")
     arrays_by_case: list[dict[str, np.ndarray]] = []
     metadata_by_case: list[dict[str, Any]] = []
-    for index, case in enumerate(config["cases"]):
+    for index in selected_indices:
+        case = cases[index]
         case_id = str(case["case_id"])
         parameters, provenance = load_spectrum_case(config, case)
+        if central_x is not None and parameters.hz0 != 0.0:
+            raise ValueError(
+                f"{case_id}: central-X resolution requires hz0 exactly equal to zero"
+            )
         digest = _case_digest(
             case,
             parameters,
             detector_n=detector_n,
             momentum=momentum,
             excitation_parity=excitation_parity,
+            central_x=central_x,
             reflection_parity=reflection_parity,
             eigenvalue_count=eigenvalue_count,
             solver_tolerance=solver_tolerance,
@@ -442,13 +609,24 @@ def compute_scan_spectra(
                 "spectrum=start",
                 flush=True,
             )
-            basis, operator = build_combined_sector_operator(
-                detector_n,
-                parameters,
-                momentum=momentum,
-                excitation_parity=excitation_parity,
-                reflection_parity=reflection_parity,
-            )
+            if central_x is None:
+                basis, operator = build_combined_sector_operator(
+                    detector_n,
+                    parameters,
+                    momentum=momentum,
+                    excitation_parity=int(excitation_parity),
+                    reflection_parity=reflection_parity,
+                )
+                symmetry_family = "total_excitation_parity"
+            else:
+                basis, operator = build_central_x_sector_operator(
+                    detector_n,
+                    parameters,
+                    momentum=momentum,
+                    central_x=central_x,
+                    reflection_parity=reflection_parity,
+                )
+                symmetry_family = "central_x"
             spectrum = central_sector_spectrum(
                 operator,
                 eigenvalue_count=eigenvalue_count,
@@ -465,6 +643,9 @@ def compute_scan_spectra(
                 "momentum": momentum,
                 "reflection_partner_momentum": (-momentum) % detector_n,
                 "excitation_parity": excitation_parity,
+                "central_x": central_x,
+                "symmetry_family": symmetry_family,
+                "central_x_partner_omitted_as_isospectral": central_x is not None,
                 "reflection_parity": reflection_parity,
                 "sector_dimension": int(basis.Ns),
                 "eigenvalue_count": eigenvalue_count,
@@ -482,6 +663,16 @@ def compute_scan_spectra(
                 "runtime_seconds": spectrum["runtime_seconds"],
                 "maximum_relative_residual": spectrum["maximum_relative_residual"],
                 "orthogonality_error": spectrum["orthogonality_error"],
+                "raw_orthogonality_error": spectrum[
+                    "raw_orthogonality_error"
+                ],
+                "minimum_qr_diagonal_ratio": spectrum[
+                    "minimum_qr_diagonal_ratio"
+                ],
+                "maximum_ritz_energy_correction": spectrum[
+                    "maximum_ritz_energy_correction"
+                ],
+                "eigenpair_refinement": spectrum["eigenpair_refinement"],
                 "degeneracy_tolerance": spectrum["degeneracy_tolerance"],
                 "resolved_level_count": spectrum["resolved_level_count"],
                 "unfolded_spacing_count": int(spectrum["unfolded_spacings"].size),
@@ -513,29 +704,62 @@ def compute_scan_spectra(
 
 
 def expected_all_sector_ids() -> tuple[str, ...]:
-    """Return the 20 nonduplicated sector identifiers in PBS-array order."""
+    """Return the 30 case-family shard identifiers in PBS-array order."""
 
     sector_ids: list[str] = []
-    for parity_label in ("even", "odd"):
+    for internal_label in ("xplus", "even", "odd"):
         sector_ids.extend(
             (
-                f"k00_{parity_label}_reflection_plus",
-                f"k00_{parity_label}_reflection_minus",
+                f"k00_{internal_label}_reflection_plus",
+                f"k00_{internal_label}_reflection_minus",
             )
         )
-        sector_ids.extend(f"k{momentum:02d}_{parity_label}" for momentum in range(1, 9))
+        sector_ids.extend(
+            f"k{momentum:02d}_{internal_label}" for momentum in range(1, 9)
+        )
     return tuple(sector_ids)
+
+
+def _case_ids_by_sector(
+    config: dict[str, Any],
+) -> tuple[dict[str, tuple[str, ...]], dict[str, int]]:
+    """Map every shard to compatible cases and every case to its exact count."""
+
+    cases = config.get("cases")
+    if not isinstance(cases, list):
+        raise ValueError("config cases must be a list")
+    zero_ids: list[str] = []
+    nonzero_ids: list[str] = []
+    case_sector_counts: dict[str, int] = {}
+    for case in cases:
+        case_id = str(case["case_id"])
+        parameters, _ = load_spectrum_case(config, case)
+        if parameters.hz0 == 0.0:
+            zero_ids.append(case_id)
+            case_sector_counts[case_id] = CENTRAL_X_SECTOR_COUNT
+        else:
+            nonzero_ids.append(case_id)
+            case_sector_counts[case_id] = GENERIC_SECTOR_COUNT
+    if not zero_ids or not nonzero_ids:
+        raise ValueError("maximal-sector campaign requires zero and nonzero hz0 cases")
+    by_sector = {
+        sector_id: tuple(zero_ids if "_xplus" in sector_id else nonzero_ids)
+        for sector_id in expected_all_sector_ids()
+    }
+    return by_sector, case_sector_counts
 
 
 def load_all_sector_campaign(
     campaign_root: Path,
     config: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
-    """Validate and aggregate a completed 20-sector Zeus campaign.
+    """Validate and aggregate a completed maximal-symmetry Zeus campaign.
 
-    Each sector is unfolded independently before its spacings are pooled.  The
-    omitted ``k=9..16`` blocks are reflection-related exact spectral copies of
-    ``k=8..1`` and are deliberately not counted a second time.
+    Each physical sector is unfolded independently before its spacings are
+    pooled.  At ``hz0=0`` the ten retained sectors fix ``X_0=+1``; the
+    ``X_0=-1`` spectra are exact copies and are omitted.  At nonzero ``hz0``
+    the twenty sectors fix total-excitation parity.  In both families the
+    omitted ``k=9..16`` blocks are reflection-related copies of ``k=8..1``.
     """
 
     campaign_root = campaign_root.resolve()
@@ -547,6 +771,7 @@ def load_all_sector_campaign(
         raise ValueError("the plotting config must contain exactly 20 hz0 cases")
     case_ids = tuple(str(case["case_id"]) for case in cases)
     expected_ids = expected_all_sector_ids()
+    expected_cases_by_sector, expected_sector_counts = _case_ids_by_sector(config)
     present_ids = tuple(
         sorted(path.name for path in sectors_root.iterdir() if path.is_dir())
     )
@@ -573,13 +798,16 @@ def load_all_sector_campaign(
             raise ValueError(f"{sector_id}: completion status is not complete")
         if complete.get("sector_id") != sector_id:
             raise ValueError(f"{sector_id}: completion marker sector_id mismatch")
-        if int(complete.get("case_count", -1)) != len(case_ids):
+        sector_case_ids = expected_cases_by_sector[sector_id]
+        if int(complete.get("case_count", -1)) != len(sector_case_ids):
             raise ValueError(f"{sector_id}: completion marker case_count mismatch")
+        if tuple(str(item) for item in complete.get("case_ids", ())) != sector_case_ids:
+            raise ValueError(f"{sector_id}: completion marker case_ids mismatch")
         recorded_files = complete.get("files")
         if not isinstance(recorded_files, dict):
             raise ValueError(f"{sector_id}: completion marker files must be an object")
         expected_files = {"sector_summary.json"}
-        for case_id in case_ids:
+        for case_id in sector_case_ids:
             expected_files.add(f"cases/{case_id}.json")
             expected_files.add(f"cases/{case_id}.npz")
         if set(recorded_files) != expected_files:
@@ -599,12 +827,14 @@ def load_all_sector_campaign(
 
         summary = _read_json(sector_dir / "sector_summary.json")
         summary_cases = summary.get("cases")
-        if not isinstance(summary_cases, list) or len(summary_cases) != len(case_ids):
+        if not isinstance(summary_cases, list) or len(summary_cases) != len(
+            sector_case_ids
+        ):
             raise ValueError(f"{sector_id}: invalid sector summary case list")
         summary_by_id = {str(item.get("case_id")): item for item in summary_cases}
-        if set(summary_by_id) != set(case_ids):
+        if set(summary_by_id) != set(sector_case_ids):
             raise ValueError(f"{sector_id}: sector summary case IDs mismatch")
-        for case_id in case_ids:
+        for case_id in sector_case_ids:
             metadata_path = sector_dir / "cases" / f"{case_id}.json"
             archive_path = sector_dir / "cases" / f"{case_id}.npz"
             metadata = _read_json(metadata_path)
@@ -626,6 +856,23 @@ def load_all_sector_campaign(
                 arrays["unfolded_spacings"].size
             ):
                 raise ValueError(f"{sector_id}/{case_id}: spacing count mismatch")
+            if "_xplus" in sector_id:
+                if (
+                    metadata.get("symmetry_family") != "central_x"
+                    or int(metadata.get("central_x", 0)) != 1
+                    or metadata.get("excitation_parity") is not None
+                ):
+                    raise ValueError(
+                        f"{sector_id}/{case_id}: invalid central-X sector metadata"
+                    )
+            elif (
+                metadata.get("symmetry_family") != "total_excitation_parity"
+                or int(metadata.get("excitation_parity", -1)) not in (0, 1)
+                or metadata.get("central_x") is not None
+            ):
+                raise ValueError(
+                    f"{sector_id}/{case_id}: invalid excitation-parity metadata"
+                )
             arrays_by_case[case_id].append(arrays)
             metadata_by_case[case_id].append(metadata)
 
@@ -634,8 +881,9 @@ def load_all_sector_campaign(
     for case_id in case_ids:
         sector_arrays = arrays_by_case[case_id]
         sector_metadata = metadata_by_case[case_id]
-        if len(sector_arrays) != ALL_SECTOR_COUNT:
-            raise ValueError(f"{case_id}: expected {ALL_SECTOR_COUNT} sector archives")
+        expected_count = expected_sector_counts[case_id]
+        if len(sector_arrays) != expected_count:
+            raise ValueError(f"{case_id}: expected {expected_count} sector archives")
         pooled_spacings = np.concatenate(
             [item["unfolded_spacings"] for item in sector_arrays]
         )
@@ -671,20 +919,29 @@ def load_all_sector_campaign(
                 "maximum_orthogonality_error": float(
                     max(float(item["orthogonality_error"]) for item in sector_metadata)
                 ),
+                "maximum_raw_orthogonality_error": float(
+                    max(
+                        float(item["raw_orthogonality_error"])
+                        for item in sector_metadata
+                    )
+                ),
                 "sectors": sector_metadata,
             }
         )
     campaign_metadata = {
         "campaign_root": str(campaign_root),
-        "sector_count": len(expected_ids),
+        "sector_shard_count": len(expected_ids),
         "case_count": len(case_ids),
-        "npz_count": len(expected_ids) * len(case_ids),
+        "npz_count": sum(expected_sector_counts.values()),
+        "case_sector_counts": expected_sector_counts,
         "verified_artifact_count": verified_artifact_count,
         "completion_marker_sha256": completion_hashes,
         "sector_ids": list(expected_ids),
         "aggregation": (
             "Each exact sector is unfolded independently; all resulting spacings "
-            "and adjacent-spacing ratios are then pooled with equal level weight."
+            "and adjacent-spacing ratios are then pooled with equal level weight. "
+            "At hz0=0, X0=+1 is retained and its isospectral X0=-1 partner is "
+            "omitted; at nonzero hz0, both total-excitation parities are retained."
         ),
     }
     return aggregated_spectra, aggregated_metadata, campaign_metadata
@@ -918,14 +1175,23 @@ def plot_three_row_strip(
         fontsize=9,
     )
     if all_sector_plot:
+        sector_counts = sorted(
+            {int(metadata["sector_count"]) for metadata in spectrum_metadata}
+        )
+        count_label = (
+            str(sector_counts[0])
+            if len(sector_counts) == 1
+            else "/".join(str(count) for count in sector_counts)
+        )
         subtitle = (
-            rf"$N_D={int(config['detector_n'])}$; all {int(first_metadata['sector_count'])} "
-            "nonduplicated exact sectors; 512 central eigenvalues per sector"
+            rf"$N_D={int(config['detector_n'])}$; all {count_label} nonduplicated "
+            "exact sectors per scan point; 512 central eigenvalues per sector"
         )
         footer = (
-            "Third row: 20 thin sector-resolved histograms plus their pooled distribution; "
-            "translation, total-excitation parity, and k=0 reflection resolved; omitted k/-k "
-            "copies are not duplicated; cubic unfolding with 10% edge trim."
+            "Third row: thin sector-resolved histograms plus their pooled distribution; "
+            "at hz0=0, X0=+1 and spatial dihedral sectors are resolved and the isospectral "
+            "X0=-1 partner is omitted; elsewhere total-excitation parity and spatial "
+            "dihedral sectors are resolved; cubic unfolding with 10% edge trim."
         )
     else:
         parity_label = (
@@ -978,7 +1244,7 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument(
         "--all-sector-root",
         type=Path,
-        help="completed 20-sector Zeus campaign to validate and aggregate",
+        help="completed maximal-symmetry Zeus campaign to validate and aggregate",
     )
     result.add_argument("--momentum", type=int, default=1)
     result.add_argument(

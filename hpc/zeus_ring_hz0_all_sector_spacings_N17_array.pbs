@@ -1,11 +1,11 @@
 #!/bin/bash
-# Full qubit-detector level spacings for all 20 unique N=17 symmetry sectors.
-# One array task owns one sector and checkpoints after every hz0 value.
+# Full qubit-detector spacings in maximal, nonduplicated N=17 symmetry sectors.
+# Ten X0=+1 spatial shards own hz0=0; 20 parity/spatial shards own nonzero hz0.
 #PBS -N ring_hz0_secs
 #PBS -q zeus_new_q
 #PBS -l select=1:ncpus=4:mem=16gb
 #PBS -l walltime=01:00:00
-#PBS -J 0-19
+#PBS -J 0-29
 #PBS -j oe
 #PBS -m abe
 #PBS -M matanhaller@campus.technion.ac.il
@@ -28,8 +28,8 @@ if [[ -n "${VIRTUAL_ENV_PATH:-}" ]]; then source "$VIRTUAL_ENV_PATH/bin/activate
 
 : "${RUN_ROOT:?submit through hpc/submit_zeus_ring_hz0_all_sector_spacings_N17.sh}"
 ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:?PBS array index unavailable}}"
-if [[ ! "$ARRAY_INDEX" =~ ^([0-9]|1[0-9])$ ]]; then
-  echo "PBS array index must lie in 0..19; got '$ARRAY_INDEX'." >&2
+if [[ ! "$ARRAY_INDEX" =~ ^([0-9]|[12][0-9])$ ]]; then
+  echo "PBS array index must lie in 0..29; got '$ARRAY_INDEX'." >&2
   exit 2
 fi
 CONFIG="${CONFIG:-configs/ring_second_neighbor_wd_hz0_all_sector_spacings_N17.json}"
