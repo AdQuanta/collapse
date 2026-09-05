@@ -209,9 +209,10 @@ source hashes instead.
 
 This section is standing authorization to commit and push successfully
 completed, in-scope change/build/fix work and to integrate its task branch into
-the default branch with a non-fast-forward merge. It also authorizes deleting
-that agent-owned task branch locally and from its configured remote after the
-merge is pushed and verified. It does not authorize deleting other branches,
+the default branch, preferring a fast-forward whenever ancestry permits and
+otherwise creating a merge commit. It also authorizes deleting that agent-owned
+task branch locally and from its configured remote after the integration is
+pushed and verified. It does not authorize deleting other branches,
 creating or merging a pull request, rewriting shared history, force-pushing,
 publishing a release, or including unrelated user changes.
 
@@ -231,11 +232,13 @@ publishing a release, or including unrelated user changes.
 6. Push the current task branch with its upstream (`git push -u origin HEAD`).
    Never force-push. If the push is rejected or the remote advanced, fetch and
    inspect; do not silently rebase or discard work.
-7. For a completed task branch, update the local default branch with
-   fast-forward-only pull, merge the task branch using `git merge --no-ff`, and
-   push the default branch. Preserve the merge commit even when a fast-forward
-   would be possible. Stop before resolving unexpected conflicts or overwriting
-   remote work; report the conflicting paths and request direction.
+7. For a completed task branch, update the local default branch with a
+   fast-forward-only pull. If the default branch is an ancestor of the task
+   branch, integrate using `git merge --ff-only <task-branch>`. Otherwise use
+   `git merge --no-ff <task-branch>` to preserve both histories, without
+   silently rebasing or rewriting either branch. Push the default branch. Stop
+   before resolving unexpected conflicts or overwriting remote work; report
+   the conflicting paths and request direction.
 8. After the default-branch push succeeds, verify that the task commit is an
    ancestor of both the local and remote-tracking default branches. Then delete
    only the now-redundant agent-owned task branch from its remote and locally,
@@ -243,14 +246,15 @@ publishing a release, or including unrelated user changes.
    protected branch, a branch checked out in another worktree, an unmerged
    branch, or a branch whose ownership or purpose is ambiguous. If either
    deletion is rejected, preserve the branch and report why; do not force it.
-9. Report the task and default branches, commit and merge hashes, pushed
-   remote, deleted branch names, validations, generated but uncommitted
-   outputs, and limitations.
+9. Report the task and default branches, task commit, integration mode and
+   resulting default-branch hash, pushed remote, deleted branch names,
+   validations, generated but uncommitted outputs, and limitations.
 
 Do not create an empty commit. Do not commit incomplete or failing work merely
 to satisfy this policy; explain the blocker instead. Read-only tasks do not
 produce a commit. Create or merge a pull request only when the user asks; the
-default delivery path is the explicit local `--no-ff` integration above.
+default delivery path is the explicit fast-forward-preferred local integration
+above.
 
 Pull-request descriptions should include the scientific objective, changed
 equations or conventions, implementation choices, exact validation commands
@@ -271,7 +275,7 @@ A task is done when the applicable conditions hold:
 - the diff excludes secrets, machine-specific clutter, and unrelated changes;
 - exact, approximate, numerical, and conjectural conclusions remain distinct;
 - completed changes are organized into scoped commits, pushed, and integrated
-  with a non-fast-forward merge;
+  by fast-forward when possible or an explicit merge commit otherwise;
 - the redundant agent-owned task branch is deleted locally and remotely after
   its integration is verified, unless a documented safety check prevents it;
 - the final report names what was and was not validated.
