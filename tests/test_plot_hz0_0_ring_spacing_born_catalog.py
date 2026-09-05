@@ -9,6 +9,7 @@ import numpy as np
 from scripts.plot_hz0_0_ring_spacing_born_catalog import (
     _density,
     _spacing_histograms,
+    parser,
 )
 
 
@@ -44,3 +45,20 @@ def test_unfolded_spacing_archive_is_histogrammed_per_sector(tmp_path: Path) -> 
 
     np.testing.assert_array_equal(sectors, [[1, 2, 0, 0], [0, 0, 1, 1]])
     np.testing.assert_array_equal(pooled, [1, 2, 1, 1])
+
+
+def test_parser_accepts_selected_individual_categories(tmp_path: Path) -> None:
+    args = parser().parse_args(
+        [
+            "--output",
+            str(tmp_path / "figures"),
+            "--category",
+            "wd_clearly_nonborn",
+            "--category",
+            "poisson_clearly_nonborn",
+            "--individual",
+        ]
+    )
+
+    assert args.individual
+    assert args.category == ["wd_clearly_nonborn", "poisson_clearly_nonborn"]

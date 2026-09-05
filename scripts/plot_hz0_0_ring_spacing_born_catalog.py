@@ -1,5 +1,5 @@
 #!/usr/bin/env python3.11
-"""Plot the four hz0=0 ring spacing/Born categories as diagnostic atlases.
+"""Plot hz0=0 ring spacing/Born categories as atlases or individual figures.
 
 Each atlas row shows one selected configuration: the two antipodal angular
 densities, the occupied-bin Born-ratio diagnostic, and the detector spacing
@@ -372,7 +372,9 @@ def plot_category(
         (
             "Spacing sectors are unfolded separately before pooling; faint curves are "
             "individual sectors. Exact degeneracies were merged; cubic unfolding used "
-            "a 10% edge trim. NN/2NN denote nearest-/second-neighbor Hamiltonians."
+            "a 10% edge trim. Lower-N catalogs retain the five largest exact sectors "
+            "per nonredundant momentum (even-N half filling omitted). NN/2NN denote "
+            "nearest-/second-neighbor Hamiltonians."
         ),
         ha="center",
         fontsize=8.0,
@@ -390,6 +392,17 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
     result.add_argument("--output", type=Path, required=True)
     result.add_argument("--dpi", type=int, default=180)
+    result.add_argument(
+        "--category",
+        action="append",
+        choices=tuple(CATEGORY_TITLES),
+        help="render only this category; may be supplied more than once",
+    )
+    result.add_argument(
+        "--individual",
+        action="store_true",
+        help="write one three-panel figure per configuration instead of atlases",
+    )
     return result
 
 
@@ -410,27 +423,53 @@ def main() -> None:
     if any(len(category_records) != 10 for category_records in by_category.values()):
         raise ValueError("each category must contain exactly ten examples")
 
+    selected_categories = tuple(dict.fromkeys(args.category or CATEGORY_TITLES))
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     figures = []
-    for category, category_records in by_category.items():
-        figure_path = output / f"{category}__diagnostics_and_resolved_spacings.png"
-        figures.append(
-            {
-                "category": category,
-                **plot_category(
-                    category,
-                    category_records,
-                    figure_path,
-                    dpi=args.dpi,
-                ),
-            }
-        )
-        print(figure_path)
+    if args.individual:
+        for category in selected_categories:
+            category_dir = output / category
+            category_dir.mkdir()
+            individual_figures = []
+            for record in by_category[category]:
+                family = "2NN" if record["family"] == "second_neighbor" else "NN"
+                figure_path = category_dir / (
+                    f"rank_{int(record['rank']):02d}__N{int(record['detector_n'])}__"
+                    f"{family}__{record['config_id']}__"
+                    "diagnostics_and_resolved_spacings.png"
+                )
+                individual_figures.append(
+                    plot_category(category, [record], figure_path, dpi=args.dpi)
+                )
+                print(figure_path)
+            figures.append(
+                {
+                    "category": category,
+                    "individual_figures": individual_figures,
+                }
+            )
+    else:
+        for category in selected_categories:
+            figure_path = output / f"{category}__diagnostics_and_resolved_spacings.png"
+            figures.append(
+                {
+                    "category": category,
+                    **plot_category(
+                        category,
+                        by_category[category],
+                        figure_path,
+                        dpi=args.dpi,
+                    ),
+                }
+            )
+            print(figure_path)
     manifest = {
         "schema_version": 1,
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "scope": "clean one-dimensional rings with hz0=0",
+        "layout": "individual" if args.individual else "category_atlas",
+        "categories": list(selected_categories),
         "catalog": str(catalog_path.relative_to(ROOT)),
         "catalog_sha256": _sha256(catalog_path),
         "spacing_plot": (
