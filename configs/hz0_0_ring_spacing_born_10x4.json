@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "born_minimum": 0.8,
+  "born_rmse_maximum": 0.05,
+  "clearly_nonborn_maximum": 0.5,
+  "clearly_nonborn_rmse_minimum": 0.1,
+  "mean_r_poisson": 0.3862943611198906,
+  "mean_r_goe": 0.5307,
+  "spacing_rule": "mean-r proximity and unfolded-spacing KS distance must agree",
+  "catalog_minimum_mean_reference_advantage": 0.03,
+  "catalog_minimum_ks_advantage": 0.03,
+  "selection_note": "The 0.03 margins are a post-audit robustness screen introduced to exclude barely winning WD/Poisson assignments; they were not preregistered before the lower-N spacing calculation."
+}

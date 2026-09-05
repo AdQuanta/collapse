@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "sector_count_per_momentum": 5,
+  "histogram": {
+    "minimum": 0.0,
+    "maximum": 4.0,
+    "bins": 40
+  },
+  "classification": {
+    "born_minimum": 0.8,
+    "born_rmse_maximum": 0.05,
+    "clearly_nonborn_maximum": 0.5,
+    "clearly_nonborn_rmse_minimum": 0.1,
+    "mean_r_poisson": 0.3862943611198906,
+    "mean_r_goe": 0.5307,
+    "spacing_rule": "mean-r proximity and unfolded-spacing KS distance must agree"
+  },
+  "sources": [
+    {
+      "name": "second_neighbor_born_N16",
+      "family": "second_neighbor",
+      "root": "work/zeus_top20_last5_largerN_20260810_001532/source_03",
+      "glob": "rank_*/N16",
+      "expected_hz0": 0.0,
+      "profile": "born",
+      "order": "descending_s_born",
+      "limit": 20
+    },
+    {
+      "name": "second_neighbor_clearly_nonborn_N14",
+      "family": "second_neighbor",
+      "root": "work/zeus_sobol_second_neighbor_hz0_0_N14_20260805_224342/jy_zero/N14",
+      "glob": "config_*",
+      "expected_hz0": 0.0,
+      "profile": "clearly_nonborn",
+      "order": "ascending_s_born",
+      "limit": 60
+    },
+    {
+      "name": "nearest_neighbor_clearly_nonborn_N13",
+      "family": "nearest_neighbor",
+      "root": "work/zeus_sobol_coupling_scans_20260726_200003/jy_zero/N13",
+      "glob": "config_*",
+      "expected_hz0": 0.0,
+      "profile": "clearly_nonborn",
+      "order": "ascending_s_born",
+      "limit": 20
+    }
+  ],
+  "expected_case_count": 91,
+  "scientific_scope": "Completed hz0=0 clean 1D ring dynamics. Each spacing calculation uses five largest nonduplicated fully resolved sectors per nonredundant momentum. Even-N half filling is omitted because it has an additional internal global-spin-reversal symmetry; N_up>N/2 is an isospectral copy."
+}

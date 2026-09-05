@@ -56,6 +56,19 @@ def test_n17_largest_sector_dimensions_match_dihedral_decomposition() -> None:
     ]
 
 
+def test_even_n_omits_half_filling_and_resolves_both_reflection_momenta() -> None:
+    selected = select_largest_sectors(6)
+    assert list(selected) == [0, 1, 2, 3]
+    assert all(item.n_up < 3 for sectors in selected.values() for item in sectors)
+    assert {item.reflection_parity for item in selected[0]} <= {-1, 1}
+    assert {item.reflection_parity for item in selected[3]} <= {-1, 1}
+    assert all(
+        item.reflection_parity is None
+        for momentum in (1, 2)
+        for item in selected[momentum]
+    )
+
+
 def test_second_neighbor_static_terms_use_simulation_sign_convention() -> None:
     parameters = HamiltonianParameters(hz=0.3, j=0.2, jpm=0.1, j2=0.4, jpm2=0.5)
     static = _detector_static(7, parameters)

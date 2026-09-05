@@ -149,18 +149,32 @@ def _basis(n: int, sector: SectorSpec | tuple[int, int, int | None]):
 
 
 def select_largest_sectors(n: int, count: int = 5) -> dict[int, list[SectorSpec]]:
-    """Return the largest conventional-symmetry blocks at each unique momentum."""
-    if n % 2 == 0:
-        raise ValueError("this N=17 analysis expects odd n; even n needs half-filling spin reversal")
+    """Return the largest fully resolved blocks at each unique momentum.
+
+    For even ``n`` the half-filled block is deliberately omitted because
+    global spin reversal is an additional internal symmetry there.  The
+    retained ``N_up < n/2`` blocks are complete conventional symmetry sectors;
+    their ``N_up > n/2`` partners are isospectral under global spin reversal.
+    Reflection parity is resolved at both self-conjugate momenta, ``k=0`` and
+    (for even ``n``) ``k=n/2``.
+    """
+    if n < 3:
+        raise ValueError("n must be at least 3")
     if count < 1:
         raise ValueError("count must be positive")
-    maximum_weight = n // 2
+    maximum_weight = (n - 1) // 2
+    maximum_momentum = n // 2
     output: dict[int, list[SectorSpec]] = {}
     dimensions: dict[tuple[int, int, int | None], int] = {}
-    for momentum in range(maximum_weight + 1):
+    for momentum in range(maximum_momentum + 1):
         candidates: list[SectorSpec] = []
         for n_up in range(maximum_weight + 1):
-            parities: tuple[int | None, ...] = (1, -1) if momentum == 0 else (None,)
+            reflection_momentum = momentum == 0 or (
+                n % 2 == 0 and momentum == maximum_momentum
+            )
+            parities: tuple[int | None, ...] = (
+                (1, -1) if reflection_momentum else (None,)
+            )
             for parity in parities:
                 dimension = int(_basis(n, (n_up, momentum, parity)).Ns)
                 dimensions[(n_up, momentum, parity)] = dimension
@@ -184,12 +198,17 @@ def select_largest_sectors(n: int, count: int = 5) -> dict[int, list[SectorSpec]
 
     # Exact representation-dimension check for every retained magnetisation.
     for n_up in range(maximum_weight + 1):
-        reconstructed = sum(
-            dimensions[(n_up, 0, parity)] for parity in (1, -1)
-        )
+        reconstructed = sum(dimensions[(n_up, 0, parity)] for parity in (1, -1))
+        if n % 2 == 0:
+            reconstructed += sum(
+                dimensions[(n_up, maximum_momentum, parity)]
+                for parity in (1, -1)
+            )
+            generic_momenta = range(1, maximum_momentum)
+        else:
+            generic_momenta = range(1, maximum_momentum + 1)
         reconstructed += 2 * sum(
-            dimensions[(n_up, momentum, None)]
-            for momentum in range(1, maximum_weight + 1)
+            dimensions[(n_up, momentum, None)] for momentum in generic_momenta
         )
         expected = math.comb(n, n_up)
         if reconstructed != expected:
