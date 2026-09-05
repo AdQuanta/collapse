@@ -209,7 +209,9 @@ source hashes instead.
 
 This section is standing authorization to commit and push successfully
 completed, in-scope change/build/fix work and to integrate its task branch into
-the default branch with a non-fast-forward merge. It does not authorize
+the default branch with a non-fast-forward merge. It also authorizes deleting
+that agent-owned task branch locally and from its configured remote after the
+merge is pushed and verified. It does not authorize deleting other branches,
 creating or merging a pull request, rewriting shared history, force-pushing,
 publishing a release, or including unrelated user changes.
 
@@ -234,8 +236,16 @@ publishing a release, or including unrelated user changes.
    push the default branch. Preserve the merge commit even when a fast-forward
    would be possible. Stop before resolving unexpected conflicts or overwriting
    remote work; report the conflicting paths and request direction.
-8. Report the task and default branches, commit and merge hashes, pushed
-   remote, validations, generated but uncommitted outputs, and limitations.
+8. After the default-branch push succeeds, verify that the task commit is an
+   ancestor of both the local and remote-tracking default branches. Then delete
+   only the now-redundant agent-owned task branch from its remote and locally,
+   using ordinary non-force deletion. Never delete the default branch, a
+   protected branch, a branch checked out in another worktree, an unmerged
+   branch, or a branch whose ownership or purpose is ambiguous. If either
+   deletion is rejected, preserve the branch and report why; do not force it.
+9. Report the task and default branches, commit and merge hashes, pushed
+   remote, deleted branch names, validations, generated but uncommitted
+   outputs, and limitations.
 
 Do not create an empty commit. Do not commit incomplete or failing work merely
 to satisfy this policy; explain the blocker instead. Read-only tasks do not
@@ -262,6 +272,8 @@ A task is done when the applicable conditions hold:
 - exact, approximate, numerical, and conjectural conclusions remain distinct;
 - completed changes are organized into scoped commits, pushed, and integrated
   with a non-fast-forward merge;
+- the redundant agent-owned task branch is deleted locally and remotely after
+  its integration is verified, unless a documented safety check prevents it;
 - the final report names what was and was not validated.
 
 If a condition is inapplicable, do not create work merely to satisfy the list.
