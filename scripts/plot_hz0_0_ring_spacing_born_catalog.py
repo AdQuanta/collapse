@@ -387,6 +387,105 @@ def plot_category(
     return {"figure": str(output.relative_to(ROOT)), "cases": provenance}
 
 
+def plot_individual_case(
+    category: str,
+    record: dict[str, Any],
+    output: Path,
+    *,
+    dpi: int,
+) -> dict[str, Any]:
+    """Plot one case as two square panes: spacings and stacked diagnostics."""
+    dynamics_path = ROOT / record["source_dir"] / "results.npz"
+    spacing_path = ROOT / record["spacing_source"]
+    if not dynamics_path.is_file() or not spacing_path.is_file():
+        raise FileNotFoundError(f"missing source for {record['config_id']}")
+
+    figure = plt.figure(figsize=(11.0, 6.6))
+    outer = figure.add_gridspec(
+        1,
+        2,
+        left=0.07,
+        right=0.985,
+        bottom=0.14,
+        top=0.84,
+        wspace=0.24,
+    )
+    spacing_axis = figure.add_subplot(outer[0, 0])
+    diagnostic_grid = outer[0, 1].subgridspec(2, 1, hspace=0.16)
+    angular_axis = figure.add_subplot(diagnostic_grid[0, 0])
+    ratio_axis = figure.add_subplot(diagnostic_grid[1, 0])
+
+    edges = np.linspace(0.0, 4.0, 41)
+    sectors, pooled = _spacing_histograms(spacing_path, edges=edges)
+    _plot_spacings(
+        spacing_axis,
+        sectors,
+        pooled,
+        edges,
+        record,
+        show_legend=True,
+    )
+    spacing_axis.set_box_aspect(1.0)
+    spacing_axis.set_title(
+        "Symmetry-resolved detector spacings",
+        fontsize=11.0,
+        pad=8.0,
+    )
+
+    with np.load(dynamics_path) as dynamics:
+        _plot_angular(angular_axis, dynamics, show_legend=True)
+        _plot_ratio(ratio_axis, dynamics, record, show_legend=True)
+    angular_axis.set_title("Dynamics diagnostics", fontsize=11.0, pad=8.0)
+    angular_axis.set_xlabel("")
+    angular_axis.tick_params(labelbottom=False)
+    ratio_axis.set_xlabel(r"$\theta$")
+
+    family = "2NN" if record["family"] == "second_neighbor" else "NN"
+    figure.suptitle(
+        f"#{int(record['rank'])}: {CATEGORY_TITLES[category]}\n"
+        f"{family}, N={int(record['detector_n'])}, {record['config_id']}; "
+        + _parameter_label(record),
+        fontsize=12.0,
+        y=0.975,
+    )
+    figure.text(
+        0.5,
+        0.035,
+        (
+            "Spacing sectors are unfolded separately before pooling; faint curves "
+            "are individual sectors. Exact degeneracies were merged; cubic "
+            "unfolding used a 10% edge trim.\n"
+            "Lower-N catalogs retain the five largest exact sectors per "
+            "nonredundant momentum (even-N half filling omitted)."
+        ),
+        ha="center",
+        va="bottom",
+        fontsize=7.5,
+    )
+
+    temporary = output.with_suffix(".tmp.png")
+    figure.savefig(temporary, dpi=dpi, bbox_inches="tight")
+    plt.close(figure)
+    temporary.replace(output)
+    return {
+        "figure": str(output.relative_to(ROOT)),
+        "cases": [
+            {
+                "rank": int(record["rank"]),
+                "family": record["family"],
+                "detector_n": int(record["detector_n"]),
+                "config_id": record["config_id"],
+                "dynamics": str(dynamics_path.relative_to(ROOT)),
+                "dynamics_sha256": _sha256(dynamics_path),
+                "spacing": str(spacing_path.relative_to(ROOT)),
+                "spacing_sha256": _sha256(spacing_path),
+                "resolved_sector_count": int(sectors.shape[0]),
+                "plotted_spacing_count": int(np.sum(pooled)),
+            }
+        ],
+    }
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description=__doc__)
     result.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
@@ -440,7 +539,7 @@ def main() -> None:
                     "diagnostics_and_resolved_spacings.png"
                 )
                 individual_figures.append(
-                    plot_category(category, [record], figure_path, dpi=args.dpi)
+                    plot_individual_case(category, record, figure_path, dpi=args.dpi)
                 )
                 print(figure_path)
             figures.append(
