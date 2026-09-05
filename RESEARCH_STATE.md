@@ -434,15 +434,50 @@ Also audit any scalar metric that concatenates sector eigenvalues before taking 
 
 # 12. Role of `V_ab` / coupling between sectors
 
-**DEFERRED.**
+**ADDRESSED METHODOLOGICALLY; MECHANISM REMAINS FINITE-SIZE AND
+OBSERVATIONAL.**
 
-There is a mathematically valid observation that the qubit coupling can connect detector sectors that are distinct under `H_D`. For example, a central XX term can change detector magnetization by one.
+For the central interaction
 
-However, the project currently lacks sufficient evidence that this inter-sector coupling structure is the mechanism controlling Born behavior.
+\[
+V=-J_x^{\rm eff}X_0\sum_j X_j,
+\]
 
-**Decision:** do not center the next analysis or explanation around `V_ab` or sector-connectivity. Return to it only if the simpler spectral program requires it.
+the isolated detector conserves magnetization `N_up` and translation momentum
+`k`.  The uniform collective operator preserves `k` but changes `N_up` by one,
+so the exact detector selection rule is
 
-For now, sectors are primarily important because level spacings must be computed inside irreducible sectors.
+\[
+(k,N_\uparrow)\longrightarrow(k,N_\uparrow\pm1).
+\]
+
+This information must not be used by mixing independent sector spectra before
+forming spacings.  Level repulsion is still evaluated within each exact
+irreducible detector sector.  The complementary dynamical object is instead a
+matrix-element- and finite-time-weighted cross-sector transition measure,
+
+\[
+\left|\langle b,k,N_\uparrow\!\pm\!1|\sum_jX_j|
+a,k,N_\uparrow\rangle\right|^2
+K_t(E_b-E_a\pm2h_{z0}),
+\qquad
+K_t(\Delta)=\frac{4\sin^2(\Delta t/2)}{\Delta^2}.
+\]
+
+`core/activation_resolved_projective.py` implements this rule explicitly in
+`(k,N_up)` blocks.  It diagonalizes the positive activation operator inside
+each degenerate detector-energy subspace, so the result is invariant under an
+arbitrary eigensolver rotation within that subspace.  The completed N=17
+three-ring campaign is in
+`work/zeus_three_ring_activation_resolved_N17_20260823_125039`, with summary
+figures in `reports/ring_activation_hz0_diagnostics_2026-08-24`.
+
+The activation-conditioned root distributions differ strongly from the global
+distribution, establishing that the qubit does not sample detector states
+uniformly.  Activation strength is not, however, monotonically equivalent to
+Born similarity across the three cases.  The current evidence therefore
+supports using cross-sector activation as a required diagnostic, not as an
+established single-variable mechanism.
 
 ---
 
