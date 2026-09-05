@@ -158,6 +158,61 @@ def select_all_families(
     return tuple(selected)
 
 
+def select_named_cases(
+    cases: list[dict[str, Any]],
+    *,
+    repository_root: Path,
+) -> tuple[ExtremeNetworkCase, ...]:
+    """Resolve an explicit, validated source case from each configured family."""
+
+    if not cases:
+        raise ValueError("cases must be nonempty")
+    selected: list[ExtremeNetworkCase] = []
+    seen: set[str] = set()
+    for family_index, item in enumerate(cases):
+        family = str(item["family"])
+        source_root = (repository_root / str(item["source_root"])).resolve()
+        source_case = str(item["source_case"])
+        key = f"{family}:{source_case}"
+        if key in seen:
+            raise ValueError(f"duplicate named case {key}")
+        seen.add(key)
+        matches = [
+            case
+            for case in load_ranked_cases(source_root)
+            if case.source_case == source_case
+        ]
+        if len(matches) != 1:
+            raise ValueError(
+                f"expected exactly one match for {key} in {source_root}; "
+                f"found {len(matches)}"
+            )
+        case = matches[0]
+        expected_digest = str(item["expected_scientific_identity_digest"])
+        if case.scientific_identity_digest != expected_digest:
+            raise ValueError(
+                f"scientific identity mismatch for {key}: "
+                f"{case.scientific_identity_digest} != "
+                f"{expected_digest}"
+            )
+        expected_score = float(item["expected_source_S_born"])
+        if abs(case.source_s_born - expected_score) > 1.0e-12:
+            raise ValueError(
+                f"source S_born mismatch for {key}: {case.source_s_born} != "
+                f"{expected_score}"
+            )
+        selected.append(
+            ExtremeNetworkCase(
+                family=family,
+                family_index=family_index,
+                cohort="wd_nonborn",
+                cohort_rank=1,
+                case=case,
+            )
+        )
+    return tuple(selected)
+
+
 def resampled_graph_spec(
     selected: ExtremeNetworkCase,
     realization_index: int,

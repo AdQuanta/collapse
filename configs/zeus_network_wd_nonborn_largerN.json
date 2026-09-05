@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "description": "Finite-size reruns of four N=12 network detectors with symmetry-resolved WD-like detector spacings and non-Born R(theta).",
+  "target_detector_sizes": [13, 14, 15],
+  "storage_mode": "summary",
+  "bins": 64,
+  "plot_grid": 720,
+  "fit_harmonics": 32,
+  "fit_tolerance": 1e-10,
+  "max_bloch_points": 6000,
+  "level_spacing_sector_count": 4,
+  "level_spacing_bins": 32,
+  "selection_convention": {
+    "wd": "Both the pooled non-half-filled mean adjacent-gap ratio and the pooled unfolded-spacing L1 distance favor GOE over Poisson at source N=12.",
+    "symmetry": "N_up=3,4,5 sectors after exact graph-automorphism resolution; the N_up=6 half-filled sector is excluded because its extra spin-reversal Z2 was not resolved in the source analysis.",
+    "non_born": "Stored canonical S_born < 0.75, with the selected examples substantially below zero or accompanied by large occupied-bin RMSE.",
+    "source_table": "reports/network_sobol_born_relations_final_2026-08-14/feature_table.csv"
+  },
+  "cases": [
+    {
+      "family": "erdos_renyi",
+      "source_root": "work/zeus_sobol_erdos_renyi_hz0_0_N12_20260809_150226",
+      "source_case": "jy_zero/N12/config_323",
+      "expected_scientific_identity_digest": "96245e122a50ea2a",
+      "expected_source_S_born": -0.1912765941837442,
+      "source_born_RMSE": 0.25881678311895273,
+      "source_level_r_mean": 0.5367883830473554,
+      "source_level_l1_goe": 0.10819211229098183,
+      "source_level_l1_poisson": 0.611577043660183
+    },
+    {
+      "family": "watts_strogatz",
+      "source_root": "work/zeus_sobol_watts_strogatz_hz0_0_N12_20260809_150226",
+      "source_case": "jy_zero/N12/config_125",
+      "expected_scientific_identity_digest": "23c871d3da5c0ceb",
+      "expected_source_S_born": -0.02823493925316467,
+      "source_born_RMSE": 0.31468954711313557,
+      "source_level_r_mean": 0.5327042404216243,
+      "source_level_l1_goe": 0.14626761025543109,
+      "source_level_l1_poisson": 0.5716175144055342
+    },
+    {
+      "family": "barabasi_albert",
+      "source_root": "work/zeus_sobol_barabasi_albert_hz0_0_N12_20260809_150226",
+      "source_case": "jy_zero/N12/config_280",
+      "expected_scientific_identity_digest": "fa4b8474510ed9d1",
+      "expected_source_S_born": -0.09764336345656033,
+      "source_born_RMSE": 0.2711132057952276,
+      "source_level_r_mean": 0.5328926235421974,
+      "source_level_l1_goe": 0.1365811903580781,
+      "source_level_l1_poisson": 0.5936474613343141
+    },
+    {
+      "family": "expander",
+      "source_root": "work/zeus_sobol_expander_hz0_0_N12_20260809_150228",
+      "source_case": "jy_zero/N12/config_166",
+      "expected_scientific_identity_digest": "11af43b16844f709",
+      "expected_source_S_born": -0.1721056454273353,
+      "source_born_RMSE": 0.28981098246698167,
+      "source_level_r_mean": 0.5309303144677789,
+      "source_level_l1_goe": 0.12761289864415046,
+      "source_level_l1_poisson": 0.605658546508043
+    }
+  ]
+}
