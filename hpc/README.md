@@ -18,8 +18,13 @@ the four random-network families is documented in
 `zeus_network_top_hz0_variants_N12.md`. Its submission wrapper is
 `submit_zeus_network_top_hz0_variants_N12.sh`.
 
-The N=17 full qubit-detector level-spacing scan over all 20 nonduplicated
-symmetry sectors is documented in
+The N=17 full qubit-detector level-spacing scan over every nonduplicated
+maximal symmetry sector is documented in
 `zeus_ring_hz0_all_sector_spacings_N17.md`. Submit it with
 `submit_zeus_ring_hz0_all_sector_spacings_N17.sh`; every sector/`hz0` result is
 checkpointed independently.
+
+The controlled N=17 pure-Ising ablation of the WD-ring central-field scan is
+documented in `zeus_ring_pure_ising_wd_ablation_hz0_N17.md`. It reuses the
+validated activation and all-sector wrappers with a self-contained config and
+defines the completion gates for the matching 3x20 diagnostic figure.

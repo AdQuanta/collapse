@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import asdict, replace
 import hashlib
 import json
 from pathlib import Path
@@ -11,6 +12,7 @@ from numpy.testing import assert_allclose
 import pytest
 from quspin.basis import spin_basis_general
 from quspin.operators import hamiltonian
+from scipy.sparse import csr_matrix
 
 from core.activation_resolved_projective import (
     RingActivationParameters,
@@ -18,6 +20,8 @@ from core.activation_resolved_projective import (
 )
 from core.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
 from scripts.build_ring_hz0_full_spacing_3x20 import (
+    _rayleigh_ritz_refine,
+    build_central_x_sector_operator,
     build_combined_sector_operator,
     central_sector_spectrum,
     excitation_parity_nups,
@@ -159,6 +163,67 @@ def test_reflection_resolution_rejects_nonzero_momentum() -> None:
         )
 
 
+def test_central_x_blocks_are_exact_isospectral_representatives() -> None:
+    detector_n = 5
+    parameters = _parameters()
+    parameters = replace(parameters, hz0=0.0)
+    xplus_basis, xplus = build_central_x_sector_operator(
+        detector_n,
+        parameters,
+        momentum=1,
+        central_x=1,
+    )
+    xminus_basis, xminus = build_central_x_sector_operator(
+        detector_n,
+        parameters,
+        momentum=1,
+        central_x=-1,
+    )
+    parity_basis, parity = build_combined_sector_operator(
+        detector_n,
+        parameters,
+        momentum=1,
+        excitation_parity=0,
+    )
+    assert xplus_basis.Ns == xminus_basis.Ns == parity_basis.Ns
+    assert_allclose(
+        np.linalg.eigvalsh(xplus.toarray()),
+        np.linalg.eigvalsh(xminus.toarray()),
+        atol=1.0e-12,
+        rtol=0.0,
+    )
+    assert_allclose(
+        np.linalg.eigvalsh(xplus.toarray()),
+        np.linalg.eigvalsh(parity.toarray()),
+        atol=1.0e-12,
+        rtol=0.0,
+    )
+
+
+def test_central_x_resolution_rejects_nonzero_central_field() -> None:
+    with pytest.raises(ValueError, match="hz0 is exactly zero"):
+        build_central_x_sector_operator(
+            5,
+            _parameters(),
+            momentum=1,
+            central_x=1,
+        )
+
+
+def test_rayleigh_ritz_refinement_repairs_nonorthogonal_degenerate_vectors() -> None:
+    operator = np.diag([0.0, 1.0, 1.0, 2.0, 3.0, 4.0])
+    approximate = np.eye(6, dtype=np.complex128)[:, 1:5]
+    approximate[:, 1] += 1.0e-4 * approximate[:, 0]
+    energies, vectors, diagnostics = _rayleigh_ritz_refine(
+        csr_matrix(operator),
+        approximate,
+    )
+    assert diagnostics["raw_orthogonality_error"] > 1.0e-8
+    assert_allclose(energies, [1.0, 1.0, 2.0, 3.0], atol=1.0e-13, rtol=0.0)
+    assert_allclose(vectors.conj().T @ vectors, np.eye(4), atol=1.0e-13, rtol=0.0)
+    assert_allclose(operator @ vectors, vectors * energies, atol=1.0e-13, rtol=0.0)
+
+
 def test_central_sector_spectrum_has_small_residuals() -> None:
     detector_n = 11
     _, operator = build_combined_sector_operator(
@@ -179,6 +244,31 @@ def test_central_sector_spectrum_has_small_residuals() -> None:
     assert result["orthogonality_error"] < 1.0e-8
 
 
+def test_central_x_sector_spectrum_smoke() -> None:
+    parameters = replace(
+        _parameters(),
+        hz0=0.0,
+        jpm=0.0,
+        j2=0.0,
+        jpm2=0.0,
+    )
+    _, operator = build_central_x_sector_operator(
+        11,
+        parameters,
+        momentum=1,
+        central_x=1,
+    )
+    result = central_sector_spectrum(
+        operator,
+        eigenvalue_count=40,
+        solver_tolerance=1.0e-10,
+    )
+    assert result["unfolded_spacings"].size >= 20
+    assert result["maximum_relative_residual"] < 1.0e-8
+    assert result["orthogonality_error"] < 1.0e-8
+    assert result["eigenpair_refinement"].startswith("reduced QR")
+
+
 def _sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -189,14 +279,29 @@ def _sha256(path: Path) -> str:
 
 def test_load_all_sector_campaign_validates_and_pools(tmp_path: Path) -> None:
     case_ids = [f"case_{index:02d}" for index in range(20)]
-    config = {"cases": [{"case_id": case_id} for case_id in case_ids]}
+    base = _parameters()
+    config = {
+        "detector_n": 17,
+        "base_parameters": {
+            **asdict(base),
+            "hz0": 0.0,
+        },
+        "cases": [
+            {
+                "case_id": case_id,
+                "parameter_overrides": {"hz0": 0.0 if index == 0 else 0.01 * index},
+            }
+            for index, case_id in enumerate(case_ids)
+        ],
+    }
     for sector_index, sector_id in enumerate(expected_all_sector_ids()):
         sector_dir = tmp_path / "sectors" / sector_id
         cases_dir = sector_dir / "cases"
         cases_dir.mkdir(parents=True)
         summary_cases = []
         files = {}
-        for case_id in case_ids:
+        sector_case_ids = case_ids[:1] if "_xplus" in sector_id else case_ids[1:]
+        for case_id in sector_case_ids:
             archive_path = cases_dir / f"{case_id}.npz"
             np.savez_compressed(
                 archive_path,
@@ -212,7 +317,17 @@ def test_load_all_sector_campaign_validates_and_pools(tmp_path: Path) -> None:
                 "mean_r": 0.45,
                 "maximum_relative_residual": 1.0e-12,
                 "orthogonality_error": 2.0e-12,
+                "raw_orthogonality_error": 3.0e-7,
                 "sector_index": sector_index,
+                "symmetry_family": (
+                    "central_x" if "_xplus" in sector_id else "total_excitation_parity"
+                ),
+                "central_x": 1 if "_xplus" in sector_id else None,
+                "excitation_parity": (
+                    None
+                    if "_xplus" in sector_id
+                    else (0 if "_even" in sector_id else 1)
+                ),
             }
             metadata_path = cases_dir / f"{case_id}.json"
             metadata_path.write_text(json.dumps(metadata), encoding="utf-8")
@@ -227,7 +342,8 @@ def test_load_all_sector_campaign_validates_and_pools(tmp_path: Path) -> None:
                 {
                     "status": "complete",
                     "sector_id": sector_id,
-                    "case_count": 20,
+                    "case_count": len(sector_case_ids),
+                    "case_ids": sector_case_ids,
                     "files": files,
                 }
             ),
@@ -236,13 +352,15 @@ def test_load_all_sector_campaign_validates_and_pools(tmp_path: Path) -> None:
 
     spectra, metadata, campaign = load_all_sector_campaign(tmp_path, config)
 
-    assert len(expected_all_sector_ids()) == len(set(expected_all_sector_ids())) == 20
+    assert len(expected_all_sector_ids()) == len(set(expected_all_sector_ids())) == 30
     assert len(spectra) == len(metadata) == 20
-    assert spectra[0]["unfolded_spacings"].shape == (40,)
-    assert spectra[0]["spacing_ratios"].shape == (40,)
-    assert len(spectra[0]["sector_unfolded_spacings"]) == 20
-    assert metadata[0]["sector_count"] == 20
+    assert spectra[0]["unfolded_spacings"].shape == (20,)
+    assert spectra[0]["spacing_ratios"].shape == (20,)
+    assert len(spectra[0]["sector_unfolded_spacings"]) == 10
+    assert metadata[0]["sector_count"] == 10
+    assert len(spectra[1]["sector_unfolded_spacings"]) == 20
+    assert metadata[1]["sector_count"] == 20
     assert metadata[0]["mean_r"] == pytest.approx(0.45)
-    assert campaign["npz_count"] == 400
-    assert campaign["verified_artifact_count"] == 820
-    assert len(campaign["completion_marker_sha256"]) == 20
+    assert campaign["npz_count"] == 390
+    assert campaign["verified_artifact_count"] == 810
+    assert len(campaign["completion_marker_sha256"]) == 30

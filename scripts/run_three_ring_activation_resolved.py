@@ -135,6 +135,44 @@ def _load_case(config_case: dict[str, Any]) -> tuple[RingActivationParameters, d
     return parameters, provenance
 
 
+def load_case_parameters(
+    config: dict[str, Any],
+    config_case: dict[str, Any],
+) -> tuple[RingActivationParameters, dict[str, Any]]:
+    """Load one case from inline base parameters or a legacy result reference.
+
+    New production configurations should use ``base_parameters`` so they are
+    self-contained.  The legacy ``source_result`` path remains supported for
+    archived campaigns whose defining parameters live in validated outputs.
+    """
+
+    raw_base = config.get("base_parameters")
+    if raw_base is None:
+        return _load_case(config_case)
+    if not isinstance(raw_base, dict):
+        raise ValueError("base_parameters must be a JSON object")
+    allowed = {item.name for item in fields(RingActivationParameters)}
+    missing = allowed - set(raw_base)
+    unknown = set(raw_base) - allowed
+    if missing or unknown:
+        raise ValueError(
+            f"invalid base_parameters: missing={sorted(missing)}, "
+            f"unknown={sorted(unknown)}"
+        )
+    parameters = RingActivationParameters(
+        **{name: float(value) for name, value in raw_base.items()}
+    )
+    if not all(math.isfinite(value) for value in asdict(parameters).values()):
+        raise ValueError("all base parameters must be finite")
+    parameters, overrides = _apply_parameter_overrides(parameters, config_case)
+    provenance = {
+        **dict(config.get("source_provenance", {})),
+        "parameter_overrides": overrides,
+        "parameter_source": "inline_base_parameters",
+    }
+    return parameters, provenance
+
+
 def _case_digest(
     case: dict[str, Any],
     parameters: RingActivationParameters,
@@ -416,7 +454,7 @@ def run_case(
     if case_index < 0 or case_index >= len(cases):
         raise ValueError(f"case-index must be in 0..{len(cases) - 1}")
     case = cases[case_index]
-    parameters, provenance = _load_case(case)
+    parameters, provenance = load_case_parameters(config, case)
     digest = _case_digest(case, parameters, detector_n, config)
     case_dir = output_root / str(case["case_id"])
     if resume and _complete_valid(case_dir, digest):
