@@ -73,6 +73,15 @@ class RankedHamiltonianCase:
         raw = json.dumps(asdict(self), sort_keys=True, separators=(",", ":"))
         return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
 
+    @property
+    def scientific_identity_digest(self) -> str:
+        """Machine-independent digest of the source and physical definition."""
+
+        payload = asdict(self)
+        payload.pop("source_root")
+        raw = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16]
+
 
 def _read_json(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
@@ -295,17 +304,22 @@ def selected_case_output_dir(
     return path if variant_label is None else path / f"hz0_{variant_label}"
 
 
-def _complete_valid(case_dir: Path) -> bool:
+def _complete_valid(case_dir: Path, *, storage_mode: str | None = None) -> bool:
     marker_path = case_dir / "COMPLETE.json"
     if not marker_path.is_file():
         return False
     try:
         marker = _read_json(marker_path)
         files = marker["files"]
-        return marker.get("status") == "complete" and all(
-            (case_dir / name).is_file()
-            and _sha256(case_dir / name) == expected
-            for name, expected in files.items()
+        marker_storage = str(marker.get("storage_mode", "full"))
+        return (
+            marker.get("status") == "complete"
+            and (storage_mode is None or marker_storage == storage_mode)
+            and all(
+                (case_dir / name).is_file()
+                and _sha256(case_dir / name) == expected
+                for name, expected in files.items()
+            )
         )
     except (KeyError, OSError, TypeError, ValueError, json.JSONDecodeError):
         return False
@@ -329,13 +343,16 @@ def simulate_ranked_case(
     graph_spec_override: DetectorGraphSpec | None = None,
     graph_provenance: dict[str, Any] | None = None,
     selection_label: str | None = None,
+    storage_mode: str = "full",
 ) -> dict[str, Any]:
     """Run and atomically persist one selected Hamiltonian configuration."""
 
     case_dir = Path(case_dir)
     if detector_n < 3:
         raise ValueError("detector_n must be at least three")
-    if resume and _complete_valid(case_dir):
+    if storage_mode not in {"full", "summary"}:
+        raise ValueError("storage_mode must be 'full' or 'summary'")
+    if resume and _complete_valid(case_dir, storage_mode=storage_mode):
         return {
             "status": "resumed",
             "source_index": source_index,
@@ -410,7 +427,48 @@ def simulate_ranked_case(
             and np.all(np.isfinite(eigenvalues.imag))
         ),
     }
-    _atomic_npz(case_dir / "results.npz", **arrays, **fit_arrays)
+    if storage_mode == "full":
+        results_name = "results.npz"
+        stored_arrays = {**arrays, **fit_arrays}
+        omitted_arrays: list[str] = []
+    else:
+        results_name = "results_summary.npz"
+        blue_counts, _ = np.histogram(arrays["theta"], bins=arrays["edges"])
+        red_counts, _ = np.histogram(
+            np.pi - arrays["theta"], bins=arrays["edges"]
+        )
+        sample_count = min(max_bloch_points, eigenvalues.size)
+        sample_indices = (
+            np.linspace(0, eigenvalues.size - 1, sample_count, dtype=np.int64)
+            if sample_count
+            else np.array([], dtype=np.int64)
+        )
+        stored_arrays = {
+            key: np.asarray(arrays[key])
+            for key in (
+                "edges",
+                "centers",
+                "p_theta",
+                "p_pi_minus_theta",
+                "p_product",
+                "R",
+                "R_occupied",
+                "R_born",
+                "R_residual",
+            )
+        }
+        stored_arrays.update(fit_arrays)
+        stored_arrays.update(
+            {
+                "theta_counts": blue_counts,
+                "theta_reflected_counts": red_counts,
+                "bloch_sample_indices": sample_indices,
+                "bloch_blue_sample": arrays["bloch_blue"][sample_indices],
+                "bloch_red_sample": arrays["bloch_red"][sample_indices],
+            }
+        )
+        omitted_arrays = ["eigenvalues", "theta", "phi", "bloch_blue", "bloch_red"]
+    _atomic_npz(case_dir / results_name, **stored_arrays)
     _atomic_json(case_dir / "metrics.json", metrics)
     _atomic_json(case_dir / "fits.json", fits)
     _atomic_json(case_dir / "validation.json", validation)
@@ -419,6 +477,7 @@ def simulate_ranked_case(
         "source_index": source_index,
         "source_rank": rank_index + 1,
         "source": asdict(case),
+        "source_scientific_identity_digest": case.scientific_identity_digest,
         "target_N": detector_n,
         "total_qubits": detector_n + 1,
         "hz0": hz0,
@@ -453,6 +512,28 @@ def simulate_ranked_case(
         "worker": multiprocessing.current_process().name,
         "pid": os.getpid(),
         "runtime": _runtime_provenance(),
+        "storage": {
+            "mode": storage_mode,
+            "results_file": results_name,
+            "saved_arrays": sorted(stored_arrays),
+            "omitted_full_arrays": omitted_arrays,
+            "histogram_counts_are_exact_integers": storage_mode == "summary",
+            "bloch_sample_rule": (
+                "all points"
+                if storage_mode == "full"
+                else (
+                    "deterministic evenly spaced indices over the in-memory "
+                    f"relative-root ordering; at most {max_bloch_points} points"
+                )
+            ),
+            "reproduction_note": (
+                "The committed Hamiltonian parameters, exact generated graph "
+                "metadata and edge list, solver/runtime provenance, histogram "
+                "counts, derived diagnostics, and fit outputs are retained. "
+                "Full relative-root eigenvalues can be regenerated by rerunning "
+                "the defining code and configuration."
+            ),
+        },
     }
     _atomic_json(case_dir / "metadata.json", metadata)
     title_lead = selection_label or f"Born rank {rank_index + 1}"
@@ -485,7 +566,7 @@ def simulate_ranked_case(
     if not validation["passed"]:
         raise RuntimeError(f"scientific validation failed for {case_dir}")
     required = (
-        "results.npz",
+        results_name,
         "metrics.json",
         "fits.json",
         "validation.json",
@@ -498,6 +579,8 @@ def simulate_ranked_case(
         "completed": timestamp(),
         "runtime_seconds": time.perf_counter() - started,
         "source_identity_digest": case.identity_digest,
+        "source_scientific_identity_digest": case.scientific_identity_digest,
+        "storage_mode": storage_mode,
         "files": {name: _sha256(case_dir / name) for name in required},
     }
     _atomic_json(case_dir / "COMPLETE.json", marker)

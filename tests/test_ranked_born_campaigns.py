@@ -133,6 +133,51 @@ def test_small_ranked_case_simulation_is_checkpointed_and_resumable(tmp_path) ->
     assert resumed["status"] == "resumed"
 
 
+def test_small_ranked_case_summary_storage_omits_full_root_arrays(tmp_path) -> None:
+    case = RankedHamiltonianCase(
+        source_root="fixture",
+        source_case="case",
+        source_metric_file="metrics.json",
+        source_s_born=0.25,
+        source_n=3,
+        hz=0.2,
+        hz0=0.0,
+        j=0.7,
+        jpm=0.1,
+        jx=0.01,
+    )
+    case_dir = tmp_path / "summary"
+    outcome = simulate_ranked_case(
+        case,
+        detector_n=3,
+        hz0=0.0,
+        case_dir=case_dir,
+        source_index=0,
+        rank_index=0,
+        bins=16,
+        plot_grid=128,
+        fit_harmonics=4,
+        max_bloch_points=3,
+        storage_mode="summary",
+    )
+    assert outcome["status"] == "success"
+    assert not (case_dir / "results.npz").exists()
+    with np.load(case_dir / "results_summary.npz") as archive:
+        assert not {"eigenvalues", "theta", "phi", "bloch_blue", "bloch_red"} & set(
+            archive.files
+        )
+        assert int(np.sum(archive["theta_counts"])) == 2**3
+        assert int(np.sum(archive["theta_reflected_counts"])) == 2**3
+        assert archive["bloch_blue_sample"].shape == (3, 3)
+        assert archive["bloch_red_sample"].shape == (3, 3)
+    metadata = json.loads((case_dir / "metadata.json").read_text())
+    assert metadata["storage"]["mode"] == "summary"
+    assert metadata["storage"]["results_file"] == "results_summary.npz"
+    marker = json.loads((case_dir / "COMPLETE.json").read_text())
+    assert marker["storage_mode"] == "summary"
+    assert "results_summary.npz" in marker["files"]
+
+
 def test_small_ranked_case_records_graph_override_provenance(tmp_path) -> None:
     case = RankedHamiltonianCase(
         source_root="fixture",
@@ -202,6 +247,9 @@ def test_zeus_configs_and_arrays_match_requested_campaign_sizes() -> None:
     larger_networks = json.loads(
         (ROOT / "configs/zeus_network_extremes_largerN.json").read_text()
     )
+    wd_nonborn_networks = json.loads(
+        (ROOT / "configs/zeus_network_wd_nonborn_largerN.json").read_text()
+    )
     assert len(resampled["families"]) == 4
     assert resampled["count_per_tail"] == 10
     assert resampled["realizations_per_case"] == 5
@@ -221,3 +269,12 @@ def test_zeus_configs_and_arrays_match_requested_campaign_sizes() -> None:
     assert larger_networks["cases_per_array_task"] == 8
     assert "#PBS -J 0-9" in larger_pbs
     assert "mem=256gb" in larger_pbs
+    assert len(wd_nonborn_networks["cases"]) == 4
+    assert wd_nonborn_networks["target_detector_sizes"] == [13, 14, 15]
+    assert wd_nonborn_networks["storage_mode"] == "summary"
+    assert wd_nonborn_networks["level_spacing_sector_count"] == 4
+    wd_nonborn_pbs = (
+        ROOT / "hpc/zeus_network_wd_nonborn_largerN_array.pbs"
+    ).read_text()
+    assert "#PBS -J 0-11" in wd_nonborn_pbs
+    assert "mem=256gb" in wd_nonborn_pbs
