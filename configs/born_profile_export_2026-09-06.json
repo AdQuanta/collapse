@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scope": "Locally collected August 2026 Sobol network/ring searches and follow-ups, plus September 5 completed non-Born network control campaign. No claim of exhaustive remote coverage.",
+  "score_min": 0.8,
+  "reference_score_min": 0.7,
+  "reference_top_per_family_size": 3,
+  "campaigns": [
+    "work/zeus_network_extremes_largerN_20260813_233000",
+    "work/zeus_network_extremes_resampled_N12_20260813_232636",
+    "work/zeus_network_top_hz0_variants_N12_20260820_210913",
+    "work/zeus_network_wd_nonborn_largerN_complete_20260905_215126",
+    "work/zeus_ranked_ring_extremes_N17_fresh_20260826_212815",
+    "work/zeus_ring_born_like_hz0_scan_N17_20260823_131757",
+    "work/zeus_ring_second_neighbor_wd_hz0_scan_N17_20260825_225825",
+    "work/zeus_sobol_barabasi_albert_hz0_0_N12_20260809_150226",
+    "work/zeus_sobol_erdos_renyi_hz0_0_N12_20260809_150226",
+    "work/zeus_sobol_expander_hz0_0_N12_20260809_150228",
+    "work/zeus_sobol_hz0_0_N14_20260805_224341",
+    "work/zeus_sobol_hz0_0p1_hz_0p0999_0p1001_N14_20260805_224341",
+    "work/zeus_sobol_second_neighbor_hz0_0_N14_20260805_224342",
+    "work/zeus_sobol_watts_strogatz_hz0_0_N12_20260809_150226",
+    "work/zeus_three_ring_activation_resolved_N17_20260823_125039",
+    "work/zeus_top20_last5_largerN_20260810_001532"
+  ]
+}

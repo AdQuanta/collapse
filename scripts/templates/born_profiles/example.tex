@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18}
+\pagestyle{empty}
+\newcommand{\casepath}{CASE_ID}
+\begin{document}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=14cm,height=7cm,xmin=0,xmax=1,ymin=0,
+ xlabel={$\theta/\pi$},ylabel={$P(\theta)$ [rad$^{-1}$]},legend pos=north east]
+\addplot[blue] table[x=theta_over_pi,y=P] {\casepath/histogram_steps.dat};
+\addlegendentry{$P(\theta)$}
+\addplot[red,dashed] table[x=theta_over_pi,y=P_reflected] {\casepath/histogram_steps.dat};
+\addlegendentry{$P(\pi-\theta)$}
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[width=14cm,height=7cm,xmin=0,xmax=1,ymin=0,ymax=1,
+ xlabel={$\theta/\pi$},ylabel={$R(\theta)$},legend pos=north east,
+ unbounded coords=jump]
+\addplot[purple,mark=*,mark size=1pt] table[x=theta_over_pi,y=R] {\casepath/profile.dat};
+\addlegendentry{$R(\theta)$}
+\addplot[black,dashed] table[x=theta_over_pi,y=Born] {\casepath/profile.dat};
+\addlegendentry{$\cos^2(\theta/2)$}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\clearpage
+\begin{center}
+\pgfplotstableread{\casepath/nodes.dat}\nodetable
+\pgfplotstableread{\casepath/edges.dat}\edgetable
+\begin{tikzpicture}[scale=4,detector/.style={circle,draw,fill=white,inner sep=2pt},
+ central/.style={circle,draw,fill=orange!30,inner sep=3pt}]
+\pgfplotstablegetrowsof{\nodetable}
+\pgfmathtruncatemacro{\lastnode}{\pgfplotsretval-1}
+\foreach \row in {0,...,\lastnode}{
+ \pgfplotstablegetelem{\row}{id}\of\nodetable\pgfmathtruncatemacro{\nid}{\pgfplotsretval}
+ \pgfplotstablegetelem{\row}{x}\of\nodetable\edef\nx{\pgfplotsretval}
+ \pgfplotstablegetelem{\row}{y}\of\nodetable\edef\ny{\pgfplotsretval}
+ \coordinate (v\nid) at (\nx,\ny);
+}
+\pgfplotstablegetrowsof{\edgetable}
+\pgfmathtruncatemacro{\lastedge}{\pgfplotsretval-1}
+\foreach \row in {0,...,\lastedge}{
+ \pgfplotstablegetelem{\row}{source}\of\edgetable\pgfmathtruncatemacro{\src}{\pgfplotsretval}
+ \pgfplotstablegetelem{\row}{target}\of\edgetable\pgfmathtruncatemacro{\dst}{\pgfplotsretval}
+ \pgfplotstablegetelem{\row}{kind}\of\edgetable\pgfmathtruncatemacro{\kind}{\pgfplotsretval}
+ \ifnum\kind=0 \draw[gray!35,thin] (v\src)--(v\dst);\fi
+ \ifnum\kind=1 \draw[blue,thick] (v\src)--(v\dst);\fi
+ \ifnum\kind=2 \draw[red,dashed,thick] (v\src)--(v\dst);\fi
+}
+\foreach \row in {0,...,\lastnode}{
+ \pgfplotstablegetelem{\row}{id}\of\nodetable\pgfmathtruncatemacro{\nid}{\pgfplotsretval}
+ \pgfplotstablegetelem{\row}{is_central}\of\nodetable\pgfmathtruncatemacro{\centralflag}{\pgfplotsretval}
+ \ifnum\centralflag=1 \node[central] at (v\nid) {$q$};
+ \else \node[detector,font=\scriptsize] at (v\nid) {\nid};\fi
+}
+\end{tikzpicture}
+
+Blue: saved detector edges / nearest neighbors. Red dashed: second neighbors.
+
+Gray: central coupling (optional). Labels: zero-based detector IDs.
+\end{center}
+\end{document}
