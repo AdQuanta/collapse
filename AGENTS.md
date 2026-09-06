@@ -108,12 +108,40 @@ realization; do not depend on unspecified iteration or scheduling order.
 ## Implementation and validation
 
 Before editing, inspect nearby modules, call sites, focused tests, existing
-outputs, and serialized formats. Keep reusable logic in `core/`. Separate model,
-solver, configuration, I/O, plotting, CLI, and HPC submission responsibilities.
+outputs, and serialized formats. Keep reusable logic in `core/`.
+
+### SOLID design
+
+Apply all five SOLID principles to new and modified code, including functions
+and modules as well as classes:
+
+- **Single responsibility:** Give each component one coherent responsibility
+  and reason to change. Separate models, solvers, configuration, I/O, plotting,
+  CLI orchestration, and HPC submission.
+- **Open/closed:** Extend established behavior through composition, strategies,
+  or small callable interfaces when adding supported variants. Avoid spreading
+  algorithm-selection conditionals across callers. This does not prevent
+  correcting scientific errors or revising an inappropriate abstraction.
+- **Liskov substitution:** Make alternative implementations honor the same
+  documented contract: accepted domains, units, normalization, shapes, error
+  behavior, and numerical guarantees. Do not strengthen preconditions or weaken
+  postconditions; use a distinct contract when a method needs different
+  assumptions or provides different guarantees.
+- **Interface segregation:** Expose only the capabilities each caller needs.
+  Prefer small functions or focused protocols over broad interfaces that force
+  solvers, models, or storage backends to implement unrelated operations.
+- **Dependency inversion:** Keep scientific policy independent of concrete
+  solver, optimizer, RNG, and storage implementations. Accept dependencies
+  through explicit arguments and narrow contracts; select and assemble concrete
+  implementations at configuration or orchestration boundaries.
+
 Prefer composition, pure functions, and frozen validated dataclasses. Introduce
-interfaces only for real alternatives; preserve contracts for domains, units,
-normalization, shapes, and numerical guarantees. Inject RNGs, solvers,
-optimizers, and storage when useful for comparisons or testing.
+abstractions for demonstrated variation or separation needs, not speculative
+extensibility. SOLID does not require class hierarchies, dependency-injection
+frameworks, or unrelated refactoring. Review changed code against the applicable
+principles while preserving scientific correctness and numerical reliability.
+
+### Python conventions and checks
 
 Follow PEP 8 and surrounding style. Use type hints for public and nontrivial
 interfaces, `pathlib.Path`, explicit tolerance/convention keywords, clear
