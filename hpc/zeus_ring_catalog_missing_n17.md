@@ -50,3 +50,36 @@ verification of every marker-listed SHA-256 hash and dynamics validation.
 Each task requests 16 CPUs, 256 GB, and 120 hours, matching the established
 N=17 ring continuation envelope. A scheduler job ID proves submission only;
 use the artifact completion gate above before analysis or collection.
+
+## Collection audit and report
+
+Run the stdlib-only audit remotely through SSH stdin before collection, then
+again on the fresh local collection with the same frozen config:
+
+```bash
+python3.11 scripts/audit_completed_ring_campaign.py \
+  --kind catalog --config configs/zeus_ring_catalog_missing_n17.json \
+  --root work/<completed_campaign> > catalog_audit.json
+```
+
+Check scheduler state separately. Require the remote and local audits' full
+`files_sha256` maps to agree; `.mplconfig` caches are excluded. The audit checks
+task identities, exact completion counts, every marker-listed checksum, source
+validation, Hamiltonian parameters, and logs without changing the campaign.
+
+After collection, render all 23 cases without any new diagonalization:
+
+```bash
+python3.11 scripts/build_collected_ring_catalog_report.py \
+  --run-root work/<fresh_local_collection> \
+  --output reports/<new_report_directory>
+```
+
+Each case receives PNG and vector PDF diagnostics plus a labeled 5-by-9 sheet
+of its 45 detector sectors. The summary compares source and current Born
+scores; source selection categories do not describe the new measurements.
+Each spacing density is normalized by its full spacing count, retaining the
+omitted probability mass above the plotted limit `s=4`. This differs from
+older report plots that renormalized their visible histogram range. Sector
+levels are never mixed before unfolding. Histogram-only storage does not
+permit a new unfolding-order, trimming, or degeneracy-tolerance study.
