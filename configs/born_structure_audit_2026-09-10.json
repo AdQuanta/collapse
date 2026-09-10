@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "moment_pairs": 8,
+  "response_order": 9,
+  "rebin_counts": [
+    32,
+    64,
+    100,
+    128,
+    256
+  ],
+  "scope": "All 60 completed N=17 field-scan cases, 40 ranked N=17 ring extremes, 12 network controls and four previously selected high-score network references. Curated comparisons, not an unbiased parameter sample.",
+  "campaigns": [
+    {
+      "key": "nearest_scan",
+      "label": "Nearest-neighbor ring",
+      "root": "work/zeus_ring_born_like_hz0_scan_N17_20260823_131757",
+      "scan": true
+    },
+    {
+      "key": "second_scan",
+      "label": "Second-neighbor ring",
+      "root": "work/zeus_ring_second_neighbor_wd_hz0_scan_N17_20260825_225825",
+      "scan": true
+    },
+    {
+      "key": "ising_scan",
+      "label": "Pure Ising ablation",
+      "root": "work/zeus_ring_pure_ising_activation_N17_collected_20260907_201731",
+      "scan": true
+    },
+    {
+      "key": "ring_extremes",
+      "label": "Ranked ring controls",
+      "root": "work/zeus_ranked_ring_extremes_N17_fresh_20260826_212815",
+      "scan": false
+    },
+    {
+      "key": "network_controls",
+      "label": "Network controls",
+      "root": "work/zeus_network_wd_nonborn_largerN_complete_20260905_215126",
+      "scan": false
+    }
+  ],
+  "references": [
+    {
+      "key": "barabasi_albert",
+      "label": "barabasi albert",
+      "source": "work/zeus_network_extremes_largerN_20260813_233000/family_02_barabasi_albert/highest_04/N13"
+    },
+    {
+      "key": "erdos_renyi",
+      "label": "erdos renyi",
+      "source": "work/zeus_network_extremes_largerN_20260813_233000/family_00_erdos_renyi/lowest_10/N15"
+    },
+    {
+      "key": "random_regular",
+      "label": "random regular",
+      "source": "work/zeus_network_extremes_largerN_20260813_233000/family_03_expander/highest_07/N14"
+    },
+    {
+      "key": "watts_strogatz",
+      "label": "watts strogatz",
+      "source": "work/zeus_network_extremes_largerN_20260813_233000/family_01_watts_strogatz/highest_10/N14"
+    }
+  ],
+  "selected_scan_ratios": [
+    0,
+    0.01,
+    0.99,
+    1,
+    1.01,
+    2
+  ]
+}

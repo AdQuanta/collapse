@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "purpose": "Reduced exact controls of analytical structural hypotheses; no search and no thermodynamic convergence claim.",
+  "baseline_source": "work/zeus_ranked_ring_extremes_N17_fresh_20260826_212815/second_neighbor/highest/rank_03__config_353/N17/metadata.json",
+  "baseline": {
+    "j": 0.22945435875360715,
+    "jpm": 0.9302783002609203,
+    "j2": 0.21127836969728062,
+    "jpm2": 0.9309148622590575,
+    "jx": 0.012333503268976361,
+    "jy": 0.0,
+    "hz": 0.33442453468287797,
+    "hz0": 0.0,
+    "hx0": 0.0,
+    "hx": 0.0
+  },
+  "detector_sizes": [
+    6,
+    8,
+    10
+  ],
+  "times": [
+    900000.0,
+    1000000.0,
+    1100000.0
+  ],
+  "representative_time": 1000000.0,
+  "bins": 32,
+  "cases": [
+    {
+      "key": "baseline",
+      "property": "baseline",
+      "value": 1.0,
+      "label": "Reference config 353",
+      "overrides": {}
+    },
+    {
+      "key": "jx_0",
+      "property": "Jx_scale",
+      "value": 0,
+      "label": "Jx x 0",
+      "overrides": {
+        "jx": 0.0
+      }
+    },
+    {
+      "key": "jx_0.5",
+      "property": "Jx_scale",
+      "value": 0.5,
+      "label": "Jx x 0.5",
+      "overrides": {
+        "jx": 0.006166751634488181
+      }
+    },
+    {
+      "key": "jx_0.8",
+      "property": "Jx_scale",
+      "value": 0.8,
+      "label": "Jx x 0.8",
+      "overrides": {
+        "jx": 0.00986680261518109
+      }
+    },
+    {
+      "key": "jx_1.2",
+      "property": "Jx_scale",
+      "value": 1.2,
+      "label": "Jx x 1.2",
+      "overrides": {
+        "jx": 0.014800203922771633
+      }
+    },
+    {
+      "key": "jx_2",
+      "property": "Jx_scale",
+      "value": 2.0,
+      "label": "Jx x 2",
+      "overrides": {
+        "jx": 0.024667006537952722
+      }
+    },
+    {
+      "key": "hz0_0.0001",
+      "property": "hz0_over_hz",
+      "value": 0.0001,
+      "label": "hz0/hz=0.0001",
+      "overrides": {
+        "hz0": 3.34424534682878e-05
+      }
+    },
+    {
+      "key": "hz0_0.001",
+      "property": "hz0_over_hz",
+      "value": 0.001,
+      "label": "hz0/hz=0.001",
+      "overrides": {
+        "hz0": 0.000334424534682878
+      }
+    },
+    {
+      "key": "hz0_0.01",
+      "property": "hz0_over_hz",
+      "value": 0.01,
+      "label": "hz0/hz=0.01",
+      "overrides": {
+        "hz0": 0.0033442453468287797
+      }
+    },
+    {
+      "key": "hz0_0.1",
+      "property": "hz0_over_hz",
+      "value": 0.1,
+      "label": "hz0/hz=0.1",
+      "overrides": {
+        "hz0": 0.0334424534682878
+      }
+    },
+    {
+      "key": "hz0_1",
+      "property": "hz0_over_hz",
+      "value": 1.0,
+      "label": "hz0/hz=1",
+      "overrides": {
+        "hz0": 0.33442453468287797
+      }
+    },
+    {
+      "key": "no_jpm",
+      "property": "detector_ablation",
+      "value": 0.0,
+      "label": "jpm=0",
+      "overrides": {
+        "jpm": 0.0
+      }
+    },
+    {
+      "key": "no_j2",
+      "property": "detector_ablation",
+      "value": 0.0,
+      "label": "j2=0",
+      "overrides": {
+        "j2": 0.0
+      }
+    },
+    {
+      "key": "no_jpm2",
+      "property": "detector_ablation",
+      "value": 0.0,
+      "label": "jpm2=0",
+      "overrides": {
+        "jpm2": 0.0
+      }
+    },
+    {
+      "key": "jy_0.25",
+      "property": "Jy_over_Jx",
+      "value": 0.25,
+      "label": "Jy/Jx=0.25",
+      "overrides": {
+        "jy": 0.0030833758172440903
+      }
+    },
+    {
+      "key": "jy_1",
+      "property": "Jy_over_Jx",
+      "value": 1.0,
+      "label": "Jy/Jx=1",
+      "overrides": {
+        "jy": 0.012333503268976361
+      }
+    },
+    {
+      "key": "hx0",
+      "property": "qubit_axis",
+      "value": 0.012333503268976361,
+      "label": "hx0=Jx unscaled",
+      "overrides": {
+        "hx0": 0.012333503268976361
+      }
+    },
+    {
+      "key": "jy_minus1",
+      "property": "Jy_over_Jx",
+      "value": -1.0,
+      "label": "Jy/Jx=-1",
+      "overrides": {
+        "jy": -0.012333503268976361
+      }
+    },
+    {
+      "key": "exchange_hx0",
+      "property": "charge_breaking",
+      "value": 1.0,
+      "label": "Jy=Jx; hx0=Jx",
+      "overrides": {
+        "jy": 0.012333503268976361,
+        "hx0": 0.012333503268976361
+      }
+    },
+    {
+      "key": "exchange_hx",
+      "property": "charge_breaking",
+      "value": 1.0,
+      "label": "Jy=Jx; detector hx=Jx",
+      "overrides": {
+        "jy": 0.012333503268976361,
+        "hx": 0.012333503268976361
+      }
+    }
+  ],
+  "representative_cases": [
+    "baseline",
+    "jy_1",
+    "jy_minus1",
+    "exchange_hx0",
+    "exchange_hx",
+    "hx0"
+  ]
+}
