@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "seeds": [511, 512, 513, 514, 515, 516],
+  "detector_sizes": [3, 4, 5],
+  "graphs": ["chain", "ring", "all_to_all"],
+  "times": [0.2, 1.0, 3.0, 10.0, 30.0, 100.0, 300.0],
+  "transverse_fields": [-0.053, 0.0, 0.017],
+  "control_longitudinal_field": 0.19,
+  "random_parameter_range": [-0.5, 0.5],
+  "bins": 64,
+  "moment_order": 16,
+  "qz_residual_tolerance": 1e-11,
+  "trace_agreement_tolerance": 1e-8,
+  "collective_coupling": 0.7,
+  "collective_plot_times": [0.7, 1.5, 4.0],
+  "scaling_time": 0.72,
+  "scaling_sizes": [32, 64, 128, 256, 512, 1024],
+  "field_interval_width": 0.2
+}

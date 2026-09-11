@@ -829,3 +829,55 @@ A new Claude Code session should begin with:
 > Read `AGENTS.md`, then read `RESEARCH_STATE.md`. Treat `RESEARCH_STATE.md` as the canonical project memory. Inspect linked repository files before making claims. At the end of substantive research work, update `RESEARCH_STATE.md` with new results, decisions, and evidence status.
 
 This is the only extra memory-transfer instruction that should be necessary.
+
+---
+
+## 22. Exact long-time Born objective: partial asymptotic obstructions
+
+**PROVED (Codex, 2026-09-11; scoped results).** The new objective permits
+N->infinity and demands exact instantaneous long-time Born behavior. The
+finite gate in section 3 is unchanged and does not settle this objective.
+See [BORN_ASYMPTOTIC_OBSTRUCTIONS.md](BORN_ASYMPTOTIC_OBSTRUCTIONS.md) for
+five theorems, proofs, all reciprocal-coordinate Jacobians and limitations.
+
+- Finite-dimensional unitary recurrence sends every projective root back
+  arbitrarily close to the north pole. A nontrivial t-first weak root limit
+  cannot exist; an unrestricted continuous-support joint limit cannot be
+  independent of all late-time subsequences. N-first limits still require proof.
+- For H_N=K_N-X_q(V_N+h_N) with [K_N,V_N]=0, any existing N-first then
+  long-time weak root law is L delta_0+(1-L)dtheta/pi. Its exact Born moment
+  identity requires L=1, which has no continuous angular coverage.
+- Even without [K,V]=0, an X-conserving family K_N-X_q(V_N+h) can satisfy
+  the necessary asymptotic first Born moment only on a measure-zero set of
+  central-X fields h (assuming the stated N-first moment limits). Thus no
+  open field interval works in this class. This is not a full-model no-go.
+- Collective commuting g/sqrt(N) coupling has an exact folded-Gaussian
+  N-first law and a uniform late-time response R->1/2. Its derived fixed-time
+  correction is O(1/N), with O(1/N^2) remainder after correction.
+- With nonzero central-Z detuning and [K,V]=0, an absolutely continuous
+  limiting coupling law with finite third absolute moment cannot yield
+  exact Born. Tight native linear-X spectral limits are sub-Gaussian. An
+  explicit non-native heavy-tail spectrum does yield Born, demonstrating
+  why unitarity alone is insufficient for a general no-go.
+
+**VERIFIED_NUMERICALLY.** Six saved random seeds, three native topologies,
+N=3,4,5 and times 0.2 through 300 give 504 production-QZ snapshots including
+central-field perturbations and X-breaking controls. Maximum QZ residual
+2.23e-15; in-scope trace discrepancy below 4.43e-12. Coverage is only
+0.03125--0.71875; global finite-bin errors remain undefined, not filled.
+All eight raw Born residuals and unchanged canonical S_born are saved.
+Six analytic-count sizes 32--1024 check the derived correction. Sixteen
+new tests pass; the combined relevant suite passes 60 tests. Eight figure
+sets and provenance are in `reports/born_asymptotic_2026-09-11_final/`.
+Code/config: `core/born_asymptotic.py`, `core/born_asymptotic_plotting.py`,
+`scripts/analyze_born_asymptotic.py`, `configs/born_asymptotic_2026-09-11.json`.
+
+**OPEN / NEXT.** The original full goal remains active. No non-tautological
+full-model dynamical C_B, full microscopic preimage, or general open-phase
+theorem/no-go has been established. The next unresolved class has central-Z
+detuning with genuinely noncommuting detector/coupling operators, or central
+YY/ZZ/ZX channels. Singular or escaping coupling spectra also need separate
+treatment. Do not generalize the excluded X-conserving subspace to all native
+Hamiltonians, or substitute the existing geometric iff for the requested
+new structural condition. The research target remains root statistics,
+not operational measurement probabilities.
