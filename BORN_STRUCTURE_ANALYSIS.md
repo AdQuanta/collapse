@@ -1,6 +1,6 @@
 # Structural conditions for the projective-root Born profile
 
-10 September 2026. Exact statements below concern the repository's root-count
+Updated 11 September 2026. Exact statements below concern the repository's root-count
 observable. Numerical results are finite-size results, not a thermodynamic
 theorem. The analysis uses 116 checksum-verified stored profiles and 180 reduced
 snapshots of the existing Hamiltonian at detector sizes 6, 8 and 10, plus 219
@@ -248,6 +248,119 @@ changes mixing and phases; it need not improve Born agreement monotonically.
 At fixed Hamiltonian ratios, scaling all energies by c is exactly equivalent
 to replacing t by ct. Evolution time is part of every condition.
 
+### Why a finite longitudinal field can make P look Gaussian
+
+The evidence supports a crossover in some fixed-detector scans, not a theorem
+that every nonzero hz0 produces a wrapped Gaussian. Two logically separate
+effects are involved: suppression of large projective roots, and an
+approximately Gaussian distribution of the remaining small fluctuations.
+
+An exact solvable limit isolates the first effect. Take
+H=Hd-hZ0+X0 V with [Hd,V]=0, h=hz0, and a simultaneous detector eigenstate
+with V eigenvalue v. The Hd phase cancels from U10/U00. With
+Omega=sqrt(h^2+v^2),
+
+\[
+U_{00}\propto\cos(\Omega t)+i\frac{h}{\Omega}\sin(\Omega t),\qquad
+U_{10}\propto-i\frac{v}{\Omega}\sin(\Omega t),
+\]
+\[
+\boxed{|\lambda|^2=
+\frac{v^2\sin^2(\Omega t)}{h^2+v^2\cos^2(\Omega t)}.}
+\]
+
+At h=0 this is the tangent-pole law |lambda|=|tan(vt)|. At h!=0,
+|lambda|<=|v/h| and theta<=2 atan(|v/h|): the field removes those poles.
+For a bounded finite detector, theta<=2 atan(||V||/|h|). These bounds and the
+formula are **exact only in this commuting class**. They provide a concrete
+mechanism, not an operator bound for the interacting scans where [Hd,V]!=0.
+The general weak-coupling detuning kernel above supplies the corresponding
+resonance filtering mechanism; shifting hz0 can also move transitions *into*
+resonance and increase spreading. A nonzero field does not uniformly add a
+positive floor to every interacting energy denominator.
+
+The second effect needs extra assumptions. For example, in the native Hd=0
+limit V=-(Jx/sqrt(N)) sum_i X_i has eigenvalues
+v_m=-(Jx/sqrt(N))(N-2m), with multiplicity binomial(N,m). Under normalized
+root counting this spectral measure converges to a real Gaussian of variance
+Jx^2. If the typical |v|/|h| is small, v^2|t|/|h| is small, and the time is
+away from zeros of sin(|h|t), the exact solution gives
+
+\[
+\theta\simeq\frac{2|\sin(ht)|}{|h|}|v|,\qquad
+\sigma_\theta\simeq\frac{2|J_x\sin(ht)|}{|h|}.
+\]
+
+The leading polar law is a **half-normal**. A narrow folded wrapped normal
+is indistinguishable from it up to small image contributions. The sequence
+of limits matters: the Gaussian limit of v does not justify linearizing its
+angle map at arbitrary width or long time. The conditions apply on the bulk
+spectral weight; the Gaussian tails require a separate tail estimate for a
+uniform error claim. No such uniform estimate is claimed here. At long times
+Omega(v)t varies across the spectrum and produces a nonlinear oscillatory
+pushforward, which need not be Gaussian even in this simple class.
+
+For interacting detectors, a similar central-limit picture requires weak
+enough connected correlations and control of higher cumulants for the
+*relevant root-generating variable*. Merely having many spins, chaotic level
+spacings, or a Gaussian Hd density of states does not establish that property.
+For context, [Hartmann, Mahler and Hess](https://arxiv.org/abs/math-ph/0312045)
+prove a Gaussian limit for an energy distribution under specified assumptions;
+their theorem is not a theorem for this nonnormal projective pencil. In
+particular a circular complex Gaussian lambda would have a Rayleigh modulus,
+not a half-normal modulus. Breaking X0 conservation makes this distinction
+essential: a Gaussian matrix-entry argument cannot determine P(theta).
+
+There is a direct bin-free shape test. A centered folded wrapped normal obeys
+
+\[
+a_n=\langle\cos(n\theta)\rangle=e^{-n^2\sigma^2/2}.
+\]
+
+Rechecking the three complete N=17 field scans, including every marker-listed
+source checksum, gives the following maximum discrepancy for n=1,...,16 from
+the already saved fitted sigma. No width was refitted for this audit.
+
+| nearest-neighbor hz0/hz | WG moment discrepancy | WG sigma (rad) | occupied R RMSE |
+|---|---:|---:|---:|
+| 0 | 0.270638 | 0.577364 | 0.015923 |
+| 0.01 | 0.060634 | 0.436841 | 0.156544 |
+| 0.1 | 0.048534 | 0.292165 | 0.227619 |
+
+Thus the Gaussian family describes the moments better as the Born response
+deteriorates in these examples; even the finite-field curves are not exact
+Gaussians. This is descriptive finite-size evidence, not proof of the
+commuting mechanism in an interacting ring. Many other finite-field source
+eigenproblems are severely ill-conditioned; the plots retain their caution
+markers. In very narrow distributions all fixed-order cosine moments approach
+one, so a small absolute moment discrepancy alone is weak shape evidence.
+Density overlays and the saved finite-width fit must be inspected as well.
+The logarithmic overlays reveal substantial excess tails even when the core
+and low-order moments look Gaussian: the field-induced crossover should not
+be described as a verified Gaussian law over the full angular range. The
+representative P panels use the same displayed density range, 1e-5 to 10 per
+radian, to expose that discrepancy without an effectively empty far-tail axis.
+
+Finally, Gaussianization itself does not generate the Born law. Neglecting
+wrapped images for a narrow core,
+
+\[
+R(\theta)\simeq
+\left[1+\exp\left(\frac{\pi(\theta-\pi/2)}{\sigma^2}\right)\right]^{-1},
+\]
+
+which is a steep crossover with higher odd cosine harmonics. The expression
+assumes the exponentially small tails are actually represented; it cannot
+fill unoccupied histogram bins. Detuning can therefore remove the tails that
+maintained the Born reflection balance while leaving an apparently Gaussian
+central peak.
+
+The exact commuting formula passed nine tests: independent full exponentials
+with a nontrivial commuting Hd, the native N=5 ring solver with Hd=0, zero
+field/pole/zero-mode limits, the field bound, and input validation. These
+checks validate the stated limit; they do not establish an interacting
+central-limit theorem or repair ill-conditioned production roots.
+
 ## Numerical evidence and diagnostics
 
 The source audit checks every file listed by each case's COMPLETE marker,
@@ -409,6 +522,9 @@ measurement probabilities are outside what this polar root diagnostic proves.
 - [Exact qubit-field prediction versus numerical R](reports/born_structure_validation_2026-09-10/qubit_phase_shift_prediction.pdf)
 - [Large-N qubit-field robustness and visibility loss](reports/born_qubit_phase_robustness_2026-09-10_final/qubit_field_errors.pdf)
 - [High-Born, flat-response and reversed-response regimes at N=17](reports/born_qubit_phase_robustness_2026-09-10_final/second_diagnostics.pdf)
+- [Finite-field Gaussian agreement, Born error and coverage](reports/finite_field_gaussian_mechanism_2026-09-11_final/field_gaussian_audit.pdf)
+- [P and R overlays with the Gaussian moment test](reports/finite_field_gaussian_mechanism_2026-09-11_final/gaussian_representatives.pdf)
+- [Exact commuting-detector field regularization](reports/finite_field_gaussian_mechanism_2026-09-11_final/commuting_field_regularization.pdf)
 - Network panels: `barabasi_albert_diagnostics`, `erdos_renyi_diagnostics`,
   `random_regular_diagnostics`, and `watts_strogatz_diagnostics` in the audit
   directory, each as PDF/PNG. These pairs differ in realization/parameters and
@@ -431,6 +547,8 @@ python scripts/analyze_born_qubit_phase_robustness.py --output reports/<new-phas
 python scripts/run_born_structure_controls.py \
   --from-results reports/<new-control-directory> --output reports/<new-parameter-figures-directory>
 python -m pytest -q tests/test_born_reciprocity.py tests/test_born_profile_export.py
+python scripts/analyze_finite_field_gaussian.py --output reports/<new-field-directory>
+python -m pytest -q tests/test_commuting_detector_field.py
 ```
 
 The configs fix scope, parameters, sizes, times and bins. Manifests retain input
@@ -442,3 +560,9 @@ sensitivity check, not a converged time average. Earlier exploratory output
 directories without the `_v2` suffix are superseded by the linked versions.
 
 Validation: 24 focused tests passed; all eight new Python modules compile. The four CLIs pass their help checks. Figures were visually checked, including coverage and the full reversed-response residual range. Generated reports/data remain uncommitted.
+
+The 11 September finite-field addition has nine further focused tests (33
+combined), an independent native-solver limit check, and a 60-case source
+checksum recheck. Its final figure directory supersedes the unsuffixed draft.
+The new figures, metrics and PGFPlots tables remain generated local artifacts;
+the derivation, configuration, analysis code and tests are versioned.

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "audit": "reports/born_structure_audit_2026-09-10_v2",
+  "groups": ["nearest_scan", "second_scan", "ising_scan"],
+  "expected_cases_per_group": 20,
+  "representative_ratios": [0.0, 0.01, 0.1],
+  "commuting_fields": [0.0, 0.1, 0.5, 1.0],
+  "commuting_time": 1.0,
+  "commuting_v_max": 4.0,
+  "commuting_grid_points": 1601
+}
