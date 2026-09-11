@@ -15,6 +15,16 @@ specific balance between the reflection-even and reflection-odd parts of the
 projective-root measure. Ordinary symmetry fixes the offset and harmonic parity;
 it does not set the Born visibility or eliminate higher odd harmonics.
 
+The [detector-isotropy extension](DETECTOR_ISOTROPY_ANALYSIS.md) adds a second
+exact constraint, verified against 220 isotropic spectra within a 3,520-case
+controlled detector grid: isotropic Heisenberg terms cancel from the relative
+pencil when the detector fields and qubit couplings are collective. The
+resulting binomial root measure has too few distinct angles to cover all 64
+bins at the studied sizes. Breaking this collective structure can open the
+support, but does not guarantee Born agreement. The successful nearest-ring
+detectors are integrable XXZ chains, so chaos of Hd is not necessary for the
+observed approximate profile.
+
 The production diagnostic is not a probability obtained by preparing an arbitrary
 input qubit angle and applying a fixed POVM. Its angle is an output coordinate of
 the generalized eigenproblem
@@ -484,8 +494,11 @@ The sign of hx0 gives the same folded density for a conjugate-paired baseline.
 | Hq field parallel to X in the X-conserving class | Exact auxiliary-phase translation; explicit cosine-moment multipliers | exact, numerically verified |
 | Hq longitudinal splitting | Shifts coupling-accessible resonance; modifies visibility and higher odd harmonics | perturbative mechanism plus fixed-detector data |
 | Hd exchange, next-neighbor terms, graph | Change transition energies and coupling matrix elements; no universal one-term direction | structural dependence; observational and reduced ablation evidence |
+| Isotropic Hd exchange with uniform collective field/coupling | Cancels from the pencil; explicit binomial root measure for Hq=0, X-only coupling | exact; 220 legacy spectra and native reduced checks |
+| Nonuniform coupling, nonuniform detector fields, or anisotropy | Can make isotropic exchange dynamically visible; does not enforce reflection balance | exact commutator criterion plus controlled detector grid |
 | Hqd scale and evolution time | Control accumulated mixing and conditional phases; effects can be nonmonotonic | exact time/energy scaling plus reduced controls |
 | Hd WD versus Poisson spacings | Does not fix interaction selection rules or root reflection balance | not a sufficient descriptor when Hqd varies |
+| Integrability of Hd | Does not prohibit the observed near-Born profile | nearest-neighbor XXZ identification plus verified N=17 example |
 | Full Born moment hierarchy / reciprocal root density | Sets v1=1 and eliminates all higher odd harmonics on support | exact necessary and sufficient spectral condition |
 | Poisson-kernel auxiliary phase law | Pure cosine R, visibility 2 rho/(1+rho^2); near-Born for rho close to one | exact sufficient spectral mechanism, microscopic origin not assumed |
 
@@ -504,6 +517,14 @@ parameter value is not required. Establishing a multidimensional robust region
 in local detector/coupling parameters still requires matched production-size
 perturbations and stable projective solves. The N=6--10 controls cannot settle
 that stronger claim.
+
+The later N=11--14 detector-grid audit supplies matched J/Jpm/hz comparisons
+and neighboring near-Born samples, with explicit legacy-source limitations.
+It establishes neither agreement between sampled endpoints nor an open
+multidimensional region in the high-score N=17 regime. See the extension for
+the exact isotropic obstruction, all grid counts, and error-versus-parameter
+plots; that evidence strengthens the detector-side account without resolving
+the general sufficiency question.
 
 No universal sufficient criterion in the bare local couplings is claimed.
 The precise necessary/sufficient spectral criterion, the charge obstruction,
