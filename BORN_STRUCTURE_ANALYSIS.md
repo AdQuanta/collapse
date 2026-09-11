@@ -6,6 +6,13 @@ theorem. The analysis uses 116 checksum-verified stored profiles and 180 reduced
 snapshots of the existing Hamiltonian at detector sizes 6, 8 and 10, plus 219
 exact conditional-phase reconstructions at N=15 and 17.
 
+The [exact finite-model limits](EXACT_BORN_FINITE_MODEL_LIMITS.md) distinguish
+these approximate profiles and measure identities from global exact Born
+behavior. No finite-bin root-count response equals the Born curve throughout
+an interval, and no finite nonpolar root cloud has exactly uniform continuous
+azimuth. The extension proves both impossibility results, the qualified
+finite-support iff criterion, and sharp finite-bin error bounds.
+
 ## Result and observable
 
 The strongest structural conclusion is that **bidirectional detector-charge

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "audit": "reports/born_structure_audit_2026-09-10_v2",
+  "case_ids": ["case_000", "case_003", "case_005", "case_082"],
+  "case_labels": {
+    "case_000": "Nearest ring: hz0/hz=0",
+    "case_003": "Nearest ring: hz0/hz=0.01",
+    "case_005": "Nearest ring: hz0/hz=0.1",
+    "case_082": "Second ring 353: hz0=0"
+  },
+  "bin_counts": [2, 4, 8, 16, 32, 48, 64, 100, 128, 256],
+  "phi_bins": 36,
+  "phi_harmonic_order": 64,
+  "minimum_polar_sine": 0.000001,
+  "adversarial_phase_count": 32
+}
