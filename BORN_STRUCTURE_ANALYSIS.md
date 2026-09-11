@@ -522,9 +522,9 @@ measurement probabilities are outside what this polar root diagnostic proves.
 - [Exact qubit-field prediction versus numerical R](reports/born_structure_validation_2026-09-10/qubit_phase_shift_prediction.pdf)
 - [Large-N qubit-field robustness and visibility loss](reports/born_qubit_phase_robustness_2026-09-10_final/qubit_field_errors.pdf)
 - [High-Born, flat-response and reversed-response regimes at N=17](reports/born_qubit_phase_robustness_2026-09-10_final/second_diagnostics.pdf)
-- [Finite-field Gaussian agreement, Born error and coverage](reports/finite_field_gaussian_mechanism_2026-09-11_final/field_gaussian_audit.pdf)
-- [P and R overlays with the Gaussian moment test](reports/finite_field_gaussian_mechanism_2026-09-11_final/gaussian_representatives.pdf)
-- [Exact commuting-detector field regularization](reports/finite_field_gaussian_mechanism_2026-09-11_final/commuting_field_regularization.pdf)
+- [Finite-field Gaussian agreement, Born error and coverage](reports/finite_field_gaussian_mechanism_2026-09-11_tables_fixed/field_gaussian_audit.pdf)
+- [P and R overlays with the Gaussian moment test](reports/finite_field_gaussian_mechanism_2026-09-11_tables_fixed/gaussian_representatives.pdf)
+- [Exact commuting-detector field regularization](reports/finite_field_gaussian_mechanism_2026-09-11_tables_fixed/commuting_field_regularization.pdf)
 - Network panels: `barabasi_albert_diagnostics`, `erdos_renyi_diagnostics`,
   `random_regular_diagnostics`, and `watts_strogatz_diagnostics` in the audit
   directory, each as PDF/PNG. These pairs differ in realization/parameters and
@@ -563,6 +563,9 @@ Validation: 24 focused tests passed; all eight new Python modules compile. The f
 
 The 11 September finite-field addition has nine further focused tests (33
 combined), an independent native-solver limit check, and a 60-case source
-checksum recheck. Its final figure directory supersedes the unsuffixed draft.
+checksum recheck. Its `_tables_fixed` directory supersedes the earlier versions:
+the prior finite-field DAT files were transposed. The figures and numerical
+conclusions are unchanged. A regression now rejects header/data column-count
+mismatches, and every corrected DAT file was checked by reading named columns.
 The new figures, metrics and PGFPlots tables remain generated local artifacts;
 the derivation, configuration, analysis code and tests are versioned.

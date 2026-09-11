@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from core.born_profile_export import (
-    graph_tables, validate_profile, write_profile_tables,
+    graph_tables, validate_profile, write_profile_tables, write_table,
 )
 
 
@@ -31,6 +31,18 @@ def test_empty_ratio_is_exported_as_nan(tmp_path):
     write_profile_tables(tmp_path, arrays)
     data = np.genfromtxt(tmp_path / "profile.dat", names=True)
     assert np.isnan(data["R"][[0, 3]]).all()
+
+
+def test_table_rejects_transposed_columns_before_writing(tmp_path):
+    path = tmp_path / "table.dat"
+    columns = [np.arange(7), np.arange(7) ** 2]
+    with pytest.raises(ValueError, match="one column per header"):
+        write_table(path, ["x", "y"], columns)
+    assert not path.exists()
+    write_table(path, ["x", "y"], np.column_stack(columns))
+    data = np.genfromtxt(path, names=True)
+    np.testing.assert_array_equal(data["x"], columns[0])
+    np.testing.assert_array_equal(data["y"], columns[1])
 
 
 def test_ring_second_neighbors_and_central_edges():

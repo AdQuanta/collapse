@@ -104,10 +104,10 @@ def main() -> None:
         axes[2, col].set(xlabel="cosine order n", ylabel=r"$a_n=\langle\cos n\theta\rangle$")
         write_table(args.output / f"{row['id']}_gaussian_profile.dat",
                     ["theta_rad", "P", "WG", "R", "Born", "occupied"],
-                    [profile["theta_rad"], profile["P"], gaussian, profile["R"], profile["Born"], profile["occupied"]])
+                    np.column_stack([profile["theta_rad"], profile["P"], gaussian, profile["R"], profile["Born"], profile["occupied"]]))
         write_table(args.output / f"{row['id']}_gaussian_moments.dat",
                     ["n", "a_n", "WG_prediction", "residual"],
-                    [n, moments["a_n"], predicted, moments["a_n"] - predicted])
+                    np.column_stack([n, moments["a_n"], predicted, moments["a_n"] - predicted]))
     axes[0, 0].legend(fontsize=8)
     axes[1, 0].legend(fontsize=8)
     axes[2, 0].legend(fontsize=8)
@@ -120,7 +120,7 @@ def main() -> None:
     for field in config["commuting_fields"]:
         theta = commuting_detector_angles(v, hz0=field, time=config["commuting_time"])
         ax.plot(v, theta / np.pi, label=rf"$h_{{z0}}={field:g}$")
-        write_table(args.output / f"commuting_field_{field:g}.dat", ["v", "theta_rad"], [v, theta])
+        write_table(args.output / f"commuting_field_{field:g}.dat", ["v", "theta_rad"], np.column_stack([v, theta]))
     ax.set(xlabel="coupling eigenvalue |v|", ylabel=r"$\theta/\pi$", ylim=(-.02, 1.03),
            title=f"Exact commuting-detector limit at t={config['commuting_time']:g}\nFinite field removes the tangent poles; it does not fix the density")
     ax.legend()

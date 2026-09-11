@@ -56,6 +56,9 @@ def validate_profile(arrays: dict[str, np.ndarray], *, rmse: float) -> dict[str,
 
 def write_table(path: Path, columns: list[str], values: np.ndarray) -> None:
     """Write whitespace-separated PGFPlots data that round-trips float64."""
+    values = np.asarray(values)
+    if values.ndim != 2 or values.shape[1] != len(columns):
+        raise ValueError("table data must have one column per header label")
     np.savetxt(path, values, fmt="%.17g", header=" ".join(columns), comments="")
     restored = np.loadtxt(path, skiprows=1, ndmin=2)
     np.testing.assert_array_equal(restored, values)
