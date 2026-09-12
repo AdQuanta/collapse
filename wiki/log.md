@@ -1,3 +1,20 @@
+## [2026-09-12] ingest | Digestion of Foundational Manuscript Draft (main.pdf)
+Digested the 36-page foundational paper draft *A Unitary Route to Measurement-Like Collapse and Born Probabilities in Many-Body Detectors* (August 12, 2026) into the wiki, while carefully preserving and contextualizing all subsequent findings:
+
+**1. Core Conceptual & Mathematical Ingestion:**
+- `wiki/concepts/foundational-draft-aug2026.md`: Created a comprehensive architectural reference covering all 15 sections, evidence ledger (Table 2), and 7 appendices of `main.pdf`, mapping each early proposal to its subsequent status in the repository.
+- `wiki/concepts/haar-baseline.md`: Created dedicated page detailing Proposition 3 (proof of rotational invariance under $SU(2)$ right-multiplication via fractional-linear Möbius action), outcome interchange symmetry ($a(\Omega)=0$), and connection to the complex Ginibre spherical ensemble ($G_1 - zG_2$).
+- `wiki/concepts/falsifiability-and-experiments.md`: Synthesized the 4 falsification routes (mesoscopic non-Born detectors, short-time deviations, finite-size scaling of covering radius $\delta_n$, and spectral crossovers), metric entropy / covering complexity $K_N(\varepsilon) = \log_2 \mathcal{N}_\varepsilon(\mathcal{R}_N)$ for quantum computing bounds, and the 4-stage experimental roadmap from Appendix G.
+- `wiki/concepts/theorem-targets.md`: Formalized the 5 strategic theorem routes (Pointer-algebra, Spectral, Entanglement-geometry, Stochastic/martingale, Locality/record) and the harmonic-oscillator / Gaussian environment conjecture.
+
+**2. Integration & Boundary Protection (No Overriding of Recent Results):**
+- `wiki/concepts/born-like-points.md`: Prominently documented the exact mathematical theorem that $R(\theta) = \cos^2(\theta/2)$ does **not** require $P(\theta)$ to have a cosine shape; it holds for any $P(\theta) = (1+\cos\theta)E(\theta)$ with reflection-even $E(\pi-\theta)=E(\theta)$. Integrated spherical outcome asymmetry $a(\Omega) = \hat{n}\cdot\vec{r}(\Omega)$, covering radius $\delta_n$, and the martingale zero-drift derivation.
+- `wiki/concepts/projective-roots.md`: Enriched with dual outcome pencils $((C,D)$ for outcome 0, $(A,B)$ for outcome 1), Proposition 1 ($d=2^n$ roots), Proposition 2 (non-closure under superposition), approximate solutions $\sigma_{\min}(C+zD) \le \varepsilon$, and extended disentangling states $\mathcal{C}_{\text{sep}}(t)$.
+- `wiki/concepts/big-picture.md`: Expanded with the three-stage progression (spontaneous emission $\to$ thermalization $\to$ measurement), the formal linearity obstruction statement, and the Bohr orbit analogy.
+- `wiki/concepts/hamiltonian-families.md`: Integrated the three foundational archetypes (disordered, pixel, tube) and contextualized the transverse field clue with the central-$X$ great-circle no-go.
+- `wiki/concepts/spectral-statistics.md`: Preserved the August 12 hypothesis while clearly stating the late August $N=17$ findings (`RESEARCH_STATE.md` §10b) that falsified level statistics as a sufficient single-variable discriminator.
+- `wiki/index.md`: Updated navigation with the new concept nodes.
+
 ## [2026-09-12] refine | Alignment with High-Impact Scientific Writing Skill
 Refined the research wiki and manuscript planning/drafting architecture in strict accordance with `.agents/skills/high-impact-academic-scientific-writing/SKILL.md`:
 

@@ -5,9 +5,13 @@ This index serves as the structural map for the `unitary-collapse` research prog
 ---
 
 ## 🧬 Theory & Concepts
+- [[foundational-draft-aug2026]] — Architectural digest of the August 12, 2026 foundation manuscript (`main.pdf`).
 - [[big-picture]] — The fundamental scientific question and the restricted-state loophole.
-- [[born-like-points]] — Definition and diagnostics of Born-like root distributions.
+- [[born-like-points]] — Definition and diagnostics of Born-like root distributions and inversion balance.
 - [[projective-roots]] — The mathematical construction of collapsible states via matrix pencils.
+- [[haar-baseline]] — Solvable Haar-random baseline, $SU(2)$ invariance proof, and spherical ensemble.
+- [[theorem-targets]] — Five strategic theorem routes, martingale formulation, and harmonic-oscillator conjecture.
+- [[falsifiability-and-experiments]] — Mesoscopic tests, short-time deviations, covering complexity, and experimental roadmap.
 - [[resonant-return-dynamics]] — Exact projected return operator and positive multichannel leads.
 - [[relative-propagator]] — The relative-unitary evolution and its eigenphases.
 - [[spectral-statistics]] — Role of Wigner-Dyson vs. Poisson statistics in generating Born geometry.
