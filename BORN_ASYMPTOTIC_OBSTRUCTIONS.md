@@ -4,6 +4,13 @@
 The finite acceptance gate is unchanged. The theorems here concern the native
 equal-algebraic-root measure, not operational outcome probabilities.
 
+**Continuation, 12 September 2026:**
+[BORN_NONNORMAL_LIMIT.md](BORN_NONNORMAL_LIMIT.md) proves an exact scalar
+determinant-potential criterion for weak polar-root convergence and a native
+exchange counterexample to replacing noncommuting roots by a Gaussian
+trace-moment limit. These results constrain the next thermodynamic argument;
+they do not close the full-model Born phase question.
+
 ## 1. The theorems
 
 **Theorem A (recurrence, all finite native Hamiltonians).** For every finite

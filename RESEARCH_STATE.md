@@ -881,3 +881,57 @@ treatment. Do not generalize the excluded X-conserving subspace to all native
 Hamiltonians, or substitute the existing geometric iff for the requested
 new structural condition. The research target remains root statistics,
 not operational measurement probabilities.
+
+---
+
+## 23. Exact root-limit potential and native nonnormal counterexample
+
+**PROVED (Codex, 2026-09-12; full Born objective remains OPEN).**
+[BORN_NONNORMAL_LIMIT.md](BORN_NONNORMAL_LIMIT.md) extends section 22 with
+an all-regular-pencils limit criterion and a native counterexample.
+
+- The circle-averaged log determinant of C-exp(x+i phi)A, normalized by
+  detector dimension and its x=0 value, is a bounded-kernel scalar potential
+  J(x). Its right derivative is the radial CDF; endpoint slopes retain zero
+  and infinite roots. Weak polar-root convergence is equivalent to local
+  uniform J convergence, and convergence at all rational x is sufficient.
+  This is a structural limit reduction, not the final requested Born C_B.
+- Weak circle-averaged singular-value limits plus uniform integrability of
+  their negative logarithmic tails suffice to pass to the correct J limit.
+  Weak singular-value convergence alone is insufficient; common divergent
+  terms may also require a separate cancellation argument.
+- Native H_N=-(g/sqrt(N))(X_q sum X_i+Y_q sum Y_i), with zero detector and
+  central fields, has all roots exactly zero at common regular times by
+  charge grading. Yet its detector variables converge in all ordered trace
+  moments to independent real Gaussians and their commutator has normalized
+  squared Hilbert--Schmidt norm 4/N. All bounded propagator trace observables
+  and singular-value statistics have the Gaussian limit. The roots of those
+  Gaussian blocks are nontrivial. Consequently a Gaussian operator-moment
+  limit cannot be substituted into the nonnormal native root problem, and
+  logarithmic uniform integrability fails on at least one pencil circle.
+
+**VERIFIED_NUMERICALLY.** At g=0.7, t=0.61 the normalized transition trace
+at N=128 is 0.2876171138189103 versus the proved limit 0.2876935987125207.
+The native first root moment remains 1 versus the Gaussian-block root value
+0.4246128025749586. Six exact-sector sizes 4--128 retain all spin-sector
+multiplicities; the largest matrix is 129 by 129. Sixteen production-QZ
+snapshots at N=2--5 and times 0.3,0.61,1.3,3.0 have zero angles and maximum
+residual 2.221e-16. Full native propagator comparisons, random-pencil Jensen
+checks, and endpoint tests are included. Fourteen new tests and the combined
+74-test relevant suite pass with runtime warnings treated as errors.
+The pole-only law has coverage 2/64; all eight moment residuals vanish but
+global errors remain null. No Born phase is inferred from this diagnostic.
+
+Code/config: `core/projective_potential.py`, `core/collective_exchange.py`,
+`core/projective_potential_plotting.py`, `scripts/analyze_born_nonnormal_limit.py`,
+`configs/born_nonnormal_limit_2026-09-12.json`.
+Two verified PDF/PNG figure sets, arrays, QZ records, and source/config/output
+hashes are in `reports/born_nonnormal_limit_2026-09-12/` (uncommitted outputs).
+
+**FALSIFIED / NEXT.** Asymptotic commutativity in normalized trace norm and
+all operator moments do not establish the noncommuting thermodynamic root
+law. Do not extend a commuting effective-field no-go through that shortcut.
+Control normalized determinant differences or the needed small-singular-value
+logarithmic tails for genuinely noncommuting native dynamics. No full-model
+non-tautological Born iff, open microscopic phase, or full-model no-go is
+established; the original exact long-time objective remains active.
