@@ -6,11 +6,11 @@ This overlay is scientific memory and research guidance, not permission to overr
 
 **Mission Priority:** Prioritize physical correctness, reproducibility, numerical reliability,
 maintainable Python, then performance. Never invent results, parameters, citations, validation, 
-or command output.
+or command output. Label exact, approximate, fitted, numerical, heuristic, and conjectural claims distinctly.
 
 ## Start here, every session
 
-Read `AGENTS.md`, then read `RESEARCH_STATE.md`. Use the `wiki/` directory for deep-dive conceptual synthesis and navigation.
+Read `RESEARCH_STATE.md`. Use the `wiki/` directory for deep-dive conceptual synthesis and navigation.
 
 `RESEARCH_STATE.md` is the **canonical shared research memory** for this project: it carries the
 project-wide scientific context, current hypotheses, evidence status, and priorities across Ido,
@@ -18,7 +18,7 @@ Claude Code, ChatGPT/Codex, and future agents. Work to the priorities it declare
 
 It is canonical, not infallible. Also weigh what you know from the current conversation and from the
 repository itself, and **argue the point whenever they conflict** — with the user, and in writing here.
-Inspect the linked repository files before making claims; `AGENTS.md` and the validated repository
+Inspect the linked repository files before making claims; validated repository
 documents remain authoritative for implementation details and derivations.
 
 Update `RESEARCH_STATE.md` whenever a discussion, calculation, or decision changes the scientific
@@ -27,34 +27,49 @@ label and never silently promote a conjecture to a result.
 
 ## Mandatory reading order before substantive work
 
-1. `AGENTS.md`
-2. `RESEARCH_STATE.md`
-3. `wiki/index.md`
-4. `README.md`
-5. `manuscript/EVIDENCE_REGISTRY.md`
-6. `manuscript/NUMERICAL_PROVENANCE.md`
-7. `manuscript/RESULTS_NEEDED.md`
-8. `manuscript/audits/NUMERICAL_AUDIT.md`
-9. `manuscript/audits/THEORY_AUDIT.md`
+1. `RESEARCH_STATE.md`
+2. `wiki/index.md`
+3. `README.md`
+4. `manuscript/EVIDENCE_REGISTRY.md`
+5. `manuscript/NUMERICAL_PROVENANCE.md`
+6. `manuscript/RESULTS_NEEDED.md`
+7. `manuscript/audits/NUMERICAL_AUDIT.md`
+8. `manuscript/audits/THEORY_AUDIT.md`
 
 If HEAD is newer than the last update recorded in `RESEARCH_STATE.md`, inspect
 the intervening commits and recent validated results before assuming the memory
 file is current.
 
-## Scientific rules
+## Project Architecture
+
+### Directory Map
+- `core/`: reusable models, equations, solvers, analysis, serialization, plots.
+- `scripts/`: thin configuration, orchestration, persistence, provenance CLIs.
+- `configs/`: versioned and validated scientific parameters.
+- `hpc/`: Zeus PBS files, submission wrappers, campaign runbooks.
+- `tests/`: unit, regression, integration, and smoke tests.
+- `manuscript/`, `reports/`, `figures/`, `presentations/`: research outputs.
+- `work/`, `output/`, `tmp/`: generated data; never import active code from them.
+- `archive/`: legacy material; never import it as active code.
+
+### Primary Skills
+- `zeus-hpc`: prepare, synchronize, submit, monitor, recover, collect, or post-process a production Zeus campaign.
+- `high-impact-academic-scientific-writing`: draft, revise, restructure, or critique scientific manuscripts, sections, captions, and reviewer responses.
+
+## Scientific Standards
 
 ### The Scientific Contract
-Before substantive theory or numerical work, establish:
-- Physical question, observable, units, and validity regime.
-- Relevant conventions (basis/tensor ordering, signs, phases, normalization, boundaries).
-- Governing equations separate from implementation and discretizations.
-- Applicable exact limits, symmetries, and conservation laws.
+Before substantive theory or numerical work, establish these in the relevant code, tests, or research artifact:
+1. **Physical context**: Question, observable, units, and validity regime.
+2. **Conventions**: Basis/tensor ordering, signs, phases, normalization, boundaries, gauge, branches, degeneracies, and zero modes.
+3. **Governing equations**: Defined independently of implementation; separate analytical definitions from discretizations.
+4. **Validation logic**: Applicable exact limits, symmetries, conservation laws, and scaling checks before implementation; identify material error sources.
 
 ### Numerical Reliability
-- Check material errors: basis/grid/cutoff/size/timestep/precision/conditioning.
-- Prefer factorizations or `solve` over matrix inversion.
-- Use Hermitian routines for Hermitian problems; handle near-degeneracy explicitly.
-- Pass `numpy.random.Generator` explicitly and save seeds.
+- **Error Analysis**: Check material errors for the method: basis/grid/cutoff/size/timestep/tail and tolerance dependence; finite volume/boundaries; precision, cancellation, conditioning; residuals, backward error, orthogonality, spectral matching and symmetry sectors; quadrature/regularization; optimization branches/initialization; Monte Carlo uncertainty, autocorrelation, burn-in, and seeds.
+- **Convergence**: Do not claim convergence from one resolution. Prefer at least three systematic refinements for orders or extrapolation; label results provisional if cost prevents adequate evidence. Name unchecked error sources.
+- **Linear Algebra**: Preserve matrix structure (e.g., Hermitian routines for Hermitian problems). Prefer factorizations or `solve` over matrix inversion. Handle near-degeneracy and eigenvector phase ambiguity explicitly.
+- **Stochastics**: Pass `numpy.random.Generator` explicitly. Save actual seeds and quantify stochastic uncertainty. Use multiple seeds when conclusions depend on a realization.
 
 ### Core Constraints
 - Never turn a numerical trend into a theorem.
@@ -75,30 +90,34 @@ Before substantive theory or numerical work, establish:
 - Keep ontology separate from mathematics. Superselection, superdeterminism, primordial selection,
   or an unknown attracting dynamics are possible interpretations, not established mechanisms.
 
-## Coding rules
+## Coding Standards
 
-### Implementation Standards
-- Apply all five **SOLID principles** to new and modified code.
-- Use Python 3.11, type hints for nontrivial interfaces, and `pathlib.Path`.
-- Prefer composition, pure functions, and frozen validated dataclasses.
-- Avoid mutable defaults, wildcard imports, and global mutable state.
+### Implementation (SOLID)
+Apply all five SOLID principles to all new/modified code:
+- **Single responsibility**: Separate models, solvers, config, I/O, plotting, CLI, and HPC submission.
+- **Open/closed**: Extend behavior through composition/strategies; avoid spreading algorithm-selection conditionals.
+- **Liskov substitution**: Honor documented contracts (domains, units, normalization, shapes, error behavior).
+- **Interface segregation**: Expose only the capabilities each caller needs; prefer focused protocols.
+- **Dependency inversion**: Keep scientific policy independent of concrete solver/RNG/storage implementations.
 
-### Validation and Testing
-- First reproduce existing anchor calculations and tests. Do not refactor first.
-- Use `tests/test_<feature>.py`, deterministic seeds, and method-justified tolerances.
-- Add failing regressions for bugs.
-- Production-size runs are not unit tests.
+### Python & Validation
+- **Conventions**: Python 3.11, type hints for nontrivial interfaces, `pathlib.Path`, explicit tolerance keywords, and domain-aware docstrings.
+- **Anti-patterns**: Avoid mutable defaults, wildcard imports, global mutable state, import-time computation, and hidden caches.
+- **Testing**: First reproduce existing anchor calculations. Use `tests/test_<feature>.py`, deterministic seeds, and method-justified tolerances. Add failing regressions for bugs. Production-size runs are not unit tests.
+- **Verification**: Use `py_compile`, `pytest` (narrow scope first), and inspect exit status/output before reporting success.
 
-### General Rules
-- Large simulations belong on Zeus; use the `zeus-hpc` skill for submission and management.
-- Prefer existing service modules and versioned JSON configs over ad-hoc scripts.
-- Every new scientifically meaningful campaign must record parameters, git SHA, random seeds,
-  software versions, sizes, times, runtime, completion status, raw-data paths, and analysis version.
-- Do not form inverse matrices when a generalized eigenvalue/QZ formulation exists.
-- Preserve projective roots at infinity and singular/indeterminate-pencil diagnostics.
-- Never concatenate symmetry sectors for level-spacing statistics.
-- Record new claims and campaigns in the existing evidence/provenance
-  registries and follow the metadata contract in `AGENTS.md`.
+## Research Operations
+
+### Provenance & Outputs
+- **Parameters**: Keep in validated, human-readable `configs/` files.
+- **Metadata**: Record effective config/schema version, Git commit/source hashes, Python/dependency versions, seed, solver, tolerance, discretization, basis, cutoff, size, units, and timestamp.
+- **Data Integrity**: Downloaded Zeus data and curated results are immutable. Use new descriptive/timestamped directories for derived outputs.
+- **Figures**: Trace figures to code and data. Label axes, units, parameters, normalization; record smoothing, filtering, or cropping.
+
+### Execution & Communication
+- **HPC**: Large simulations belong on Zeus. Local runs are for validation/smoke cases. Production submission requires explicit authorization, a documented `hpc/` wrapper, and a fresh output root.
+- **Communication**: Lead with the result and evidence. Use concise connected paragraphs, precise verbs, and technical detail. Avoid promotional adjectives or decorative contrast.
+- **Completion (Done)**: The requested outcome is implemented, all scientific/validation requirements are met, prior data is preserved, and authorized Git delivery is verified.
 
 ## Git Delivery
 
@@ -107,7 +126,7 @@ Standing authorization covers committing and pushing completed in-scope work.
 2. Keep commits cohesive; separate scientific implementation from instruction maintenance.
 3. Validate thoroughly before committing.
 4. Integrate into the default branch (fast-forward preferred) and delete the task branch.
-5. Follow the detailed delivery flow in `AGENTS.md` for remote conflicts and push failures.
+5. Follow the detailed flow in the repository for remote conflicts and push failures.
 
 ## Research loop
 
