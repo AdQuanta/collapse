@@ -6,7 +6,7 @@ This overlay is scientific memory and research guidance, not permission to overr
 
 ## Start here, every session
 
-Read `AGENTS.md`, then read `RESEARCH_STATE.md`.
+Read `AGENTS.md`, then read `RESEARCH_STATE.md`. Use the `wiki/` directory for deep-dive conceptual synthesis and navigation.
 
 `RESEARCH_STATE.md` is the **canonical shared research memory** for this project: it carries the
 project-wide scientific context, current hypotheses, evidence status, and priorities across Ido,
@@ -25,12 +25,13 @@ label and never silently promote a conjecture to a result.
 
 1. `AGENTS.md`
 2. `RESEARCH_STATE.md`
-3. `README.md`
-4. `manuscript/EVIDENCE_REGISTRY.md`
-5. `manuscript/NUMERICAL_PROVENANCE.md`
-6. `manuscript/RESULTS_NEEDED.md`
-7. `manuscript/audits/NUMERICAL_AUDIT.md`
-8. `manuscript/audits/THEORY_AUDIT.md`
+3. `wiki/index.md`
+4. `README.md`
+5. `manuscript/EVIDENCE_REGISTRY.md`
+6. `manuscript/NUMERICAL_PROVENANCE.md`
+7. `manuscript/RESULTS_NEEDED.md`
+8. `manuscript/audits/NUMERICAL_AUDIT.md`
+9. `manuscript/audits/THEORY_AUDIT.md`
 
 If HEAD is newer than the last update recorded in `RESEARCH_STATE.md`, inspect
 the intervening commits and recent validated results before assuming the memory
@@ -80,7 +81,8 @@ For each question:
 6. Analyze failure modes and confounds.
 7. Update evidence status: PROVED / REPRODUCED_NUMERIC / PRELIMINARY_NUMERIC / FALSIFIED /
    CONJECTURE / SPECULATIVE.
-8. Only then propose manuscript wording.
+8. Record the activity in `wiki/log.md` and integrate synthesis into relevant `wiki/concepts/` pages.
+9. Only then propose manuscript wording.
 
 ## Highest-priority scientific objective
 

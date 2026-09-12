@@ -127,6 +127,22 @@ Counting algebraic roots equally is a mathematical/statistical construction. A p
 
 This distinction is central and should never be hidden.
 
+## Declared polar acceptance gate for the September 11 structural study
+
+On 2026-09-11 the user selected the following finite-resolution definition for
+the iff/universal-family task: full reflected polar coverage in 64 uniform
+theta bins, bin-center R RMSE at most 0.05 against cos²(theta/2), and
+maximal absolute Born moment residual at most 0.05 over the first eight
+relations `2 a_(2m+1) - a_(2m) - a_(2m+2)`, m=0,...,7, where
+`a_n = mean(cos(n theta))` uses all algebraic roots. No pseudocount is used.
+This is a declared study gate, not exact equality on a continuous interval
+or a claim of full-sphere Born geometry. The canonical 100-bin `S_born`
+is reported alongside it and is not an additional acceptance threshold.
+
+See [the constructive finite-family study](BORN_LIKE_CONSTRUCTIVE_FAMILY.md)
+for the effective iff condition, an analytically certified family using
+the native X/XX channels, numerical validation, and limitations.
+
 ---
 
 # 4. Closest prior work and literature map

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "criterion": {
+    "authorization": "User selected the previously declared polar audit gate on 2026-09-11",
+    "theta_bins": 64,
+    "required_coverage": 1.0,
+    "maximum_center_rms": 0.05,
+    "maximum_moment_residual": 0.05,
+    "maximum_moment_order": 16,
+    "pseudocount": 0
+  },
+  "phase_numerator": 99,
+  "phase_denominator_factor": 200,
+  "phase_divisors": [2, 4, 8, 16, 3, 5, 7, 11, 13, 6, 10, 14, 12],
+  "phase_l1_radius": 0.00004,
+  "seed": 20260911,
+  "inside_samples": 256,
+  "outside_samples": 256,
+  "purpose": "Exact commuting reduction and finite combinatorial certificate; no large matrix simulation"
+}

@@ -1,0 +1,216 @@
+{
+  "main": {
+    "id": "fe308f77f5adca3f",
+    "type": "split",
+    "children": [
+      {
+        "id": "576652272ba3f70d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "43d7456cebcce5e7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "methods/git-delivery.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "git-delivery"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a01f4a3bfa22f9c2",
+    "type": "split",
+    "children": [
+      {
+        "id": "28519cc67e8dd498",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6976e7c7b2904134",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "320c0bd934a0dc40",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "f2a9547faa630a1e",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "18c47d651489af98",
+    "type": "split",
+    "children": [
+      {
+        "id": "ff8cba14834125f2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6e2e8d3df8af888d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "methods/git-delivery.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "2d35b8afda23c053",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "methods/git-delivery.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "58493a7187932751",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "6b141522a0318687",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f4f4b09a868c5db5",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "methods/git-delivery.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "43d7456cebcce5e7",
+  "lastOpenFiles": [
+    "concepts/spectral-statistics.md",
+    "concepts/scientific-rules.md",
+    "concepts/projective-roots.md",
+    "concepts/born-like-points.md",
+    "concepts/big-picture.md",
+    "concepts/coverage-gates.md",
+    "campaigns/detuning-intervals.md",
+    "collapse/Welcome.md",
+    "concepts/literature-map.md",
+    "literature/Hamid-2025.md",
+    "literature/Guttel-2026.md",
+    "literature/Schulman-Theory.md",
+    "literature/Palmer-2026.md",
+    "methods/production-pipeline.md",
+    "literature",
+    "methods/homogeneous-qz.md",
+    "methods/git-delivery.md",
+    "methods/implementation-standards.md",
+    "methods/scientific-contract.md",
+    "campaigns/weak-coupling-search.md",
+    "campaigns/constructive-families.md",
+    "campaigns/nonnormal-limits.md"
+  ]
+}

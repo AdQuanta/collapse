@@ -13,6 +13,13 @@ an interval, and no finite nonpolar root cloud has exactly uniform continuous
 azimuth. The extension proves both impossibility results, the qualified
 finite-support iff criterion, and sharp finite-bin error bounds.
 
+For the subsequently approved finite polar gate, the
+[constructive X/XX family](BORN_LIKE_CONSTRUCTIVE_FAMILY.md) supplies an
+explicit sufficient microscopic family: a certified unequal-coupling design
+with arbitrary commuting detector X/XX dynamics and a bounded neighborhood
+of central-field and coupling perturbations. It is a different native
+operator subclass from the longitudinal XXZ ring controls below.
+
 ## Result and observable
 
 The strongest structural conclusion is that **bidirectional detector-charge
@@ -533,7 +540,9 @@ the exact isotropic obstruction, all grid counts, and error-versus-parameter
 plots; that evidence strengthens the detector-side account without resolving
 the general sufficiency question.
 
-No universal sufficient criterion in the bare local couplings is claimed.
+No universal sufficient criterion in the bare local couplings of these
+longitudinal XXZ ring controls is claimed. The later constructive X/XX
+study supplies such a sufficient family in its stated commuting subclass.
 The precise necessary/sufficient spectral criterion, the charge obstruction,
 and the qubit-axis identity are the established analytical results. The
 Hamiltonian-to-Born spectral law for generic interacting networks remains the

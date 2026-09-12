@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "source_candidate": "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17/metadata.json",
+  "source_note": "Positive-sign second-neighbor ring coefficients; chain uses the same bulk coefficients with open bonds and endpoint coupling",
+  "qubit_field": [0.0, 0.0, 0.0],
+  "detector_field": [0.0, 0.0, -0.014352746605732818],
+  "nearest": [-0.03048824849974197, -0.03048824849974197, -0.02418712918852393],
+  "second": [-0.13226687994843697, -0.13226687994843697, -0.16899859316711222],
+  "g_effective": -0.001200423510786095,
+  "anisotropies": [0.0, 0.5],
+  "coupling_parameterization": "gx=g_effective*cosh(eta), gy=g_effective*sinh(eta), gz=0",
+  "ring_divisors": ["sqrt(N)", "sqrt(N)", "N"],
+  "chain_attachment": "site 1, unscaled",
+  "sizes": {"ring": [5, 6, 7], "chain": [3, 4, 5]},
+  "times": [1000.0, 10000.0, 100000.0, 1000000.0],
+  "resolvent_z": [0.0, 0.03],
+  "log_radius_grid": [-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0],
+  "theta_bins": 64,
+  "moment_order": 16
+}
