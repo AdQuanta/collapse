@@ -935,3 +935,57 @@ Control normalized determinant differences or the needed small-singular-value
 logarithmic tails for genuinely noncommuting native dynamics. No full-model
 non-tautological Born iff, open microscopic phase, or full-model no-go is
 established; the original exact long-time objective remains active.
+
+---
+
+## 24. Detuning-interval obstruction with commuting detector vector fields
+
+**PROVED (Codex, 2026-09-12; scoped no-go).**
+[BORN_DETUNING_INTERVAL.md](BORN_DETUNING_INTERVAL.md) proves Theorem H for
+H_N(b)=K_N-X_q V_N-Z_q(W_N+b), with K_N,V_N,W_N commuting. If the joint
+spectral law has finite transverse second moment and a nonzero active
+fraction, and ordinary N-first then late-time phase mixing holds, exact
+Born balance cannot hold throughout any open central-Z detuning interval.
+No independence, spectral density, or longitudinal moment is assumed.
+
+The exact root coordinate is x=sin²(theta/2)=k_b sin²(t Omega), with
+k_b=v²/(v²+(w+b)²). In the mixed active law, Born requires south-cap mass
+o(epsilon). Any positive field mass whose resonance lies inside a putative
+Born interval gives an integrated south-cap lower bound C epsilon, a
+contradiction. If the interval contains no resonances, an interior detuning
+has a uniform gap. Finite E v² then gives south mass o(epsilon^(3/2)), while
+Born requires at least c epsilon^(3/2). These two cases exhaust the interval.
+This strengthens the earlier finite-third-moment gap obstruction to a finite
+second moment; the earlier heavy-tail Born construction has infinite second
+moment and shows the gap argument's moment order is sharp.
+
+**PROVED (native pointwise corollary).** For V_N=h+g sum X_i/sqrt(N),
+W_N=c sum X_i/sqrt(N), g!=0, every real h,b,c has an ordinary N-first then
+late-time weak root limit, and none is continuous full-support exact Born.
+For c!=0 and v0=h-gb/c!=0, the south cap divided by epsilon tends to
+|v0|/|c| times the standard Gaussian density at -b/c, which is positive.
+Coincident zeros instead give a strict support gap. The c=0 cases reduce
+to the gap obstruction or the uniform polar law. This is an actual commuting
+spectral CLT, not the invalid noncommuting substitution falsified in section 23.
+
+**VERIFIED_NUMERICALLY.** Nine new tests pass; the combined relevant suite
+passes 92 tests. At g=0.7,h=0.2,c=0.5,detector X field=0.13, 36 full native
+QZ checks cover N=2,3,4, times 0.3,1.7,11.3,83 and b=-0.6,0.3,0.8.
+Maximum angle-formula error is 8.072e-14; homogeneous residual 6.956e-16.
+The exact resonance coefficients are 0.4039069944,0.1466188253,0.2040943358;
+13 cap refinements from 1e-2 to 1e-5 verify the predicted limits. Coverage
+is 0.0625--0.15625 and global histogram errors remain null. All eight raw
+moment residuals and canonical S_born are saved without diagnostic changes.
+
+Code/config: `core/commuting_vector_field.py`,
+`core/commuting_vector_field_plotting.py`, `scripts/analyze_born_detuning_interval.py`,
+`configs/born_detuning_interval_2026-09-12.json`.
+The verified PDF/PNG figure, arrays, QZ records and checked provenance hashes
+are in `reports/born_detuning_interval_2026-09-12/` (uncommitted).
+
+**OPEN / NEXT.** This excludes a broader native XX/ZX preimage and any
+commuting-vector detuning interval under the stated assumptions. It does
+not resolve genuinely noncommuting detector fields or non-phase-mixing
+spectral limits. A full-model non-tautological C_B, microscopic preimage,
+robust positive phase or full-model no-go is still unproved. Continue with
+noncommuting determinant limits; do not generalize this scoped exclusion.

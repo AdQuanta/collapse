@@ -11,6 +11,12 @@ exchange counterexample to replacing noncommuting roots by a Gaussian
 trace-moment limit. These results constrain the next thermodynamic argument;
 they do not close the full-model Born phase question.
 
+[BORN_DETUNING_INTERVAL.md](BORN_DETUNING_INTERVAL.md) further excludes an
+open central-Z detuning interval for phase-mixed commuting detector vector
+fields with finite transverse second moment. It proves a pointwise no-go
+for the native affine collective XX/ZX family and sharpens Theorem E's
+moment assumption. Genuinely noncommuting detector operators remain open.
+
 ## 1. The theorems
 
 **Theorem A (recurrence, all finite native Hamiltonians).** For every finite

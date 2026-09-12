@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "transverse_slope": 0.7,
+  "transverse_offset": 0.2,
+  "longitudinal_slope": 0.5,
+  "detunings": [-0.6, 0.3, 0.8],
+  "epsilon_log10_min": -5,
+  "epsilon_log10_max": -2,
+  "epsilon_points": 13,
+  "qz_sizes": [2, 3, 4],
+  "qz_times": [0.3, 1.7, 11.3, 83.0],
+  "detector_x_field": 0.13
+}
