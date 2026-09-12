@@ -1,0 +1,12 @@
+{
+  "schema_version": "born-phase-verifier-v1",
+  "hypothesis": "Saved positive-seed structural metrics reproduce with the frozen production definitions; historical angle archives may lack homogeneous QZ validity evidence.",
+  "alternative": "Source integrity, root count, or reproduced metrics fail; no failed condition may be omitted.",
+  "prediction": "Nearest and second-neighbor N17 references pass the established structural gate; this cannot promote a phase because times, generic perturbations and fresh QZ validity remain missing.",
+  "cases": [
+    {"candidate": "nearest_neighbor_ring", "sizes": [14,15,16,17], "source": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N{N}"},
+    {"candidate": "second_neighbor_ring", "sizes": [14,15,16,17], "source": "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N{N}"},
+    {"candidate": "config_079", "sizes": [13,14,15], "source": "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N{N}/config_079"},
+    {"candidate": "config_047", "sizes": [13,14,15,16], "source": "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N{N}/config_047"}
+  ]
+}

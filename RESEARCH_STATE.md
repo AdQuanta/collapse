@@ -1,5 +1,14 @@
 # RESEARCH_STATE.md — Canonical Shared Research Memory
 
+> **2026-09-12 audited correction — objective OPEN.** The perturbative
+> completion claim is withdrawn; density is J'' rather than J'. Existing
+> Theorem C excludes a full-parameter open phase containing an X-conserving
+> seed. Frozen verifier v1 reproduces all 15 saved positive snapshots, with
+> largest-size normalized balance residuals .05808/.05675 (X-only rings),
+> .27107 (079), .36732 (047). Fresh QZ validity, multiple times and generic
+> perturbations remain missing. Next: genuinely multichannel seeds.
+> See `research_reports/BORN_PHASE_AUDIT_2026-09-12.md`.
+
 Last updated: 2026-08-29 (section 10b added; see also sections 14a, 15, and 17)
 
 This is the **single canonical research-memory file** for this project. It is intended to transfer context between Ido, Claude Code, ChatGPT/Codex, and future agents.

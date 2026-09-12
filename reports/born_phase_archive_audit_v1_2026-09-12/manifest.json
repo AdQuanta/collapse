@@ -1,0 +1,153 @@
+{
+  "schema_version": "born-phase-verifier-v1",
+  "config": {
+    "schema_version": "born-phase-verifier-v1",
+    "hypothesis": "Saved positive-seed structural metrics reproduce with the frozen production definitions; historical angle archives may lack homogeneous QZ validity evidence.",
+    "alternative": "Source integrity, root count, or reproduced metrics fail; no failed condition may be omitted.",
+    "prediction": "Nearest and second-neighbor N17 references pass the established structural gate; this cannot promote a phase because times, generic perturbations and fresh QZ validity remain missing.",
+    "cases": [
+      {
+        "candidate": "nearest_neighbor_ring",
+        "sizes": [
+          14,
+          15,
+          16,
+          17
+        ],
+        "source": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N{N}"
+      },
+      {
+        "candidate": "second_neighbor_ring",
+        "sizes": [
+          14,
+          15,
+          16,
+          17
+        ],
+        "source": "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N{N}"
+      },
+      {
+        "candidate": "config_079",
+        "sizes": [
+          13,
+          14,
+          15
+        ],
+        "source": "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N{N}/config_079"
+      },
+      {
+        "candidate": "config_047",
+        "sizes": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "source": "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N{N}/config_047"
+      }
+    ]
+  },
+  "config_sha256": "23501ae6b22355d30328d610d51954c10eb9d79b8ef2eda95b992e79c00a63f9",
+  "timestamp_utc": "2026-09-12T20:11:11.659624+00:00",
+  "python": "3.11.16",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "git_commit": "b8d4a4c08e308782e709971adb898ba9673e9550",
+  "code_sha256": {
+    "scripts/audit_born_phase_archives.py": "528728e3479f325e6880de7f97f1be95d60e4c8089328a6e74e7fa1a14723410",
+    "core/born_phase_verifier.py": "325c4de0a6373c3471769457b18268200d255fac5c187e0589598abead65b442",
+    "core/born.py": "83649fe004f426db7bd602ea46381cb8ee2942c2ac9ceee9c8914f0410cb75f4",
+    "core/born_reciprocity.py": "1c292d86a88a01916f6617b9a40a531a7d439fc970958980da6a85a07d953e20",
+    "core/relative_evolution_pencil.py": "54245c926fa11728de5fada4a65154fe0270ce31d27d0385236740dee7e29f4b"
+  },
+  "input_sha256": {
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N14/results.npz": "939eafb80bffe3bcd693c98811cada82556e68b0d86703e20990d32fb1c0a877",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N14/metadata.json": "b700855bcd5f5f5c3acfbb1fe940144f143b1c8dea1ad1797b89abdb3dca1b57",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N14/metrics.json": "67570137811a8de4ff892801ed15971d0cf888a2f77e6451c5db85321333d926",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N14/validation.json": "1f45e10fbc9b722242bd4b8f193968857aa6a693ca9e0f24be693027d7561d9f",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N14/COMPLETE.json": "7fa75c4bb4e99e512fb29c5071f94c685154e89cd64ac870249b3b876d4adba8",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N15/results.npz": "364c04c4761a59b8bcdbdb44767456029f2ce2c85d36057222647238028e594b",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N15/metadata.json": "5f1f210aafaf4855f9889bffd1ad27491ecedf2066ae1a85c0bac09e40de903b",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N15/metrics.json": "077244f8d41a9c0a33e2ec1ce1e517db9915d8e8870e9e22e545760058651a21",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N15/validation.json": "0408f33c1a5d7f74b17e241f0c8d3745e7c1cc37e4f4401117ed9eb8e096d8fa",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N15/COMPLETE.json": "c3be30ca13a9eb21b2385e8369ffbfc549919a11c9c2149951a7cbac0f9f22cf",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N16/results.npz": "4d7c3ad7f19f50f0b83b8105ba83007c720aa26e43a59b3392401e22cda54841",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N16/metadata.json": "bec575ce1aef04ae66bcec61ab0f1836073d5037e373bda6966cb8bf3220b8c8",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N16/metrics.json": "9a57a29656a6d222abde4f39c5847b0729776367e1ca59322afacec48df417a2",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N16/validation.json": "1401a88335f46e9d92afecb4340e560160aedabaecbbd4ae69b45edc891bc304",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N16/COMPLETE.json": "f2871e7a32e2235759e44c3597a7eb9d0c8b83e2d33e2db08c4d1db312ef6416",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17/results.npz": "a974e8288d29912a7290224b10e8b5f09c0dff19f9546e09d3427d8073caab9c",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17/metadata.json": "581fca0540ff6df1a788bdaf1a2eba7eded4245ea614f65603cf63412d9cfa9e",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17/metrics.json": "1a37c11fbcd26fa8f4a259877b3d5b7162486274615107c4e17cebdee8dcae99",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17/validation.json": "532ea425fbd3c27af2f16b353ec35fcfb6212411c913f132e15167c23841bbd2",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001/N17/COMPLETE.json": "f9d64bd1cd937026a4af71b47b05c9c7bc2b7fda7f1eba5217eb91fe6ed2e68f",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N14/results.npz": "5a6fb24926c0d9c108008bdbf8f4536b3d03c0956161e5ec876c6088805cdcd6",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N14/metadata.json": "2821cd904d08a4884316653a7c483c762bb84f23784cc11c6f5a471755428d48",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N14/metrics.json": "ee527df25c77d650b3e8f0372685c4f7a54dffaf5da407cc8214d94162f1d6cd",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N14/validation.json": "1f45e10fbc9b722242bd4b8f193968857aa6a693ca9e0f24be693027d7561d9f",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N14/COMPLETE.json": "0f1aa79a0ada9122f044a00aaf2aeaee3a05e0948236e383fecc368201c464ec",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N15/results.npz": "ffdc329db5723c7e2ff0eec1fcc52481b573c63611b0922749a885a82f9d5b18",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N15/metadata.json": "a8d212afc8b850963d3cc12b54055e67aeb6a89db826c2c18ef4fd6305652d12",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N15/metrics.json": "06d1f9e82ac292c9d329120bd8a81aba71796e2b2208b217506f04ff21405e74",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N15/validation.json": "0408f33c1a5d7f74b17e241f0c8d3745e7c1cc37e4f4401117ed9eb8e096d8fa",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N15/COMPLETE.json": "9c87aa1fc8ab2eedce04569be85d06cf32aba1f453457ec2da87e0c6cfa8820b",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N16/results.npz": "9e02d3ca519529a8b5d241a1c02ec8cc7414a32c948da56682d516981f1cb671",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N16/metadata.json": "98eb6c18a2e1502abc25feea482c69fbeb7d3c8cdaed230c335134feeac612b3",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N16/metrics.json": "e2e5eb1d42130a22677d9cac8cf42878b4404b4aab78a75e7f7b33013ab8ad23",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N16/validation.json": "1401a88335f46e9d92afecb4340e560160aedabaecbbd4ae69b45edc891bc304",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N16/COMPLETE.json": "640c1dbb5b1166a62766afdc25beb040462dddaaee271492f1c6ad9b2f743e52",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17/results.npz": "eb5f9a39d3312fbb14b0b84967a2738776e4da0fd4389fd63011ef94763e7afd",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17/metadata.json": "da72d65f5942082f30b133106c5409fce7633a675fbe6d1a51b2d9a3c40448ff",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17/metrics.json": "f9c522b3825ec8392b98d87d322cc75c384f8793b355df46924e43d4d3bbcf5f",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17/validation.json": "532ea425fbd3c27af2f16b353ec35fcfb6212411c913f132e15167c23841bbd2",
+    "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001/N17/COMPLETE.json": "0cdefe65b05c8cc9451de6665d5820d141f336efa28c18f93925f29a3df524bc",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_079/results.npz": "3bd414c7dd7b58008bd9b33ff9c396525dc6bc30da7d08c902e1909473c1a86b",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_079/metadata.json": "0927a2497b4ac6ad80a0b1c476c94c7f201aed5241f7ed136c296f3c3edda21b",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_079/metrics.json": "560df1495e35c25a8b2160781725b88150ff1e760440f4c803fd4e7b413d33ed",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_079/validation.json": "9f3a07ca9c5301cfdecf465c2980dd0d069283906978f60d0d4c812a98457d06",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_079/COMPLETE.json": "4c6b12392d4756f2e6ce8468409db2bcf56785b60be410a4db2ef7b0d64265e8",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_079/results.npz": "bc747fdd23cb84624208e3c0070b8904bd19346892147a5837446439ce9f87fb",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_079/metadata.json": "1280c733c6b67daed9962bb8ae38c978187830f3bce7107f2bd0f9e8ab7b8c88",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_079/metrics.json": "5d9323373714f0d43c3c78272b1ddcceaaaf9b29a3c21e9c69dac2e73f7ee4d3",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_079/validation.json": "8a9ead52c29479ceeb9f927109f21e303161256bf911d6d845625fc43e27dfbe",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_079/COMPLETE.json": "223706c02245976a6f19300aba8d3251779e4bc40c78f04ece9757172d21be3c",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_079/results.npz": "e5eff3ab31395855491030f5b7b35b7cad9f0f6f503fbbad9e110a3c33c0271f",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_079/metadata.json": "b3f9132c41f97a9d8dc4e5b599c42f24ff5190c20f4ee74a2aba9a3aee9dc085",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_079/metrics.json": "df55316800e07b71532f8346dda90c7ae0c5d549a654ba6ac6367c04360c7ab6",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_079/validation.json": "c409ee9d3b00964efaa838c5c7e48d9b8770f1e2666de14922162f055c2042af",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_079/COMPLETE.json": "99d1e12a8e649a020dcac2178f24fef60b0baa9a3f77a8cce8dfe6d46f468ba2",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_047/results.npz": "956827cf633f25667bf39ec2a430c9446c63ade23d0ce895a931969795cf8d6c",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_047/metadata.json": "d41f728023bbeb7e8843a0e9d35907b4f76a2617f0c21e4e427e435b2b56fdcd",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_047/metrics.json": "aebf36e42f7f4ad68318c0f6ac711f6dc6e1bcf2d21b0b757f3fe0d706eb4139",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_047/validation.json": "96e20681e153fba55335599b0ca0786d56fe14bed123374d0ff43d18812a75d1",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_047/COMPLETE.json": "e03da785727426eb6cc047da2d15352c43965e384b9a52aca735ff50912f4b2c",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_047/results.npz": "91394954e89076f46dc4bb4462f42dd48bf54aa5b0f99ae6aeff618be7516567",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_047/metadata.json": "a839d4917545577f33fe6746d38ded0602ba120aab90ae3b23e6ef2d7dc7105d",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_047/metrics.json": "0d508f860dbff0e6024ff7e896fa6ddcaa2b9df206de800b05d45f8e601cebf1",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_047/validation.json": "be31be8344f0a148164e514d12c9dcc5bc84bbf7a6da19f1de2efbf7093d0514",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N14/config_047/COMPLETE.json": "c150d217516b017e05e33f82ce461c83a12406f76d0d6c07f83a561e2e36603a",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_047/results.npz": "e6deece53c495ec8424cd2ad88d2920e0887d0a9e5f1d6d1de551ba00479f487",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_047/metadata.json": "cd53a0416efcd041aceb8c667f066be0604b27cc636b2905da49d61953d905e0",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_047/metrics.json": "788dc23808402e29369d8407240e72e849a82c244e3eaa4cf49fec9fca1c86bf",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_047/validation.json": "27857a1eabf901041c2ec0c36946113a31f789ffc49279d80116108a4dba57fc",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N15/config_047/COMPLETE.json": "3354c564cbf3c0a7b9ad40d385a9d837ab4a0a950088f3e6fb7c02d6c0a06d8c",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N16/config_047/results.npz": "0d3cf05378fbfede33a95d7d6a1dec83daf56adbccc3042ed8e4d69f79451198",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N16/config_047/metadata.json": "0322a0df1b0bfc4a4afb033dc47bfdfc187810f7ce48850757b268d6382ed110",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N16/config_047/metrics.json": "cb256fd2f251ef4f84851c99b14989413b75bb9e170012760f2b6363531eec29",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N16/config_047/validation.json": "a82250687c6bff4df0adb9569cb60288d7cd423bfe4ed9d93a3dbf6a3728c885",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N16/config_047/COMPLETE.json": "5aac8c86fb0e980c91b78e892c5408113c274791a671534dfd8174f2ed8ee633"
+  },
+  "output_sha256": {
+    "config_079.png": "daedf2828c4485e1959547a6f4b67c2bc87a8abf457e228ff66bad688173f3a3",
+    "second_neighbor_ring.png": "4a3ccb82758a16d231374584e976113a9214cdcbb53ea5ed1d3499021bbc01e7",
+    "config_047.pdf": "784a0c4fcc3ed28dfab1b2a710a1e8f67ece5b90bb730a4b0e5711143d582772",
+    "config_079.pdf": "d9f8c7e1c599f9596a778d5c0ae33c2434a4808da3368f4ee40fa9a878982222",
+    "second_neighbor_ring.pdf": "e321959d2c31ba7f75c263bf0cd9969bd73e0ad20ee8a1c1ee153d9a8edfcd78",
+    "config_047.png": "de0cbd22ee7396ff13c9755ce5073aa74daa4344bc6021479ccd16566b41f440",
+    "results.json": "5a7b68ce80f90b58e1f63b7088d2cc82fa01cf19d32c45f78cb82e173b05500f",
+    "nearest_neighbor_ring.pdf": "8f5d9311a410039c361c4efc3d35faac9d9d66344cca6f45542c2d7e06b39f84",
+    "nearest_neighbor_ring.png": "05a5ac10e3d86a5eb9637770ac71cc4e84add59bd987a15b978f801811100fc3"
+  },
+  "status": "complete",
+  "scope": "Archive reanalysis; no new QZ certificate or asymptotic inference"
+}

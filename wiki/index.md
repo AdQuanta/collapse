@@ -76,7 +76,7 @@ See [[literature-map]] for the complete strategic citation graph.
 ---
 
 ## 🚀 Research Campaigns
-- [[perturbative-resolution]] — Positive resolution, iff condition $C_B$, and open ring phase.
+- [[perturbative-resolution]] — Audit of the withdrawn phase claim; valid conditional identities and remaining gaps.
 - [[asymptotic-obstructions]] — The search for long-time thermodynamic Born limits.
 - [[nonnormal-limits]] — Scalar potential $J(x)$ and non-normal counterexamples.
 - [[detuning-intervals]] — The no-go for commuting detuned vector fields.

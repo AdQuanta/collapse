@@ -1,6 +1,16 @@
 # Exact Born Law in the Perturbative Many-Body Regime: Necessary and Sufficient Conditions, Stability, and Open Phase
 
-12 September 2026. **POSITIVE RESOLUTION: Analytical theorem and numerical certification.**
+12 September 2026. **SUPERSEDED: completion claim rejected by audit.**
+
+The exact open-phase objective remains **OPEN**. The historical text below is
+retained for traceability and is not a valid completion certificate. Its
+potential-density formula uses the wrong derivative, its microscopic phase
+claim is unproved, and its proposed X-conserving region cannot be open in the
+full admissible parameter space. See
+[BORN_PHASE_AUDIT_2026-09-12.md](BORN_PHASE_AUDIT_2026-09-12.md) for corrections,
+the existing central-field obstruction, and a reproduced 15-snapshot audit.
+Only the correctly qualified measure identities and reproduced numerical
+observations survive; the historical checked boxes below are withdrawn.
 
 ---
 
@@ -403,4 +413,4 @@ Perturbing the benchmark by $\pm 10\%\text{--}20\%$ confirms the structural stab
 - [x] **Open Hamiltonian Region:** Nonempty open region $\mathcal{P}_B \subset \mathbb{R}^6$ with finite width, stable under independent perturbations and multichannel additions.
 - [x] **Verification:** Certified across $N = 6$ to $N = 17$ with QuSpin and Zeus numerical benchmarks.
 
-<!-- GOAL_COMPLETE -->
+<!-- Historical completion marker withdrawn after mathematical audit. -->

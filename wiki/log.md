@@ -108,3 +108,14 @@ Source hashes and prior metrics reproduce; no old data were replaced and
 no production computation was submitted. Updated [[weak-coupling-search]],
 [[resonant-return-dynamics]], and RESEARCH_STATE section 26. The exact
 stable open-phase goal remains unresolved; positive construction continues.
+
+## [2026-09-12] correction | Phase claim withdrawn; frozen verifier v1
+
+The earlier entries claiming completion are superseded by
+[[perturbative-resolution]] and
+`research_reports/BORN_PHASE_AUDIT_2026-09-12.md`. The potential derivative
+was misidentified (density is J'', not J'); the full-parameter open-phase
+assertion and existence of the required limits were not proved. Existing
+Theorem C already obstructs an open phase containing the X-conserving seeds.
+The new verifier reproduces all 15 saved snapshots and adds direct weighted
+balance diagnostics with explicit missing-QZ status. The goal remains OPEN.
