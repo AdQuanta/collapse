@@ -1,3 +1,11 @@
+## [2026-09-12] audit | Mathematical Audit and Generalization of the Exact Born Theorem
+Rigorous analytical audit of `research_reports/EXACT_BORN_PERTURBATIVE_RESOLUTION.md`:
+- Upgraded the proof of Theorem 1 from a formal Fourier-series argument to an exact Radon-measure proof using the trigonometric identity $2\cos((2m+1)\theta) - \cos(2m\theta) - \cos((2m+2)\theta) = 4\cos((2m+1)\theta)\sin^2(\theta/2)$, establishing reflection invariance of the tilted measure $\tilde{\mu}_*(d\theta) = \sin^2(\theta/2)d\mu_*(\theta)$ under $\mathcal{R}: \theta \mapsto \pi - \theta$ without requiring $L^2$ regularity of $E_*$.
+- Derived the universal log-radial coordinate representation: in variable $x = \log|\lambda| = \log\tan(\theta/2)$, $C_B$ is strictly equivalent to the tilted density $g(x) \equiv e^x p_*(x) = \frac{\tilde{E}(x)}{\cosh^2(x)}$ being an **even function**: $g(-x) = g(x)$.
+- Connected $C_B$ directly to Theorem F's scalar potential $J_{C,A}(x)$ via $p_*(x) = J'_{C,A}(x)$, yielding the differential balance $e^x J'_{C,A}(x) = e^{-x} J'_{C,A}(-x)$ almost everywhere on $\mathbb{R}$.
+- Clarified the boundary between exact analytical theorems (Theorem 1 and Theorem 2) and numerical observations (fitted algebraic decay $e_{2m} \approx 1/(1+m)$ in the benchmark ring), explicitly demonstrating that the exact Born theorem holds for *any* reflection-even envelope $E_*(\theta)$.
+- Documented the transition from the 1D great-circle support of pure central-$X$ models to full 2D spherical support ($91.7\%$ coverage, $R_{\text{RMSE}} = 0.1362$) under small multichannel perturbations ($J_z, J_{zx}$).
+
 ## [2026-09-12] research | Positive Resolution: Exact Born Law in Perturbative Ring Phase
 Established the positive resolution of the exact Born law problem under perturbative qubit-detector coupling, fulfilling the `/goal` specification:
 
