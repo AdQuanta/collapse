@@ -85,9 +85,12 @@ full detector space is exp(N|eta|); it is not uniformly well-conditioned in
 N. Exact finite-N spectral equality remains true, but small matrix errors
 cannot be transported through this similarity with a size-independent bound.
 
-Adding a weak gz term leaves the first derivative (2) unchanged, but generally
-introduces a second-order matrix correction. Generic transverse detector
-fields or Jrx!=Jry remove the charge condition. These are directions the
+Adding epsilon gz Z0 Lz to (1) leaves the first derivative (2) unchanged,
+but generally introduces a second-order matrix correction. This statement
+requires the physical longitudinal coupling to vanish linearly with epsilon;
+a fixed longitudinal coupling changes the zeroth-order conditional detector
+Hamiltonians and hence (2). Generic transverse detector fields or Jrx!=Jry
+remove the charge condition. These are directions the
 open-phase proof must eventually cover, not directions excluded from the
 positive search.
 
@@ -186,10 +189,12 @@ full self-consistent inverse in (6) near resonance.
 ## 4. A candidate scale for a finite-width search
 
 **Dimensional estimate and hypothesis, not a derived relaxation rate.**
-For a fixed microscopic detector energy E_D, a return self-energy away
-from singular spectral structure has the scale g²/E_D. Its actual value
-depends on the matrix spectral measure in (7); E_D does not substitute for
-a gap or a detector correlation-time calculation.
+For a fixed microscopic detector energy E_D, g²/E_D is a candidate
+return-energy scale. This is not a size-uniform matrix-norm estimate:
+exactly, ||Sigma(E+i delta)|| <= ||Q||²/|delta|, and the ring ||Q||²
+can grow as N g². Establishing g²/E_D as a typical scale requires control
+of the relevant matrix spectral measure in (7); E_D does not substitute
+for a gap or a detector correlation-time calculation.
 
 The two saved positive ring references were previously compared using
 h0z/hz. Choose, solely for a reproducible dimensional comparison, E_D as
@@ -226,6 +231,12 @@ does not impose an exact resonance or a coupling-ratio equality. This
 describes a legitimate candidate neighborhood; **no point in its generic
 interior is yet certified to satisfy the exact-Born law**.
 
+In the endpoint chain, the conditional term gz Z1 in (11) is of order
+epsilon E_D, larger than the central fields. It must remain in H+ and H-;
+the central-field scale alone is not the full resonance mismatch. The ring
+term gz sum Zi/N also cannot be discarded without a stated sector or
+spectral-measure estimate.
+
 The auxiliary time tau=epsilon² E_D t organizes the return dynamics. A
 weak-coupling kinetic limit epsilon->0 at fixed tau would not by itself
 prove the requested N-first, t->infinity law at fixed weak epsilon. That
@@ -234,8 +245,8 @@ additional uniformity and the root logarithmic-tail control remain required.
 ## 5. Numerical verification and limits
 
 Eleven focused tests verify (6) against an independent full solve at exact
-degeneracy and three complex spectral points, (7), (4) for interacting
-ring/chain detectors and three sign regimes, the derivative (2) at three
+degeneracy and three complex spectral points, the causality sign in (7),
+(4) for interacting ring/chain detectors and three sign regimes, the derivative (2) at three
 coupling refinements, and exclusion of the singular gauge boundary from
 the invertible formula. They pass; the combined relevant suite passes 50 tests.
 
@@ -285,3 +296,10 @@ time-domain pencil obeys an independently characterized Born condition,
 and establish late-time and perturbation stability. The transverse
 equivalence and Schur resummation are tools for that positive construction,
 not substitutes for the requested iff/open-phase theorem.
+
+**Diagnostic figure supplement (2026-09-12).** All 48 full-propagator
+snapshots now have P(theta), reflected P, and R(theta) versus Born panels
+in `reports/born_positive_diagnostics_2026-09-12/return_{ring,chain}_N*.{png,pdf}`.
+Empty ratio bins remain gaps. The same supplement includes seven saved
+positive multichannel ring snapshots; see
+[BORN_POSITIVE_MULTICHANNEL.md](BORN_POSITIVE_MULTICHANNEL.md).

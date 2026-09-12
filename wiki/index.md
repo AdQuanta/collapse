@@ -8,6 +8,7 @@ This index serves as the structural map for the `unitary-collapse` research prog
 - [[big-picture]] — The fundamental scientific question and the restricted-state loophole.
 - [[born-like-points]] — Definition and diagnostics of Born-like root distributions.
 - [[projective-roots]] — The mathematical construction of collapsible states via matrix pencils.
+- [[resonant-return-dynamics]] — Exact projected return operator and positive multichannel leads.
 - [[relative-propagator]] — The relative-unitary evolution and its eigenphases.
 - [[spectral-statistics]] — Role of Wigner-Dyson vs. Poisson statistics in generating Born geometry.
 - [[symmetry-sectors]] — Exact irreducible sectors and the rule against mixing spectra.

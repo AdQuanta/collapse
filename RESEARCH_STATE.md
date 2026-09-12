@@ -1045,3 +1045,61 @@ Code/config: `core/ring_chain_family.py`, `core/weak_coupling_picture.py`,
 provenance are in `reports/born_weak_coupling_2026-09-12_final/` (uncommitted).
 No production calculation was submitted. The original exact-Born goal
 remains active; neither its positive nor negative completion test is met.
+
+
+---
+
+## 26. Positive multichannel leads, exact returns, and P/R diagnostics
+
+**USER DIRECTION (2026-09-12).** Include P(theta), reflected P, and R(theta)
+versus Born wherever needed to assess numerical candidates, as in previous
+studies. Continue the positive perturbative ring/endpoint-chain search with
+ring gx/sqrt(N), gy/sqrt(N), gz/N. Updated instructions/wiki organization
+is adopted; tracked research reports now reside in `research_reports/`.
+
+**PROVED, SCOPED.** [The return study](research_reports/BORN_RESONANT_RETURN.md)
+derives exact leading transverse similarity for charge-conserving detectors
+and an exact Schur/Volterra return representation for the full requested
+XYZ families. The similarity is a fixed-N,t first-derivative statement;
+its condition number grows with N and it is not full-dynamics equivalence.
+The Schur representation keeps all repeated returns and conditional gz
+shifts without division by vanishing level differences. A g²/E_D scale is
+only dimensional: ||Sigma(E+i delta)|| <= ||Q||²/|delta|, with ring ||Q||²
+potentially proportional to N g². A gz of order epsilon changes conditional
+endpoint energies at order epsilon and must not be dropped when central
+fields are of order epsilon².
+
+**VERIFIED_NUMERICALLY.** Eleven focused tests and the combined 50-test
+suite pass. Forty-eight reduced full-QZ snapshots (ring N=5–7, endpoint
+chain N=3–5, eta=0,0.5, t=1e3–1e6) verify the reduction and reveal finite
+return effects. Maximum homogeneous residual is 2.311e-15 and independent
+Schur-resolvent relative error 4.870e-14. Their incomplete polar coverage
+makes global histogram errors undefined; these small sizes do not exclude
+a thermodynamic phase. Verified source data are in
+`reports/born_resonant_return_2026-09-12_verified/`.
+
+**REPRODUCED_NUMERIC, POSITIVE LEADS.**
+[The multichannel audit](research_reports/BORN_POSITIVE_MULTICHANNEL.md)
+adds archived ring config_079 and config_047 with both gx and gy nonzero.
+At t=1e6, ratio RMSE is 0.097703,0.068593,0.054979 for N=13,14,15 (079)
+and 0.123585,0.120579,0.087264,0.062789 for N=13,14,15,16 (047).
+All have full 64-bin reflected coverage. Largest-size eight-moment maxima
+are 0.052994 and 0.045441; moment errors do not systematically decrease.
+Second azimuthal harmonics are 0.403694 and 0.435970, not evidence of
+azimuthal uniformity. Source COMPLETE hashes, root counts, normalization,
+and saved ratio metrics are checked; no new QZ certification of old roots
+is claimed. Both cases still have h0=gz=0 and charge-conserving detectors.
+
+Eight PNG/PDF diagnostic figures cover all 55 profiles in
+`reports/born_positive_diagnostics_2026-09-12/`, with all moments, coverage,
+errors, and provenance saved. Code/config: `core/polar_diagnostic_plotting.py`,
+`scripts/plot_born_positive_diagnostics.py`, and
+`configs/born_positive_diagnostics_2026-09-12.json`. All roots are retained;
+no smoothing, averaging, or pseudocounts are applied. Born is overlaid on R;
+P is shown with its reflection since the ratio does not fix a unique P.
+
+**OPEN / NEXT.** Pursue independent microscopic neighborhoods around these
+multichannel positive leads using the full conditional return operator.
+Multiple high-N late times, nonzero gz/central fields, generic detector
+perturbations, and the exact N-first stable Born phase remain unverified.
+No production campaign was submitted. The exact-Born goal remains active.

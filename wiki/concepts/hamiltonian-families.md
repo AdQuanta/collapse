@@ -39,6 +39,6 @@ A specifically designed class where the detector Hamiltonian $K$ commutes with t
 ## 7. Weak-Coupling Interacting Families
 Perturbatively coupled XYZ rings and endpoint-chains.
 - **Focus**: Studies the stability of Born-like behavior under weak coupling and the role of resonances.
-- See: [[weak-coupling-search]].
+- See: [[weak-coupling-search]], [[resonant-return-dynamics]]. Both transverse collective channels now have saved positive numerical leads; generic XYZ stability remains open.
 
 See also: [[production-pipeline]], [[symmetry-resolution]].

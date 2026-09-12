@@ -46,3 +46,18 @@ Executed a massive expansion of the literature wiki to establish the theoretical
 **Integration:**
 - Updated `wiki/concepts/literature-map.md` with a fully linked graph of these references.
 - Updated `wiki/literature/` directory with detailed summaries for each.
+
+
+## [2026-09-12] research | Multichannel positive leads and polar diagnostics
+
+**REPRODUCED_NUMERIC:** Audited seven archived ring snapshots with gx and gy
+both nonzero; improving ratio RMSE accompanies non-improving moment errors.
+**PROVED, SCOPED:** Added the leading transverse similarity and exact
+Schur/Volterra return representation to shared memory, with explicit
+longitudinal-scaling and matrix-norm caveats from independent review.
+Generated eight P/reflected-P and R/Born PDF/PNG figures for 55 profiles.
+The output root is `reports/born_positive_diagnostics_2026-09-12/`.
+Source hashes and prior metrics reproduce; no old data were replaced and
+no production computation was submitted. Updated [[weak-coupling-search]],
+[[resonant-return-dynamics]], and RESEARCH_STATE section 26. The exact
+stable open-phase goal remains unresolved; positive construction continues.

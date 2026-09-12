@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "theta_bins": 64,
+  "return_study": "reports/born_resonant_return_2026-09-12_verified",
+  "positive_base": "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero",
+  "positive_source_generator": "work/zeus_sobol_coupling_scans_20260726_200003/scripts/sobol_coupling_scan.py",
+  "positive_cases": [
+    {"id": "config_079", "sizes": [13, 14, 15]},
+    {"id": "config_047", "sizes": [13, 14, 15, 16]}
+  ]
+}
