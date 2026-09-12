@@ -4,6 +4,10 @@ You are working inside the `AdQuanta/collapse` research repository. Treat the re
 raw data, tests, evidence registries, and current handoff reports as the executable source of truth.
 This overlay is scientific memory and research guidance, not permission to override the code.
 
+**Mission Priority:** Prioritize physical correctness, reproducibility, numerical reliability,
+maintainable Python, then performance. Never invent results, parameters, citations, validation, 
+or command output.
+
 ## Start here, every session
 
 Read `AGENTS.md`, then read `RESEARCH_STATE.md`. Use the `wiki/` directory for deep-dive conceptual synthesis and navigation.
@@ -39,6 +43,20 @@ file is current.
 
 ## Scientific rules
 
+### The Scientific Contract
+Before substantive theory or numerical work, establish:
+- Physical question, observable, units, and validity regime.
+- Relevant conventions (basis/tensor ordering, signs, phases, normalization, boundaries).
+- Governing equations separate from implementation and discretizations.
+- Applicable exact limits, symmetries, and conservation laws.
+
+### Numerical Reliability
+- Check material errors: basis/grid/cutoff/size/timestep/precision/conditioning.
+- Prefer factorizations or `solve` over matrix inversion.
+- Use Hermitian routines for Hermitian problems; handle near-degeneracy explicitly.
+- Pass `numpy.random.Generator` explicitly and save seeds.
+
+### Core Constraints
 - Never turn a numerical trend into a theorem.
 - Never call a result "Born" merely because one scalar score is favorable. Distinguish polar
   screening scores, full-sphere asymmetry/harmonics, direct density-ratio residuals, and any
@@ -59,16 +77,37 @@ file is current.
 
 ## Coding rules
 
+### Implementation Standards
+- Apply all five **SOLID principles** to new and modified code.
+- Use Python 3.11, type hints for nontrivial interfaces, and `pathlib.Path`.
+- Prefer composition, pure functions, and frozen validated dataclasses.
+- Avoid mutable defaults, wildcard imports, and global mutable state.
+
+### Validation and Testing
 - First reproduce existing anchor calculations and tests. Do not refactor first.
+- Use `tests/test_<feature>.py`, deterministic seeds, and method-justified tolerances.
+- Add failing regressions for bugs.
+- Production-size runs are not unit tests.
+
+### General Rules
+- Large simulations belong on Zeus; use the `zeus-hpc` skill for submission and management.
 - Prefer existing service modules and versioned JSON configs over ad-hoc scripts.
 - Every new scientifically meaningful campaign must record parameters, git SHA, random seeds,
   software versions, sizes, times, runtime, completion status, raw-data paths, and analysis version.
 - Do not form inverse matrices when a generalized eigenvalue/QZ formulation exists.
 - Preserve projective roots at infinity and singular/indeterminate-pencil diagnostics.
 - Never concatenate symmetry sectors for level-spacing statistics.
-- Production-size runs are not unit tests.
 - Record new claims and campaigns in the existing evidence/provenance
   registries and follow the metadata contract in `AGENTS.md`.
+
+## Git Delivery
+
+Standing authorization covers committing and pushing completed in-scope work.
+1. Create `codex/<topic>` branches for substantive work from the default branch.
+2. Keep commits cohesive; separate scientific implementation from instruction maintenance.
+3. Validate thoroughly before committing.
+4. Integrate into the default branch (fast-forward preferred) and delete the task branch.
+5. Follow the detailed delivery flow in `AGENTS.md` for remote conflicts and push failures.
 
 ## Research loop
 

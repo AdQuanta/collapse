@@ -11,6 +11,8 @@ This index serves as the structural map for the `unitary-collapse` research prog
 - [[symmetry-sectors]] — Exact irreducible sectors and the rule against mixing spectra.
 - [[coverage-gates]] — The requirements for full-sphere support and polar acceptance.
 - [[scientific-rules]] — The "Never" list: absolute rules for scientific integrity.
+- [[hamiltonian-families]] — Overview of the detector architectures and models.
+- [[random-graphs]] — The role of ER, WS, BA, and Regular graph topologies.
 
 ## 📚 Literature
 - [[literature-map]] — Mapping the project to the broader physics literature.
@@ -24,6 +26,9 @@ This index serves as the structural map for the `unitary-collapse` research prog
 - [[homogeneous-qz]] — The mathematical and numerical implementation of the QZ algorithm.
 - [[symmetry-resolution]] — How to correctly resolve sectors for level-spacing analysis.
 - [[relative-evolution]] — The block partitioning and pencil construction.
+- [[scientific-writing]] — Standards for high-impact scientific papers and storytelling.
+- [[figure-design]] — The "figure-first" doctrine and visual standards.
+- [[reviewer-responses]] — Protocol for professional and exact referee responses.
 - [[scientific-contract]] — Rigor requirements for establishing results.
 - [[implementation-standards]] — SOLID, PEP 8, and validation workflows.
 - [[git-delivery]] — The audit-ready Git workflow.
