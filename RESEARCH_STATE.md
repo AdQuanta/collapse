@@ -989,3 +989,43 @@ not resolve genuinely noncommuting detector fields or non-phase-mixing
 spectral limits. A full-model non-tautological C_B, microscopic preimage,
 robust positive phase or full-model no-go is still unproved. Continue with
 noncommuting determinant limits; do not generalize this scoped exclusion.
+
+---
+
+## 25. Positive weak-coupling search: corrected ring and chain families
+
+**USER DIRECTION (2026-09-12).** Prioritize constructing robust, stable Born
+families with perturbative qubit–detector coupling, using existing `work/`
+and `reports/` numerical evidence. Start from uniform XYZ fields and first-
+and second-neighbor XYZ ring/chain Hamiltonians. The final ring normalization
+is gx/sqrt(N), gy/sqrt(N), gz/N, superseding the earlier all-1/N clarification.
+The open chain attaches only to detector site 1 with gx,gy,gz unscaled.
+Readout remains central Z and coefficients use positive Pauli signs.
+
+**VERIFIED NUMERICAL LEADS.** [BORN_WEAK_COUPLING_SEARCH.md](BORN_WEAK_COUPLING_SEARCH.md)
+audits the nearest- and second-neighbor interacting ring sequences at
+N=14,15,16,17, fixed microscopic parameters and t=1e6. Source-manifest
+hashes and recomputed raw-angle metrics agree. The respective 64-bin
+ratio RMSE sequences are 0.051086,0.046515,0.033764,0.015923 and
+0.057754,0.050724,0.024587,0.017574; all have full reflected polar coverage.
+At N=17 the eight-moment maxima are 0.014054 and 0.015164. These X-only,
+zero-central-field references have great-circle support. Existing field
+scans show sensitivity; no finite-width phase or long-time law is inferred.
+Keep their interacting detectors as positive leads and extend independent
+central channels and fields, rather than broadening narrow no-go classes.
+
+**PROVED FINITE-TIME REFERENCE.** The phase-retaining interaction-picture
+kernel uses the entire sinc energy filter, including exact degeneracies.
+First Magnus exponentiation has fixed-time error bounded by t²||V||² in
+operator norm and t²||V||_(4,tau)² in normalized Hilbert--Schmidt norm.
+The latter bound is uniform in N under the corrected ring normalization.
+This does not establish root convergence or a kinetic-time approximation.
+Resonant resummation and determinant/logarithmic-tail control remain open.
+
+Code/config: `core/ring_chain_family.py`, `core/weak_coupling_picture.py`,
+`core/weak_coupling_evidence_plotting.py`, `scripts/audit_born_weak_coupling.py`,
+`configs/born_weak_coupling_2026-09-12.json`. Six new focused tests and the
+39-test relevant suite pass. Verified derived JSON/PDF/PNG outputs and
+provenance are in `reports/born_weak_coupling_2026-09-12_final/` (uncommitted).
+No production calculation was submitted. The original exact-Born goal
+remains active; neither its positive nor negative completion test is met.

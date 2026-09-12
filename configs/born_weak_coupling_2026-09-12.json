@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "conventions": {
+    "hamiltonian_sign": "positive Pauli coefficients",
+    "tensor_order": "central qubit first, detector sites 1 through N",
+    "hbar": 1,
+    "ring_coupling_divisors": ["sqrt(N)", "sqrt(N)", "N"],
+    "chain_attachment": "site 1, no size scaling",
+    "readout": "fixed central Z basis",
+    "root_weight": "equal algebraic multiplicity"
+  },
+  "theta_bins": 64,
+  "moment_order": 16,
+  "sizes": [14, 15, 16, 17],
+  "candidates": [
+    {
+      "name": "nearest_neighbor_ring",
+      "source": "work/zeus_top20_last5_largerN_20260810_001532/source_02/rank_001",
+      "field_scan": "reports/ring_activation_hz0_diagnostics_2026-08-24/hz0_scan_summary.json"
+    },
+    {
+      "name": "second_neighbor_ring",
+      "source": "work/zeus_top20_last5_largerN_20260810_001532/source_03/rank_001",
+      "field_scan": "reports/ring_second_neighbor_wd_hz0_scan_N17_2026-08-26/hz0_scan_summary.json"
+    }
+  ]
+}
