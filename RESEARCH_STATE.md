@@ -9,6 +9,13 @@
 > perturbations remain missing. Next: genuinely multichannel seeds.
 > See `research_reports/BORN_PHASE_AUDIT_2026-09-12.md`.
 
+> **Reduced follow-up:** 162 full-QZ conditions at N=5–7 and three times
+> passed numerical validation, but all lack full coverage and no tested
+> central-field/gz direction uniformly improves the reduced seeds. The
+> larger-N question remains OPEN. Next: verify full-parameter ring translation
+> sectors before a larger-N campaign. Evidence:
+> `research_reports/BORN_MULTICHANNEL_SENSITIVITY_2026-09-12.md`.
+
 Last updated: 2026-08-29 (section 10b added; see also sections 14a, 15, and 17)
 
 This is the **single canonical research-memory file** for this project. It is intended to transfer context between Ido, Claude Code, ChatGPT/Codex, and future agents.

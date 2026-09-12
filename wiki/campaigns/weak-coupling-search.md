@@ -46,3 +46,23 @@ it does not select a unique P density.
 The positive construction now uses [[resonant-return-dynamics]] to retain
 conditional detector shifts and repeated qubit flips. The proposed g²/E_D
 scale remains dimensional until matrix spectral-measure control is proved.
+
+## Reduced sensitivity follow-up (2026-09-12)
+
+**VERIFIED_NUMERICALLY:** 162 full-QZ conditions for seeds 079/047 at N=5,6,7
+and t=10³,10⁵,10⁶ passed numerical validation. Independent ±h0x, ±h0y, ±h0z
+and ±gz increments of .05 max(|gx|,|gy|) produced no uniformly improving
+candidate under the preregistered size/worst-time rule. Every condition has
+incomplete 64-bin coverage. Reduced baselines are nearly north-polar; their
+small moment residuals are insufficient. Transverse fields cause large
+worst-time moment errors, while longitudinal perturbations give mixed effects.
+This is **INCONCLUSIVE** for the larger-N Born regime, not a full-family no-go.
+
+**PROVED in this seed slice:** global Z rotation maps each isolated positive
+transverse central field to its negative and sends lambda to -lambda, leaving
+polar statistics unchanged. All 36 signed numerical pairs support the identity.
+
+Next: verify an exact translation-sector implementation of the full ring
+parameter family before larger-N time/perturbation work. Do not tune small-N
+scores in the regime where balance saturates and coverage fails.
+See [complete experiment](../../research_reports/BORN_MULTICHANNEL_SENSITIVITY_2026-09-12.md).

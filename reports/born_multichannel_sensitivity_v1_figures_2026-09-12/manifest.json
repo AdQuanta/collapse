@@ -1,0 +1,15 @@
+{
+  "source": "reports/born_multichannel_sensitivity_v1_2026-09-12/records.jsonl",
+  "source_sha256": "87406d9918aa07d7fd92529dba9d7b66bc903dbb16036cae76ccaf5905cb222b",
+  "script_sha256": "3478451cca07201621ea7b0890ef4a5f0d559b54428e5345c8eefa59afbcfb01",
+  "conditions_displayed": 162,
+  "profile_pages": 18,
+  "outputs": {
+    "config_047_N7_last_time.png": "7d0e9062e1a7929a8872eb36aa99cfffa1b2930f2e91399ef0f5ddd6b20a7cb7",
+    "config_079_N7_last_time.png": "9e7df2e8843a7aa4a70051710ca1f9a5de84dfd85221c65fe1a4046886827709",
+    "config_047_all_profiles.pdf": "fd2c62b8e07e2ea59469b3b295e59fc1c84fb0c37c2544eaa204a01e516e4f88",
+    "config_079_all_profiles.pdf": "54c16e379dfd668a23e4cf424c766cdb7795cd203b35f22db1efda0964210521",
+    "worst_time.pdf": "f2045eb5754ab976329e1c91f3aa247ee6540ba4234e9ab10660fd342c0a158d",
+    "worst_time.png": "55149484a9849a870480f44caaf686a83ba2f3b8a1fa919821f209de96229d40"
+  }
+}

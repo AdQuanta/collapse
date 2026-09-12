@@ -119,3 +119,12 @@ assertion and existence of the required limits were not proved. Existing
 Theorem C already obstructs an open phase containing the X-conserving seeds.
 The new verifier reproduces all 15 saved snapshots and adds direct weighted
 balance diagnostics with explicit missing-QZ status. The goal remains OPEN.
+
+## [2026-09-12] experiment | Multichannel reduced sensitivity
+
+Completed 162 preregistered full-QZ conditions with zero numerical validation
+failures. No tested direction improves worst-time balance, moments and coverage
+at all three reduced sizes. All conditions have incomplete coverage, so the
+large-N phase question remains unresolved. Exact transverse-field sign
+symmetry reduces redundant future conditions. Evidence and next action are
+in `research_reports/BORN_MULTICHANNEL_SENSITIVITY_2026-09-12.md`.
