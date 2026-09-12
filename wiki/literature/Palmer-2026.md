@@ -1,16 +1,26 @@
-# Palmer (2026): Rational Quantum Mechanics (RaQM)
+---
+name: palmer-2026
+description: Rational Quantum Mechanics (RaQM) - a discrete, rational restriction of Hilbert Space.
+metadata:
+  type: reference
+---
+
+# Palmer 2026 — Rational Quantum Mechanics (RaQM)
+
+**Reference**: T. Palmer, "Rational quantum mechanics: a new theory of quantum physics" (University of Oxford / arXiv:2510.02877).
 
 ## Core Thesis
-Hilbert Space is not a continuum but is **discrete**. The available state-space is constrained by a granularity parameter $L$, such that squared amplitudes and phases must be rational numbers.
+The continuous complex Hilbert space of standard Quantum Mechanics is an unphysical approximation. Nature is fundamentally discrete, and quantum states are only defined in bases where the squared amplitudes and phases are **rational numbers** ($\mathbb{Q}$). This discretization, potentially driven by gravity, resolves the paradoxes of QM (non-locality, etc.) by replacing them with a framework of "holism" and finite information capacity.
 
-## Key Mechanisms
-- **Granularity Parameter $L$**: An integer representing the "bit-depth" of the universe. $L \to \infty$ recovers standard QM.
-- **Gravitational Origin**: $L$ is determined by the Diósi-Penrose gravitational collapse timescale.
-- **Qubit Information Capacity ($N_{\max}$)**: Because information grows linearly ($N \times L$) rather than exponentially ($2^N$), there is a hard limit to the number of qubits that can be coherently entangled. Palmer predicts $N_{\max} < 1000$.
+## Key Concepts
+- **Finite Arithmetic State-Space Restriction**: A quantum state $|\psi\rangle$ is only defined if $\cos^2(\theta/2) \in \mathbb{Q}$ and $\phi/2\pi \in \mathbb{Q}$. 
+- **Bit-String Representation**: States are represented as length-$L$ bit strings, where $L$ is a fundamental granularity constant.
+- **The "Impossible Triangle"**: Uses Niven's Theorem to show that if two bases are rational, their linear combination is almost certainly irrational (and thus undefined), providing a geometric explanation for interference and the non-commutativity of observables.
+- **Qubit Information Capacity (QIC)**: Predicts a fundamental limit ($N_{\text{max}}$) to quantum computing. Once $N > N_{\text{max}}$, the linear information growth of RaQM cannot support the exponential dimensions of standard Hilbert space, leading to the failure of algorithms like Shor's.
 
-## Relevance to `collapse`
-- **Born's Rule**: In RaQM, Born's rule is an emergent property of the bit-string representation of states, rather than a separate axiom.
-- **State Restriction**: Like the `collapse` project, RaQM restricts the physically realized set of states in Hilbert space.
-- **Testability**: RaQM's prediction about the breakdown of quantum advantage at $N \approx 1000$ provides a concrete falsification target.
+## Relevance to `unitary-collapse`
+The `unitary-collapse` project deals with a **discrete set of "collapsible states"** on the Bloch sphere. 
 
-**Source:** [arXiv:2510.02877v3](https://arxiv.org/html/2510.02877v3)
+Palmer's RaQM provides a radical theoretical justification for why such a discrete set should exist: **because the continuum itself is a mathematical fiction.**
+
+While the `unitary-collapse` project identifies the collapsible states as the projective roots of a relative propagator (a dynamical origin), RaQM suggests that any "physical" state must be rational (an arithmetic origin). If the projective roots of the relative propagator for a physical Hamiltonian happen to coincide with (or be approximated by) the rational points of RaQM, it would provide a deep link between the *dynamics* of measurement and the *fundamental arithmetic* of the universe.

@@ -1,22 +1,38 @@
-# Figure 2: Emergence of Born Statistics
+# Figure Card 2: Interacting Spin Rings Generate Full-Sphere Born Dipoles
 
-**Claim**: In complex interacting detectors, the empirical distribution of collapsible states approximates the qubit Born rule.
+## 1. Figure Card Specification
 
-**One-sentence takeaway**: The polar density of disentangling roots in interacting rings exhibits a strong preference for the Born profile $\cos^2(\theta/2)$, outperforming random and QND controls.
+1. **Claim-like Title**:
+   *Clean Interacting Spin Rings Generate a Full-Sphere Born-Like Dipolar Root Geometry Distinguishable from the Uniform Haar Null.*
 
-**Question answered**: Does the set of collapsible states actually follow the Born rule, or is it just a generic spread?
+2. **One-Sentence Takeaway**:
+   At $N=16$ detector spins ($65,536$ roots), the full-sphere root-count asymmetry of a clean interacting spin ring forms a pronounced $\cos^2(\theta/2)$ dipole with residual $0.089$ and $98.2\%$ odd power in $\ell=1$, sharply contrasting with the flat isotropic Haar null.
 
-**Panel flow**:
-1. **The Born Profile**: A 64-bin histogram of root densities for $N=17$ interacting rings overlaid with the $\cos^2(\theta/2)$ curve.
-2. **Metric Scaling**: A plot of Ratio RMSE and Born Moment Residuals as a function of $N$ (e.g., $14 \to 17$), showing a clear downward trend toward the Born limit.
-3. **The Control Contrast**: Side-by-side histograms comparing the interacting ring (Born-like) vs. a Haar-random unitary (isotropic) and a strict-QND case (pole-concentrated).
+3. **Question Answered**:
+   Does the discrete multiset of collapsible states spread isotropically, collapse onto trivial poles, or physically recover the polar structure of Born's rule?
 
-**Dominant panel**: The histogram of the $N=17$ interacting ring vs. the Born curve.
+4. **Panel Flow**:
+   - **(a) Full-Sphere Asymmetry Map**: Equal-area projection ($36$ azimuthal by $18$ polar bins) of asymmetry $a(\phi, \mu)$ ($\mu = \cos\theta$) for a clean ring of $N=16$ spins at $t=10^4\,\hbar/J$.
+   - **(b) Polar Profile vs. Born Curve**: Multiplicity-weighted polar ratio $R(\theta) = P(\theta)/[P(\theta) + P(\pi-\theta)]$ compared against the ideal Born dipole $\cos^2(\theta/2)$.
+   - **(c) Multi-Model Control Contrast**: Direct side-by-side comparison of the matched spin ring against the flat Haar-random null ($S_{\mathrm{B}} = 0$) and a strict-QND localized pole distribution.
 
-**Instant comparison**: The visual difference between the "dipole" of the Born profile and the "flatness" of the Haar control.
+5. **Dominant Panel**:
+   Panel (a), the full-sphere equal-area asymmetry map, visually establishing global 2D dipolar alignment without azimuthal warping.
 
-**Quantitative anchor**: The Ratio RMSE $\le 0.05$ and the specific moment residuals $d_m$.
+6. **Instant Comparison**:
+   The stark contrast between the structured polar gradient of the interacting ring and the featureless, uniform intensity of the Haar-scrambling ensemble.
 
-**Alternative explanation addressed**: This is not a result of a specific seed or single size; the scaling in panel (b) shows a systematic convergence.
+7. **Quantitative Anchor**:
+   Count-weighted Born residual $0.089$; correlation with $\mu = \cos\theta$ of $0.971$; dipole mode carries $98.2\%$ of resolved odd multipole power through $\ell=7$; free dipole fit recovers $\hat{\bm{n}} = \hat{\bm{z}}$ with amplitude $1.062$.
 
-**Why main text**: This is the central numerical result of the paper; it is the primary "Proof" that the collapsible states follow the Born rule.
+8. **Alternative Explanation Addressed**:
+   Falsifies the notion that Born-like behavior is a trivial artifact of generic quantum chaos or random unitary mixing. The exact Haar null theorem proves that generic scrambling yields zero dipolar bias.
+
+9. **Why Main Text vs. SI**:
+   This is the primary empirical proof of the Letter, providing the decisive quantitative verification of Claim 3.
+
+---
+
+## 2. Publication-Ready Draft Caption
+
+> **FIG. 2. Full-sphere matched-ring geometry and the Born dipole.** (a) Equal-area projection of the root-count asymmetry $a(\phi, \mu)$ ($\mu = \cos\theta$) for a clean ring of $N=16$ detector spins ($65,536$ roots) at $t = 10^4\,\hbar/J$, partitioned into 36 azimuthal and 18 polar bins without smoothing. All 648 bins are occupied. The distribution is strongly dipolar: its linear correlation with $\mu$ is $0.971$, its count-weighted residual from the ideal Born dipole is $0.089$, and the $\ell = 1$ mode captures $0.982$ of resolved odd multipole power. (b) Polar root ratio $R(\theta)$ overlaid on the theoretical Born curve $\cos^2(\theta/2)$. (c) Contrast with controls: Haar-distributed unitaries produce a uniform complex spherical ensemble ($S_{\mathrm{B}} = 0$), while strict-QND Hamiltonians condense entirely onto the poles.

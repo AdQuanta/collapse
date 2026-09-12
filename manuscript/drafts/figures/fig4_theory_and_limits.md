@@ -1,22 +1,38 @@
-# Figure 4: Theoretical Certification and Limits
+# Figure Card 4: Theoretical Certification and Rigorous No-Go Boundaries
 
-**Claim**: Born-like root geometry is analytically certifiable for specific classes but is obstructed by rigorous no-gos in others.
+## 1. Figure Card Specification
 
-**One-sentence takeaway**: We provide a complete theoretical boundary for Born-like behavior, demonstrating both a constructive "existence proof" and rigorous "no-go" obstructions.
+1. **Claim-like Title**:
+   *Analytic Certification of Constructive Hamiltonian Families and Rigorous Boundaries for Commuting and Non-Normal Models.*
 
-**Question answered**: Is Born-like geometry a generic feature of complex unitaries, or does it require specific structural conditions?
+2. **One-Sentence Takeaway**:
+   Born-like root geometry is analytically certifiable in constructive commuting-X families through folded spectral engineering, but is bounded by rigorous no-go obstructions in commuting detuned fields and non-normal pencils.
 
-**Panel flow**:
-1. **Existence (The Constructive Class)**: Root distribution of the commuting-X family vs. the Born curve, showing that a designed "folded" spectrum $\sum s_i g_i$ can precisely recover the Born profile.
-2. **Obstruction I (Detuning No-Go)**: A plot of the Born-ratio RMSE vs. central-Z detuning $b$ for commuting vector fields, illustrating the "no-go" intervals where exact Born balance is impossible.
-3. **Obstruction II (Non-Normal Failure)**: A contrast between the native "Exchange" root law ($\delta_0$) and the incorrect Gaussian-substitution prediction, proving that singular-value convergence is insufficient for root limits.
+3. **Question Answered**:
+   What exact mathematical symmetries and algebraic structures govern the emergence of Born-like root geometry, and where do simplified models fail?
 
-**Dominant panel**: The "Existence" panel, showing the a-priori design of a Born-like system.
+4. **Panel Flow**:
+   - **(a) Constructive Family Certification**: Root distribution of the analytically designed commuting-X family evaluated against the Born curve $\cos^2(\theta/2)$, proving satisfaction of the finite-resolution gate $C_{\mathrm{B}}$.
+   - **(b) Obstruction I (Detuning Interval No-Go)**: Root-ratio residual as a function of detuning field $b$, demonstrating Theorem H: commuting vector fields $H = K - X_q V - Z_q W$ cannot maintain exact Born balance across open detuning intervals.
+   - **(c) Obstruction II (Non-Normal Failure)**: Native exchange channel root distribution (concentrating at $\delta_0$) contrasted with the spurious prediction of Gaussian substitution, proving that singular-value convergence is insufficient for pencil root limits.
 
-**Instant comparison**: The contrast between the "designed" success (Panel a) and the "proven" failure (Panel b/c).
+5. **Dominant Panel**:
+   Panel (a), demonstrating the first-principles analytic engineering of a Born-like spectrum.
 
-**Quantitative anchor**: The $C_B$ gate for the constructive family and the singular-value logarithmic tail failure for the exchange case.
+6. **Instant Comparison**:
+   The analytical success of the structured folded spectrum (Panel a) contrasted with the rigorous obstruction in commuting fields (Panel b) and the breakdown of naive Gaussian approximations (Panel c).
 
-**Alternative explanation addressed**: This proves that while Born-like behavior is possible, it is not a trivial consequence of "complex" or "random" dynamics; it requires a specific balance of reciprocal branches.
+7. **Quantitative Anchor**:
+   Analytic proof of gate $C_{\mathrm{B}} \le \epsilon$ for the constructive family; zero-measure support of Born balance in detuned commuting models; divergence of logarithmic singular-value tails in non-normal pencils.
 
-**Why main text**: This elevates the paper from a numerical observation to a theoretical framework, providing the necessary boundaries for the claim.
+8. **Alternative Explanation Addressed**:
+   Refutes the assumption that any complex Hamiltonian or random-matrix approximation can serve as a proxy for physical measurement dynamics. Specific algebraic structures (reciprocal branch balance) are strictly required.
+
+9. **Why Main Text vs. SI**:
+   Elevates the manuscript from an empirical observation to a comprehensive theoretical framework, completing the scientific loop by defining both what works and what is mathematically forbidden.
+
+---
+
+## 2. Publication-Ready Draft Caption
+
+> **FIG. 4. Theoretical certification, detuning obstructions, and non-normal limits.** (a) Analytic certification of the constructive commuting-X family: the folded spectral sum $\sum_i s_i g_i$ directly satisfies the finite-resolution Born gate $C_{\mathrm{B}}$, matching the polar profile $\cos^2(\theta/2)$. (b) Detuning-interval obstruction (Theorem H): for commuting vector fields $H = K - X_q V - Z_q W$ ($[K, V] = 0$), exact Born balance fails across any open interval of detuning field $b$. (c) Non-normal thermodynamic limit: the exact native exchange channel root measure ($\delta_0$) sharply departs from the incorrect prediction of Gaussian substitution, establishing that operator singular-value convergence is insufficient to capture non-normal pencil root laws without controlling logarithmic tails.

@@ -1,14 +1,33 @@
-# The Pitch
+# The Narrative Pitch
 
-**Internal Narrative Pitch:**
-Many seemingly irreversible quantum processes are now understood as emergent properties of purely unitary evolution: the thermalization of closed systems is explained via the Eigenstate Thermalization Hypothesis (ETH), and spontaneous emission is recovered through the coupling of an emitter with a continuum of electromagnetic modes (Wigner-Weisskopf). Yet, the most fundamental transition—the resolution of a quantum measurement into a single, definite outcome—is often still treated as an external, non-unitary 'collapse.' 
+## 1. Single-Sentence Internal Pitch
 
-Here, we demonstrate that this process can also be framed unitarily. We show that collapse-like behavior is not a universal property of all states, but is concentrated on a finite, sparse yet dense set of initial "collapsible states"—identified as the projective roots of the relative propagator. We establish that for specific detector architectures, the distribution of these states on the Bloch sphere admits a Born-rule-like profile, supported by both constructive analytical families and numerical size-scaling in interacting rings. This provides a structural classification of "measurement-capable" unitary dynamics, suggesting that the apparent arrow of time in measurement is a consequence of specific root geometries rather than a breakdown of unitarity.
+> **Because** seemingly irreversible quantum processes such as spontaneous emission and many-body thermalization are now understood as subsystem manifestations of globally unitary evolution, the persistent treatment of wave-function collapse as an external non-unitary reduction represents a critical conceptual gap. **Here we** formulate an exact restricted-state framework wherein initial qubit states yielding definite measurement outcomes correspond to the projective roots of a detector-space matrix pencil, **enabled by** the spectral structure and Jacobi complementary-minor antipodality of the relative propagator, **established by** an exact uniform null theorem for Haar scramblers alongside verified finite-size scaling in clean interacting spin rings whose polar score rises from $0.192$ at $N=11$ to $0.807$ at $N=16$ with unit full-sphere coverage, **which makes possible** a rigorous structural classification of unitary many-body Hamiltonians capable of generating measurement-compatible root geometries.
 
-## Stress Test
-- **Context**: Broadens the scope from just the "linearity objection" to the broader theme of unitary irreversibility (ETH, Wigner-Weisskopf).
-- **Gap**: Specifically targets the "collapse" as the final frontier of unitary explanation for measurement.
-- **Advance**: Identifies "collapsible states" as the unitary mechanism for definite outcome selection.
-- **Mechanism**: Projective roots of the relative propagator.
-- **Evidence**: Constructive families + numerical scaling in rings.
-- **Consequence**: A structural classification of "measurement-capable" unitary dynamics.
+---
+
+## 2. Six-Slot Pitch Stress Test
+
+1. **Territory (Broad Context)**:
+   - *Test*: Is the context broad enough for a high-impact venue (PRL / Nature Physics) but specific enough to be physically meaningful?
+   - *Assessment*: Passes. Places measurement alongside established subsystem arrows of time (spontaneous emission via Wigner-Weisskopf and closed-system thermalization via ETH), framing measurement as the unresolved fourth arrow.
+
+2. **Tension (The Gap)**:
+   - *Test*: Is the gap factual and structural rather than merely rhetorical?
+   - *Assessment*: Passes. The gap is the linearity obstruction: standard unitary evolution maps a superposition of inputs to a macroscopic superposition of detector records. Bypassing this requires either non-unitary collapse or a restricted set of physically realized boundary states.
+
+3. **Advance (The Contribution)**:
+   - *Test*: Does the advance use the strongest accurate verb without claiming to have derived collapse as a universal law of nature?
+   - *Assessment*: Passes. We *formulate* an exact restricted-state framework and *demonstrate* that structured many-body detectors develop Born-like dipolar root distributions, staying strictly within the wording ceiling of Narrative D.
+
+4. **Mechanism (The Degree of Freedom)**:
+   - *Test*: Is the mechanism causal and algebraically defined?
+   - *Assessment*: Passes. The mechanism is the projective matrix pencil $(C, A)$ of the relative propagator $W = A^{-1}C$, combined with Jacobi minor duality that forces the two outcome multisets to be exact Bloch antipodes.
+
+5. **Proof (Decisive Evidence & Controls)**:
+   - *Test*: Does the evidence distinguish the claim from plausible alternative explanations?
+   - *Assessment*: Passes. Contrasted with an exact analytic null (Haar-random unitaries yield a uniform spherical ensemble with zero preferred dipole axis), the clean interacting spin ring displays monotonic polar score convergence ($S_{\mathrm{B}} = 0.192 \to 0.807$ across $N=11\to16$), unit coverage, and a full-sphere count-weighted residual of $0.089$ with dominant $\ell=1$ power ($98.2\%$).
+
+6. **Horizon (Broader Consequence)**:
+   - *Test*: Is the broader consequence enabled by the demonstrated mechanism rather than aspirational?
+   - *Assessment*: Passes. It shifts the measurement problem from philosophical interpretation to a concrete Hamiltonian classification program: determining which microscopic interactions engineer measurement-compatible root geometry and record stability.
