@@ -2,7 +2,7 @@
 
 These functions do not replace the production homogeneous-QZ root solver or
 the finite Born gate. Units use hbar=1, Pauli eigenvalues +/-1 and radians.
-See BORN_ASYMPTOTIC_OBSTRUCTIONS.md for hypotheses and scope.
+See research_reports/BORN_ASYMPTOTIC_OBSTRUCTIONS.md for hypotheses and scope.
 """
 
 from __future__ import annotations

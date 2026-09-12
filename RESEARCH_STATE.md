@@ -139,7 +139,7 @@ This is a declared study gate, not exact equality on a continuous interval
 or a claim of full-sphere Born geometry. The canonical 100-bin `S_born`
 is reported alongside it and is not an additional acceptance threshold.
 
-See [the constructive finite-family study](BORN_LIKE_CONSTRUCTIVE_FAMILY.md)
+See [the constructive finite-family study](research_reports/BORN_LIKE_CONSTRUCTIVE_FAMILY.md)
 for the effective iff condition, an analytically certified family using
 the native X/XX channels, numerical validation, and limitations.
 
@@ -853,7 +853,7 @@ This is the only extra memory-transfer instruction that should be necessary.
 **PROVED (Codex, 2026-09-11; scoped results).** The new objective permits
 N->infinity and demands exact instantaneous long-time Born behavior. The
 finite gate in section 3 is unchanged and does not settle this objective.
-See [BORN_ASYMPTOTIC_OBSTRUCTIONS.md](BORN_ASYMPTOTIC_OBSTRUCTIONS.md) for
+See [research_reports/BORN_ASYMPTOTIC_OBSTRUCTIONS.md](research_reports/BORN_ASYMPTOTIC_OBSTRUCTIONS.md) for
 five theorems, proofs, all reciprocal-coordinate Jacobians and limitations.
 
 - Finite-dimensional unitary recurrence sends every projective root back
@@ -903,7 +903,7 @@ not operational measurement probabilities.
 ## 23. Exact root-limit potential and native nonnormal counterexample
 
 **PROVED (Codex, 2026-09-12; full Born objective remains OPEN).**
-[BORN_NONNORMAL_LIMIT.md](BORN_NONNORMAL_LIMIT.md) extends section 22 with
+[research_reports/BORN_NONNORMAL_LIMIT.md](research_reports/BORN_NONNORMAL_LIMIT.md) extends section 22 with
 an all-regular-pencils limit criterion and a native counterexample.
 
 - The circle-averaged log determinant of C-exp(x+i phi)A, normalized by
@@ -957,7 +957,7 @@ established; the original exact long-time objective remains active.
 ## 24. Detuning-interval obstruction with commuting detector vector fields
 
 **PROVED (Codex, 2026-09-12; scoped no-go).**
-[BORN_DETUNING_INTERVAL.md](BORN_DETUNING_INTERVAL.md) proves Theorem H for
+[research_reports/BORN_DETUNING_INTERVAL.md](research_reports/BORN_DETUNING_INTERVAL.md) proves Theorem H for
 H_N(b)=K_N-X_q V_N-Z_q(W_N+b), with K_N,V_N,W_N commuting. If the joint
 spectral law has finite transverse second moment and a nonzero active
 fraction, and ordinary N-first then late-time phase mixing holds, exact
@@ -1018,7 +1018,7 @@ is gx/sqrt(N), gy/sqrt(N), gz/N, superseding the earlier all-1/N clarification.
 The open chain attaches only to detector site 1 with gx,gy,gz unscaled.
 Readout remains central Z and coefficients use positive Pauli signs.
 
-**VERIFIED NUMERICAL LEADS.** [BORN_WEAK_COUPLING_SEARCH.md](BORN_WEAK_COUPLING_SEARCH.md)
+**VERIFIED NUMERICAL LEADS.** [research_reports/BORN_WEAK_COUPLING_SEARCH.md](research_reports/BORN_WEAK_COUPLING_SEARCH.md)
 audits the nearest- and second-neighbor interacting ring sequences at
 N=14,15,16,17, fixed microscopic parameters and t=1e6. Source-manifest
 hashes and recomputed raw-angle metrics agree. The respective 64-bin

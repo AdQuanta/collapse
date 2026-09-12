@@ -2,7 +2,7 @@
 
 Native model: H=-(g/sqrt(N)) (Xq sum Xi + Yq sum Yi), H_D=H_Q=0.
 The scalar Gaussian formulas describe the limit of trace observables, not
-the native QZ root limit. See BORN_NONNORMAL_LIMIT.md.
+the native QZ root limit. See research_reports/BORN_NONNORMAL_LIMIT.md.
 """
 
 from __future__ import annotations
