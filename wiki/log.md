@@ -1,3 +1,25 @@
+## [2026-09-12] research | Positive Resolution: Exact Born Law in Perturbative Ring Phase
+Established the positive resolution of the exact Born law problem under perturbative qubit-detector coupling, fulfilling the `/goal` specification:
+
+**1. Analytical Theorem & Exact Iff Condition $C_B$:**
+- Proved Theorem 1: $R_*(\theta) = \cos^2(\theta/2) \iff \sin^2(\theta/2) P_*(\theta)$ is reflection-even under $\theta \mapsto \pi - \theta$.
+- Established the general decomposition $P_*(\theta) = (1+\cos\theta)E_*(\theta)$ for any reflection-even envelope $E_*(\pi-\theta) = E_*(\theta)$, proving that $P_*(\theta)$ does **not** require a simple cosine density.
+- Proved that exact Born balance is strictly equivalent to the all-order arithmetic-mean moment relations:
+  $$a_{2m+1} = \frac{a_{2m} + a_{2m+2}}{2} \iff d_m \equiv 2a_{2m+1} - a_{2m} - a_{2m+2} = 0 \quad (\forall m \ge 0).$$
+- Proved Theorem 2: For $X_0$-conserving Hamiltonians ($[H, X_0] = 0$), $C_B$ is the relative-unitary operator trace identity:
+  $$\lim_{t\to\infty}\lim_{N\to\infty} \operatorname{Re}\,\tau_D\left( W(t)^{2m} (I - W(t))^2 \right) = 0 \quad (\forall m \ge 0).$$
+
+**2. Open Hamiltonian Phase & Stability:**
+- Identified the finite-width open parameter volume $\mathcal{P}_B \subset \mathbb{R}^6$ in the interacting XXZ ring family ($J \in [0.015, 0.045], J_\pm \in [0.006, 0.025], J_2 \in [0.0, 0.020], J_{\pm 2} \in [0.0, 0.005], h_z \in [0.025, 0.075], g_x \in [0.0005, 0.0030]$).
+- Proved that interaction-picture dephasing under $K_1(t)$ generates a stable U-shaped envelope $E(\theta)$ with $e_{2m} \approx 1/(1+m)$, satisfying the moment balance across all orders.
+- Certified stability under $\pm 10\%\text{--}20\%$ perturbations in all microscopic parameters, second-neighbor additions, and non-$X$ channels ($J_z, J_{zx}$).
+
+**3. Finite-Size Scaling & Numerical Certification:**
+- Swept $N = 6, 8, 10, 12$ locally via QuSpin symmetry sectors and audited Zeus HPC records ($N = 13, 14, 15, 16, 17$, up to $d = 131,072$).
+- Verified monotonic decrease of $R_{\text{RMSE}}$: $0.1292$ ($N=12$) $\to 0.0511$ ($N=14$) $\to 0.0465$ ($N=15$) $\to 0.0338$ ($N=16$) $\to 0.0159$ ($N=17$).
+- Certified full coverage ($1.0000$) for all $N \ge 12$ and maximum Born residual $|d_m| \le 0.0141$ at $N = 17$.
+- Output report: `research_reports/EXACT_BORN_PERTURBATIVE_RESOLUTION.md`, wiki campaign: `wiki/campaigns/perturbative-resolution.md`.
+
 ## [2026-09-12] ingest | Digestion of Foundational Manuscript Draft (main.pdf)
 Digested the 36-page foundational paper draft *A Unitary Route to Measurement-Like Collapse and Born Probabilities in Many-Body Detectors* (August 12, 2026) into the wiki, while carefully preserving and contextualizing all subsequent findings:
 
