@@ -347,9 +347,9 @@ $$
 J_{2x}=J_{2y}=J_{2z}=0
 $$
 
-throughout the entire ledger below.
+throughout the initial NN phase (Cases 0–40, Families A–H).
 
-Do **not** introduce NNN interactions until every NN case below has been analytically classified for both ring and chain.
+Do **not** introduce NNN interactions until every NN case has been analytically classified and verified for both ring and chain.
 
 The goal is first to understand exhaustively how:
 
@@ -362,170 +362,40 @@ The goal is first to understand exhaustively how:
 
 affect \(P\) and \(R\).
 
-Only after the full NN ledger is complete may a separate NNN ladder begin.
+Only after the full NN phase (Cases 0–40) is complete and verified may the NNN phase (Cases 41–86, Families I–N) begin.
 
 ---
 
-# 5. NN coefficient/scaling ladder and master ledgers
+# 5. Master case ladder and ledgers
 
-The atomic case-by-case tracking for each physical regime and subcase across all $\mathbf h_0$ regimes is maintained in:
-- **Ring:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md)
-- **Endpoint chain:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md)
+The complete, authoritative case specifications, scale hierarchies, and atomic subcase rows across all $\mathbf h_0$ regimes are maintained directly in the two master ledgers:
 
-**Cases must be solved strictly in order.** Do not advance to Case $k+1$ until Case $k$ (including all its $h_0$ subcases) has been completely solved and verified for both geometries.
+- **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md)
+- **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md)
 
-Take \(\mathbf h_0\) as general unless restricting it is mathematically necessary. If it must be restricted, derive the restricted case first and then determine exactly which additional \(\mathbf h_0\) components can be restored.
+The program spans all 87 physical cases (Cases 0–86) and their detailed $h_0$ subcases, cataloged across 14 distinct families:
 
-The coefficients listed in each row are the detector/coupling coefficients that are nonzero.
+### Part I: Nearest-Neighbor (NN) Ladder (Cases 0–40)
+- **Family A (Cases 0–8)**: Decoupled baseline and one-axis / QND cases ($g_z$ with field and interaction hierarchies).
+- **Family B (Cases 9–14)**: Transverse-field Ising model (TFIM / Ising ladder with gapped, ordered, and critical regimes).
+- **Family C (Cases 15–17)**: XX ladder ($J_x = J_y \equiv J_\perp$).
+- **Family D (Cases 18–20)**: XY ladder (distinguishing isotropic $J_x = J_y$ and anisotropic $J_x \neq J_y$).
+- **Family E (Cases 21–26)**: XXZ ladder (distinguishing easy-plane, Heisenberg vicinity, easy-axis, field-polarized, and critical regimes).
+- **Family F (Cases 27–32)**: Anisotropic XYZ ladder with longitudinal qubit coupling ($g_z$).
+- **Family G (Cases 33–36)**: Perturbative transverse qubit–detector coupling ($g_\perp$).
+- **Family H (Cases 37–40)**: Multi-axis perturbative qubit coupling ($g_\perp, g_z$), culminating in Case 40 (full NN production family).
 
-Use axis permutations when genuinely equivalent, but prove the equivalence rather than duplicating calculations.
+### Part II: Next-Nearest-Neighbor (NNN) & Full Production Ladder (Cases 41–86)
+- **Family I (Cases 41–48)**: Single-axis NNN couplings ($J_{2z}$).
+- **Family J (Cases 49–54)**: Frustrated Ising models with competing NN/NNN interactions.
+- **Family K (Cases 55–60)**: NNN XX and XY models.
+- **Family L (Cases 61–69)**: NNN XXZ models.
+- **Family M (Cases 70–77)**: Anisotropic NNN XYZ models.
+- **Family N (Cases 78–86)**: Full production Hamiltonian with arbitrary NN and NNN XYZ couplings and multi-axis qubit coupling ($g_x, g_y, g_z$).
 
-## A. Baseline and one-axis/QND cases
-
-| Case | Nonzero coefficients | Scaling regime              |             |          |
-| ---- | -------------------- | --------------------------- | ----------- | -------- |
-| 0    | none                 | decoupled detector baseline |             |          |
-| 1    | \(g_z\)              | perturbative \(g_z\)        |             |          |
-| 2    | \(h_z,g_z\)          | \(g_z\ll h_z\)              |             |          |
-| 3    | \(h_z,g_z\)          | (g_z\ll h_z\ll              | \mathbf h_0 | )        |
-| 4    | \(h_z,g_z\)          | (g_z\ll                     | \mathbf h_0 | \ll h_z) |
-| 5    | \(J_z,g_z\)          | \(g_z\ll J_z\)              |             |          |
-| 6    | \(h_z,J_z,g_z\)      | \(g_z\ll h_z\ll J_z\)       |             |          |
-| 7    | \(h_z,J_z,g_z\)      | \(g_z\ll J_z\ll h_z\)       |             |          |
-| 8    | \(h_z,J_z,g_z\)      | \(g_z\ll h_z\sim J_z\)      |             |          |
-
-These cases should be exhausted completely before moving to noncommuting detector terms.
-
----
-
-## B. Ising / transverse-field Ising ladder
-
-| Case | Nonzero coefficients | Scaling regime               |
-| ---- | -------------------- | ---------------------------- |
-| 9    | \(h_x,J_z,g_z\)      | \(g_z\ll h_x\ll J_z\)        |
-| 10   | \(h_x,J_z,g_z\)      | \(g_z\ll J_z\ll h_x\)        |
-| 11   | \(h_x,J_z,g_z\)      | \(g_z\ll h_x\sim J_z\)       |
-| 12   | \(h_x,h_z,J_z,g_z\)  | \(g_z\ll h_z\ll h_x\ll J_z\) |
-| 13   | \(h_x,h_z,J_z,g_z\)  | \(g_z\ll h_x\ll h_z\ll J_z\) |
-| 14   | \(h_x,h_z,J_z,g_z\)  | \(g_z\ll J_z\ll h_x,h_z\)    |
-
-Treat the critical/crossover regime separately from the gapped ordered and polarized regimes.
-
----
-
-## C. XX ladder
-
-Let
-
-$$
-J_x=J_y\equiv J_\perp.
-$$
-
-| Case | Nonzero coefficients | Scaling regime             |
-| ---- | -------------------- | -------------------------- |
-| 15   | \(h_z,J_x=J_y,g_z\)  | \(g_z\ll h_z\ll J_\perp\)  |
-| 16   | \(h_z,J_x=J_y,g_z\)  | \(g_z\ll J_\perp\ll h_z\)  |
-| 17   | \(h_z,J_x=J_y,g_z\)  | \(g_z\ll h_z\sim J_\perp\) |
-
----
-
-## D. XY ladder
-
-| Case | Nonzero coefficients | Scaling regime  |     |   |     |          |
-| ---- | -------------------- | --------------- | --- | - | --- | -------- |
-| 18   | \(h_z,J_x,J_y,g_z\)  | (g_z\ll h_z\ll  | J_x | , | J_y | )        |
-| 19   | \(h_z,J_x,J_y,g_z\)  | (g_z\ll         | J_x | , | J_y | \ll h_z) |
-| 20   | \(h_z,J_x,J_y,g_z\)  | (g_z\ll h_z\sim | J_x | , | J_y | )        |
-
-Track separately the isotropic limit
-
-$$
-J_x=J_y
-$$
-
-and anisotropic limit
-
-$$
-J_x\neq J_y.
-$$
-
----
-
-## E. XXZ ladder
-
-Let
-
-$$
-J_x=J_y\equiv J_\perp.
-$$
-
-| Case | Nonzero coefficients    | Scaling regime                    |
-| ---- | ----------------------- | --------------------------------- |
-| 21   | \(h_z,J_\perp,J_z,g_z\) | \(g_z\ll h_z\ll J_\perp,J_z\)     |
-| 22   | \(h_z,J_\perp,J_z,g_z\) | \(g_z\ll h_z\ll J_\perp\ll J_z\)  |
-| 23   | \(h_z,J_\perp,J_z,g_z\) | \(g_z\ll h_z\ll J_z\ll J_\perp\)  |
-| 24   | \(h_z,J_\perp,J_z,g_z\) | \(g_z\ll h_z\ll J_z\sim J_\perp\) |
-| 25   | \(h_z,J_\perp,J_z,g_z\) | \(g_z\ll J_\perp,J_z\ll h_z\)     |
-| 26   | \(h_z,J_\perp,J_z,g_z\) | \(g_z\ll h_z\sim J_\perp,J_z\)    |
-
-Explicitly distinguish:
-
-$$
-\Delta=\frac{J_z}{J_\perp},
-$$
-
-including:
-
-* easy-plane;
-* Heisenberg vicinity;
-* easy-axis;
-* field-polarized;
-* critical/gapless regimes.
-
----
-
-## F. XYZ ladder with longitudinal qubit coupling
-
-| Case | Nonzero coefficients          | Scaling regime  |           |          |
-| ---- | ----------------------------- | --------------- | --------- | -------- |
-| 27   | \(h_z,J_x,J_y,J_z,g_z\)       | (g_z\ll h_z\ll  | J_\alpha  | )        |
-| 28   | \(h_z,J_x,J_y,J_z,g_z\)       | (g_z\ll         | J_\alpha  | \ll h_z) |
-| 29   | \(h_z,J_x,J_y,J_z,g_z\)       | (g_z\ll h_z\sim | J_\alpha  | )        |
-| 30   | \(\mathbf h,J_x,J_y,J_z,g_z\) | (g_z\ll         | \mathbf h | \ll J)   |
-| 31   | \(\mathbf h,J_x,J_y,J_z,g_z\) | (g_z\ll J\ll    | \mathbf h | )        |
-| 32   | \(\mathbf h,J_x,J_y,J_z,g_z\) | (g_z\ll         | \mathbf h | \sim J)  |
-
-Here \(J\) denotes the characteristic nonzero NN interaction scale.
-
----
-
-## G. Perturbative transverse qubit–detector coupling
-
-| Case | Nonzero coefficients        | Scaling regime                |
-| ---- | --------------------------- | ----------------------------- |
-| 33   | \(h_z,J_x=J_y,g_x=g_y\)     | \(g_\perp\ll h_z\ll J_\perp\) |
-| 34   | \(h_z,J_x=J_y,g_x=g_y\)     | \(g_\perp\ll J_\perp\ll h_z\) |
-| 35   | \(h_z,J_x=J_y,J_z,g_x=g_y\) | \(g_\perp\ll h_z\ll J\)       |
-| 36   | \(h_z,J_x=J_y,J_z,g_x=g_y\) | \(g_\perp\ll J\ll h_z\)       |
-
-For the endpoint chain, prioritize Jordan–Wigner/BdG representations whenever the qubit plus endpoint detector can be treated as an extended quadratic chain.
-
-For the ring, prioritize collective-spin, momentum-sector, symmetry, and form-factor representations.
-
----
-
-## H. Multi-axis perturbative qubit coupling
-
-| Case | Nonzero coefficients                  | Scaling regime              |
-| ---- | ------------------------------------- | --------------------------- |
-| 37   | \(h_z,J_x=J_y,J_z,g_x=g_y,g_z\)       | \(g_\perp,g_z\ll h_z\ll J\) |
-| 38   | \(h_z,J_x=J_y,J_z,g_x=g_y,g_z\)       | \(g_\perp,g_z\ll J\ll h_z\) |
-| 39   | \(\mathbf h,J_x,J_y,J_z,g_x,g_y\)     | \(g_x,g_y\ll h,J\)          |
-| 40   | \(\mathbf h,J_x,J_y,J_z,g_x,g_y,g_z\) | \(g_x,g_y,g_z\ll h,J\)      |
-
-Case 40 is the **full NN production family in the perturbative qubit–detector regime**.
-
-Do not begin NNN work until Case 40 has been reached for both ring and chain and all earlier cases have been entered in the analytical ledger.
+### Sequential Derivation Rule
+Derivations must proceed strictly in order from Case 0 to Case 86.
+Never move to Case $k+1$ before Case $k$ (including all its $\mathbf h_0$ subcases) has been completely solved and verified for both geometries.
 
 ---
 
@@ -1028,33 +898,24 @@ Write
 
 `NN_LEDGER_COMPLETE`
 
-only when Cases 0–40 have been processed for both ring and chain and every case has either:
+only when Cases 0–40 (Families A–H) have been completely solved and verified for both ring and chain, or have a precisely established mathematical obstruction.
 
-* the requested analytical expressions; or
-* a precisely established obstruction explaining why the current analytic machinery cannot produce them.
-
-The full NN family must at minimum have a controlled perturbative-in-\(g\) representation.
-
-Do not introduce \(J_2\) before this milestone.
+Do not begin NNN work (Cases 41–86) before this milestone is met.
 
 ---
 
-# 14. NNN phase
+# 14. NNN & full production phase
 
-Only after `NN_LEDGER_COMPLETE`, create a separate NNN ladder.
+Following `NN_LEDGER_COMPLETE`, proceed strictly in order through Cases 41–86 (Families I–N) as defined in the master ledgers:
 
-Start from the simplest extensions:
+1. Single-axis NNN interactions (Family I, Cases 41–48);
+2. Frustrated Ising interactions (Family J, Cases 49–54);
+3. NNN XX/XY interactions (Family K, Cases 55–60);
+4. NNN XXZ interactions (Family L, Cases 61–69);
+5. Anisotropic NNN XYZ interactions (Family M, Cases 70–77);
+6. Full production Hamiltonian with arbitrary NN/NNN XYZ and multi-axis coupling (Family N, Cases 78–86).
 
-1. one \(J_{2\alpha}\);
-2. NNN interactions that preserve quadratic/free-fermion structure;
-3. NNN XX/XY;
-4. NNN XXZ-like regimes;
-5. anisotropic NNN XYZ;
-6. full \(\mathbf J_2\).
-
-At each NNN rung repeat the same eight-observable program.
-
-Do not jump directly to arbitrary \(\mathbf J_2\).
+At each case repeat the same eight-observable program and verification standards. Do not jump directly to arbitrary \(\mathbf J_2\).
 
 ---
 
@@ -1079,10 +940,10 @@ $$
 
 through:
 
-1. all NN ledger cases;
-2. the full perturbative NN family;
-3. the subsequent NNN ladder;
-4. the full implemented production family within its explicitly stated perturbative domain.
+1. all NN ledger cases (Cases 0–40);
+2. the full perturbative NN family (Case 40);
+3. the subsequent NNN ladder (Cases 41–86);
+4. the full implemented production family (Case 86) within its explicitly stated perturbative domain.
 
 Do not mark complete because:
 
