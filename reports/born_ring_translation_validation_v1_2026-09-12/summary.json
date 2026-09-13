@@ -1,0 +1,13 @@
+{
+  "method_version": "ring-translation-qz-v1",
+  "conditions": 27,
+  "passed": 27,
+  "maxima": {
+    "projection_residual": 5.021124152583614e-16,
+    "eigensystem_max": 1.4750566920670105e-14,
+    "bloch_max": 2.4558800193777882e-08,
+    "potential_max": 7.565174708901168e-09
+  },
+  "elapsed_seconds": 1.0312818330712616,
+  "scope": "Method verification only, not a changed verifier or a new candidate search"
+}

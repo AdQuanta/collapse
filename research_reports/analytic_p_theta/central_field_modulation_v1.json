@@ -1,0 +1,9 @@
+{
+  "schema": "central-field-modulation-v1",
+  "phase_factor": "2",
+  "window": "(1-exp(-I*z*T))/(I*z*T)",
+  "field_plancherel_factor": "pi/ell",
+  "square_time_interpolation": "2*(2*n+1)/n**2",
+  "nonzero_resonant_means": ["0", "1/2"],
+  "commuting_resonant_means": ["1/2", "1/2", "1/2", "1/2"]
+}

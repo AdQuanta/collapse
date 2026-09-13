@@ -140,6 +140,7 @@ credentials*.json
 .idea/
 .vscode/
 .fleet/
+.claude/
 .settings/
 .project
 .classpath

@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-09-13T18:15:53.749962+00:00",
+  "files": {
+    "research_reports/analytic_p_theta/08_chain_majorana_benchmark.md": "50f1ae81f8b99fd10208b714521ce279832a665d4b5b924a7a08b91974d580d6",
+    "scripts/cesaro_spectral_formula.py": "28d9ad9299f9545cae6389a44fa3a7d146261c1c4f8f8ace84833ad6b67c386e",
+    "scripts/chain_cesaro_moments.py": "5e7d5b4b02e8f304f6263c612580574e565db418631d28aed0b902fac73b19cd",
+    "scripts/check_chain_commutator.py": "f8cd323ef219f05430d3f4dcfac926f2dcde153a96da6d65b5acd3b14a3d4278",
+    "scripts/explore_chain_majorana.py": "3caaf3341090f502e4381229b8bb6fb9e255f9093e6ee26ff28b3bc35df1d4ea",
+    "scripts/full_cesaro_analysis.py": "8ac5cacba0590d0459e8e3cd1656300ac5987fd5290df42e2626704ef739bcaf",
+    "scripts/full_majorana_analysis.py": "3a230067571f8e3db55af41bc8bb479f6b6320831c655184007500ada77bba0e",
+    "scripts/pfaffian_chain_moments.py": "f64535175b5a5aa82a71b570943784812e80e18c903c8c862109eff38dcf0e17",
+    "scripts/verify_chain_majorana_identity.py": "6b5bf16d719e790c6dc666a75f435d15169dc93c54d4dadd70d217f5df3cd1c5"
+  }
+}

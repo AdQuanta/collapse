@@ -1,0 +1,9 @@
+{
+  "version": "analytic-p-theta-v1",
+  "frozen_at": "2026-09-13T13:18:26.952542+00:00",
+  "source_hashes": {
+    "check.py": "624648f1611201eef78baf224016fd9022ea53fa41c34642b7c5bbb294e8523a",
+    "reference.py": "000855c3d0adede93edee029f0f5cc886ce7cc4e5622990f25eb3947baf0e0c7"
+  },
+  "self_checks": "explicit two-spin XYZ; Hermiticity; normalized X basis: PASS"
+}

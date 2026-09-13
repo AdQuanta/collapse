@@ -1,0 +1,23 @@
+{
+  "method_version": "ring-translation-qz-v1",
+  "hypothesis": "The complete momentum direct sum reproduces the dense full-parameter XYZ ring Hamiltonian and its homogeneous projective root multiset.",
+  "alternative": "Basis ordering, Y signs, missing coefficients or sector multiplicities change the production roots.",
+  "prediction": "All projected Hamiltonians agree within 1e-12; eigen/orthogonality/isometry checks pass 1e-12; dense/sector Bloch-root matching is below 2e-5 and bounded radial-potential differences below 1e-6 at every condition.",
+  "scope": "Method verification only, not a changed verifier or a new candidate search",
+  "sizes": [5,6,7],
+  "times": [0.31,1000.0,1000000.0],
+  "seed_config": "configs/born_multichannel_sensitivity_v1.json",
+  "generic_parameters": {
+    "qubit_field": [0.13,-0.07,0.11],
+    "detector_field": [0.29,0.17,-0.31],
+    "nearest": [0.41,-0.23,0.37],
+    "second": [-0.19,0.09,0.15],
+    "coupling": [0.12,-0.08,0.06]
+  },
+  "matrix_tolerance": 1e-12,
+  "eigensystem_tolerance": 1e-12,
+  "isometry_tolerance": 1e-12,
+  "bloch_tolerance": 2e-5,
+  "potential_tolerance": 1e-6,
+  "log_radius_grid": [-4,-3,-2,-1,0,1,2,3,4]
+}

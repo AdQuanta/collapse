@@ -1,0 +1,34 @@
+{
+  "timestamp_utc": "2026-09-13T07:57:10.244712+00:00",
+  "source_commit": "89b7c36",
+  "source_snapshot": "/home/matanhaller/research/collapse/source_snapshots/born_ring_89b7c36",
+  "snapshot_status": "unverified; preparation SSH timed out",
+  "run_root": "/home/matanhaller/research/collapse/work/born_ring_baseline_v1_89b7c36",
+  "submission_status": "not submitted",
+  "submission_authorization": "not yet requested; remote preflight incomplete",
+  "initial_remote_check": {
+    "hostname": "zeus",
+    "project_tree": "non-Git",
+    "own_user_queue": "empty qstat output",
+    "python_executable": "/usr/bin/python3.11",
+    "python": "3.11.11",
+    "numpy": "2.2.6",
+    "scipy": "1.17.1",
+    "quspin": "0.3.7"
+  },
+  "subsequent_checks": [
+    "source snapshot transfer pipeline: SSH timeout exit 255",
+    "remote test/dry-run request: SSH timeout exit 255",
+    "snapshot-state read: SSH timeout exit 255"
+  ],
+  "local_tests_passed": 38,
+  "local_defining_sha256": {
+    "core/ring_translation.py": "4b2048ad540117ce138d0cd449d46846ae2d4690cff6e4470e8874acc6d9b42e",
+    "core/born_phase_verifier.py": "325c4de0a6373c3471769457b18268200d255fac5c187e0589598abead65b442",
+    "scripts/run_born_ring_campaign.py": "47aa1b89bf4ffd54291d8686275032c11a20457218498575d5b465b465a0482f",
+    "configs/born_ring_baseline_campaign_v1.json": "31cc44363c8e9340d4f44a94996a7a577561b7751535173b988799271ce73f0f",
+    "configs/born_multichannel_sensitivity_v1.json": "8b8933f92508e9f9a40ffe4cd1faca60810bbb57a995f02250cf86abb3bed62b",
+    "hpc/zeus_born_ring_baseline_v1.pbs": "54e9fe0fe9eda927a81dc787ff190c697b006993894f4261532b5ef8cef9d1d6",
+    "hpc/submit_zeus_born_ring_baseline_v1.sh": "6edccd5db282cbd631733b58885d85dbec6deeecf3177ecfb100767978fbfc08"
+  }
+}

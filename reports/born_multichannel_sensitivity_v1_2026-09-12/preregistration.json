@@ -1,0 +1,142 @@
+{
+  "config": {
+    "schema_version": "born-multichannel-sensitivity-v1",
+    "verifier_schema": "born-phase-verifier-v1",
+    "hypothesis": "A small independent central field or longitudinal channel improves worst-time normalized detailed balance without reducing coverage in a multichannel seed.",
+    "alternative": "Apparent improvements depend on readout time or trade balance for coverage; no tested perturbation uniformly improves the size/time comparison.",
+    "prediction": "A retained direction must weakly improve both worst-time balance and worst-time moment error, and not reduce minimum coverage, at every tested size; at least one balance improvement must be strict. This is a reduced diagnostic only, not phase promotion.",
+    "scope": "Reduced full-Hamiltonian QZ sensitivity; no asymptotic extrapolation or time averaging",
+    "topology": "ring",
+    "sizes": [
+      5,
+      6,
+      7
+    ],
+    "times": [
+      1000.0,
+      100000.0,
+      1000000.0
+    ],
+    "perturbation_scale": "0.05 * max(abs(gx),abs(gy)) in unscaled positive-coefficient energy units",
+    "relative_amplitude": 0.05,
+    "directions": [
+      "qubit_field_0",
+      "qubit_field_1",
+      "qubit_field_2",
+      "coupling_2"
+    ],
+    "signs": [
+      -1,
+      1
+    ],
+    "eigensystem_tolerance": 1e-12,
+    "unitarity_tolerance": 1e-12,
+    "driver_crosscheck": {
+      "size": 7,
+      "perturbations": [
+        "baseline",
+        "qubit_field_0_plus"
+      ],
+      "potential_tolerance": 1e-06,
+      "angle_tolerance": 0.0001
+    },
+    "log_radius_grid": [
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "seeds": [
+      {
+        "name": "config_079",
+        "source": "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_079/metadata.json",
+        "qubit_field": [
+          0,
+          0,
+          0
+        ],
+        "detector_field": [
+          0,
+          0,
+          -0.13289388114917208
+        ],
+        "nearest": [
+          -0.08498949318953924,
+          -0.08498949318953924,
+          -2.532451303152143
+        ],
+        "second": [
+          0,
+          0,
+          0
+        ],
+        "coupling": [
+          -0.0018956904663967606,
+          -0.012527361172537119,
+          0
+        ]
+      },
+      {
+        "name": "config_047",
+        "source": "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_047/metadata.json",
+        "qubit_field": [
+          0,
+          0,
+          0
+        ],
+        "detector_field": [
+          0,
+          0,
+          -3.3877092607196566
+        ],
+        "nearest": [
+          -2.6139708805673743,
+          -2.6139708805673743,
+          -5.86769881537915
+        ],
+        "second": [
+          0,
+          0,
+          0
+        ],
+        "coupling": [
+          -0.21538120964223245,
+          -0.009162024068483241,
+          0
+        ]
+      }
+    ]
+  },
+  "config_sha256": "8b8933f92508e9f9a40ffe4cd1faca60810bbb57a995f02250cf86abb3bed62b",
+  "source_sha256": {
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_079/metadata.json": "0927a2497b4ac6ad80a0b1c476c94c7f201aed5241f7ed136c296f3c3edda21b",
+    "work/zeus_sobol_coupling_scans_20260726_200003/jy_nonzero/N13/config_047/metadata.json": "d41f728023bbeb7e8843a0e9d35907b4f76a2617f0c21e4e427e435b2b56fdcd"
+  },
+  "code_sha256": {
+    "scripts/run_born_multichannel_sensitivity.py": "183b39f55f6c86c3ca96d4787c8c192dd629a590e81e51a7a812cc74cf095a80",
+    "core/ring_chain_family.py": "e4ff9f8fd2348040b92e5940eab1d9d0c5ff637196fc7667fc14b20dbedc8840",
+    "core/pauli.py": "0b899d85aa5940f7db4b806c7c4688bfae2238eeb7ebd1406ec3eb29cf482dd9",
+    "core/born_phase_verifier.py": "325c4de0a6373c3471769457b18268200d255fac5c187e0589598abead65b442",
+    "core/born.py": "83649fe004f426db7bd602ea46381cb8ee2942c2ac9ceee9c8914f0410cb75f4",
+    "core/born_reciprocity.py": "1c292d86a88a01916f6617b9a40a531a7d439fc970958980da6a85a07d953e20",
+    "core/projective_roots.py": "8745be0e8e237a702d91d37c07c0acc01704a6a1d1a9db4b09825e481ea551f2",
+    "core/relative_evolution_pencil.py": "54245c926fa11728de5fada4a65154fe0270ce31d27d0385236740dee7e29f4b",
+    "core/projective_potential.py": "8a91a017a3dc8657eccd9c36f79aeb5cc380b58b30fd1caa9a01db88ee174ec0"
+  },
+  "git_commit": "eb48c0a6086d83c42f9953de813a1ce9c9369988",
+  "timestamp_utc": "2026-09-12T20:19:45.129699+00:00",
+  "python": "3.11.16",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "seed": null,
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "expected_conditions": 27,
+  "outputs": {
+    "summary.json": "c3a730b797538d4255d96642d85733bdd24baefc71addffee88fb355a55bad13",
+    "records.jsonl": "3a5d9e4f99277d5b32cbc218df97e8ae8380861b6c9b3f5854893b2e96a456ff",
+    "preregistration.json": "9571c8c8a4f426bfbc9cabc88d537911cea6ec7815b70ea2baa6d1ba65730b69"
+  }
+}

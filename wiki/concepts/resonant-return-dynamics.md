@@ -43,3 +43,14 @@ residuals. These do not prove an open stable Born phase.
 Sources: [derivation and validation](../../research_reports/BORN_RESONANT_RETURN.md),
 [positive multichannel audit](../../research_reports/BORN_POSITIVE_MULTICHANNEL.md).
 See [[weak-coupling-search]] and [[projective-roots]].
+
+**PROVED, conditional (2026-09-13):** changing only the ring parameter gz
+changes U(t) in normalized Hilbert-Schmidt norm by at most
+|t delta-gz|/sqrt(N), for arbitrary other fields and interactions. Fixed-cutoff
+logarithmic pencil potentials therefore agree as N grows. Equality of the
+actual thermodynamic root laws additionally follows if the compared pencils
+have uniformly vanishing small-singular-value logarithmic tails. That
+condition is OPEN for the multichannel seeds. This argument neither covers
+chain gz nor central-field/transverse-coupling directions, and supplies no
+Born phase by itself. See the
+[proof and explicit tail bound](../../research_reports/BORN_RING_LONGITUDINAL_STABILITY_2026-09-13.md).

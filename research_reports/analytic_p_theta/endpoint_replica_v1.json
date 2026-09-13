@@ -1,0 +1,10 @@
+{
+  "schema": "endpoint-replica-v1",
+  "scope": "Central-X endpoint chain with arbitrary detector fields and NN/NNN XYZ; higher-moment thermodynamic Cesaro still conditional",
+  "left_sign": 1,
+  "right_sign": -1,
+  "replica_factor": "d**(ell-1)",
+  "functional_norm_squared": "d**(2*ell-2)",
+  "first_spectral_moments": ["1", "2*a", "4*a**2+4*g**2", "8*a**3+24*a*g**2", "16*a**4+96*a**2*g**2+16*g**4+4*g**2*mu2"],
+  "control_time_means": ["1/2", "-1/4"]
+}

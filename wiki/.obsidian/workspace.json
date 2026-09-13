@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "576652272ba3f70d",
+        "id": "01ed0f2ca99ef605",
         "type": "tabs",
         "children": [
           {
-            "id": "43d7456cebcce5e7",
+            "id": "6c52ae8b90defb4d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "methods/git-delivery.md",
-                "mode": "preview",
+                "file": "concepts/spectral-statistics.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "git-delivery"
+              "title": "spectral-statistics"
             }
           }
         ]
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "methods/git-delivery.md",
+                "file": "concepts/spectral-statistics.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "methods/git-delivery.md",
+                "file": "concepts/spectral-statistics.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "methods/git-delivery.md",
+                "file": "concepts/spectral-statistics.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -188,29 +188,39 @@
       "bases:Create new base": false
     }
   },
-  "active": "43d7456cebcce5e7",
+  "active": "6c52ae8b90defb4d",
   "lastOpenFiles": [
-    "concepts/spectral-statistics.md",
-    "concepts/scientific-rules.md",
-    "concepts/projective-roots.md",
-    "concepts/born-like-points.md",
-    "concepts/big-picture.md",
-    "concepts/coverage-gates.md",
-    "campaigns/detuning-intervals.md",
-    "collapse/Welcome.md",
+    "concepts/measurement-induced-transitions.md",
+    "concepts/qbism.md",
+    "methods/reviewer-responses.md",
+    "campaigns/analytic-p-theta.md",
+    "concepts/fock-space-graphs.md",
     "concepts/literature-map.md",
-    "literature/Hamid-2025.md",
-    "literature/Guttel-2026.md",
-    "literature/Schulman-Theory.md",
-    "literature/Palmer-2026.md",
-    "methods/production-pipeline.md",
+    "literature/Kottos-Smilansky-1997.md",
+    "literature/Landauer-1961.md",
+    "literature/Farhi-Gutmann-1998.md",
+    "concepts/random-graphs.md",
+    "literature/Hardy-2001.md",
+    "literature/Many-Body-Scars.md",
+    "literature/Pearle-1989-CSL.md",
+    "literature/Watts-Strogatz-1998.md",
+    "literature/Tikhonov-Mirlin-2016.md",
+    "literature/Caruso-et-al-2009.md",
+    "literature/Basko-Aleiner-Altshuler-2006.md",
+    "literature/Altshuler-et-al-1997.md",
+    "literature/Abou-Chacra-Thouless-Anderson-1973.md",
+    "literature/Mulken-Blumen-2011.md",
+    "literature/Childs-et-al-2003.md",
+    "literature/Chung-1997.md",
+    "literature/Barabasi-Albert-1999.md",
+    "literature/Erdos-Renyi-1959.md",
+    "concepts/quantum-transport-networks.md",
+    "index.md",
+    "methods",
     "literature",
-    "methods/homogeneous-qz.md",
-    "methods/git-delivery.md",
-    "methods/implementation-standards.md",
-    "methods/scientific-contract.md",
-    "campaigns/weak-coupling-search.md",
-    "campaigns/constructive-families.md",
-    "campaigns/nonnormal-limits.md"
+    "concepts",
+    "collapse",
+    "campaigns",
+    "audits"
   ]
 }

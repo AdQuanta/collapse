@@ -1,0 +1,74 @@
+Job id            Name             User              Time Use S Queue
+----------------  ---------------- ----------------  -------- - -----
+4682629[].zeus-m* born_ring_basel* matanhaller              0 B zeus_new_q      
+4682629[0].zeus-* born_ring_basel* matanhaller       00:00:14 X zeus_new_q      
+4682629[1].zeus-* born_ring_basel* matanhaller       00:00:00 R zeus_new_q      
+4682629[2].zeus-* born_ring_basel* matanhaller       00:00:00 R zeus_new_q      
+4682629[3].zeus-* born_ring_basel* matanhaller              0 Q zeus_new_q      
+4682629[4].zeus-* born_ring_basel* matanhaller              0 Q zeus_new_q      
+4682629[5].zeus-* born_ring_basel* matanhaller              0 Q zeus_new_q      
+Job Id: 4682629[].zeus-master
+    Job_Name = born_ring_baseline
+    Job_Owner = matanhaller@zeus-login.zeus.technion.ac.il
+    job_state = B
+    queue = zeus_new_q
+    server = zeus-master
+    Checkpoint = u
+    ctime = Sun Sep 13 11:28:22 2026
+    Error_Path = zeus-login.zeus.technion.ac.il:/home/matanhaller/research/coll
+	apse/source_snapshots/born_ring_89b7c36/born_ring_baseline.e4682629.^ar
+	ray_index^
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Sep 13 11:28:29 2026
+    Output_Path = zeus-login.zeus.technion.ac.il:/home/matanhaller/research/col
+	lapse/work/born_ring_baseline_v1_89b7c36/logs/
+    Priority = 0
+    qtime = Sun Sep 13 11:28:22 2026
+    Rerunable = True
+    Resource_List.mem = 16gb
+    Resource_List.ncpus = 8
+    Resource_List.nodect = 1
+    Resource_List.place = free
+    Resource_List.select = 1:ncpus=8:mem=16gb
+    Resource_List.walltime = 24:00:00
+    stime = Sun Sep 13 11:28:22 2026
+    substate = 70
+    Variable_List = PBS_O_HOME=/home/matanhaller,PBS_O_LANG=C.UTF-8,
+	PBS_O_LOGNAME=matanhaller,
+	PBS_O_PATH=/home/matanhaller/.local/bin:/home/matanhaller/bin:/usr/loc
+	al/bin:/usr/share/lmod/lmod/libexec:/usr/lib64/ccache:/usr/local/bin:/u
+	sr/bin:/usr/local/sbin:/usr/sbin:/opt/pbs/bin,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=zeus-login.zeus.technion.ac.il,
+	PBS_O_WORKDIR=/home/matanhaller/research/collapse/source_snapshots/bor
+	n_ring_89b7c36,PBS_O_SYSTEM=Linux,
+	RUN_ROOT=/home/matanhaller/research/collapse/work/born_ring_baseline_v
+	1_89b7c36,PYTHON_BIN=/usr/bin/python3.11,PBS_O_QUEUE=zeus_new_q
+    comment = Job Array Began at Sun Sep 13 at 11:28
+    etime = Sun Sep 13 11:28:22 2026
+    Stageout_status = 1
+    Exit_status = 1
+    Submit_arguments = -o /home/matanhaller/research/collapse/work/born_ring_ba
+	seline_v1_89b7c36/logs/ -v RUN_ROOT=/home/matanhaller/research/collapse
+	/work/born_ring_baseline_v1_89b7c36,
+	PYTHON_BIN=/usr/bin/python3.11 hpc/zeus_born_ring_baseline_v1.pbs
+    array = True
+    array_state_count = Queued:3 Running:2 Exiting:0 Expired:1
+    array_indices_submitted = 0-5
+    array_indices_remaining = 3-5
+    project = _pbs_project_default
+    Submit_Host = zeus-login.zeus.technion.ac.il
+    max_run_subjobs = 2
+
+4682629[].zeus-master
+total 36
+drwxr-xr-x  6 matanhaller users  4096 Sep 13 11:28 .
+drwxr-xr-x 78 matanhaller users 12288 Sep 13 11:28 ..
+-rw-r--r--  1 matanhaller users   715 Sep 13 11:28 defining_files.sha256
+-rw-r--r--  1 matanhaller users    22 Sep 13 11:28 job_id.txt
+drwxr-xr-x  2 matanhaller users  4096 Sep 13 11:28 logs
+drwxr-xr-x  3 matanhaller users  4096 Sep 13 11:28 task_000_config_079_N13
+drwxr-xr-x  3 matanhaller users  4096 Sep 13 11:28 task_001_config_079_N14
+drwxr-xr-x  3 matanhaller users  4096 Sep 13 11:28 task_002_config_079_N15

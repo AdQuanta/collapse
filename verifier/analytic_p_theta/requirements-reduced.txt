@@ -1,0 +1,7 @@
+# Independent reduced analytic/QZ validation environment: Python 3.11.
+# Kept separate from the production/HPC dependency pins.
+sympy==1.14.0
+numpy==2.3.3
+scipy==1.16.2
+matplotlib==3.10.6
+pytest==8.4.2

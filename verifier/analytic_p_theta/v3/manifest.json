@@ -1,0 +1,9 @@
+{
+  "version": "analytic-p-theta-v3",
+  "frozen_at": "2026-09-13T13:39:07.243262+00:00",
+  "source_hashes": {
+    "v3/check.py": "cfe18835be21a4c971f7962982895537364a7c40f08e484f69217fd22188def8",
+    "v1/reference.py": "000855c3d0adede93edee029f0f5cc886ce7cc4e5622990f25eb3947baf0e0c7"
+  },
+  "self_checks": "compile, Pauli norm, exact zero and rejection: PASS"
+}

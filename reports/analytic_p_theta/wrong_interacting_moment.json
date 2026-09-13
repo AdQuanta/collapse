@@ -1,0 +1,231 @@
+{
+  "candidate": "negative-control-ignore-interaction",
+  "frozen_at": "2026-09-13T13:41:20.606520+00:00",
+  "source_sha256": "7adf7fbdce7c701ad714cd3235ded3aac25b9a4428b157d568b10aae571179cf",
+  "cases": [
+    {
+      "id": "ring_5_symbolic_ising",
+      "family": "ring",
+      "n": 5,
+      "hd": [
+        "0",
+        "0",
+        "h"
+      ],
+      "j1": [
+        "J",
+        "0",
+        "0"
+      ],
+      "j2": [
+        "0",
+        "0",
+        "0"
+      ],
+      "observable": "collective_x",
+      "moments": [
+        "1",
+        "4*h**2",
+        "16*h**4"
+      ],
+      "commutator_slope_squared": "16*h**2/5"
+    },
+    {
+      "id": "ring_6_symbolic_ising",
+      "family": "ring",
+      "n": 6,
+      "hd": [
+        "0",
+        "0",
+        "h"
+      ],
+      "j1": [
+        "J",
+        "0",
+        "0"
+      ],
+      "j2": [
+        "0",
+        "0",
+        "0"
+      ],
+      "observable": "collective_x",
+      "moments": [
+        "1",
+        "4*h**2",
+        "16*h**2*(2*J**2 + h**2)"
+      ],
+      "commutator_slope_squared": "8*h**2/3"
+    },
+    {
+      "id": "chain_1_symbolic_ising",
+      "family": "chain",
+      "n": 1,
+      "hd": [
+        "0",
+        "0",
+        "h"
+      ],
+      "j1": [
+        "J",
+        "0",
+        "0"
+      ],
+      "j2": [
+        "0",
+        "0",
+        "0"
+      ],
+      "observable": "endpoint_x",
+      "moments": [
+        "1",
+        "4*h**2",
+        "16*h**4"
+      ]
+    },
+    {
+      "id": "chain_3_symbolic_ising",
+      "family": "chain",
+      "n": 3,
+      "hd": [
+        "0",
+        "0",
+        "h"
+      ],
+      "j1": [
+        "J",
+        "0",
+        "0"
+      ],
+      "j2": [
+        "0",
+        "0",
+        "0"
+      ],
+      "observable": "endpoint_x",
+      "moments": [
+        "1",
+        "4*h**2",
+        "16*h**2*(J**2 + h**2)"
+      ]
+    },
+    {
+      "id": "ring_5_full_detector_xyz",
+      "family": "ring",
+      "n": 5,
+      "hd": [
+        "1/3",
+        "2/5",
+        "3/7"
+      ],
+      "j1": [
+        "2/7",
+        "-1/5",
+        "3/11"
+      ],
+      "j2": [
+        "1/13",
+        "2/17",
+        "-1/19"
+      ],
+      "observable": "collective_x",
+      "moments": [
+        "1",
+        "52491889724/15464166025",
+        "10063154233243124748288032/363732595320970501250625"
+      ]
+    },
+    {
+      "id": "ring_6_full_detector_xyz",
+      "family": "ring",
+      "n": 6,
+      "hd": [
+        "1/3",
+        "2/5",
+        "3/7"
+      ],
+      "j1": [
+        "2/7",
+        "-1/5",
+        "3/11"
+      ],
+      "j2": [
+        "1/13",
+        "2/17",
+        "-1/19"
+      ],
+      "observable": "collective_x",
+      "moments": [
+        "1",
+        "52491889724/15464166025",
+        "9954824751961007257569632/363732595320970501250625"
+      ]
+    },
+    {
+      "id": "ring_5_noninteracting_control",
+      "family": "ring",
+      "n": 5,
+      "hd": [
+        "0",
+        "0",
+        "h"
+      ],
+      "j1": [
+        "0",
+        "0",
+        "0"
+      ],
+      "j2": [
+        "0",
+        "0",
+        "0"
+      ],
+      "observable": "collective_x",
+      "moments": [
+        "1",
+        "4*h**2",
+        "16*h**4",
+        "64*h**6"
+      ]
+    },
+    {
+      "id": "ring_5_echo_taylor",
+      "family": "ring",
+      "n": 5,
+      "hd": [
+        "0",
+        "0",
+        "2/3"
+      ],
+      "j1": [
+        "3/7",
+        "0",
+        "0"
+      ],
+      "j2": [
+        "0",
+        "0",
+        "0"
+      ],
+      "observable": "collective_x",
+      "moments": [
+        "1",
+        "16/9"
+      ],
+      "coupling": "4/9",
+      "echo_taylor": [
+        "1",
+        "0",
+        "-32/81",
+        "0",
+        "12416/98415"
+      ]
+    }
+  ],
+  "infinite_ising_moments": [
+    "1",
+    "4*h**2",
+    "16*h**2*(2*J**2 + h**2)",
+    "64*h**2*(2*J**2 + h**2)*(4*J**2 + h**2)"
+  ]
+}

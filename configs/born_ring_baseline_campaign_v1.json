@@ -1,0 +1,16 @@
+{
+  "schema_version": "born-ring-baseline-campaign-v1",
+  "method_version": "ring-translation-qz-v1",
+  "verifier_schema": "born-phase-verifier-v1",
+  "hypothesis": "The multichannel large-N positive regime persists across widely separated instantaneous times, with improving direct balance and adequate coverage.",
+  "alternative": "The archived t=1e6 improvement is time-sensitive or fails fresh homogeneous-QZ validity; further basin scans would be premature.",
+  "prediction": "Report every size/time point and the worst-time errors without fitting an asymptote. No perturbation campaign is promoted unless the baseline scientific case improves beyond a selected time.",
+  "seed_config": "configs/born_multichannel_sensitivity_v1.json",
+  "seed_names": ["config_079","config_047"],
+  "sizes": [13,14,15],
+  "discovery_times": [10000.0,1000000.0],
+  "heldout_times": [100000.0,10000000.0],
+  "eigensystem_tolerance": 1e-12,
+  "isometry_tolerance": 1e-12,
+  "scope": "Fresh baseline replication and instantaneous time stability; no time average, no parameter tuning, no asymptotic certificate"
+}

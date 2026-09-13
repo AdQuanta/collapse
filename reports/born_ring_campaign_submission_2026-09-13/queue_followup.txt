@@ -1,0 +1,16 @@
+Job id            Name             User              Time Use S Queue
+----------------  ---------------- ----------------  -------- - -----
+4682629[].zeus-m* born_ring_basel* matanhaller              0 B zeus_new_q      
+4682629[0].zeus-* born_ring_basel* matanhaller       00:00:14 X zeus_new_q      
+4682629[1].zeus-* born_ring_basel* matanhaller       00:01:48 R zeus_new_q      
+4682629[2].zeus-* born_ring_basel* matanhaller       00:04:50 R zeus_new_q      
+4682629[3].zeus-* born_ring_basel* matanhaller              0 Q zeus_new_q      
+4682629[4].zeus-* born_ring_basel* matanhaller              0 Q zeus_new_q      
+4682629[5].zeus-* born_ring_basel* matanhaller              0 Q zeus_new_q      
+{
+  "status": "failed",
+  "error": "ArithmeticError(\"eigensystem validation failed k=0: {'hermiticity': 6.375170684606419e-20, 'eigen_residual': 4.00617133010049e-15, 'orthogonality': 1.2284321012392794e-12}\")",
+  "timestamp_utc": "2026-09-13T08:28:27.238472+00:00"
+}
+total 4
+-rw------- 1 matanhaller users 793 Sep 13 11:28 4682629[0].zeus-master.OU

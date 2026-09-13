@@ -1,0 +1,12 @@
+{
+  "verifier": "analytic-p-theta-v6",
+  "source_hashes": {
+    "v6/check.py": "f876c85218d5176e2feb86b4609fb53c2e7da016a17d323016f26638f263ed17",
+    "v1/reference.py": "000855c3d0adede93edee029f0f5cc886ce7cc4e5622990f25eb3947baf0e0c7"
+  },
+  "pre_freeze_checks": [
+    "compilation",
+    "exact equality",
+    "nonzero rejection"
+  ]
+}

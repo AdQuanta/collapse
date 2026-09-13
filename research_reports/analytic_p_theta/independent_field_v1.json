@@ -1,0 +1,9 @@
+{
+  "candidate": "independent-detector-field-v1",
+  "hypothesis": "A transverse detector field bounds the ring collective phase variance at fixed time, preventing the uniform Cesaro law of the commuting rung.",
+  "alternative": "Every nonzero coupling yields a uniform polar Cesaro measure regardless of field direction.",
+  "prediction": "The exact local relative SU2 trace has epsilon^2 coefficient -2 B(t)^2 with B(t)^2=sin(q*t)^2/q^2 for a purely transverse field.",
+  "cos_phi": "cos(rp*t)*cos(rm*t) + (p**2+q**2-e**2)/(rp*rm)*sin(rp*t)*sin(rm*t)",
+  "B_squared": "p**2*t**2/(p**2+q**2) + q**2*sin(sqrt(p**2+q**2)*t)**2/(p**2+q**2)**2",
+  "chain_density": "cos(theta/2)/(pi*sqrt(k-sin(theta/2)**2))"
+}

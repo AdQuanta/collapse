@@ -1,0 +1,829 @@
+{
+  "summary": {
+    "schema_version": "born-phase-verifier-v1",
+    "groups": [
+      {
+        "candidate": "config_047",
+        "split": "discovery",
+        "conditions": 81,
+        "failed_conditions": 0,
+        "sizes": [
+          5,
+          6,
+          7
+        ],
+        "times": [
+          1000.0,
+          100000.0,
+          1000000.0
+        ],
+        "perturbations": [
+          "baseline",
+          "coupling_2_minus",
+          "coupling_2_plus",
+          "qubit_field_0_minus",
+          "qubit_field_0_plus",
+          "qubit_field_1_minus",
+          "qubit_field_1_plus",
+          "qubit_field_2_minus",
+          "qubit_field_2_plus"
+        ],
+        "worst_global_ratio_rmse": null,
+        "worst_moment_max": 3.4325324432109117,
+        "worst_balance_binned_relative": 1.0000000000000004,
+        "minimum_coverage": 0.09375,
+        "all_qz_verified": true,
+        "all_structural_gate": false,
+        "phase_status": "OPEN: finite conditions cannot establish the required limits or basin"
+      },
+      {
+        "candidate": "config_079",
+        "split": "discovery",
+        "conditions": 81,
+        "failed_conditions": 0,
+        "sizes": [
+          5,
+          6,
+          7
+        ],
+        "times": [
+          1000.0,
+          100000.0,
+          1000000.0
+        ],
+        "perturbations": [
+          "baseline",
+          "coupling_2_minus",
+          "coupling_2_plus",
+          "qubit_field_0_minus",
+          "qubit_field_0_plus",
+          "qubit_field_1_minus",
+          "qubit_field_1_plus",
+          "qubit_field_2_minus",
+          "qubit_field_2_plus"
+        ],
+        "worst_global_ratio_rmse": null,
+        "worst_moment_max": 1.8561995712724841,
+        "worst_balance_binned_relative": 1.0000000000000004,
+        "minimum_coverage": 0.125,
+        "all_qz_verified": true,
+        "all_structural_gate": false,
+        "phase_status": "OPEN: finite conditions cannot establish the required limits or basin"
+      }
+    ]
+  },
+  "decisions": [
+    {
+      "candidate": "config_047",
+      "perturbation": "coupling_2_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.01862843498596156,
+            "coverage": 0.09375
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 0.012379870668020487,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000004,
+            "moment": 0.012005948489014484,
+            "coverage": 0.125
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_047",
+      "perturbation": "coupling_2_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.015513540251065772,
+            "coverage": 0.09375
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 0.03033416400457689,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000004,
+            "moment": 0.01719595799972984,
+            "coverage": 0.1875
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_047",
+      "perturbation": "qubit_field_0_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 0.9999999999999998,
+            "moment": 3.3867957537322173,
+            "coverage": 0.21875
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 3.3444308847062647,
+            "coverage": 0.28125
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 3.3924790389077817,
+            "coverage": 0.375
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_047",
+      "perturbation": "qubit_field_0_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 3.386795753750479,
+            "coverage": 0.21875
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 3.344430884715894,
+            "coverage": 0.28125
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 0.9999999999999998,
+            "moment": 3.3924790389135566,
+            "coverage": 0.375
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_047",
+      "perturbation": "qubit_field_1_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 0.9999999999999998,
+            "moment": 3.4325324432109117,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 3.2710842810981924,
+            "coverage": 0.25
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 0.9999999999999998,
+            "moment": 3.266677420141672,
+            "coverage": 0.3125
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_047",
+      "perturbation": "qubit_field_1_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 3.4325324432108553,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 3.2710842810982284,
+            "coverage": 0.25
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 0.9999999999999998,
+            "moment": 3.266677420141131,
+            "coverage": 0.3125
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_047",
+      "perturbation": "qubit_field_2_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.015075661858633405,
+            "coverage": 0.125
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.024490747009450642,
+            "coverage": 0.125
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.013172674267391216,
+            "coverage": 0.15625
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_047",
+      "perturbation": "qubit_field_2_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.009246356308891146,
+            "coverage": 0.09375
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.00647795118426675,
+            "coverage": 0.09375
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02417674154788063,
+            "coverage": 0.15625
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.019022191741519867,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.015806759768615786,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.012897738590508023,
+            "coverage": 0.15625
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "coupling_2_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.04795830798650269,
+            "coverage": 0.125
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 0.02608267622396676,
+            "coverage": 0.1875
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05180994023256258,
+            "coverage": 0.28125
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "coupling_2_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 0.9999999999999999,
+            "moment": 0.08271096777700682,
+            "coverage": 0.125
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.016557462378950616,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 0.05108248271110327,
+            "coverage": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "qubit_field_0_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 1.2211872214626154,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 1.3381984534534355,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 0.9999999999999997,
+            "moment": 1.355014721404287,
+            "coverage": 0.15625
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "qubit_field_0_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 1.2211872214609636,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 1.338198453457251,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 0.9999999999999996,
+            "moment": 1.3550147214018893,
+            "coverage": 0.15625
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "qubit_field_1_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 0.9999999999999999,
+            "moment": 1.8561995712724841,
+            "coverage": 0.21875
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 0.9543100223915587,
+            "moment": 1.1249400131740217,
+            "coverage": 0.40625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 0.840455268373419,
+            "moment": 1.2516660331875393,
+            "coverage": 0.53125
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "qubit_field_1_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 1.8561995712724313,
+            "coverage": 0.21875
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 0.9543100223915589,
+            "moment": 1.1249400131742302,
+            "coverage": 0.40625
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 0.84045526837343,
+            "moment": 1.2516660331875304,
+            "coverage": 0.53125
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "qubit_field_2_minus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.14789550612508673,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.025726591562242884,
+            "coverage": 0.1875
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 1.0,
+            "moment": 0.04405975456042088,
+            "coverage": 0.21875
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "config_079",
+      "perturbation": "qubit_field_2_plus",
+      "decision": "REJECT",
+      "scope": "Reduced worst-time comparison only",
+      "comparisons": [
+        {
+          "N": 5,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.08661057922287863,
+            "coverage": 0.125
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.12489894178458738,
+            "coverage": 0.15625
+          }
+        },
+        {
+          "N": 6,
+          "baseline": {
+            "balance": 1.0000000000000002,
+            "moment": 0.02165718318820642,
+            "coverage": 0.1875
+          },
+          "perturbation": {
+            "balance": 1.0000000000000004,
+            "moment": 0.023409220325989688,
+            "coverage": 0.1875
+          }
+        },
+        {
+          "N": 7,
+          "baseline": {
+            "balance": 1.0000000000000004,
+            "moment": 0.05325625017078439,
+            "coverage": 0.25
+          },
+          "perturbation": {
+            "balance": 1.0000000000000002,
+            "moment": 0.04926568981683588,
+            "coverage": 0.25
+          }
+        }
+      ]
+    }
+  ]
+}
