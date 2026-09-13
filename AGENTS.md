@@ -164,7 +164,9 @@ Repository map:
 - `work/`, `output/`, `tmp/`: generated data, never active imports;
 - `archive/`: legacy, never active imports.
 
-Prefer small complete changes, pure functions, explicit dependencies, validated
+Code must adhere to the principles of SOLID (Single Responsibility, Open/Closed,
+Liskov Substitution, Interface Segregation, and Dependency Inversion). Prefer
+small complete changes, pure functions, explicit dependencies, validated
 dataclasses/configs, and narrow interfaces. Keep models, solvers, I/O, plotting,
 and orchestration separate. Avoid speculative abstraction and unrelated
 refactoring.
