@@ -166,20 +166,23 @@ Repository map:
 
 Code must adhere to the principles of SOLID:
 
-- **Single Responsibility**: strictly separate physics/Hamiltonian models,
-  eigensolvers/QZ, data I/O, plotting, and CLI orchestration into dedicated
-  modules;
-- **Open/Closed**: extend physical regimes, observable diagnostics, and solver
-  backends via composition and pluggable strategies rather than sprawling
-  branching conditionals;
-- **Liskov Substitution**: interchangeable solver or model implementations must
-  honor identical contracts (phase conventions, basis ordering, branch cuts,
-  units, and normalization);
-- **Interface Segregation**: expose small, focused functional interfaces and
-  validated dataclasses rather than monolithic parameter bags;
-- **Dependency Inversion**: keep high-level scientific workflows and theorem
-  verifiers decoupled from concrete solver backends, storage formats, or HPC
-  execution mechanics.
+- **Single Responsibility Principle (SRP)**: A module, class, or function should
+  have one, and only one, reason to change. It should encapsulate a single,
+  cohesive responsibility rather than combining disparate concerns;
+- **Open/Closed Principle (OCP)**: Software entities should be open for
+  extension, but closed for modification. New behavior or variations should be
+  added by extending or composing abstractions rather than modifying existing,
+  tested code;
+- **Liskov Substitution Principle (LSP)**: Subtypes or implementing components
+  must be substitutable for their base types without altering program
+  correctness. Implementations must honor all base contracts, invariants, and
+  expected behaviors;
+- **Interface Segregation Principle (ISP)**: Clients should not be forced to
+  depend on methods, interfaces, or parameters they do not use. Prefer small,
+  focused, and cohesive interfaces over bulky, general-purpose ones;
+- **Dependency Inversion Principle (DIP)**: High-level modules should not depend
+  on low-level modules; both should depend on abstractions. Abstractions should
+  not depend on details; concrete details should depend on abstractions.
 
 Prefer small complete changes, pure functions, explicit dependencies, validated
 dataclasses/configs, and narrow interfaces. Avoid speculative abstraction and
