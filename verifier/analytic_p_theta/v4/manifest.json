@@ -1,0 +1,8 @@
+{
+  "version": "analytic-p-theta-v4",
+  "frozen_at": "2026-09-13T18:13:57.925372+00:00",
+  "source_hashes": {
+    "v4/check.py": "8e49966d435b57506798e6c4d9acccbb5e1d51eb3d4ccd793c7ad6ee1455deba",
+    "v1/reference.py": "000855c3d0adede93edee029f0f5cc886ce7cc4e5622990f25eb3947baf0e0c7"
+  }
+}

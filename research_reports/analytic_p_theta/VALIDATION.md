@@ -106,3 +106,66 @@ New evidence files:
 Proof and scope audit: reports 05–07. The norm-limit result for chains does
 not establish their generic Cesàro average. No claim is made for additional
 central coupling axes. Full completion remains OPEN.
+
+## General detector endpoint time-average route, 2026-09-13
+
+Report 09 keeps hx and all detector NN/NNN XYZ coefficients. It proves the
+first-moment mean and a conditional all-moment criterion; it does not prove
+the condition needed for the full probability measure. Frozen v5 passed
+the exact left/right generator identities, derivatives through order four,
+root-moment replica contractions for ell=1,2,3 at N=1,2,3, the first five
+spectral moments, zero/commuting reductions, and a negative second-moment
+time mean in an exactly integrable one-pixel control. Runtime: 96.46 s.
+The proof that the replica functional has norm 2^(N(ell-1)) rules out
+passing to the thermodynamic limit by a dimension-independent functional
+bound. Neither the finite checks nor that obstruction settles all means.
+
+Both intentional v5 negative candidates were rejected: the wrong right-action
+sign fails at N=1, derivative one, and omitting the replica factor fails at
+N=1, ell=2, derivative zero. Their exact residuals and input hashes are in
+the existing append-only verifier log. The frozen source hashes of all
+five versions were checked and remain unchanged.
+
+The separate reduced spectral-weight diagnostic uses the production chain
+Hamiltonian and root solver. All 24 QZ comparisons passed, covering N=2–5,
+three times and general/commuting detector models. Maximum second-moment
+error is 9.103828801926284e-15; maximum homogeneous residual is
+1.1962270386311935e-15. Its frequency weights sum to one within
+1.111e-15. Generic second-moment total variations at these sizes are
+2.1357, 2.8800, 3.9464, 6.2717; commuting controls stay at one. The small
+change under the loosest predeclared frequency-coalescing tolerance at
+N=5 is retained. Classification: PRELIMINARY_NUMERIC / INCONCLUSIVE for
+uniform boundedness, not a divergence theorem or a time-average solution.
+
+The earlier Majorana candidate v4 run failed at its bound-pole equation;
+that failure is retained, no formula was repaired inside the frozen checker,
+and the benchmark is parked per the user's focus correction. Report 08
+withdraws its unsupported completion/validation wording, corrects the
+full-system versus detector-only Jordan–Wigner identification, and retains
+the exploratory numbers as unverified preliminary reports. The original
+draft/scripts are preserved locally in `reports/analytic_p_theta/claude_continuation_snapshot/`
+and versioned byte-for-byte in `reports/analytic_p_theta/claude_continuation_snapshot.tar.gz`,
+alongside the original SHA256 manifest. These scripts are historical evidence,
+not active candidate imports.
+This audit is not a new validation of the Majorana candidate.
+
+New artifacts:
+
+- `verifier/analytic_p_theta/v5/{METHOD.md,check.py,manifest.json}`
+- `research_reports/analytic_p_theta/endpoint_replica_v1.json`
+- `reports/analytic_p_theta/endpoint_replica_weights_v1.json`
+- `reports/analytic_p_theta/wrong_endpoint_right_sign.json`
+- `reports/analytic_p_theta/wrong_endpoint_replica_factor.json`
+
+Reproduction uses the same reduced environment and immutable output policy:
+
+```sh
+python -m py_compile verifier/analytic_p_theta/v5/check.py scripts/check_endpoint_replica_weights.py
+python verifier/analytic_p_theta/v5/check.py --candidate research_reports/analytic_p_theta/endpoint_replica_v1.json --log reports/analytic_p_theta/verifier_log.jsonl
+python scripts/check_endpoint_replica_weights.py --help
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/check_endpoint_replica_weights.py --output reports/analytic_p_theta/endpoint_replica_weights_new.json
+```
+
+No production observable, root solver, binning gate, HPC allocation, or
+prior curated dataset changed. The next analytic target is near-zero
+frequency cancellation or locality control sufficient for every moment.

@@ -1,0 +1,14 @@
+{
+  "verifier": "analytic-p-theta-v5",
+  "source_hashes": {
+    "v5/check.py": "74cd00fb736346c28432448a12bfa85daf6fd3a08f9262349d2de0102aa0fbf1",
+    "v1/reference.py": "000855c3d0adede93edee029f0f5cc886ce7cc4e5622990f25eb3947baf0e0c7"
+  },
+  "pre_freeze_checks": [
+    "compilation",
+    "zero equality",
+    "nonzero rejection",
+    "cyclic trace",
+    "zero generator"
+  ]
+}

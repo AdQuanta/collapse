@@ -1,0 +1,11 @@
+{
+  "candidate": "endpoint-majorana-v1",
+  "hypothesis": "The full conserved-X Majorana system forces W+Wdagger=2r(t)I, so a single boundary return amplitude determines all root moments.",
+  "alternative": "Interacting detector dynamics creates more than two relative-unitary eigenphases in this quadratic slice.",
+  "prediction": "Exact Pauli anticommutators match the Majorana return coefficient through order six; the Jacobi pole residue and single-pixel Cesaro moments satisfy the supplied identities.",
+  "upper_generator_factor": "-2",
+  "single_pixel_b1": "1/2",
+  "single_pixel_b2": "-1/4",
+  "bound_energy_squared": "A*(A+B-C)/(A-C)",
+  "bound_weight_each": "((A-C)**2-B*C)/(2*(A-C)*(A+B-C))"
+}

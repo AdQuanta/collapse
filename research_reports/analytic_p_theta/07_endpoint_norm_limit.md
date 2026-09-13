@@ -51,7 +51,8 @@ not disappear: the endpoint commutator generally has O(1) norm.
 does not justify interchanging N→infinity with Cesàro averaging. Nor does
 finite-N recurrence prove that the limiting moments have time means. An
 exact boundary-mode or other spectral representation is still needed.
-The h0x=hx=0 transverse-field/XX detector slice is a useful next benchmark
-because the complete endpoint system has a quadratic Majorana representation;
-that property must be derived and verified before being used for the roots.
-The retained nonzero hx/general XYZ chain remains in the full objective.
+The restricted Majorana benchmark is now parked following the user's focus
+correction. Report 09 keeps the general detector coefficients, proves the
+first-moment mean, and isolates the unbounded replica trace functional
+which prevents an immediate all-moment mean-ergodic argument. Its conditional
+total-variation criterion is not established by the reduced numerical tests.

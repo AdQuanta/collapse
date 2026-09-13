@@ -1,0 +1,732 @@
+{
+  "schema": "endpoint-replica-weights-v1",
+  "timestamp": "2026-09-13T18:28:50Z",
+  "commit": "223588a5a069befaeadde030ed5202b4cfd8cdb7",
+  "source_hashes": {
+    "scripts/check_endpoint_replica_weights.py": "9e4ab53bda0cc5ed8f456c24d0b35d9f364b273d0388fd6cc7b44c4e1c83ba43",
+    "core/ring_chain_family.py": "e4ff9f8fd2348040b92e5940eab1d9d0c5ff637196fc7667fc14b20dbedc8840",
+    "core/projective_roots.py": "8745be0e8e237a702d91d37c07c0acc01704a6a1d1a9db4b09825e481ea551f2",
+    "core/relative_evolution_pencil.py": "54245c926fa11728de5fada4a65154fe0270ce31d27d0385236740dee7e29f4b",
+    "core/pauli.py": "0b899d85aa5940f7db4b806c7c4688bfae2238eeb7ebd1406ec3eb29cf482dd9"
+  },
+  "python": "3.11.16",
+  "numpy": "2.3.3",
+  "scipy": "1.16.2",
+  "seed": null,
+  "evidence": "PRELIMINARY_NUMERIC",
+  "limitation": "Finite-size frequency diagnostic; no infinite-volume total-variation or Cesaro claim",
+  "tolerances": {
+    "moment": 1e-08,
+    "homogeneous_residual": 1e-11,
+    "mass": 1e-10,
+    "frequency_coalescing": [
+      1e-12,
+      1e-10,
+      1e-08
+    ]
+  },
+  "rows": [
+    {
+      "model": "general",
+      "spec": {
+        "detector_n": 2,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.4,
+          0.42857142857142855
+        ],
+        "nearest": [
+          0.2857142857142857,
+          -0.3333333333333333,
+          0.2
+        ],
+        "second": [
+          -0.4,
+          0.14285714285714285,
+          0.2222222222222222
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 4,
+      "spectral_terms": 100,
+      "eigensolver_residual": 1.2888750710922027e-14,
+      "total_mass_error": 0.0,
+      "permutation_grouped_variation": 2.1357227330006583,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 2.1357227330006583,
+          "groups": 100,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 2.1357227330006583,
+          "groups": 100,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 2.1357227330006583,
+          "groups": 100,
+          "maximum_cluster_span": 0.0
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.9380803629869531,
+          "qz_moment": 0.9380803629869527,
+          "error": 3.3306690738754696e-16,
+          "homogeneous_residual": 3.6189010391054333e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.21927988747175686,
+          "qz_moment": -0.21927988747175847,
+          "error": 1.609823385706477e-15,
+          "homogeneous_residual": 3.499044898061701e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6814112490867708,
+          "qz_moment": -0.6814112490867739,
+          "error": 3.1086244689504383e-15,
+          "homogeneous_residual": 2.792446473141412e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "model": "general",
+      "spec": {
+        "detector_n": 3,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.4,
+          0.42857142857142855
+        ],
+        "nearest": [
+          0.2857142857142857,
+          -0.3333333333333333,
+          0.2
+        ],
+        "second": [
+          -0.4,
+          0.14285714285714285,
+          0.2222222222222222
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 8,
+      "spectral_terms": 1296,
+      "eigensolver_residual": 1.3367058487642305e-14,
+      "total_mass_error": 0.0,
+      "permutation_grouped_variation": 2.879965807145449,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 2.8799658071454486,
+          "groups": 1296,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 2.8799658071454486,
+          "groups": 1296,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 2.8799658071454486,
+          "groups": 1296,
+          "maximum_cluster_span": 0.0
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.938103393219362,
+          "qz_moment": 0.9381033932193619,
+          "error": 1.1102230246251565e-16,
+          "homogeneous_residual": 5.984093426035141e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.2092629947971052,
+          "qz_moment": -0.20926299479710833,
+          "error": 3.1363800445660672e-15,
+          "homogeneous_residual": 8.311485986219379e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6520656493578227,
+          "qz_moment": -0.6520656493578318,
+          "error": 9.103828801926284e-15,
+          "homogeneous_residual": 5.887271505216261e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "model": "general",
+      "spec": {
+        "detector_n": 4,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.4,
+          0.42857142857142855
+        ],
+        "nearest": [
+          0.2857142857142857,
+          -0.3333333333333333,
+          0.2
+        ],
+        "second": [
+          -0.4,
+          0.14285714285714285,
+          0.2222222222222222
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 16,
+      "spectral_terms": 18496,
+      "eigensolver_residual": 1.2396493649556196e-14,
+      "total_mass_error": 6.661338147750939e-16,
+      "permutation_grouped_variation": 3.946368493330972,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 3.946368493330972,
+          "groups": 18496,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 3.946368493330972,
+          "groups": 18496,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 3.946368493330972,
+          "groups": 18496,
+          "maximum_cluster_span": 0.0
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.9381033617875787,
+          "qz_moment": 0.9381033617875781,
+          "error": 5.551115123125783e-16,
+          "homogeneous_residual": 8.97564876493514e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.20962101893951784,
+          "qz_moment": -0.2096210189395175,
+          "error": 3.3306690738754696e-16,
+          "homogeneous_residual": 8.753382512846599e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6546522770886375,
+          "qz_moment": -0.6546522770886368,
+          "error": 6.661338147750939e-16,
+          "homogeneous_residual": 5.785845033755846e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "model": "general",
+      "spec": {
+        "detector_n": 5,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.4,
+          0.42857142857142855
+        ],
+        "nearest": [
+          0.2857142857142857,
+          -0.3333333333333333,
+          0.2
+        ],
+        "second": [
+          -0.4,
+          0.14285714285714285,
+          0.2222222222222222
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 32,
+      "spectral_terms": 278784,
+      "eigensolver_residual": 2.1365211846828398e-14,
+      "total_mass_error": 3.3306690738754696e-16,
+      "permutation_grouped_variation": 6.2716757518932305,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 6.2716757518932305,
+          "groups": 278784,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 6.2716757518932305,
+          "groups": 278784,
+          "maximum_cluster_span": 0.0
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 6.271468565761647,
+          "groups": 278714,
+          "maximum_cluster_span": 9.8514636448499e-09
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.9381033520051884,
+          "qz_moment": 0.9381033520051886,
+          "error": 2.220446049250313e-16,
+          "homogeneous_residual": 1.0626631145075897e-15,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.2097457880994137,
+          "qz_moment": -0.20974578809941544,
+          "error": 1.7486012637846216e-15,
+          "homogeneous_residual": 1.1962270386311935e-15,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6560740003749026,
+          "qz_moment": -0.6560740003749057,
+          "error": 3.1086244689504383e-15,
+          "homogeneous_residual": 1.059650526125531e-15,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "model": "commuting",
+      "spec": {
+        "detector_n": 2,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.0,
+          0.0
+        ],
+        "nearest": [
+          0.2857142857142857,
+          0.0,
+          0.0
+        ],
+        "second": [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 4,
+      "spectral_terms": 100,
+      "eigensolver_residual": 6.4567930668526146e-15,
+      "total_mass_error": 1.1102230246251565e-15,
+      "permutation_grouped_variation": 0.9999999999999989,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 0.9999999999999989,
+          "groups": 51,
+          "maximum_cluster_span": 2.886579864025407e-15
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 0.9999999999999989,
+          "groups": 51,
+          "maximum_cluster_span": 2.886579864025407e-15
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 0.9999999999999989,
+          "groups": 51,
+          "maximum_cluster_span": 2.886579864025407e-15
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.9379166366620806,
+          "qz_moment": 0.9379166366620815,
+          "error": 8.881784197001252e-16,
+          "homogeneous_residual": 4.3236308401661776e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.2912420606049497,
+          "qz_moment": -0.29124206060495156,
+          "error": 1.8318679906315083e-15,
+          "homogeneous_residual": 2.279158079576834e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6661773751396339,
+          "qz_moment": -0.6661773751396289,
+          "error": 4.9960036108132044e-15,
+          "homogeneous_residual": 2.4669376566760907e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS",
+      "control_variation_error": 1.1102230246251565e-15
+    },
+    {
+      "model": "commuting",
+      "spec": {
+        "detector_n": 3,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.0,
+          0.0
+        ],
+        "nearest": [
+          0.2857142857142857,
+          0.0,
+          0.0
+        ],
+        "second": [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 8,
+      "spectral_terms": 1296,
+      "eigensolver_residual": 9.745237733884449e-15,
+      "total_mass_error": 2.220446049250313e-16,
+      "permutation_grouped_variation": 0.9999999999999998,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 0.9999999999999997,
+          "groups": 439,
+          "maximum_cluster_span": 1.5987211554602254e-14
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 0.9999999999999997,
+          "groups": 439,
+          "maximum_cluster_span": 1.5987211554602254e-14
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 0.9999999999999997,
+          "groups": 439,
+          "maximum_cluster_span": 1.5987211554602254e-14
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.9379166366620812,
+          "qz_moment": 0.9379166366620815,
+          "error": 2.220446049250313e-16,
+          "homogeneous_residual": 3.2141179623309777e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.2912420606049496,
+          "qz_moment": -0.29124206060495167,
+          "error": 2.0539125955565396e-15,
+          "homogeneous_residual": 4.211704372194921e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6661773751396227,
+          "qz_moment": -0.6661773751396292,
+          "error": 6.439293542825908e-15,
+          "homogeneous_residual": 3.764897433270403e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS",
+      "control_variation_error": 3.3306690738754696e-16
+    },
+    {
+      "model": "commuting",
+      "spec": {
+        "detector_n": 4,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.0,
+          0.0
+        ],
+        "nearest": [
+          0.2857142857142857,
+          0.0,
+          0.0
+        ],
+        "second": [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 16,
+      "spectral_terms": 18496,
+      "eigensolver_residual": 9.931530522581638e-15,
+      "total_mass_error": 4.440892098500626e-16,
+      "permutation_grouped_variation": 1.0128527642220344,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 0.9999999999999996,
+          "groups": 1086,
+          "maximum_cluster_span": 2.2648549702353193e-14
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 0.9999999999999996,
+          "groups": 1086,
+          "maximum_cluster_span": 2.2648549702353193e-14
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 0.9999999999999996,
+          "groups": 1086,
+          "maximum_cluster_span": 2.2648549702353193e-14
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.937916636662081,
+          "qz_moment": 0.9379166366620815,
+          "error": 4.440892098500626e-16,
+          "homogeneous_residual": 4.83832622728284e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.29124206060495134,
+          "qz_moment": -0.2912420606049523,
+          "error": 9.43689570931383e-16,
+          "homogeneous_residual": 6.635447760294818e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6661773751396318,
+          "qz_moment": -0.6661773751396289,
+          "error": 2.886579864025407e-15,
+          "homogeneous_residual": 4.79002596039972e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS",
+      "control_variation_error": 4.440892098500626e-16
+    },
+    {
+      "model": "commuting",
+      "spec": {
+        "detector_n": 5,
+        "topology": "chain",
+        "qubit_field": [
+          0.14285714285714285,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.5,
+          0.0,
+          0.0
+        ],
+        "nearest": [
+          0.2857142857142857,
+          0.0,
+          0.0
+        ],
+        "second": [
+          -0.4,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.6666666666666666,
+          0.0,
+          0.0
+        ]
+      },
+      "dimension": 32,
+      "spectral_terms": 278784,
+      "eigensolver_residual": 1.248749005432172e-14,
+      "total_mass_error": 0.0,
+      "permutation_grouped_variation": 1.036320398246843,
+      "coalesced": [
+        {
+          "tolerance": 1e-12,
+          "total_variation": 1.0000000000000002,
+          "groups": 2137,
+          "maximum_cluster_span": 2.220446049250313e-14
+        },
+        {
+          "tolerance": 1e-10,
+          "total_variation": 1.0000000000000002,
+          "groups": 2137,
+          "maximum_cluster_span": 2.220446049250313e-14
+        },
+        {
+          "tolerance": 1e-08,
+          "total_variation": 1.0000000000000002,
+          "groups": 2137,
+          "maximum_cluster_span": 2.220446049250313e-14
+        }
+      ],
+      "checks": [
+        {
+          "time": 0.13,
+          "spectral_moment": 0.9379166366620816,
+          "qz_moment": 0.9379166366620815,
+          "error": 1.1102230246251565e-16,
+          "homogeneous_residual": 7.134900193532367e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 0.71,
+          "spectral_moment": -0.2912420606049512,
+          "qz_moment": -0.29124206060495117,
+          "error": 5.551115123125783e-17,
+          "homogeneous_residual": 6.364156142706842e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        },
+        {
+          "time": 1.33,
+          "spectral_moment": -0.6661773751396296,
+          "qz_moment": -0.6661773751396294,
+          "error": 2.220446049250313e-16,
+          "homogeneous_residual": 6.994665913017242e-16,
+          "indeterminate": 0,
+          "status": "PASS"
+        }
+      ],
+      "status": "PASS",
+      "control_variation_error": 2.220446049250313e-16
+    }
+  ],
+  "elapsed_seconds": 0.16128220804966986,
+  "status": "PASS"
+}

@@ -13,8 +13,16 @@
 > Frozen v3 symbolic checks and 36 further QZ comparisons passed; small-N
 > Gaussian errors are nonmonotone and are retained. See reports 05–07 and
 > `research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md`.
-> Next: interacting endpoint-chain time averages, starting with a verified
-> boundary-Majorana benchmark while retaining the full general-XYZ objective.
+> Focus correction: park the restricted boundary-Majorana benchmark; it is
+> not an established prerequisite for the full goal. Its v4 candidate check
+> failed (bound pole equation); preserve that record without promotion.
+> Report 09 retains all detector terms: PROVED first-moment mean as a
+> Liouvillian zero-frequency atom, but the higher-moment replica functional
+> has norm 2^(N(ell-1)). Frozen v5 passes; 24 QZ checks pass. Actual second-
+> moment frequency variation rises 2.14→6.27 at N=2–5 (INCONCLUSIVE for
+> boundedness). Next: near-zero cancellation/locality bounds for every
+> higher moment after N→infinity; global variation is not yet controlled.
+> Then address the additional central axes and their nonnormal root limits.
 > Exact exchange singular pencils still obstruct an everywhere-defined P.
 
 

@@ -33,11 +33,22 @@ reports. The uniform result is a density with respect to dtheta, not sphere
 area. Neither a subfamily solution nor a singular-time counterexample meets
 the full goal's completion conditions.
 
-Next highest-information question: compute the interacting endpoint-chain
-Cesàro measure after its proved norm thermodynamic limit. The hx=0,
-transverse-field/XX slice offers a quadratic boundary-Majorana benchmark,
-but does not by itself settle the retained hx/general XYZ detector. Additional
-central coupling axes still require a separate nonnormal-root argument.
+Next highest-information question: establish the interacting endpoint-chain
+Cesàro measure after its proved norm thermodynamic limit, retaining hx and
+general detector XYZ/NNN terms. Report 09 proves the first-moment mean via
+a local self-adjoint Liouvillian. The higher-moment replica functional
+has norm 2^(N(ell-1)); an N-uniform bound on its actual spectral variation
+would suffice but is OPEN. Second-moment variations 2.14→6.27 at N=2–5
+do not justify that bound. Seek weaker near-zero cancellation/locality
+control of every moment; the first-moment result does not fill the OPEN
+time-average or R columns above.
+The restricted hx=0 boundary-Majorana work is parked following the user's
+focus correction: no dependency from that benchmark to the full result has
+been established. The v4 candidate check failed at the bound pole equation;
+its append-only record is retained and the candidate is not promoted.
+Additional central coupling axes still require a separate nonnormal-root
+argument. No new benchmark should be expanded without identifying the
+specific full-goal obstruction it resolves.
 The ring echo conjecture is now PROVED in its central-X scope in report 05;
 its spectral recurrence determines the generic law, with an explicitly
 uniform average whenever the detector hx and gx are nonzero.

@@ -46,11 +46,25 @@ thermodynamic limit for arbitrary detector fields/NN/NNN XYZ coefficients.
 The subsequent generic time average is OPEN. See
 [endpoint limit](../../research_reports/analytic_p_theta/07_endpoint_norm_limit.md).
 
+**PROVED, all detector coefficients retained:** the endpoint first root
+moment has a self-adjoint local generator K=[D,.]+g{X1,.}+2h0x and its
+thermodynamic-first mean is the nonnegative zero-frequency spectral atom
+in the tracial identity vector. This is only one moment. Exact replication
+of higher moments needs a trace functional of norm 2^(N(ell-1)); hence its
+finite-volume mean-ergodic theorem cannot simply be passed to infinite N.
+A uniform bound on the actual signed frequency measures would suffice,
+but remains OPEN. Reduced second-moment variations grow from 2.14 to 6.27
+at N=2–5, with the commuting control at 1 and 24 production-QZ comparisons
+passing. This is not a divergence proof. The next target is a weaker
+near-zero cancellation/locality argument. See
+[general-chain analysis](../../research_reports/analytic_p_theta/09_general_chain_cesaro_obstruction.md).
+
 **OPEN:** endpoint-chain Cesàro statistics and additional central coupling
 axes/non-X central fields in both families. The ring theorem cannot be
 transferred to a nonnormal multichannel pencil or to unscaled endpoint
-coupling. A quadratic boundary-Majorana slice is the next endpoint benchmark;
-retained hx and general XYZ remain part of the full objective.
+coupling. The quadratic boundary-Majorana slice is parked per the user's
+focus correction; its v4 candidate check failed and was not promoted.
+Retained hx and general XYZ remain part of the full objective.
 
 Frozen independent SymPy v1/v2/v3 records, negative controls and reduced
 production-QZ comparisons are in
