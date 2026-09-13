@@ -1,3 +1,92 @@
+## [2026-09-13] ingestion | Random Graphs, Complex Networks, Quantum Walks & Fock-Space Graphs
+Executed a comprehensive survey and ingestion of random graph topologies, complex networks, spectral graph theory, quantum walks, quantum transport, and Fock-space localization into the research wiki. This establishes the structural and dynamical foundations for the detector interaction graphs used in `core/detector_graphs.py` and symmetry resolution in `core/graph_spectral_sectors.py`.
+
+**Updated & New Concept Pages (3):**
+- `wiki/concepts/random-graphs.md` — Comprehensively rewritten (upgraded from 31 lines to authoritative treatise): full mathematical taxonomy of Erdős–Rényi $G(N, p)$, Watts–Strogatz $WS(N, k, p)$, Barabási–Albert $BA(N, m)$, Random Regular expanders $RRG(N, d)$, and Bethe lattices; spectral graph theory (normalized Laplacians $\mathcal{L}$, algebraic connectivity $\lambda_2$, Cheeger isoperimetric inequality, Ramanujan bound); Continuous-Time Quantum Walks (Farhi-Gutmann); quantum chaos on graphs (Kottos-Smilansky trace formulas and Wigner-Dyson level statistics); Anderson localization on Bethe lattices (Abou-Chacra-Thouless-Anderson); symmetry-resolved spectra in `core/graph_spectral_sectors.py` (Hamming weight conservation, graph automorphisms $\operatorname{Aut}(G)$, half-filling spin reversal); and role in Born vs. Haar discrimination.
+- `wiki/concepts/quantum-transport-networks.md` — Quantum transport on graphs: Continuous-Time Quantum Walks, ballistic vs. diffusive spreading, exponential algorithmic speedup on glued-trees graphs (Childs et al. 2003), Environment-Assisted Quantum Transport (ENAQT) and dephasing-assisted transport (Caruso et al. 2009), hitting times across topologies, and relevance to non-backflowing detector architectures.
+- `wiki/concepts/fock-space-graphs.md` — Mapping many-body quantum systems to single-particle hopping on complex Fock-space graphs (hypercube and Johnson graphs); Altshuler-Gefen-Kamenev-Levitov (1997) mapping to Bethe trees; Basko-Aleiner-Altshuler (2006) Many-Body Localization as Anderson localization on Fock-space graphs; non-ergodic extended states and wave function multifractality on random regular graphs (De Luca et al., Tikhonov & Mirlin); Krylov operator complexity and the universal operator growth hypothesis (Parker et al. 2019); quantum scars and Hilbert space fragmentation; and interpretation of projective roots as non-ergodic coherent trajectories.
+
+**New Literature Entries (13):**
+- `Erdos-Renyi-1959.md` — Foundational random graph paper; giant component percolation transition.
+- `Watts-Strogatz-1998.md` — Collective dynamics of small-world networks: high clustering with logarithmic path length.
+- `Barabasi-Albert-1999.md` — Scale-free networks, preferential attachment growth, and structural hubs.
+- `Chung-1997.md` — Spectral Graph Theory monograph: normalized Laplacians, Cheeger constant, expander mixing lemma.
+- `Farhi-Gutmann-1998.md` — Continuous-time quantum walks on graphs and decision trees.
+- `Childs-et-al-2003.md` — Exponential quantum speedup by a quantum walk on glued trees.
+- `Kottos-Smilansky-1997.md` — Quantum chaos on graphs: trace formula and Wigner-Dyson spectral statistics.
+- `Mulken-Blumen-2011.md` — Continuous-time quantum walks on complex networks review.
+- `Abou-Chacra-Thouless-Anderson-1973.md` — Exact self-consistent theory of Anderson localization on the Bethe lattice.
+- `Altshuler-et-al-1997.md` — Quasiparticle lifetime and localization on Fock-space graphs.
+- `Basko-Aleiner-Altshuler-2006.md` — Foundational paper establishing Many-Body Localization.
+- `Caruso-et-al-2009.md` — Highly efficient energy transfer: environment-assisted quantum transport (ENAQT).
+- `Tikhonov-Mirlin-2016.md` — Wave function multifractality and non-ergodic extended states on random regular graphs.
+
+**Structural Updates:**
+- `wiki/index.md` — Updated with new concept pages under Theory & Concepts and 13 literature entries across the Four Strategic Sets.
+- `wiki/concepts/literature-map.md` — Strategic citation graph updated and Thematic Cross-Map expanded with a dedicated branch for Complex Networks & Quantum Dynamics.
+
+## [2026-09-13] ingestion | Comprehensive Survey of Collapse Models, Interpretations & Quantum Arrow of Time
+Executed an exhaustive, field-wide survey and ingestion of all models and interpretations of quantum collapse and all instances of the "quantum arrow of time" into the research wiki. This positions `unitary-collapse` firmly within the global taxonomy of quantum foundations.
+
+**New Concept Pages (8):**
+- `wiki/concepts/many-worlds.md` — Everettian quantum mechanics: universal wave function, relative states, pointer basis via decoherence, decision-theoretic (Deutsch-Wallace) and envariance (Zurek) Born rule derivations, self-locating uncertainty (Vaidman, Carroll), Kent's critiques, and comparative analysis with unitary collapse.
+- `wiki/concepts/consistent-histories.md` — Griffiths, Omnès, Gell-Mann & Hartle: class operators, decoherence functional $D(\alpha, \alpha')$, weak vs. strong consistency, single-framework rule, Dowker-Kent underdetermination and non-extendibility theorems.
+- `wiki/concepts/qbism.md` — Fuchs, Caves, Schack, Mermin: quantum states as personal Bayesian credences, Quantum de Finetti theorem, SIC-POVMs and Zauner's conjecture, the Urgleichung, the Born rule as a normative constraint, and Timpson's critique.
+- `wiki/concepts/relational-qm.md` — Rovelli, Laudisa, Di Biagio: observer-relative facts, Wigner's friend, cross-perspective consistency, sparse vs. stable facts, Brukner's (2018) no-go theorem for observer-independent facts, and Frauchiger-Renner (2018).
+- `wiki/concepts/quantum-arrow-of-time.md` — The arrow of time in quantum mechanics: Boltzmann's H-theorem & Loschmidt's reversibility objection (Umkehreinwand), Albert's Past Hypothesis and Mentaculus, Penrose's Weyl Curvature Hypothesis ($C_{abcd} \to 0$), Zeh's cosmological master arrow, Maccone's memory-erasure vs. Jennings-Rudolph critique, Aharonov's TSVF & ABL rule, Leifer-Pusey no-go theorem, and quantum information thermodynamics (Landauer, Jarzynski, Crooks, Sagawa-Ueda).
+- `wiki/concepts/objective-collapse.md` — Spontaneous wave-function localization models: GRW discrete jumps, Pearle CSL stochastic Schrödinger equation, Diósi-Penrose gravitational reduction, macro-amplification scaling ($N$ vs $N^2$), spontaneous heating and X-ray emission, and empirical exclusion bounds (Carlesso 2022, Majorana, VIP-2, LISA Pathfinder).
+- `wiki/concepts/measurement-induced-transitions.md` — Measurement-Induced Phase Transitions (MIPT): hybrid monitored random circuits (Li-Chen-Fisher, Skinner-Ruhman-Nahum), pure-state trajectory entanglement entropy, volume-law to area-law transition, conformal critical point, replica statistical mechanics mapping, quantum error correction threshold, and superconducting processor experiments (Google Sycamore, IBM Quantum).
+- `wiki/concepts/quantum-trajectories.md` — Continuous quantum measurement, Belavkin stochastic master equation, weak values and weak value amplification (AAV), optimal action-principle collapse paths on the Bloch sphere (Weber et al. 2014), and catching/reversing quantum jumps mid-flight (Minev et al. 2019).
+
+**New Literature Entries (20):**
+- `Von-Neumann-1932.md` — First rigorous mathematical axiomatization; Process 1 (collapse) vs. Process 2 (unitary evolution).
+- `Everett-1957.md` — Foundational relative-state formulation eliminating Process 1.
+- `Wallace-2012.md` — Modern defense of the emergent multiverse and decision-theoretic Born rule.
+- `Griffiths-1984.md` — Consistent histories and probability assignment without collapse.
+- `Gell-Mann-Hartle-1990.md` — Decoherent histories for quantum cosmology and quasiclassical realms.
+- `Fuchs-Mermin-Schack-2014.md` — Accessible QBism introduction and dissolution of the measurement problem.
+- `Rovelli-1996.md` — Foundational paper on Relational Quantum Mechanics.
+- `Cramer-1986.md` — Transactional interpretation based on Wheeler-Feynman time-symmetric absorber theory.
+- `Pearle-1989-CSL.md` — Continuous Spontaneous Localization (CSL) via non-linear stochastic dynamics.
+- `Zeh-2007.md` — The Physical Basis of the Direction of Time (5th ed.); cosmological master arrow.
+- `Maccone-2009.md` — Quantum solution to the arrow-of-time dilemma via observer memory erasure.
+- `Aharonov-1964.md` — Time symmetry in quantum measurement; the ABL probability rule.
+- `Price-1996.md` — Time's Arrow and Archimedes' Point; time-symmetric physics and retrocausal realism.
+- `Page-Wootters-1983.md` — Evolution without evolution; time emerging from entanglement in stationary states.
+- `Hardy-2001.md` — Informational reconstruction of QM from five operational axioms.
+- `Li-Chen-Fisher-2019.md` — Discovery of measurement-induced entanglement transitions in monitored circuits.
+- `Minev-2019.md` — Experimental observation, tracking, and mid-flight reversal of individual quantum jumps.
+- `Landauer-1961.md` — Thermodynamic dissipation of information erasure ($Q \ge k_B T \ln 2$).
+- `Jarzynski-1997.md` — Non-equilibrium free energy equality connecting microscopic reversibility to work fluctuations.
+- `Frauchiger-Renner-2018.md` — Extended Wigner's friend no-go theorem: quantum theory cannot consistently describe itself.
+
+**Structural Updates:**
+- `wiki/index.md` — Completely updated with all 8 new concept pages and 20 new literature entries properly partitioned across Foundations, Nearest Prior Art, Contrast & Limitations, and Implications.
+- `wiki/concepts/literature-map.md` — Master citation map rewritten with all new entries categorized and an expanded Thematic Cross-Map linking all collapse paradigms, no-collapse alternatives, stochastic reformulations, the quantum arrow of time, and continuous measurement trajectories.
+
+## [2026-09-13] ingestion | Bohmian Mechanics, Superdeterminism & Stochastic-Quantum Correspondence
+Ingested three foundational areas into the wiki to contextualize the `unitary-collapse` program within the broader landscape of quantum foundations interpretations.
+
+**New concept pages (3):**
+- `wiki/concepts/bohmian-mechanics.md` — de Broglie–Bohm pilot-wave theory: guiding equation, quantum equilibrium, equivariance, effective collapse, contextuality, preferred foliation, and the orthogonal relationship to unitary collapse.
+- `wiki/concepts/superdeterminism.md` — Violation of Statistical Independence: Bell's original discussion, 't Hooft CAI, Palmer IST/RaQM, Hossenfelder–Donadi program, Hall information bounds, Conway-Kochen counterpoint, and unitary superdeterminism as the `unitary-collapse` classification.
+- `wiki/concepts/stochastic-quantum-correspondence.md` — Barandes (Harvard, 2023): QM as an indivisible stochastic process, unistochastic matrices, interference tensor $\mathcal{I}$, division events as collapse, complex amplitudes as linearizing gauge potentials, comparison with Nelson stochastic mechanics.
+
+**New literature entries (7):**
+- `Bohm-1952.md` — Foundational hidden-variable papers (Parts I & II).
+- `DGZ-1992.md` — Dürr-Goldstein-Zanghì equivariance and typicality.
+- `tHooft-2016.md` — Cellular Automaton Interpretation.
+- `Hall-2010.md` — Quantitative measurement independence relaxation bounds ($\approx 0.14$ bits).
+- `Barandes-2023.md` — The Stochastic-Quantum Correspondence.
+- `Conway-Kochen-2006.md` — Free Will Theorem (critical counterpoint).
+- `Donadi-Hossenfelder-2022.md` — Experimental proposals for testing superdeterminism.
+
+**Updated:**
+- `wiki/index.md` — All new entries registered.
+- `wiki/concepts/literature-map.md` — Entries added to Foundations, Contrast & Limitations, and Implications sections; thematic cross-map expanded with deterministic hidden variables and stochastic reformulation trees.
+
+**Key structural insight for unitary-collapse:** The program sits precisely at the intersection of unitary superdeterminism and special-state restriction. In Bell's trilemma (Realism + Locality + Statistical Independence), `unitary-collapse` preserves realism and locality by violating Statistical Independence—the projective root variety restricts physically realizable states to a measure-zero algebraic subset of Hilbert space. Bohmian mechanics takes the opposite route (preserving Statistical Independence, violating locality). Barandes' SQC provides a complementary language where projective roots correspond to autonomous "division events" that restore stochastic divisibility without external measurement.
+
 ## [2026-09-12] audit | Mathematical Audit and Generalization of the Exact Born Theorem
 Rigorous analytical audit of `research_reports/EXACT_BORN_PERTURBATIVE_RESOLUTION.md`:
 - Upgraded the proof of Theorem 1 from a formal Fourier-series argument to an exact Radon-measure proof using the trigonometric identity $2\cos((2m+1)\theta) - \cos(2m\theta) - \cos((2m+2)\theta) = 4\cos((2m+1)\theta)\sin^2(\theta/2)$, establishing reflection invariance of the tilted measure $\tilde{\mu}_*(d\theta) = \sin^2(\theta/2)d\mu_*(\theta)$ under $\mathcal{R}: \theta \mapsto \pi - \theta$ without requiring $L^2$ regularity of $E_*$.
