@@ -1,0 +1,16 @@
+#!/bin/bash
+#PBS -N born_ring_baseline
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=16gb
+#PBS -l walltime=24:00:00
+#PBS -J 0-5%2
+#PBS -j oe
+set -euo pipefail
+cd "${PBS_O_WORKDIR:?}"
+: "${RUN_ROOT:?}"
+: "${PYTHON_BIN:?}"
+export OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 MKL_NUM_THREADS=8
+export PYTHONUNBUFFERED=1
+"$PYTHON_BIN" scripts/run_born_ring_campaign.py \
+  --config configs/born_ring_baseline_campaign_v1.json \
+  --array-index "${PBS_ARRAY_INDEX:?}" --output-root "$RUN_ROOT"
