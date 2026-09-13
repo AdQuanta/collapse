@@ -1,0 +1,1619 @@
+{
+  "schema": "analytic-ring-echo-crosscheck-v1",
+  "timestamp": "2026-09-13T13:49:25Z",
+  "commit": "5616aa0883e9764e323f86ee10ce116f962d0f5b",
+  "python": "3.11.16",
+  "numpy": "2.3.3",
+  "scipy": "1.16.2",
+  "seed": null,
+  "source_hashes": {
+    "scripts/verify_analytic_ring_echo.py": "7acc50af9f633102dc49442ed3fbdfacbcff295b9f5166f274a7b4ac88e722bb",
+    "core/ring_chain_family.py": "e4ff9f8fd2348040b92e5940eab1d9d0c5ff637196fc7667fc14b20dbedc8840",
+    "core/projective_roots.py": "8745be0e8e237a702d91d37c07c0acc01704a6a1d1a9db4b09825e481ea551f2",
+    "core/relative_evolution_pencil.py": "54245c926fa11728de5fada4a65154fe0270ce31d27d0385236740dee7e29f4b",
+    "core/pauli.py": "0b899d85aa5940f7db4b806c7c4688bfae2238eeb7ebd1406ec3eb29cf482dd9"
+  },
+  "exact_reduction_tolerances": {
+    "angle": 1e-08,
+    "homogeneous_residual": 1e-11
+  },
+  "approximation_gate": null,
+  "rows": [
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 7.771561172376096e-16,
+      "qz_homogeneous_residual": 6.632206284804573e-16,
+      "indeterminate": 0,
+      "integrated_variance": 0.016865779252356494,
+      "echo_integrated_field_error": 1.1661207667560019e-05,
+      "scaled_echo_error": 2.6075253044405972e-05,
+      "fluctuation_commutator_norm": 0.13884412563469323,
+      "scaled_commutator_norm": 0.3104649031956952,
+      "exact_root_cosine_moments": [
+        0.9776569482150039,
+        0.9132306885080163,
+        0.8140929270680399,
+        0.6911616692048516,
+        0.557138686849203,
+        0.42455487223519484
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9776873572500386,
+        0.9136888708635669,
+        0.8161876059277309,
+        0.6968937022180577,
+        0.5687428665787116,
+        0.4436316258908775
+      ],
+      "gaussian_moment_max_error": 0.019076753655682677
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 1.7763568394002505e-15,
+      "qz_homogeneous_residual": 7.205432868419985e-16,
+      "indeterminate": 0,
+      "integrated_variance": 0.47495109870088575,
+      "echo_integrated_field_error": 0.009565491666572848,
+      "scaled_echo_error": 0.02138908960466464,
+      "fluctuation_commutator_norm": 0.67223683490414,
+      "scaled_commutator_norm": 1.5031672598249604,
+      "exact_root_cosine_moments": [
+        0.5155824036103422,
+        0.04608521076721329,
+        3.566258492881946e-05,
+        -0.004668222619966911,
+        -0.10159280517650891,
+        -0.11200408274068671
+      ],
+      "gaussian_finite_variance_moments": [
+        0.528685336544708,
+        0.07783778138555454,
+        0.0031498094728851854,
+        3.393689716666274e-05,
+        8.925643071797344e-08,
+        3.817899557985753e-11
+      ],
+      "gaussian_moment_max_error": 0.11200408277886571
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 2.6645352591003757e-15,
+      "qz_homogeneous_residual": 7.984863364749425e-16,
+      "indeterminate": 0,
+      "integrated_variance": 1.446804437141063,
+      "echo_integrated_field_error": 0.10110228177371026,
+      "scaled_echo_error": 0.22607157472635417,
+      "fluctuation_commutator_norm": 1.0825467900865833,
+      "scaled_commutator_norm": 2.4206482114577956,
+      "exact_root_cosine_moments": [
+        0.11664809551985136,
+        0.0007453254576517132,
+        -0.08324323706878406,
+        0.19634706042638844,
+        0.024317270292533773,
+        0.01417472634643991
+      ],
+      "gaussian_finite_variance_moments": [
+        0.141163110362579,
+        0.00037497507427441246,
+        1.2274918636009936e-08,
+        -3.1921938531216267e-14,
+        -4.9782540801501155e-21,
+        -1.011573428702982e-29
+      ],
+      "gaussian_moment_max_error": 0.19634706042642036
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 8.951173136040325e-16,
+      "qz_homogeneous_residual": 5.553424596078632e-16,
+      "indeterminate": 0,
+      "integrated_variance": 0.016859142879070223,
+      "echo_integrated_field_error": 3.4260640498334634e-05,
+      "scaled_echo_error": 7.660912110695851e-05,
+      "fluctuation_commutator_norm": 0.22706953461647442,
+      "scaled_commutator_norm": 0.5077429150216785,
+      "exact_root_cosine_moments": [
+        0.9776653398375843,
+        0.9132623179744266,
+        0.8141573130821815,
+        0.6912609337194506,
+        0.5572672924938636,
+        0.42470117423243486
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9776956623070853,
+        0.9137199169227315,
+        0.8162500066881964,
+        0.696988425516387,
+        0.5688636598832576,
+        0.4437673109980218
+      ],
+      "gaussian_moment_max_error": 0.01906613676558694
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 2.220446049250313e-15,
+      "qz_homogeneous_residual": 9.299324538274406e-16,
+      "indeterminate": 0,
+      "integrated_variance": 0.4696950549182428,
+      "echo_integrated_field_error": 0.025261036847206295,
+      "scaled_echo_error": 0.056485395572480245,
+      "fluctuation_commutator_norm": 0.9794147717303399,
+      "scaled_commutator_norm": 2.1900380077564794,
+      "exact_root_cosine_moments": [
+        0.520232224923997,
+        0.048377097480452505,
+        4.00892235297573e-05,
+        -0.004333954305297795,
+        -0.09602114791952612,
+        -0.10981911632437391
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5322541836074329,
+        0.07996090913161036,
+        0.0033464215824759607,
+        3.779385832160077e-05,
+        1.0560512179801097e-07,
+        4.8641837182246035e-11
+      ],
+      "gaussian_moment_max_error": 0.10981911637301575
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 2.220446049250313e-15,
+      "qz_homogeneous_residual": 9.661018986660979e-16,
+      "indeterminate": 0,
+      "integrated_variance": 1.397026653999005,
+      "echo_integrated_field_error": 0.2017154015265176,
+      "scaled_echo_error": 0.4510493499219582,
+      "fluctuation_commutator_norm": 1.1358320897185468,
+      "scaled_commutator_norm": 2.5397977636363107,
+      "exact_root_cosine_moments": [
+        0.1335416893708851,
+        0.000125412147898879,
+        -0.07803977869312381,
+        0.20591425314112638,
+        0.021577960881318123,
+        0.004132611803015242
+      ],
+      "gaussian_finite_variance_moments": [
+        0.15045011918889947,
+        0.00048382429059725746,
+        2.178013045212204e-08,
+        -8.847698842570364e-14,
+        -2.448273814695569e-20,
+        -1.0026857231662467e-28
+      ],
+      "gaussian_moment_max_error": 0.20591425314121486
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 1.4779844015322396e-15,
+      "qz_homogeneous_residual": 9.581362109966105e-16,
+      "indeterminate": 0,
+      "integrated_variance": 0.01685544505624093,
+      "echo_integrated_field_error": 3.749603011198331e-05,
+      "scaled_echo_error": 8.384367221677373e-05,
+      "fluctuation_commutator_norm": 0.2442820496615414,
+      "scaled_commutator_norm": 0.5462312687261861,
+      "exact_root_cosine_moments": [
+        0.9776699971961443,
+        0.9132798783866722,
+        0.8141930809325687,
+        0.691316126142318,
+        0.5573388872698782,
+        0.4247827571215013
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9777002899600724,
+        0.9137372164112615,
+        0.8162847787967316,
+        0.6970412114324318,
+        0.568930977690953,
+        0.4438429334716428
+      ],
+      "gaussian_moment_max_error": 0.019060176350141456
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 2.6645352591003757e-15,
+      "qz_homogeneous_residual": 7.570258549499056e-16,
+      "indeterminate": 0,
+      "integrated_variance": 0.46718832101584995,
+      "echo_integrated_field_error": 0.026877668620422766,
+      "scaled_echo_error": 0.0601002941119783,
+      "fluctuation_commutator_norm": 1.008190134577613,
+      "scaled_commutator_norm": 2.254381675160204,
+      "exact_root_cosine_moments": [
+        0.5224521701767695,
+        0.05023161868578074,
+        -3.0548374652869525e-05,
+        -0.0034462667790189014,
+        -0.09373424938777329,
+        -0.10903252264823271
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5339647274786419,
+        0.0809937796255973,
+        0.00344446696427033,
+        3.9784783755247426e-05,
+        1.144253169929266e-07,
+        5.459783916217834e-11
+      ],
+      "gaussian_moment_max_error": 0.10903252270283055
+    },
+    {
+      "spec": {
+        "detector_n": 5,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 3.552713678800501e-15,
+      "qz_homogeneous_residual": 1.278566502128733e-15,
+      "indeterminate": 0,
+      "integrated_variance": 1.383446179857313,
+      "echo_integrated_field_error": 0.20259252589010296,
+      "scaled_echo_error": 0.45301065962365633,
+      "fluctuation_commutator_norm": 1.1481902205043866,
+      "scaled_commutator_norm": 2.567431384148281,
+      "exact_root_cosine_moments": [
+        0.14721416746663563,
+        -0.00016617448186082018,
+        -0.08749545384046785,
+        0.2016215913024356,
+        0.019248886012834934,
+        0.03616721667591814
+      ],
+      "gaussian_finite_variance_moments": [
+        0.15308825760829314,
+        0.0005186627333118583,
+        2.5468570667402723e-08,
+        -1.1684761042460772e-13,
+        -3.7808860364365806e-20,
+        -1.8747407280832569e-28
+      ],
+      "gaussian_moment_max_error": 0.20162159130255244
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 1.3322676295501878e-15,
+      "qz_homogeneous_residual": 1.0050698119156539e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.016865779252356494,
+      "echo_integrated_field_error": 9.718606523191579e-06,
+      "scaled_echo_error": 2.3805626992703457e-05,
+      "fluctuation_commutator_norm": 0.12674676597867132,
+      "scaled_commutator_norm": 0.31046490319569525,
+      "exact_root_cosine_moments": [
+        0.9776620260639401,
+        0.9133076281839794,
+        0.8144478294375574,
+        0.6921441983164083,
+        0.5591544776625768,
+        0.4279144872722026
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9776873572500386,
+        0.9136888708635669,
+        0.8161876059277309,
+        0.6968937022180577,
+        0.5687428665787116,
+        0.4436316258908775
+      ],
+      "gaussian_moment_max_error": 0.01571713861867491
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 2.6645352591003757e-15,
+      "qz_homogeneous_residual": 1.4731200310894745e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.4749510987008848,
+      "echo_integrated_field_error": 0.007995018387076907,
+      "scaled_echo_error": 0.01958371553250779,
+      "fluctuation_commutator_norm": 0.6136654642051869,
+      "scaled_commutator_norm": 1.5031672600708825,
+      "exact_root_cosine_moments": [
+        0.5178622131195767,
+        0.0515558677950021,
+        0.000123936496632171,
+        3.5813809462124924e-05,
+        0.021394614324470276,
+        0.066447611794021
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5286853365447086,
+        0.07783778138555493,
+        0.0031498094728852188,
+        3.3936897166663404e-05,
+        8.925643071797612e-08,
+        3.817899557985915e-11
+      ],
+      "gaussian_moment_max_error": 0.066447611755842
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 3.9968028886505635e-15,
+      "qz_homogeneous_residual": 1.0883597779897286e-15,
+      "indeterminate": 0,
+      "integrated_variance": 1.4468044370826858,
+      "echo_integrated_field_error": 0.08549494325350948,
+      "scaled_echo_error": 0.20941898655930133,
+      "fluctuation_commutator_norm": 0.9882253081136503,
+      "scaled_commutator_norm": 2.420647755783132,
+      "exact_root_cosine_moments": [
+        0.12054813910695178,
+        0.0002806190186470884,
+        0.020969745272098585,
+        -0.23452432883074004,
+        -0.10861113492052452,
+        -0.0036586765550886743
+      ],
+      "gaussian_finite_variance_moments": [
+        0.14116311037312712,
+        0.0003749750743864893,
+        1.2274918644264866e-08,
+        -3.192193856938106e-14,
+        -4.978254089449862e-21,
+        -1.01157343142413e-29
+      ],
+      "gaussian_moment_max_error": 0.23452432883070812
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 2.6645352591003757e-15,
+      "qz_homogeneous_residual": 1.3575557265879272e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.01685914287906946,
+      "echo_integrated_field_error": 2.856083814336055e-05,
+      "scaled_echo_error": 6.995948007745221e-05,
+      "fluctuation_commutator_norm": 0.20728517692755585,
+      "scaled_commutator_norm": 0.5077429147150443,
+      "exact_root_cosine_moments": [
+        0.9776704031977869,
+        0.913339159410941,
+        0.8145118770837672,
+        0.6922426756920919,
+        0.5592817020980632,
+        0.4280588740443126
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9776956623070863,
+        0.913719916922735,
+        0.8162500066882036,
+        0.6969884255163978,
+        0.5688636598832715,
+        0.44376731099803746
+      ],
+      "gaussian_moment_max_error": 0.01570843695372487
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 2.6645352591003757e-15,
+      "qz_homogeneous_residual": 1.5847257565500637e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.46969504268239987,
+      "echo_integrated_field_error": 0.021268743791276985,
+      "scaled_echo_error": 0.052097569758616374,
+      "fluctuation_commutator_norm": 0.8940499191131454,
+      "scaled_commutator_norm": 2.189966106403779,
+      "exact_root_cosine_moments": [
+        0.5223126301008424,
+        0.05386313495638578,
+        0.00013983002202091338,
+        4.213398425601672e-05,
+        0.01986725965413601,
+        0.06418264867570828
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5322541919435336,
+        0.07996091414096282,
+        0.0033464220541772434,
+        3.779386779236728e-05,
+        1.05605163147385e-07,
+        4.864186460786623e-11
+      ],
+      "gaussian_moment_max_error": 0.06418264862706641
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 4.884981308350689e-15,
+      "qz_homogeneous_residual": 1.3072436171474806e-15,
+      "indeterminate": 0,
+      "integrated_variance": 1.397024681658848,
+      "echo_integrated_field_error": 0.17389541580612955,
+      "scaled_echo_error": 0.42595503733413004,
+      "fluctuation_commutator_norm": 1.034943977746506,
+      "scaled_commutator_norm": 2.535084657845288,
+      "exact_root_cosine_moments": [
+        0.13596801137294648,
+        -0.00010257608755990383,
+        0.023422755062067646,
+        -0.2143979776244055,
+        -0.13607260973211188,
+        0.0008623585559093608
+      ],
+      "gaussian_finite_variance_moments": [
+        0.15045049901505791,
+        0.00048382917646424276,
+        2.1780625331898718e-08,
+        -8.848056239545489e-14,
+        -2.4484283420923272e-20,
+        -1.0027768568350941e-28
+      ],
+      "gaussian_moment_max_error": 0.214397977624317
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 2.220446049250313e-15,
+      "qz_homogeneous_residual": 1.191630884975822e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.016855443627967814,
+      "echo_integrated_field_error": 3.125968832566172e-05,
+      "scaled_echo_error": 7.657028591630744e-05,
+      "fluctuation_commutator_norm": 0.22301370146935137,
+      "scaled_commutator_norm": 0.5462697742492859,
+      "exact_root_cosine_moments": [
+        0.9776750574382691,
+        0.9133566834444842,
+        0.8145474925501629,
+        0.6922974821443023,
+        0.5593525891757538,
+        0.42813944966307094
+      ],
+      "gaussian_finite_variance_moments": [
+        0.977700291747494,
+        0.9137372230932009,
+        0.8162847922276416,
+        0.6970412318216079,
+        0.5689310036937958,
+        0.4438429626830887
+      ],
+      "gaussian_moment_max_error": 0.015703513020017767
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 3.1086244689504383e-15,
+      "qz_homogeneous_residual": 1.3377534501398146e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.4671583172130117,
+      "echo_integrated_field_error": 0.02271013563879731,
+      "scaled_echo_error": 0.0556282443044487,
+      "fluctuation_commutator_norm": 0.9250908142666929,
+      "scaled_commutator_norm": 2.2660004606892024,
+      "exact_root_cosine_moments": [
+        0.5244760655680867,
+        0.05567653824722847,
+        0.00030032072569345127,
+        6.469649309885639e-05,
+        0.01949527684519637,
+        0.06418098966488103
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5339852347171077,
+        0.08100622280287244,
+        0.0034456577287291152,
+        3.9809238137479284e-05,
+        1.1453523197918851e-07,
+        5.467337698880833e-11
+      ],
+      "gaussian_moment_max_error": 0.06418098961020766
+    },
+    {
+      "spec": {
+        "detector_n": 6,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 4.884981308350689e-15,
+      "qz_homogeneous_residual": 1.4587329303212273e-15,
+      "indeterminate": 0,
+      "integrated_variance": 1.382673508156838,
+      "echo_integrated_field_error": 0.17685847696072335,
+      "scaled_echo_error": 0.4332130252395468,
+      "fluctuation_commutator_norm": 1.074631173081023,
+      "scaled_commutator_norm": 2.6322980357370196,
+      "exact_root_cosine_moments": [
+        0.1473056676554629,
+        0.0010580036920322597,
+        0.028377215943610007,
+        -0.20266355989458135,
+        -0.14476366338533442,
+        -0.010711167639742614
+      ],
+      "gaussian_finite_variance_moments": [
+        0.15323973981973785,
+        0.0005207186681534567,
+        2.5696282898112264e-08,
+        -1.1871135130699245e-13,
+        -3.8755356199357485e-20,
+        -1.9426928613691222e-28
+      ],
+      "gaussian_moment_max_error": 0.20266355989446264
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 2.55351295663786e-15,
+      "qz_homogeneous_residual": 1.9005343804262497e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.0168657792523565,
+      "echo_integrated_field_error": 8.330805710919642e-06,
+      "scaled_echo_error": 2.2041240131890024e-05,
+      "fluctuation_commutator_norm": 0.11734470352422183,
+      "scaled_commutator_norm": 0.3104649031956956,
+      "exact_root_cosine_moments": [
+        0.977665650724735,
+        0.9133624430022231,
+        0.8146998901067497,
+        0.692839156437729,
+        0.5605734460263756,
+        0.4302675089739297
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9776873572500386,
+        0.9136888708635669,
+        0.8161876059277308,
+        0.6968937022180576,
+        0.5687428665787115,
+        0.44363162589087735
+      ],
+      "gaussian_moment_max_error": 0.013364116916947666
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 5.10702591327572e-15,
+      "qz_homogeneous_residual": 4.159006010898484e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.4749510987008833,
+      "echo_integrated_field_error": 0.006867469943897293,
+      "scaled_echo_error": 0.018169617607762933,
+      "fluctuation_commutator_norm": 0.568143821297443,
+      "scaled_commutator_norm": 1.5031672600709565,
+      "exact_root_cosine_moments": [
+        0.5194661394383474,
+        0.055433279758814874,
+        0.0002710971851988958,
+        -1.2187414082012044e-07,
+        -0.002279526197197514,
+        -0.025636905315732747
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5286853365447095,
+        0.07783778138555551,
+        0.003149809472885275,
+        3.393689716666443e-05,
+        8.925643071798042e-08,
+        3.817899557986187e-11
+      ],
+      "gaussian_moment_max_error": 0.02563690535391174
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.0,
+          0.0,
+          0.6
+        ],
+        "nearest": [
+          0.4,
+          0.0,
+          0.0
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "transverse_ising",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 4.6629367034256575e-15,
+      "qz_homogeneous_residual": 2.0426733756799286e-15,
+      "indeterminate": 0,
+      "integrated_variance": 1.446804437082679,
+      "echo_integrated_field_error": 0.07406005192953721,
+      "scaled_echo_error": 0.19594447949008476,
+      "fluctuation_commutator_norm": 0.9149188536080757,
+      "scaled_commutator_norm": 2.4206477564512787,
+      "exact_root_cosine_moments": [
+        0.12341693865339155,
+        8.055805222646848e-05,
+        -0.002419797773596995,
+        0.18746975938172983,
+        0.28978926757818607,
+        0.0056678273774946435
+      ],
+      "gaussian_finite_variance_moments": [
+        0.14116311037312837,
+        0.00037497507438650265,
+        1.2274918644265869e-08,
+        -3.19219385693856e-14,
+        -4.9782540894509586e-21,
+        -1.0115734314244605e-29
+      ],
+      "gaussian_moment_max_error": 0.28978926757818607
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 4.107825191113079e-15,
+      "qz_homogeneous_residual": 3.2774204192763714e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.016859142879069394,
+      "echo_integrated_field_error": 2.448702896310815e-05,
+      "scaled_echo_error": 6.478658898322e-05,
+      "fluctuation_commutator_norm": 0.191908783184045,
+      "scaled_commutator_norm": 0.5077429147139974,
+      "exact_root_cosine_moments": [
+        0.9776740175262317,
+        0.9133939043325416,
+        0.814763698054729,
+        0.6929370795913665,
+        0.5606997050519861,
+        0.4304105673549266
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9776956623070863,
+        0.9137199169227354,
+        0.8162500066882041,
+        0.6969884255163987,
+        0.5688636598832727,
+        0.44376731099803884
+      ],
+      "gaussian_moment_max_error": 0.013356743643112234
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 4.884981308350689e-15,
+      "qz_homogeneous_residual": 1.9814772538770077e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.46969504269585294,
+      "echo_integrated_field_error": 0.01836497108270762,
+      "scaled_echo_error": 0.04858914631973698,
+      "fluctuation_commutator_norm": 0.8277281522879504,
+      "scaled_commutator_norm": 2.189962844120916,
+      "exact_root_cosine_moments": [
+        0.5237799953450483,
+        0.05773860618339109,
+        0.0003106290153100013,
+        1.5964723751576287e-07,
+        -0.0021159647456051,
+        -0.024732372853416375
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5322541919343682,
+        0.07996091413545516,
+        0.0033464220536586152,
+        3.7793867781954376e-05,
+        1.0560516310192215e-07,
+        4.8641864577712164e-11
+      ],
+      "gaussian_moment_max_error": 0.02473237290205824
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nn",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 7.105427357601002e-15,
+      "qz_homogeneous_residual": 2.1475554728943064e-15,
+      "indeterminate": 0,
+      "integrated_variance": 1.3970247239800795,
+      "echo_integrated_field_error": 0.15272243132883376,
+      "scaled_echo_error": 0.40406557291723383,
+      "fluctuation_commutator_norm": 0.9579987561091513,
+      "scaled_commutator_norm": 2.534626464974034,
+      "exact_root_cosine_moments": [
+        0.13786426662106244,
+        6.65085672476003e-05,
+        -0.004049178197257183,
+        0.14112152723020904,
+        0.344617395032184,
+        0.004077521023534626
+      ],
+      "gaussian_finite_variance_moments": [
+        0.15045049086497764,
+        0.0004838290716258718,
+        2.1780614712962476e-08,
+        -8.848048570594995e-14,
+        -2.4484250262384938e-20,
+        -1.0027749012593365e-28
+      ],
+      "gaussian_moment_max_error": 0.344617395032184
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 0.13,
+      "status": "PASS",
+      "qz_angle_max_error": 3.0531133177191805e-15,
+      "qz_homogeneous_residual": 2.077719778190275e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.01685544352748368,
+      "echo_integrated_field_error": 2.6801043698961716e-05,
+      "scaled_echo_error": 7.090889650442734e-05,
+      "fluctuation_commutator_norm": 0.20647110558111698,
+      "scaled_commutator_norm": 0.5462711982881958,
+      "exact_root_cosine_moments": [
+        0.9776786683411434,
+        0.913411397447083,
+        0.8147991934355896,
+        0.6929915908277005,
+        0.5607700574326071,
+        0.4304903816221335
+      ],
+      "gaussian_finite_variance_moments": [
+        0.9777002918732455,
+        0.9137372235632993,
+        0.8162847931725544,
+        0.6970412332560596,
+        0.5689310055231891,
+        0.4438429647382188
+      ],
+      "gaussian_moment_max_error": 0.013352583116085337
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 0.71,
+      "status": "PASS",
+      "qz_angle_max_error": 5.329070518200751e-15,
+      "qz_homogeneous_residual": 7.128921365589886e-15,
+      "indeterminate": 0,
+      "integrated_variance": 0.46715589582980876,
+      "echo_integrated_field_error": 0.01959891700795576,
+      "scaled_echo_error": 0.05185386036924506,
+      "fluctuation_commutator_norm": 0.8551940677587264,
+      "scaled_commutator_norm": 2.2626308259873107,
+      "exact_root_cosine_moments": [
+        0.5258774893166938,
+        0.059360420917643916,
+        0.0004084276244604272,
+        -1.3950727894423975e-06,
+        -0.0020101630520474156,
+        -0.02517645954318147
+      ],
+      "gaussian_finite_variance_moments": [
+        0.5339868897377563,
+        0.0810072270822867,
+        0.0034457538443989025,
+        3.98112123236816e-05,
+        1.1454410700100085e-07,
+        5.4679477639012643e-11
+      ],
+      "gaussian_moment_max_error": 0.025176459597860947
+    },
+    {
+      "spec": {
+        "detector_n": 7,
+        "topology": "ring",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "model": "full_nnn",
+      "time": 1.33,
+      "status": "PASS",
+      "qz_angle_max_error": 5.10702591327572e-15,
+      "qz_homogeneous_residual": 2.6665948959453474e-15,
+      "indeterminate": 0,
+      "integrated_variance": 1.3825842041533614,
+      "echo_integrated_field_error": 0.15524390891407785,
+      "scaled_echo_error": 0.4107367755442134,
+      "fluctuation_commutator_norm": 0.9856590798669508,
+      "scaled_commutator_norm": 2.607808802820703,
+      "exact_root_cosine_moments": [
+        0.1475710536428485,
+        0.00020101011727849828,
+        -0.004528851368877509,
+        0.11609770634268235,
+        0.3422163147633137,
+        0.009535209045626478
+      ],
+      "gaussian_finite_variance_moments": [
+        0.15325725752142508,
+        0.0005209568141739993,
+        2.572273237755258e-08,
+        -1.1892866662548812e-13,
+        -3.8866266871021754e-20,
+        -1.9507037637325698e-28
+      ],
+      "gaussian_moment_max_error": 0.3422163147633137
+    }
+  ],
+  "status": "PASS",
+  "evidence": "VERIFIED_NUMERICALLY",
+  "elapsed_seconds": 0.7199068329064175
+}

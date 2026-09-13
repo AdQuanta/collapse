@@ -1,19 +1,21 @@
 # RESEARCH_STATE.md — Canonical Shared Research Memory
 
-> **2026-09-13 analytic goal — OPEN.** This task follows `goal-analytic.md`:
-> thermodynamic-first **Cesàro** averaging, distinct from the older instantaneous
-> Born-phase objective below. **PROVED:** exact commuting X-coupled ring/chain
-> measures and limits through detector hx/NN XX, with commuting NNN XX and
-> central-X extensions; also a solved noninteracting transverse-field slice.
-> **PROVED:** allowed XY exchange gives singular pencils at exact swap times,
-> so a canonical root probability measure is not defined everywhere. Frozen
-> independent SymPy v1/v2 checks passed; 72 production-QZ comparisons passed
-> (max angle error 1.07e-14). The interacting transverse step/full XYZ limits
-> remain OPEN. Next: control the central-X ring echo's fluctuation limit via
-> detector autocorrelations; do not transfer a collective CLT to endpoint
-> chains or nonnormal multichannel pencils. See
-> `research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md` and
-> `wiki/campaigns/analytic-p-theta.md`.
+> **2026-09-13 analytic goal — OPEN.** Follow `goal-analytic.md`'s
+> thermodynamic-first **Cesàro** order, distinct from the older objective below.
+> **PROVED, central-X rings:** an exact Pauli/Newton recurrence and locality
+> argument give the interacting detector root law as a folded Gaussian with
+> recurrence-defined autocorrelation variance. Both ordered limits and an
+> exact measure formula for R are established in this scope; hx!=0 forces
+> the explicitly uniform late-time law R=1/2 for gx!=0, even with full
+> detector NN/NNN XYZ. **PROVED, central-X chains:** the fixed-time root law
+> has a norm-controlled thermodynamic limit; its generic Cesàro average is
+> still OPEN. Additional central coupling axes/non-X fields remain OPEN.
+> Frozen v3 symbolic checks and 36 further QZ comparisons passed; small-N
+> Gaussian errors are nonmonotone and are retained. See reports 05–07 and
+> `research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md`.
+> Next: interacting endpoint-chain time averages, starting with a verified
+> boundary-Majorana benchmark while retaining the full general-XYZ objective.
+> Exact exchange singular pencils still obstruct an everywhere-defined P.
 
 
 > **2026-09-12 audited correction — objective OPEN.** The perturbative

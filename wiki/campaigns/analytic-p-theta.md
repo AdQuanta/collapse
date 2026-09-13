@@ -27,15 +27,33 @@ repair it. The requested everywhere-defined probability measure therefore
 has a domain obstruction. See
 [singular cases](../../research_reports/analytic_p_theta/02_singular_pencil_obstruction.md).
 
-**OPEN:** interacting transverse fields, full XYZ/multichannel families and
-their required limits. The noninteracting field solution is a side branch,
-not completion of the interacting coefficient step. Next: investigate the
-central-X ring echo's collective fluctuation limit and integrated detector
-autocorrelation. Such a CLT does not apply automatically to local endpoint
-coupling or nonnormal multichannel pencils.
+**PROVED, central-X rings:** arbitrary fixed detector fields and NN/NNN XYZ
+interactions admit an exact local Pauli/Newton recurrence. The N-first root
+law is a folded Gaussian whose variance is the integrated tracial detector
+X autocorrelation. Locality bounds the fluctuation commutators in normalized
+2-norm, which controls time ordering; exact unitary normality then transfers
+trace moments to roots. The detector spectral measure is determined by a
+local commutator recurrence and Carleman determinacy. The Cesàro moments are
+explicit atom weights of associated Gaussian/compound-Poisson limits.
+If detector hx!=0, conserved-energy overlap gives a positive zero-frequency
+mass and hence an explicitly uniform late-time law, R=1/2, for gx!=0.
+See [theorem](../../research_reports/analytic_p_theta/05_interacting_ring_echo_theorem.md)
+and [proof audit](../../research_reports/analytic_p_theta/06_echo_proof_audit.md).
 
-Frozen independent SymPy verifiers v1/v2, 37 distinct grouped exact checks,
-five rejected negative controls, and 72 reduced production-QZ comparisons
-are recorded in [validation](../../research_reports/analytic_p_theta/VALIDATION.md).
+**PROVED, central-X endpoint chains:** the finite-time relative unitary has
+an operator-norm half-chain limit, so its actual root measure has a
+thermodynamic limit for arbitrary detector fields/NN/NNN XYZ coefficients.
+The subsequent generic time average is OPEN. See
+[endpoint limit](../../research_reports/analytic_p_theta/07_endpoint_norm_limit.md).
+
+**OPEN:** endpoint-chain Cesàro statistics and additional central coupling
+axes/non-X central fields in both families. The ring theorem cannot be
+transferred to a nonnormal multichannel pencil or to unscaled endpoint
+coupling. A quadratic boundary-Majorana slice is the next endpoint benchmark;
+retained hx and general XYZ remain part of the full objective.
+
+Frozen independent SymPy v1/v2/v3 records, negative controls and reduced
+production-QZ comparisons are in
+[validation](../../research_reports/analytic_p_theta/VALIDATION.md).
 Keep the [coefficient ledger](../../research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md)
 as the compact solved/unsolved map. The full goal remains OPEN.

@@ -18,10 +18,12 @@ unsolved steps. All omitted coefficients are zero unless explicitly retained.
 | chain | commuting central-field extension | previous + h0x | two atoms | unchanged | uniform/zero-frequency atom mixture | explicit measure ratio | PROVED, report 01 |
 | ring | 4, J1x=J2x=hx=0 slice | gx,hz | SU2 binomial atoms | periodically refocused Gaussian | explicit positive mixture/Bessel moments | explicit density ratio | PROVED, report 03 |
 | chain | 4, J1x=J2x=hx=0 slice | gx,hz | one SU2 atom | unchanged | explicit arcsine polar cap | explicit density ratio | PROVED, report 03 |
-| ring | 4, interacting | gx,hx,J1x,hz | conditional-unitary reduction only | OPEN | OPEN | OPEN | OPEN |
-| chain | 4, interacting | gx,hx,J1x,hz | conditional-unitary reduction only | OPEN | OPEN | OPEN | OPEN |
-| ring and chain | 5 | full NN XYZ | OPEN | OPEN | OPEN | OPEN | OPEN |
-| ring and chain | 6 | full NN + NNN XYZ | OPEN | OPEN | OPEN | OPEN | OPEN |
+| ring | 4, interacting | gx,hx,J1x,hz | exact Pauli/Newton recurrence | proved folded Gaussian via local autocorrelation | proved spectral atom formula; uniform if hx!=0 | exact measure formula; 1/2 if hx!=0 | PROVED representation, report 05 |
+| chain | 4, interacting | gx,hx,J1x,hz | exact conditional-unitary recurrence | proved norm limit | OPEN | OPEN | partial PROVED, report 07 |
+| ring | 5 | gx,h0x,detector fields,full NN XYZ | exact Pauli/Newton recurrence | proved folded Gaussian via local autocorrelation | proved spectral atom formula; uniform if hx!=0 | exact measure formula | PROVED representation, report 05 |
+| chain | 5 | gx,h0x,detector fields,full NN XYZ | exact conditional-unitary recurrence | proved norm limit | OPEN | OPEN | partial PROVED, report 07 |
+| ring | 6 | previous + detector NNN XYZ | exact Pauli/Newton recurrence | proved folded Gaussian via local autocorrelation | proved spectral atom formula; uniform if hx!=0 | exact measure formula | PROVED representation, report 05 |
+| chain | 6 | previous + detector NNN XYZ | exact conditional-unitary recurrence | proved norm limit | OPEN | OPEN | partial PROVED, report 07 |
 | ring and chain | 7 | additional coupling axes | singular cases proved; regular-domain law OPEN | OPEN | OPEN | OPEN | OPEN, report 02 |
 | ring and chain | 8 | remaining fields | OPEN | OPEN | OPEN | OPEN | OPEN |
 | ring and chain | 9 | full family | singular domain obstruction; regular-domain characterization OPEN | OPEN | OPEN | OPEN | OPEN |
@@ -31,11 +33,11 @@ reports. The uniform result is a density with respect to dtheta, not sphere
 area. Neither a subfamily solution nor a singular-time counterexample meets
 the full goal's completion conditions.
 
-Next highest-information question: for the interacting central-X ring,
-does the tracial fluctuation limit of the exact relative-unitary echo yield
-a folded Gaussian whose variance is the integrated infinite-temperature
-detector X autocorrelation? This is **CONJECTURE** until time-ordered
-cumulants and uniform finite-time error estimates are controlled. For the
-endpoint chain the coupling remains local, so that collective CLT cannot
-be transferred without a separate argument. Existing Schur/Volterra and
-projective-potential tools remain available for later multichannel work.
+Next highest-information question: compute the interacting endpoint-chain
+Cesàro measure after its proved norm thermodynamic limit. The hx=0,
+transverse-field/XX slice offers a quadratic boundary-Majorana benchmark,
+but does not by itself settle the retained hx/general XYZ detector. Additional
+central coupling axes still require a separate nonnormal-root argument.
+The ring echo conjecture is now PROVED in its central-X scope in report 05;
+its spectral recurrence determines the generic law, with an explicitly
+uniform average whenever the detector hx and gx are nonzero.

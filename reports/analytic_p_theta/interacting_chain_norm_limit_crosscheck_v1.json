@@ -1,0 +1,421 @@
+{
+  "schema": "analytic-chain-norm-limit-crosscheck-v1",
+  "timestamp": "2026-09-13T13:54:44Z",
+  "commit": "5616aa0883e9764e323f86ee10ce116f962d0f5b",
+  "source_hashes": {
+    "scripts/verify_analytic_chain_limit.py": "78e60c72f5eabc4401f1955f02e548474294e3205b72804951008140855880a4",
+    "core/ring_chain_family.py": "e4ff9f8fd2348040b92e5940eab1d9d0c5ff637196fc7667fc14b20dbedc8840",
+    "core/projective_roots.py": "8745be0e8e237a702d91d37c07c0acc01704a6a1d1a9db4b09825e481ea551f2",
+    "core/relative_evolution_pencil.py": "54245c926fa11728de5fada4a65154fe0270ce31d27d0385236740dee7e29f4b",
+    "core/pauli.py": "0b899d85aa5940f7db4b806c7c4688bfae2238eeb7ebd1406ec3eb29cf482dd9"
+  },
+  "python": "3.11.16",
+  "numpy": "2.3.3",
+  "scipy": "1.16.2",
+  "seed": null,
+  "tolerances": {
+    "angle": 1e-08,
+    "homogeneous_residual": 1e-11
+  },
+  "rows": [
+    {
+      "spec": {
+        "detector_n": 2,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 0.13,
+      "angle_max_error": 1.6653345369377348e-16,
+      "homogeneous_residual": 3.0805281393994097e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        0.9775266397858667,
+        0.911282897943495,
+        0.8047299748483829,
+        0.663414595245249,
+        0.49465022737797903,
+        0.3070981533623631
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 2,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 0.71,
+      "angle_max_error": 1.2212453270876722e-15,
+      "homogeneous_residual": 2.458827916535096e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        0.43689291051535395,
+        -0.5266092622879819,
+        -0.7370493647199412,
+        -0.16567888758710125,
+        0.2560681759514743,
+        0.11435822894388091
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 2,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 1.33,
+      "angle_max_error": 8.881784197001252e-16,
+      "homogeneous_residual": 3.190625307990032e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        -0.2460325600192467,
+        -0.5018423743433413,
+        0.14420593352458674,
+        -0.08734276940673205,
+        0.4703192737672615,
+        -0.06285410170545039
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 3,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 0.13,
+      "angle_max_error": 6.106226635438361e-16,
+      "homogeneous_residual": 5.250231352750064e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        0.9775278451424045,
+        0.9112876019603318,
+        0.8047401283260897,
+        0.6634316097927719,
+        0.4946748235628532,
+        0.30713026657922693
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 3,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 0.71,
+      "angle_max_error": 8.881784197001252e-16,
+      "homogeneous_residual": 5.17937265062899e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        0.43766534795822637,
+        -0.5252691728212665,
+        -0.7372197418737552,
+        -0.16756340130375863,
+        0.25480260778438313,
+        0.11446901015636254
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 3,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 1.33,
+      "angle_max_error": 6.661338147750939e-16,
+      "homogeneous_residual": 4.511169455256526e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        -0.24268549847345,
+        -0.5024443616788885,
+        0.14199846936003083,
+        -0.08793901636126733,
+        0.46145382188194256,
+        -0.05991409991660242
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 4,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 0.13,
+      "angle_max_error": 1.1934897514720433e-15,
+      "homogeneous_residual": 7.668290204512499e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        0.9775278446030748,
+        0.9112875998555056,
+        0.804740123782733,
+        0.6634316021789336,
+        0.49467481255558055,
+        0.3071302522066908
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 4,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 0.71,
+      "angle_max_error": 1.3322676295501878e-15,
+      "homogeneous_residual": 7.929442018771096e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        0.43765467704512573,
+        -0.525288238560094,
+        -0.7372186497508693,
+        -0.167537677622888,
+        0.25482145142347024,
+        0.11446827739918311
+      ]
+    },
+    {
+      "spec": {
+        "detector_n": 4,
+        "topology": "chain",
+        "qubit_field": [
+          0.17,
+          0.0,
+          0.0
+        ],
+        "detector_field": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "nearest": [
+          0.3,
+          -0.1,
+          0.2
+        ],
+        "second": [
+          0.1,
+          0.08,
+          -0.06
+        ],
+        "coupling": [
+          0.8,
+          0.0,
+          0.0
+        ]
+      },
+      "time": 1.33,
+      "angle_max_error": 8.881784197001252e-16,
+      "homogeneous_residual": 7.082844521852949e-16,
+      "status": "PASS",
+      "indeterminate": 0,
+      "cosine_moments": [
+        -0.24289182131215,
+        -0.5024649504855508,
+        0.1421734079350119,
+        -0.08790215174406465,
+        0.4625357358640457,
+        -0.06074199888307309
+      ]
+    }
+  ],
+  "evidence": "VERIFIED_NUMERICALLY",
+  "status": "PASS",
+  "elapsed_seconds": 0.01644383301027119
+}

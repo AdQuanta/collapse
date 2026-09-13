@@ -21,3 +21,14 @@ Run from repository root:
 ```sh
 python verifier/analytic_p_theta/v1/check.py --candidate research_reports/analytic_p_theta/commuting_x_v1.json --log reports/analytic_p_theta/verifier_log.jsonl
 ```
+
+Subsequent separately versioned series:
+
+- v2: independent noninteracting-field SU2 identities; see `v2/METHOD.md`.
+- v3: interacting detector Liouvillian moments and echo coefficients; see
+  `v3/METHOD.md`. Its matched series uses the eight-case parameter list in
+  frozen `interacting_echo_v1.json`; candidate/control comparisons retain
+  that list. Changing the comparison cases must be explicitly documented.
+
+Every version keeps its own source-hash manifest. No previous version was
+edited to make a later candidate pass.
