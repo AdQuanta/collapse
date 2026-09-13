@@ -23,6 +23,12 @@
 > pending; no production job submitted. Runbook and preflight evidence:
 > `hpc/zeus_born_ring_baseline_v1.md`.
 
+> **Analytical follow-up:** ring gz changes vanish in the fixed-time normalized
+> propagator 2-norm. Equality of the actual thermodynamic root laws follows
+> only with logarithmic-tail control, still OPEN for the seeds. This settles
+> neither the other 14 directions nor chains. Proof:
+> `research_reports/BORN_RING_LONGITUDINAL_STABILITY_2026-09-13.md`.
+
 Last updated: 2026-08-29 (section 10b added; see also sections 14a, 15, and 17)
 
 This is the **single canonical research-memory file** for this project. It is intended to transfer context between Ido, Claude Code, ChatGPT/Codex, and future agents.
