@@ -169,3 +169,39 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python scripts/check_endpoint_replica_w
 No production observable, root solver, binning gate, HPC allocation, or
 prior curated dataset changed. The next analytic target is near-zero
 frequency cancellation or locality control sufficient for every moment.
+
+## Almost-every-central-field theorem, 2026-09-13
+
+Report 10 proves the full ordered uniform measure for a.e. h0x with every
+detector field/NN/NNN XYZ coefficient retained. The proof acts on the
+already established thermodynamic moments and uses the exact scalar
+central-field modulation, Plancherel, Tonelli at T=n², and a uniform
+interpolation estimate for all intermediate real T. Taking a countable
+union over all moments gives one null exceptional set for each fixed
+detector/coupling vector. No frequency total-variation bound is assumed,
+and no parameter average is substituted for the requested observable.
+
+Frozen v6 passed six grouped exact controls: conditional scalar modulation,
+the Fourier window and its zero-frequency limit, the field Jacobian in
+the Plancherel bound, the summable square-time/interpolation constants,
+the nonzero resonant field with b1=0,b2=1/2, and commuting resonances in
+four harmonics. The wrong phase factor and a falsely zero resonant second
+moment were both rejected; the latter residual is exactly 1/2. All records
+are appended to the existing verifier log. Source hashes v1–v6 remain
+frozen. Python 3.11.16 and SymPy 1.14.0 are unchanged.
+
+The v6 controls do not prove the a.e. convergence theorem; its complete
+measure-theoretic proof is in report 10. Existing v5 checks supply the
+finite general-detector generator/sector identities. No additional
+numerical simulations or production changes were needed. The theorem
+does not identify the exceptional set, imply a pointwise convergence rate
+for a prescribed h0x, or establish full arbitrary-parameter completion.
+
+Artifacts: `central_field_modulation_v1.json` beside the report,
+`verifier/analytic_p_theta/v6/{METHOD.md,check.py,manifest.json}`, and
+`reports/analytic_p_theta/wrong_central_{modulation_phase,resonant_mean}.json`.
+
+```sh
+python -m py_compile verifier/analytic_p_theta/v6/check.py
+python verifier/analytic_p_theta/v6/check.py --candidate research_reports/analytic_p_theta/central_field_modulation_v1.json --log reports/analytic_p_theta/verifier_log.jsonl
+```

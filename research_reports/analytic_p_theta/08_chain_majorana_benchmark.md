@@ -99,6 +99,11 @@ but this draft does not establish the required infinite-volume frequency
 representation or the absence of resonant contributions for every ell.
 Finite-N frequency matching does not justify the requested order of limits.
 
+Subsequently, report 10 proves uniformity for Lebesgue-a.e. h0x by a
+bounded-signal modulation argument that applies even to the general
+interacting detector. That theorem does not validate this draft's mode
+formulas or eliminate the exceptional fixed-field problem.
+
 For h0x = 0: the Cesàro moments depend on the spectral properties of the
 detector-coupled dynamics. This requires understanding the discrete
 spectrum of the time-quasiperiodic function t -> tau_det(W(t)^ell).

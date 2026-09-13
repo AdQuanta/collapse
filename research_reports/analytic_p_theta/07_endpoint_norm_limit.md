@@ -56,3 +56,9 @@ correction. Report 09 keeps the general detector coefficients, proves the
 first-moment mean, and isolates the unbounded replica trace functional
 which prevents an immediate all-moment mean-ergodic argument. Its conditional
 total-variation criterion is not established by the reduced numerical tests.
+
+**Update, report 10:** the full Cesàro probability law is now PROVED to be
+dtheta/pi for Lebesgue-almost every central h0x, for each fixed arbitrary
+detector/coupling vector. This uses bounded scalar modulation and Plancherel,
+not the replica bound. Exceptional prescribed fields remain OPEN, so the
+arbitrary-parameter goal is not complete.

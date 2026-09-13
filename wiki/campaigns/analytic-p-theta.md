@@ -43,7 +43,7 @@ and [proof audit](../../research_reports/analytic_p_theta/06_echo_proof_audit.md
 **PROVED, central-X endpoint chains:** the finite-time relative unitary has
 an operator-norm half-chain limit, so its actual root measure has a
 thermodynamic limit for arbitrary detector fields/NN/NNN XYZ coefficients.
-The subsequent generic time average is OPEN. See
+The subsequent average at arbitrary prescribed fields is OPEN. See
 [endpoint limit](../../research_reports/analytic_p_theta/07_endpoint_norm_limit.md).
 
 **PROVED, all detector coefficients retained:** the endpoint first root
@@ -59,7 +59,19 @@ passing. This is not a divergence proof. The next target is a weaker
 near-zero cancellation/locality argument. See
 [general-chain analysis](../../research_reports/analytic_p_theta/09_general_chain_cesaro_obstruction.md).
 
-**OPEN:** endpoint-chain Cesàro statistics and additional central coupling
+**PROVED, report 10:** for each fixed choice of all detector fields/NN/NNN
+XYZ and gx, the central-X chain has uniform thermodynamic-first Cesàro law
+dtheta/pi and R=1/2 for Lebesgue-almost every h0x. The exact scalar phase
+exp(-2i ell h0x t), bounded echo moments, Plancherel, summable square times,
+and interpolation control **all** moments without a global frequency-
+variation bound. The field is fixed in the observable; field integration
+is only a proof device. A null exceptional set remains, can depend on the
+detector, and includes actual nonzero resonances. Thus this is not an
+all-parameter or open-region theorem. The same argument applies to rings,
+whose central-X result was already stronger. See
+[a.e.-field theorem](../../research_reports/analytic_p_theta/10_almost_every_central_field.md).
+
+**OPEN:** endpoint-chain Cesàro statistics at exceptional prescribed fields and additional central coupling
 axes/non-X central fields in both families. The ring theorem cannot be
 transferred to a nonnormal multichannel pencil or to unscaled endpoint
 coupling. The quadratic boundary-Majorana slice is parked per the user's

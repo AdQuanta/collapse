@@ -21,9 +21,9 @@ unsolved steps. All omitted coefficients are zero unless explicitly retained.
 | ring | 4, interacting | gx,hx,J1x,hz | exact Pauli/Newton recurrence | proved folded Gaussian via local autocorrelation | proved spectral atom formula; uniform if hx!=0 | exact measure formula; 1/2 if hx!=0 | PROVED representation, report 05 |
 | chain | 4, interacting | gx,hx,J1x,hz | exact conditional-unitary recurrence | proved norm limit | OPEN | OPEN | partial PROVED, report 07 |
 | ring | 5 | gx,h0x,detector fields,full NN XYZ | exact Pauli/Newton recurrence | proved folded Gaussian via local autocorrelation | proved spectral atom formula; uniform if hx!=0 | exact measure formula | PROVED representation, report 05 |
-| chain | 5 | gx,h0x,detector fields,full NN XYZ | exact conditional-unitary recurrence | proved norm limit | OPEN | OPEN | partial PROVED, report 07 |
+| chain | 5 | gx,h0x,detector fields,full NN XYZ | exact conditional-unitary recurrence | proved norm limit | uniform for a.e. h0x; exceptional fields OPEN | 1/2 for a.e. h0x | PROVED a.e.-field result, reports 07,10 |
 | ring | 6 | previous + detector NNN XYZ | exact Pauli/Newton recurrence | proved folded Gaussian via local autocorrelation | proved spectral atom formula; uniform if hx!=0 | exact measure formula | PROVED representation, report 05 |
-| chain | 6 | previous + detector NNN XYZ | exact conditional-unitary recurrence | proved norm limit | OPEN | OPEN | partial PROVED, report 07 |
+| chain | 6 | previous + detector NNN XYZ | exact conditional-unitary recurrence | proved norm limit | uniform for a.e. h0x; exceptional fields OPEN | 1/2 for a.e. h0x | PROVED a.e.-field result, reports 07,10 |
 | ring and chain | 7 | additional coupling axes | singular cases proved; regular-domain law OPEN | OPEN | OPEN | OPEN | OPEN, report 02 |
 | ring and chain | 8 | remaining fields | OPEN | OPEN | OPEN | OPEN | OPEN |
 | ring and chain | 9 | full family | singular domain obstruction; regular-domain characterization OPEN | OPEN | OPEN | OPEN | OPEN |
@@ -34,14 +34,18 @@ area. Neither a subfamily solution nor a singular-time counterexample meets
 the full goal's completion conditions.
 
 Next highest-information question: establish the interacting endpoint-chain
-Cesàro measure after its proved norm thermodynamic limit, retaining hx and
-general detector XYZ/NNN terms. Report 09 proves the first-moment mean via
+Cesàro measure at the remaining exceptional prescribed central fields,
+retaining hx and general detector XYZ/NNN terms, or cross the next central-
+axis obstruction. Report 10 now proves the full uniform ordered probability
+law and R=1/2 for a.e. h0x by scalar modulation and Plancherel; this does
+not identify the null exceptional set or cover h0x=0 automatically.
+Report 09 proves the first-moment mean at every h0x via
 a local self-adjoint Liouvillian. The higher-moment replica functional
 has norm 2^(N(ell-1)); an N-uniform bound on its actual spectral variation
 would suffice but is OPEN. Second-moment variations 2.14→6.27 at N=2–5
 do not justify that bound. Seek weaker near-zero cancellation/locality
-control of every moment; the first-moment result does not fill the OPEN
-time-average or R columns above.
+control of every moment at exceptional fields; neither the first-moment
+nor a.e.-field result fills the arbitrary-parameter completion requirements.
 The restricted hx=0 boundary-Majorana work is parked following the user's
 focus correction: no dependency from that benchmark to the full result has
 been established. The v4 candidate check failed at the bound pole equation;

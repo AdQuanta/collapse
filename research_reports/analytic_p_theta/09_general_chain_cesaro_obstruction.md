@@ -8,6 +8,12 @@ replicated frequency measure would give all ordered time averages and R.
 **OPEN:** that bound, or another argument establishing all the means.
 This does not solve the full goal, and adds no integrability restriction.
 
+**Subsequent result:** report 10 bypasses the total-variation hypothesis for
+Lebesgue-almost every central h0x and proves the full ordered uniform law
+there. The present obstruction and conditional theorem remain valid;
+the unresolved fixed-field problem is now confined to an exceptional
+set and to the additional central axes/non-X fields.
+
 ## 1. Question, prediction, and conventions
 
 The main endpoint obstruction is the existence and evaluation of the time
