@@ -52,14 +52,15 @@ def test_each_independent_coefficient_has_native_positive_normalization(field,ax
 
 @pytest.mark.parametrize("n",[5,6,7])
 @pytest.mark.parametrize("time",[.31,37.])
-def test_union_of_sector_roots_matches_full_complex_projective_rays(n,time):
+@pytest.mark.parametrize("eigensolver",["ring-eigh-evr-v1","ring-eigh-evd-v1"])
+def test_union_of_sector_roots_matches_full_complex_projective_rays(n,time,eigensolver):
     spec=generic_spec(n)
     h0,v=build_ring_chain_parts(spec)
     full=production_root_spectrum(expm(-1j*time*(h0+v)))
     sectors=[]
     for k in range(n):
         block=build_ring_translation_block(spec,k)
-        e,v,check=diagonalize_ring_translation_block(block)
+        e,v,check=diagonalize_ring_translation_block(block,eigensolver_version=eigensolver)
         assert max(check.values())<1e-12
         sectors.append(evaluate_ring_translation_time(block,e,v,time))
     combined=combine_ring_translation_diagnostics(n,sectors)

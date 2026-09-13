@@ -25,8 +25,9 @@ def test_campaign_has_unique_six_task_ownership_and_disjoint_times():
     with pytest.raises(ValueError):campaign_tasks(cfg,seed)
 
 
-def test_reduced_worker_completes_resumes_and_detects_corrupt_root_checkpoint(tmp_path):
-    cfg=config();cfg.update(sizes=[5],seed_names=["config_079"],discovery_times=[.31],heldout_times=[.79])
+@pytest.mark.parametrize("eigensolver",["ring-eigh-evr-v1","ring-eigh-evd-v1"])
+def test_reduced_worker_completes_resumes_and_detects_corrupt_root_checkpoint(tmp_path,eigensolver):
+    cfg=config();cfg.update(sizes=[5],seed_names=["config_079"],discovery_times=[.31],heldout_times=[.79],eigensolver_version=eigensolver)
     path=tmp_path/"config.json";path.write_text(json.dumps(cfg))
     output=tmp_path/"output"
     command=[sys.executable,str(ROOT/"scripts/run_born_ring_campaign.py"),"--config",str(path),

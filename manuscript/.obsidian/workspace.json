@@ -1,24 +1,24 @@
 {
   "main": {
-    "id": "fe308f77f5adca3f",
+    "id": "e35e5b0b419a3f7f",
     "type": "split",
     "children": [
       {
-        "id": "01ed0f2ca99ef605",
+        "id": "6937abc29cbad838",
         "type": "tabs",
         "children": [
           {
-            "id": "6c52ae8b90defb4d",
+            "id": "547a9c63b658ea54",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "concepts/spectral-statistics.md",
-                "mode": "source",
+                "file": "WRITE_GUIDE.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "spectral-statistics"
+              "title": "WRITE_GUIDE"
             }
           }
         ]
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "a01f4a3bfa22f9c2",
+    "id": "d6d752c9f9711e0f",
     "type": "split",
     "children": [
       {
-        "id": "28519cc67e8dd498",
+        "id": "d219e80524a1ca42",
         "type": "tabs",
         "children": [
           {
-            "id": "6976e7c7b2904134",
+            "id": "52c05a2c821548fd",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -50,7 +50,7 @@
             }
           },
           {
-            "id": "320c0bd934a0dc40",
+            "id": "793479200d52781a",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -67,7 +67,7 @@
             }
           },
           {
-            "id": "f2a9547faa630a1e",
+            "id": "e869471b0504e58c",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -86,20 +86,20 @@
     "width": 300
   },
   "right": {
-    "id": "18c47d651489af98",
+    "id": "bef6e42e0baf39ca",
     "type": "split",
     "children": [
       {
-        "id": "ff8cba14834125f2",
+        "id": "c29d42842fc60e4e",
         "type": "tabs",
         "children": [
           {
-            "id": "6e2e8d3df8af888d",
+            "id": "94b2786eb5ca780e",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "concepts/spectral-statistics.md",
+                "file": "WRITE_GUIDE.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,12 +113,12 @@
             }
           },
           {
-            "id": "2d35b8afda23c053",
+            "id": "966da27247e66c1b",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "concepts/spectral-statistics.md",
+                "file": "WRITE_GUIDE.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -127,7 +127,7 @@
             }
           },
           {
-            "id": "58493a7187932751",
+            "id": "0334e83ffa145e35",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -142,7 +142,7 @@
             }
           },
           {
-            "id": "6b141522a0318687",
+            "id": "5c6b8ed75cc1f12a",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -156,12 +156,12 @@
             }
           },
           {
-            "id": "f4f4b09a868c5db5",
+            "id": "09a1cdadf97cc93a",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "concepts/spectral-statistics.md",
+                "file": "WRITE_GUIDE.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -188,39 +188,26 @@
       "bases:Create new base": false
     }
   },
-  "active": "6c52ae8b90defb4d",
+  "active": "547a9c63b658ea54",
   "lastOpenFiles": [
-    "concepts/measurement-induced-transitions.md",
-    "concepts/qbism.md",
-    "methods/reviewer-responses.md",
-    "campaigns/analytic-p-theta.md",
-    "concepts/fock-space-graphs.md",
-    "concepts/literature-map.md",
-    "literature/Kottos-Smilansky-1997.md",
-    "literature/Landauer-1961.md",
-    "literature/Farhi-Gutmann-1998.md",
-    "concepts/random-graphs.md",
-    "literature/Hardy-2001.md",
-    "literature/Many-Body-Scars.md",
-    "literature/Pearle-1989-CSL.md",
-    "literature/Watts-Strogatz-1998.md",
-    "literature/Tikhonov-Mirlin-2016.md",
-    "literature/Caruso-et-al-2009.md",
-    "literature/Basko-Aleiner-Altshuler-2006.md",
-    "literature/Altshuler-et-al-1997.md",
-    "literature/Abou-Chacra-Thouless-Anderson-1973.md",
-    "literature/Mulken-Blumen-2011.md",
-    "literature/Childs-et-al-2003.md",
-    "literature/Chung-1997.md",
-    "literature/Barabasi-Albert-1999.md",
-    "literature/Erdos-Renyi-1959.md",
-    "concepts/quantum-transport-networks.md",
-    "index.md",
-    "methods",
-    "literature",
-    "concepts",
-    "collapse",
-    "campaigns",
-    "audits"
+    "drafts/figures/fig4_theory_and_limits.md",
+    "drafts/architecture/pitch.md",
+    "drafts/sections/abstract.md",
+    "drafts/README.md",
+    "AUDIT.md",
+    "NUMERICAL_PROVENANCE.md",
+    "NARRATIVE_REGISTRY.md",
+    "WRITE_GUIDE.md",
+    "drafts/sections/introduction.md",
+    "drafts/architecture/figure_plan.md",
+    "drafts/architecture/claim_ladder.md",
+    "RESULTS_NEEDED.md",
+    "drafts/figures/fig2_born_profile.md",
+    "drafts/figures/fig3_sparsity_density.md",
+    "drafts/sections/discussion.md",
+    "drafts/sections/results.md",
+    "BUILD.md",
+    "drafts/figures/fig1_concept.md",
+    "drafts/sections"
   ]
 }

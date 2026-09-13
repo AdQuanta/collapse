@@ -58,7 +58,7 @@ def main() -> None:
                 block=build_ring_translation_block(spec,k)
                 p=block.basis.get_proj(np.complex128).toarray()
                 block_error=max(block_error,float(np.linalg.norm(h@p-p@block.matrix)/max(1.,np.linalg.norm(h))))
-                ek,vk,checks=diagonalize_ring_translation_block(block)
+                ek,vk,checks=diagonalize_ring_translation_block(block,eigensolver_version=cfg.get("eigensolver_version","ring-eigh-evr-v1"))
                 eigen_error=max(eigen_error,max(checks.values()))
                 for time in cfg["times"]:
                     sector_results[time].append(evaluate_ring_translation_time(block,ek,vk,time))

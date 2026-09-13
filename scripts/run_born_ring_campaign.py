@@ -21,7 +21,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from core.born_phase_verifier import SCHEMA_VERSION
 from core.ring_chain_family import RingChainSpec
-from core.ring_translation import METHOD_VERSION,build_ring_translation_block,diagonalize_ring_translation_block,evaluate_ring_translation_time,combine_ring_translation_diagnostics
+from core.ring_translation import EIGENSOLVER_DRIVERS,METHOD_VERSION,build_ring_translation_block,diagonalize_ring_translation_block,evaluate_ring_translation_time,combine_ring_translation_diagnostics
 from core.translation_sector_roots import cyclic_translation_multiplicities
 
 DEFINING_FILES=("core/ring_translation.py","core/ring_chain_family.py","core/translation_sector_roots.py",
@@ -41,6 +41,8 @@ def write_json(path: Path,value: dict) -> None:
 
 
 def campaign_tasks(config: dict,seed_config: dict) -> list[tuple[str,RingChainSpec]]:
+    if config.get("eigensolver_version","ring-eigh-evr-v1") not in EIGENSOLVER_DRIVERS:
+        raise ValueError("unknown campaign eigensolver version")
     if config["schema_version"]!="born-ring-baseline-campaign-v1" or config["method_version"]!=METHOD_VERSION or config["verifier_schema"]!=SCHEMA_VERSION:
         raise ValueError("campaign/method/verifier schema mismatch")
     times=config["discovery_times"]+config["heldout_times"]
@@ -120,7 +122,7 @@ def main() -> None:
             else:
                 directory.mkdir(exist_ok=True)
                 block=build_ring_translation_block(spec,k)
-                e,v,eig=diagonalize_ring_translation_block(block)
+                e,v,eig=diagonalize_ring_translation_block(block,eigensolver_version=cfg.get("eigensolver_version","ring-eigh-evr-v1"))
                 if max(eig.values())>cfg["eigensystem_tolerance"]:raise ArithmeticError(f"eigensystem validation failed k={k}: {eig}")
                 results={}
                 for ti,time in enumerate(times):

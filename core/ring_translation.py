@@ -21,6 +21,7 @@ from core.ring_chain_family import RingChainSpec
 from core.translation_sector_roots import cyclic_translation_multiplicities
 
 METHOD_VERSION = "ring-translation-qz-v1"
+EIGENSOLVER_DRIVERS = {"ring-eigh-evr-v1": "evr", "ring-eigh-evd-v1": "evd"}
 
 
 @dataclass(frozen=True)
@@ -80,10 +81,19 @@ def build_ring_translation_block(spec: RingChainSpec, momentum: int) -> RingTran
     return RingTranslationBlock(n,momentum,matrix,basis,top,bottom)
 
 
-def diagonalize_ring_translation_block(block: RingTranslationBlock) -> tuple[np.ndarray,np.ndarray,dict]:
-    """Diagonalize one block and record dimensionless backward checks."""
+def diagonalize_ring_translation_block(
+    block: RingTranslationBlock, *, eigensolver_version: str = "ring-eigh-evr-v1",
+) -> tuple[np.ndarray,np.ndarray,dict]:
+    """Diagonalize with an explicit, versioned backend and unchanged checks.
+
+    Preserve the original EVR default for historical campaign reproduction.
+    EVD is a separately validated alternative, never an automatic retry after
+    seeing a failed numerical gate.
+    """
     h = block.matrix
-    energies,vectors = eigh(h,driver="evr")
+    if eigensolver_version not in EIGENSOLVER_DRIVERS:
+        raise ValueError("unknown ring eigensolver version")
+    energies,vectors = eigh(h,driver=EIGENSOLVER_DRIVERS[eigensolver_version])
     scale = max(1.,float(np.linalg.norm(h)))
     diagnostics = dict(
         hermiticity=float(np.linalg.norm(h-h.conj().T)/scale),
