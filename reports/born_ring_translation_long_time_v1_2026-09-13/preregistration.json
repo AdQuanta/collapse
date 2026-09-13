@@ -1,0 +1,82 @@
+{
+  "config": {
+    "method_version": "ring-translation-qz-v1",
+    "hypothesis": "The complete momentum direct sum reproduces the dense full-parameter XYZ ring Hamiltonian and its homogeneous projective root multiset.",
+    "alternative": "Basis ordering, Y signs, missing coefficients or sector multiplicities change the production roots.",
+    "prediction": "All projected Hamiltonians agree within 1e-12; eigen/orthogonality/isometry checks pass 1e-12; dense/sector Bloch-root matching is below 2e-5 and bounded radial-potential differences below 1e-6 at every condition.",
+    "scope": "Additional long-time method validation at the planned production endpoint; no candidate tuning",
+    "sizes": [
+      5,
+      6,
+      7
+    ],
+    "times": [
+      10000000.0
+    ],
+    "seed_config": "configs/born_multichannel_sensitivity_v1.json",
+    "generic_parameters": {
+      "qubit_field": [
+        0.13,
+        -0.07,
+        0.11
+      ],
+      "detector_field": [
+        0.29,
+        0.17,
+        -0.31
+      ],
+      "nearest": [
+        0.41,
+        -0.23,
+        0.37
+      ],
+      "second": [
+        -0.19,
+        0.09,
+        0.15
+      ],
+      "coupling": [
+        0.12,
+        -0.08,
+        0.06
+      ]
+    },
+    "matrix_tolerance": 1e-12,
+    "eigensystem_tolerance": 1e-12,
+    "isometry_tolerance": 1e-12,
+    "bloch_tolerance": 2e-05,
+    "potential_tolerance": 1e-06,
+    "log_radius_grid": [
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "config_sha256": "35c96cf803337fb551001ca736a8ac8987fce6a23726dc01e2e4bb4cc9b0e8f6",
+  "seed_config_sha256": "8b8933f92508e9f9a40ffe4cd1faca60810bbb57a995f02250cf86abb3bed62b",
+  "code_sha256": {
+    "core/ring_translation.py": "4b2048ad540117ce138d0cd449d46846ae2d4690cff6e4470e8874acc6d9b42e",
+    "core/ring_chain_family.py": "e4ff9f8fd2348040b92e5940eab1d9d0c5ff637196fc7667fc14b20dbedc8840",
+    "core/pauli.py": "0b899d85aa5940f7db4b806c7c4688bfae2238eeb7ebd1406ec3eb29cf482dd9",
+    "core/translation_sector_roots.py": "f4149f9655e698657d92a9e06409af163f7e56f3d851ec9cfc7dc5a0e7ac0aa9",
+    "core/born_phase_verifier.py": "325c4de0a6373c3471769457b18268200d255fac5c187e0589598abead65b442",
+    "core/born.py": "83649fe004f426db7bd602ea46381cb8ee2942c2ac9ceee9c8914f0410cb75f4",
+    "core/born_reciprocity.py": "1c292d86a88a01916f6617b9a40a531a7d439fc970958980da6a85a07d953e20",
+    "core/relative_evolution_pencil.py": "54245c926fa11728de5fada4a65154fe0270ce31d27d0385236740dee7e29f4b",
+    "core/projective_roots.py": "8745be0e8e237a702d91d37c07c0acc01704a6a1d1a9db4b09825e481ea551f2",
+    "core/projective_potential.py": "8a91a017a3dc8657eccd9c36f79aeb5cc380b58b30fd1caa9a01db88ee174ec0",
+    "scripts/verify_born_ring_translation.py": "45ed6af6848e31594a3c890c800fe97873b8e47e067b5213206235aaa8636d80"
+  },
+  "timestamp_utc": "2026-09-13T07:55:54.499492+00:00",
+  "python": "3.11.16",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "seed": null,
+  "commit": "89b7c364e416306f07a42f38d6a3d4c969043db9"
+}

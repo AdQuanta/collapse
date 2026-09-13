@@ -66,3 +66,20 @@ Next: verify an exact translation-sector implementation of the full ring
 parameter family before larger-N time/perturbation work. Do not tune small-N
 scores in the regime where balance saturates and coverage fails.
 See [complete experiment](../../research_reports/BORN_MULTICHANNEL_SENSITIVITY_2026-09-12.md).
+
+## Full-parameter translation method (2026-09-13)
+
+**PROVED / VERIFIED_NUMERICALLY:** the uniform ring remains translation
+invariant with all 15 independent h0/h/J1/J2/g components. The determinant
+factors over all momentum blocks, preserving projective root multiplicities.
+The new sequential sector path matches the dense Hamiltonian, every individual
+coefficient and full complex projective rays. All 27 comparisons through t=1e6
+and nine more at t=1e7 passed. The frozen verifier is unchanged.
+
+A checkpointed six-task baseline campaign (079/047, N13–15, four times) is
+prepared with a 38-test local suite. Remote preflight is incomplete after SSH
+timeouts; no job was submitted. First inspect the intended immutable snapshot
+state, finish remote tests/hash checks, then request explicit submission
+authorization for the concrete campaign. See
+[method and preflight](../../research_reports/BORN_RING_TRANSLATION_2026-09-13.md)
+and [runbook](../../hpc/zeus_born_ring_baseline_v1.md).

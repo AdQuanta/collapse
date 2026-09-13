@@ -16,6 +16,13 @@
 > sectors before a larger-N campaign. Evidence:
 > `research_reports/BORN_MULTICHANNEL_SENSITIVITY_2026-09-12.md`.
 
+> **2026-09-13 method ready:** full-parameter ring translation blocks pass
+> 36 dense comparisons (through t=1e7) and 38 focused tests. Six larger-N
+> baseline tasks are prepared. Remote source/preflight remains unverified
+> after SSH timeouts; no job submitted. Next: inspect the isolated snapshot,
+> validate remotely, then obtain submission authorization. Runbook:
+> `hpc/zeus_born_ring_baseline_v1.md`.
+
 Last updated: 2026-08-29 (section 10b added; see also sections 14a, 15, and 17)
 
 This is the **single canonical research-memory file** for this project. It is intended to transfer context between Ido, Claude Code, ChatGPT/Codex, and future agents.

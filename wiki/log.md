@@ -128,3 +128,10 @@ at all three reduced sizes. All conditions have incomplete coverage, so the
 large-N phase question remains unresolved. Exact transverse-field sign
 symmetry reduces redundant future conditions. Evidence and next action are
 in `research_reports/BORN_MULTICHANNEL_SENSITIVITY_2026-09-12.md`.
+
+## [2026-09-13] method | Full XYZ-ring sectors and baseline preparation
+
+All 15 ring coefficients now have an exact translation-sector implementation;
+36 dense/sector conditions and 38 focused tests passed. Six larger-N baseline
+tasks are prepared, but SSH timed out during remote preflight. No production
+submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.

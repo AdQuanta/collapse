@@ -1,0 +1,13 @@
+{
+  "method_version": "ring-translation-qz-v1",
+  "conditions": 9,
+  "passed": 9,
+  "maxima": {
+    "projection_residual": 5.021124152583614e-16,
+    "eigensystem_max": 1.4750566920670105e-14,
+    "bloch_max": 2.7344885383218263e-07,
+    "potential_max": 3.8282302661230005e-08
+  },
+  "elapsed_seconds": 0.5566129588987678,
+  "scope": "Additional long-time method validation at the planned production endpoint; no candidate tuning"
+}
