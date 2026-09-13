@@ -164,12 +164,26 @@ Repository map:
 - `work/`, `output/`, `tmp/`: generated data, never active imports;
 - `archive/`: legacy, never active imports.
 
-Code must adhere to the principles of SOLID (Single Responsibility, Open/Closed,
-Liskov Substitution, Interface Segregation, and Dependency Inversion). Prefer
-small complete changes, pure functions, explicit dependencies, validated
-dataclasses/configs, and narrow interfaces. Keep models, solvers, I/O, plotting,
-and orchestration separate. Avoid speculative abstraction and unrelated
-refactoring.
+Code must adhere to the principles of SOLID:
+
+- **Single Responsibility**: strictly separate physics/Hamiltonian models,
+  eigensolvers/QZ, data I/O, plotting, and CLI orchestration into dedicated
+  modules;
+- **Open/Closed**: extend physical regimes, observable diagnostics, and solver
+  backends via composition and pluggable strategies rather than sprawling
+  branching conditionals;
+- **Liskov Substitution**: interchangeable solver or model implementations must
+  honor identical contracts (phase conventions, basis ordering, branch cuts,
+  units, and normalization);
+- **Interface Segregation**: expose small, focused functional interfaces and
+  validated dataclasses rather than monolithic parameter bags;
+- **Dependency Inversion**: keep high-level scientific workflows and theorem
+  verifiers decoupled from concrete solver backends, storage formats, or HPC
+  execution mechanics.
+
+Prefer small complete changes, pure functions, explicit dependencies, validated
+dataclasses/configs, and narrow interfaces. Avoid speculative abstraction and
+unrelated refactoring.
 
 Use Python 3.11, type hints for nontrivial interfaces, `pathlib.Path`, explicit
 tolerances, deterministic tests, and domain-aware docstrings.
