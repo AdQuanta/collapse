@@ -20,9 +20,15 @@ R_\infty(\theta,t),\qquad
 \overline R_\infty(\theta),
 $$
 
-for **every case in the coefficient/scaling ledger below**.
+for **every case in the two authoritative master ledgers**:
 
-Proceed gradually. Do not attack the fully general Hamiltonian first.
+- **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md)
+- **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md)
+
+### Strict Ordering Invariant
+Derivations must proceed **strictly in order** (Case 0, Case 1, Case 2, etc.).
+**Do not move to the next case before the current one is completely solved and verified.**
+Proceed systematically across regimes; do not attack the general Hamiltonian first, and do not bypass intermediate cases.
 
 The qubit–detector coupling is assumed throughout to be **perturbative** relative to the intrinsic detector scales. Exploit this assumption systematically.
 
@@ -360,7 +366,13 @@ Only after the full NN ledger is complete may a separate NNN ladder begin.
 
 ---
 
-# 5. NN coefficient/scaling ledger
+# 5. NN coefficient/scaling ladder and master ledgers
+
+The atomic case-by-case tracking for each physical regime and subcase across all $\mathbf h_0$ regimes is maintained in:
+- **Ring:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md)
+- **Endpoint chain:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md)
+
+**Cases must be solved strictly in order.** Do not advance to Case $k+1$ until Case $k$ (including all its $h_0$ subcases) has been completely solved and verified for both geometries.
 
 Take \(\mathbf h_0\) as general unless restricting it is mathematically necessary. If it must be restricted, derive the restricted case first and then determine exactly which additional \(\mathbf h_0\) components can be restored.
 
@@ -851,29 +863,33 @@ Boundary rules:
 
 Use exact arithmetic whenever possible.
 
-## Required SymPy checks
+## Symbolic Verification (SymPy)
 
-For tractable small \(N\):
+The verifier must use **SymPy** to symbolically verify the algebraic and mathematical correctness of every derivation at tractable small \(N\):
 
-* construct ring and chain Hamiltonians independently;
-* compute \(U_N(t)\);
-* extract \(A_N,C_N\);
-* compute generalized projective roots;
-* verify analytic root formulas;
-* verify perturbative coefficients in \(g\);
-* compare Taylor expansions in \(t\);
-* verify normalization;
-* verify reflection relations;
-* verify zero-coefficient reductions;
-* verify special rational/algebraic parameter cases;
-* verify determinant/Pfaffian/transfer-matrix identities where proposed;
-* verify moments or characteristic functions if direct measure comparison is impractical.
+* independently construct symbolic ring and chain Hamiltonians;
+* compute the symbolic propagator \(U_N(t) = e^{-i H_N t}\);
+* extract the block pencil \((A_N(t), C_N(t))\);
+* compute and symbolically verify the generalized projective roots \(\beta C_N(t) v = \alpha A_N(t) v\);
+* verify closed-form root formulas and their angular representations \(\theta_j^{(N)}(t)\);
+* verify perturbative series expansions in \(g\) against exact symbolic perturbation expansions;
+* compare symbolic Taylor expansions in \(t\) order by order;
+* verify exact measure normalization \(\sum_j w_j = 1\) and reflection relations \(\theta \mapsto \pi - \theta\);
+* verify all zero-coefficient reductions to earlier solved cases in the ladder;
+* verify special rational/algebraic parameter cases and exact conserved charges;
+* verify determinant, Pfaffian, or transfer-matrix identities where proposed;
+* verify algebraic moments or characteristic functions.
 
-Use high-precision independent numerical substitutions only as a secondary test.
+## Small-\(N\) Numerical Verification
 
-Numerics can falsify or support.
+Perform independent, high-precision numerical matrix exponentials and projective-root evaluations at small \(N\) (e.g., \(N = 1, 2, 3, \dots\)) as a sanity check on finite-\(N\) formulas, root positions, and spectral weights.
 
-They do not prove an analytic theorem.
+> [!WARNING]
+> **RESTRICTION ON SMALL-\(N\) NUMERICAL VERIFICATION:**
+> **Small-\(N\) numerical verification must NOT be used to determine if \(R(\theta)\) is Born-like (\(R_{\rm Born}(\theta) = \cos^2(\theta/2)\)).**
+> At small \(N\), the root distribution is dominated by finite-size artifacts, discrete delta atoms, and boundary effects. Whether the system generates a Born profile is strictly an **asymptotic question** for the thermodynamic limit (\(N \to \infty\)) and infinite-time Cesàro limit (\(T \to \infty\)), embodied by \(\overline R_\infty(\theta)\). Small-\(N\) numerics serve exclusively to verify the mathematical correctness of finite-\(N\) identities and solvers, never to judge asymptotic Born behavior.
+
+Numerics can falsify or support finite-\(N\) algebraic identities; they do not prove an asymptotic theorem, and small-\(N\) numerics must never be used to judge whether \(R(\theta)\) is Born-like.
 
 ---
 
@@ -903,7 +919,7 @@ LOOP UNTIL THE CURRENT LEDGER CASE IS RESOLVED:
    Save the formula before verification.
 
 8. **Verify independently**
-   Run the fixed verifier.
+   Run the fixed verifier: perform exact symbolic verification with SymPy and small-\(N\) numerical sanity checks. Do NOT use small-\(N\) numerics to judge whether \(R(\theta)\) is Born-like.
 
 9. **Decide**
    Label the result:
@@ -930,8 +946,8 @@ LOOP UNTIL THE CURRENT LEDGER CASE IS RESOLVED:
 12. **Learn**
     Update durable wiki/state only when scientific knowledge changed.
 
-13. **Advance**
-    Move to the next scaling regime only after the current one is analytically classified.
+13. **Advance strictly in order**
+    Move to the next case/subcase **only** after the current one is completely solved and verified across all 8 observables, or a definitive mathematical obstruction is proved. Never skip cases or work on subsequent cases while earlier cases remain unsolved.
 
 Use repository evidence labels exactly:
 
@@ -944,28 +960,32 @@ Use repository evidence labels exactly:
 
 ---
 
-# 11. Required analytical ledger
+# 11. Required analytical ledgers
+
+All progress across the ladder is recorded atomically in the two authoritative wiki master ledgers:
+
+- **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md)
+- **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md)
 
 Maintain:
 
-`research_reports/analytic_p_theta/`
+- `wiki/campaigns/analytic_distribution_ring_master_ledger.md`
+- `wiki/campaigns/analytic_distribution_chain_master_ledger.md`
+- `research_reports/analytic_p_theta/`
+- `wiki/`
+- `RESEARCH_STATE.md`
+- and an append-only verifier log (`reports/analytic_p_theta/verifier_log.jsonl`).
 
-`wiki/`
+The master ledgers contain one dedicated row per physical case and $\mathbf h_0$ subcase, with columns:
 
-`RESEARCH_STATE.md`
+`family | case | parent case | nonzero coefficients | scale hierarchy | h0 regime | perturbative type | perturbative parameter | P_N | P_inf | Pbar_N | Pbar_inf | R_N | R_inf | Rbar_N | Rbar_inf | Born deviation | status`
 
-and an append-only verifier log.
-
-Maintain one compact master table with columns:
-
-`family | case | nonzero coefficients | scale hierarchy | perturbative type | perturbative parameter | P_N | P_inf | Pbar_N | Pbar_inf | R_N | R_inf | Rbar_N | Rbar_inf | Born deviation | status`
-
-Each cell should contain either:
+Each cell must contain either:
 
 * a formula reference;
 * `PROVED`;
 * `OPEN`;
-* or a precise obstruction.
+* or a precise, mathematically proved obstruction.
 
 Never write “done” if only numerical evidence exists.
 
@@ -989,12 +1009,16 @@ A single ledger case is complete only when, for **both ring and chain**, the fol
 12. \(\overline R_\infty(\theta)\);
 13. support/atoms/singular cases;
 14. reduction to all nested earlier cases;
-15. independent small-\(N\) verifier checks;
+15. independent small-\(N\) symbolic SymPy checks and small-\(N\) numerical verifier checks (with the strict rule that small-\(N\) numerics are never used to judge Born-like behavior);
 16. explicit perturbative validity domain.
 
 If one of these cannot presently be derived, mark that item `OPEN` and state the precise mathematical obstruction.
 
 Do not hide an unresolved item behind a formal spectral decomposition.
+
+### Strict Sequential Progression Rule
+**Cases must be derived in order.**
+Do not move to the next case before the current case is completely solved and verified across all criteria above. Never skip unresolved intermediate cases.
 
 ---
 
