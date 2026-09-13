@@ -1,0 +1,54 @@
+{
+  "timestamp_utc": "2026-09-13T08:11:54.629855+00:00",
+  "status": "preflight_passed_submission_pending",
+  "submitted": false,
+  "source_commit": "89b7c364e416306f07a42f38d6a3d4c969043db9",
+  "remote_source": "/home/matanhaller/research/collapse/source_snapshots/born_ring_89b7c36",
+  "output_root": "/home/matanhaller/research/collapse/work/born_ring_baseline_v1_89b7c36",
+  "output_root_absent": true,
+  "source_sha256": {
+    "source.tar": "ecc92774fe2cde92c9b9a2006b01526bbdc8fbe182df77ce448177a5f268e67e",
+    "core/ring_translation.py": "4b2048ad540117ce138d0cd449d46846ae2d4690cff6e4470e8874acc6d9b42e",
+    "core/ring_chain_family.py": "e4ff9f8fd2348040b92e5940eab1d9d0c5ff637196fc7667fc14b20dbedc8840",
+    "core/translation_sector_roots.py": "f4149f9655e698657d92a9e06409af163f7e56f3d851ec9cfc7dc5a0e7ac0aa9",
+    "core/born_phase_verifier.py": "325c4de0a6373c3471769457b18268200d255fac5c187e0589598abead65b442",
+    "core/born.py": "83649fe004f426db7bd602ea46381cb8ee2942c2ac9ceee9c8914f0410cb75f4",
+    "core/born_reciprocity.py": "1c292d86a88a01916f6617b9a40a531a7d439fc970958980da6a85a07d953e20",
+    "core/relative_evolution_pencil.py": "54245c926fa11728de5fada4a65154fe0270ce31d27d0385236740dee7e29f4b",
+    "scripts/run_born_ring_campaign.py": "47aa1b89bf4ffd54291d8686275032c11a20457218498575d5b465b465a0482f",
+    "configs/born_ring_baseline_campaign_v1.json": "31cc44363c8e9340d4f44a94996a7a577561b7751535173b988799271ce73f0f",
+    "configs/born_multichannel_sensitivity_v1.json": "8b8933f92508e9f9a40ffe4cd1faca60810bbb57a995f02250cf86abb3bed62b",
+    "hpc/zeus_born_ring_baseline_v1.pbs": "54e9fe0fe9eda927a81dc787ff190c697b006993894f4261532b5ef8cef9d1d6",
+    "hpc/submit_zeus_born_ring_baseline_v1.sh": "6edccd5db282cbd631733b58885d85dbec6deeecf3177ecfb100767978fbfc08"
+  },
+  "runtime": {
+    "python": "3.11.11",
+    "numpy": "2.2.6",
+    "scipy": "1.17.1",
+    "quspin": "0.3.7",
+    "paths": [
+      "/home/matanhaller/.local/lib/python3.11/site-packages/numpy/__init__.py",
+      "/home/matanhaller/.local/lib/python3.11/site-packages/scipy/__init__.py",
+      "/home/matanhaller/.local/lib/python3.11/site-packages/quspin/__init__.py"
+    ]
+  },
+  "remote_tests_passed": 38,
+  "remote_test_seconds": 17.97,
+  "local_tests_passed": 38,
+  "local_test_seconds": 3.54,
+  "dry_run_tasks": 6,
+  "queue_jobs": 0,
+  "shell_syntax_passed": true,
+  "qsub": "/usr/local/bin/qsub",
+  "test_environment": "/tmp/born_ring_preflight_89b7c36",
+  "production_python": "/usr/bin/python3.11",
+  "initial_failure": "System Python lacks pytest; installed pytest 9.1.1 only into isolated test venv with system scientific libraries",
+  "resources": {
+    "array_tasks": 6,
+    "concurrent_tasks": 2,
+    "cpus_per_task": 8,
+    "memory_gib_per_task": 16,
+    "walltime_hours_per_task": 24
+  },
+  "scientific_status": "OPEN; preflight is not production evidence"
+}

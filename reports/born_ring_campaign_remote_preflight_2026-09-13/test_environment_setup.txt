@@ -1,0 +1,16 @@
+Collecting pytest==9.1.1
+  Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.5/386.5 kB 1.7 MB/s eta 0:00:00
+Collecting iniconfig>=1.0.1
+  Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Requirement already satisfied: packaging>=22 in ./.local/lib/python3.11/site-packages (from pytest==9.1.1) (26.2)
+Collecting pluggy<2,>=1.5
+  Downloading pluggy-1.6.0-py3-none-any.whl (20 kB)
+Collecting pygments>=2.7.2
+  Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 10.6 MB/s eta 0:00:00
+Installing collected packages: pygments, pluggy, iniconfig, pytest
+Successfully installed iniconfig-2.3.0 pluggy-1.6.0 pygments-2.21.0 pytest-9.1.1
+
+[notice] A new release of pip available: 22.3.1 -> 26.2.1
+[notice] To update, run: /tmp/born_ring_preflight_89b7c36/bin/python -m pip install --upgrade pip

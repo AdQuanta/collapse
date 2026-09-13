@@ -18,9 +18,9 @@
 
 > **2026-09-13 method ready:** full-parameter ring translation blocks pass
 > 36 dense comparisons (through t=1e7) and 38 focused tests. Six larger-N
-> baseline tasks are prepared. Remote source/preflight remains unverified
-> after SSH timeouts; no job submitted. Next: inspect the isolated snapshot,
-> validate remotely, then obtain submission authorization. Runbook:
+> baseline tasks are prepared. Zeus connectivity is restored; source hashes,
+> 38 remote tests and the six-task dry run pass. Submission authorization is
+> pending; no production job submitted. Runbook and preflight evidence:
 > `hpc/zeus_born_ring_baseline_v1.md`.
 
 Last updated: 2026-08-29 (section 10b added; see also sections 14a, 15, and 17)

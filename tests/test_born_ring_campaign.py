@@ -7,6 +7,7 @@ import sys
 import pytest
 
 from scripts.run_born_ring_campaign import campaign_tasks,verify_marker
+from scripts.audit_born_ring_campaign import audit_campaign
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -39,6 +40,10 @@ def test_reduced_worker_completes_resumes_and_detects_corrupt_root_checkpoint(tm
     rows=json.loads((task/"results.json").read_text())["records"]
     assert [r["split"] for r in rows]==["discovery","heldout"]
     assert all(r["diagnostics"]["qz_validity"] for r in rows)
+    audit=audit_campaign(output,path)
+    assert audit["audited_conditions"]==2
+    assert audit["status"]=="complete"
+    assert len(audit["summary"]["groups"])==2
     second=subprocess.run(command+["--resume"],cwd=ROOT,capture_output=True,text=True)
     assert second.returncode==0,second.stdout+second.stderr
     assert "Already complete" in second.stdout
@@ -46,3 +51,5 @@ def test_reduced_worker_completes_resumes_and_detects_corrupt_root_checkpoint(tm
     third=subprocess.run(command+["--resume"],cwd=ROOT,capture_output=True,text=True)
     assert third.returncode!=0
     assert "checkpoint hash mismatch" in third.stderr
+    with pytest.raises(ValueError,match="checkpoint hash mismatch"):
+        audit_campaign(output,path)

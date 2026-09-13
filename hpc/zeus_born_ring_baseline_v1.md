@@ -56,14 +56,25 @@ must remain untouched.
 Fresh intended output root:
 `/home/matanhaller/research/collapse/work/born_ring_baseline_v1_89b7c36`.
 Verified remote Python entry point: `/usr/bin/python3.11`.
-On the successful initial read-only check: Python 3.11.11, NumPy 2.2.6,
-SciPy 1.17.1 and QuSpin 0.3.7. The local versions differ; remote tests and
-dry run are therefore required. A subsequent source-preparation SSH timed
-out. This document does not assert the snapshot was transferred or validated.
+Verified runtime: Python 3.11.11, NumPy 2.2.6, SciPy 1.17.1 and QuSpin 0.3.7.
+After the user restored connectivity, the isolated snapshot was transferred
+and its archive plus all worker-defining source/config/PBS/wrapper hashes
+matched locally. The intended output root remains absent. The initial SSH
+failures are preserved in the earlier preflight record.
 
 Before submission, verify the complete source/config/PBS/wrapper hashes,
 run the focused test suite and dry run, confirm a fresh output root, check
-the current queue, and record all outputs. Local validation passed 38 tests,
+the current queue, and record all outputs. These remote checks passed on
+2026-09-13: 38 focused tests, the six-task dry run and shell syntax checks;
+qsub is present and the user's queue is empty. System Python lacks pytest,
+so tests used `/tmp/born_ring_preflight_89b7c36`, an isolated venv containing
+pytest 9.1.1. Both Python entry points resolve the exact same installed
+NumPy/SciPy/QuSpin modules and versions. Production still uses
+`/usr/bin/python3.11`. Evidence:
+`reports/born_ring_campaign_remote_preflight_2026-09-13/`.
+Submission authorization is pending; no production job has been submitted.
+
+Local validation passed 38 tests,
 including an actual reduced worker run, successful resume and deliberate
 checkpoint corruption rejection. The separate dense/sector validation passed
 27 conditions through t=1e6, followed by nine more at t=1e7; all passed
@@ -99,3 +110,10 @@ only a completed campaign into a fresh local directory and verify hashes
 again. Preserve discovery/held-out separation and show every P/reflected-P
 and R/Born profile, including failed coverage cases. No candidate is promoted
 to an exact phase from this finite sample.
+
+The local `scripts/audit_born_ring_campaign.py` validates all task, momentum
+and time coverage, recursive hashes, source/config identity and saved numerical
+diagnostics, then recomputes pooled frozen metrics from homogeneous root files.
+Run it against a completed collection with a fresh derived output directory.
+It retains failed angular coverage as a scientific result; it does not rerun
+QZ or establish an asymptotic limit.
