@@ -141,6 +141,8 @@ credentials*.json
 .vscode/
 .fleet/
 .claude/
+**/.obsidian/workspace.json
+**/.obsidian/workspace-mobile.json
 .settings/
 .project
 .classpath
