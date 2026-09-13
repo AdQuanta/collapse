@@ -1,6 +1,6 @@
 # Six-task multichannel baseline replication
 
-Prepared 2026-09-13. **Submission requires explicit user authorization.**
+Prepared and submitted 2026-09-13 after explicit user authorization.
 Preparation and local validation do not constitute submission. Follow
 `.agents/skills/zeus-hpc/SKILL.md` and inspect current remote state first.
 
@@ -72,7 +72,11 @@ pytest 9.1.1. Both Python entry points resolve the exact same installed
 NumPy/SciPy/QuSpin modules and versions. Production still uses
 `/usr/bin/python3.11`. Evidence:
 `reports/born_ring_campaign_remote_preflight_2026-09-13/`.
-Submission authorization is pending; no production job has been submitted.
+Submitted as `4682629[].zeus-master` with the approved resources. Initial task 0
+failed the unchanged eigensystem orthogonality gate at momentum zero
+(1.2284321012392794e-12 > 1e-12); tasks 1 and 2 were running, 3–5 queued.
+Evidence: `reports/born_ring_campaign_submission_2026-09-13/`.
+No recovery or production source modification has been performed.
 
 Local validation passed 38 tests,
 including an actual reduced worker run, successful resume and deliberate

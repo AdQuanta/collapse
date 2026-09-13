@@ -18,9 +18,9 @@
 
 > **2026-09-13 method ready:** full-parameter ring translation blocks pass
 > 36 dense comparisons (through t=1e7) and 38 focused tests. Six larger-N
-> baseline tasks are prepared. Zeus connectivity is restored; source hashes,
-> 38 remote tests and the six-task dry run pass. Submission authorization is
-> pending; no production job submitted. Runbook and preflight evidence:
+> baseline campaign submitted with user approval as 4682629[].zeus-master.
+> Task 0 failed the fixed orthogonality gate (1.23e-12 > 1e-12); other tasks
+> are running/queued. Preserve failures and inspect the eigensolver. Runbook:
 > `hpc/zeus_born_ring_baseline_v1.md`.
 
 > **Analytical follow-up:** ring gz changes vanish in the fixed-time normalized
