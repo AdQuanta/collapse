@@ -201,36 +201,49 @@ Scientific outputs should record, as applicable:
 Treat prior curated/production data as immutable unless replacement is
 explicitly requested. Put derived outputs in new descriptive locations.
 
-## 10. Git
+## 10. Git delivery
 
-Preserve unrelated work and pre-existing changes.
+Standing authorization covers committing and pushing completed in-scope
+change/build/fix work, integrating the task branch into the default branch
+(fast-forward preferred, otherwise a merge commit), and deleting only that
+agent-owned branch after verified integration. It excludes unrelated changes,
+other branches, PR creation/merging, history rewriting, force-pushing, and
+releases. Read-only tasks produce no commit; never make an empty or failing
+commit to satisfy delivery rules.
 
-For substantive implementation work, use a task branch unless the user
-requests otherwise. Keep commits cohesive and stage explicit paths.
+1. At task start, inspect branch, upstream, remotes, and `git status --short`.
+   Preserve ownership of pre-existing changes.
+2. From the default branch, create `codex/<topic>` for substantive work unless
+   the user requests a direct update. Reuse a task branch only when it clearly
+   owns this work.
+3. Keep commits cohesive. Separate prior/unrelated work and, when useful,
+   scientific implementation from instruction maintenance.
+4. Stage explicit paths, inspect `git diff --cached`, and exclude secrets,
+   machine-specific clutter, generated bulk data, and accidental edits.
+5. After validation passes, commit with a concise imperative subject and push
+   the task branch with `git push -u origin HEAD`.
+6. If a push is rejected or the remote advances, fetch and inspect; never
+   silently rebase or discard work. Update the local default branch with a
+   fast-forward-only pull. If it is an ancestor of the task branch, integrate
+   with `git merge --ff-only <task-branch>`; otherwise use
+   `git merge --no-ff <task-branch>`. Push the default branch. Stop before
+   resolving unexpected conflicts or overwriting remote work; name conflicting
+   paths and request direction.
+7. Verify the task commit is an ancestor of both local and remote-tracking
+   default branches after the push succeeds.
+8. Delete only the redundant agent-owned task branch remotely and locally,
+   using ordinary non-force deletion. Preserve default/protected branches,
+   branches checked out in another worktree, unmerged branches, and branches
+   of ambiguous ownership. If deletion is rejected, preserve it and report why.
+9. Report task/default branches, task commit, integration mode, resulting
+   default hash, pushed remote, deleted branches, validation, generated but
+   uncommitted outputs, and limitations.
 
-Do not force-push, rewrite unrelated history, delete others' branches, or
-resolve unexpected remote conflicts silently.
-
-### Git delivery policy
-
-For every completed task that changes tracked repository files, after applicable
-validation:
-
-1. commit the completed changes in a cohesive commit;
-2. push the commit/task branch to the configured remote;
-3. when integration into the default branch is authorized, merge the task branch
-   using a **non-fast-forward merge** (`git merge --no-ff ...`), even when a
-   fast-forward merge would be possible;
-4. push the updated default branch to the configured remote;
-5. verify the expected remote ancestry/state before declaring delivery complete;
-6. remove only redundant agent-owned branches, and only after successful remote
-   delivery is verified.
-
-If the task is performed directly on an authorized target branch rather than a
-task branch, commit the completed changes there and push that branch to the
-configured remote after validation.
-
-Instruction-only analysis/review does not require an empty commit or push.
+Create or merge a PR only when requested. Its description should state the
+scientific objective, changed equations/conventions, implementation choices,
+exact validation commands/results, convergence/sensitivity evidence, output
+paths, Zeus resource implications, and unresolved limits as applicable. Pair
+representative figures with quantitative evidence.
 
 ## 11. Completion
 
