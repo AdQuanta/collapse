@@ -1,5 +1,21 @@
 # RESEARCH_STATE.md — Canonical Shared Research Memory
 
+> **2026-09-13 analytic goal — OPEN.** This task follows `goal-analytic.md`:
+> thermodynamic-first **Cesàro** averaging, distinct from the older instantaneous
+> Born-phase objective below. **PROVED:** exact commuting X-coupled ring/chain
+> measures and limits through detector hx/NN XX, with commuting NNN XX and
+> central-X extensions; also a solved noninteracting transverse-field slice.
+> **PROVED:** allowed XY exchange gives singular pencils at exact swap times,
+> so a canonical root probability measure is not defined everywhere. Frozen
+> independent SymPy v1/v2 checks passed; 72 production-QZ comparisons passed
+> (max angle error 1.07e-14). The interacting transverse step/full XYZ limits
+> remain OPEN. Next: control the central-X ring echo's fluctuation limit via
+> detector autocorrelations; do not transfer a collective CLT to endpoint
+> chains or nonnormal multichannel pencils. See
+> `research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md` and
+> `wiki/campaigns/analytic-p-theta.md`.
+
+
 > **2026-09-12 audited correction — objective OPEN.** The perturbative
 > completion claim is withdrawn; density is J'' rather than J'. Existing
 > Theorem C excludes a full-parameter open phase containing an X-conserving

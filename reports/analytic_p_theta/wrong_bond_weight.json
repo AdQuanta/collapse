@@ -1,0 +1,11 @@
+{
+  "candidate": "negative-control-wrong_bond_weight",
+  "hypothesis": "All detector X-only fields and bonds cancel from the production pencil; ring root multiplicities are binomial.",
+  "alternative": "Detector interaction phases change the root radii or multiplicity weights.",
+  "prediction": "Independent exact Pauli Hamiltonians reduce to K I + V X in every X sector and the column agrees through Taylor order six.",
+  "K": "hx*M + 2*jx*B1 + j2x*B2",
+  "V": "hqx + gx*L",
+  "A": "exp(-I*K*t)*cos(V*t)",
+  "C": "-I*exp(-I*K*t)*sin(V*t)",
+  "magnetization_laurent": "(z+1/z)**N/2**N"
+}

@@ -1,5 +1,8 @@
 # Research Wiki Index
 
+- [[analytic-p-theta]] — Exact commuting and noninteracting-field root measures, thermodynamic-first Cesàro limits, frozen symbolic verifiers, and singular-pencil domain obstruction.
+
+
 This index serves as the structural map for the `unitary-collapse` research program. While `RESEARCH_STATE.md` provides the canonical current state and priorities, the Wiki provides deep-dive conceptual synthesis, literature mapping, and operational methods.
 
 ---
