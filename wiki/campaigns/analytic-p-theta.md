@@ -81,5 +81,7 @@ Retained hx and general XYZ remain part of the full objective.
 Frozen independent SymPy v1/v2/v3 records, negative controls and reduced
 production-QZ comparisons are in
 [validation](../../research_reports/analytic_p_theta/VALIDATION.md).
-Keep the [coefficient ledger](../../research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md)
-as the compact solved/unsolved map. The full goal remains OPEN.
+Track atomic case progress in the dedicated master ledgers:
+[[analytic_distribution_ring_master_ledger]] (ring) and
+[[analytic_distribution_chain_master_ledger]] (endpoint chain).
+The full goal remains OPEN.

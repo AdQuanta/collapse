@@ -1,6 +1,8 @@
 # Research Wiki Index
 
 - [[analytic-p-theta]] — Exact commuting and noninteracting-field root measures, thermodynamic-first Cesàro limits, frozen symbolic verifiers, and singular-pencil domain obstruction.
+- [[analytic_distribution_ring_master_ledger]] — Single atomic progress ledger for ring geometry across all 87 cases and h0 regimes.
+- [[analytic_distribution_chain_master_ledger]] — Single atomic progress ledger for endpoint chain geometry across all 87 cases and h0 regimes.
 
 
 This index serves as the structural map for the `unitary-collapse` research program. While `RESEARCH_STATE.md` provides the canonical current state and priorities, the Wiki provides deep-dive conceptual synthesis, literature mapping, and operational methods.
@@ -132,6 +134,9 @@ See [[literature-map]] for the complete strategic citation graph.
 ---
 
 ## 🚀 Research Campaigns
+- [[analytic-p-theta]] — Exact commuting and noninteracting-field root measures, thermodynamic-first Cesàro limits, frozen symbolic verifiers, and singular-pencil domain obstruction.
+- [[analytic_distribution_ring_master_ledger]] — Single atomic progress ledger for ring geometry across all 87 cases and h0 regimes.
+- [[analytic_distribution_chain_master_ledger]] — Single atomic progress ledger for endpoint chain geometry across all 87 cases and h0 regimes.
 - [[perturbative-resolution]] — Audit of the withdrawn phase claim; valid conditional identities and remaining gaps.
 - [[asymptotic-obstructions]] — The search for long-time thermodynamic Born limits.
 - [[nonnormal-limits]] — Scalar potential $J(x)$ and non-normal counterexamples.

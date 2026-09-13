@@ -1,8 +1,14 @@
-# Coefficient ledger
+# Coefficient ledger [SUPERSEDED]
 
-Status: **OPEN** for the full goal. Date: 2026-09-13.
-Step numbers match the requested ladder; extensions do not fill intervening
-unsolved steps. All omitted coefficients are zero unless explicitly retained.
+> [!IMPORTANT]
+> **This original coefficient ledger has been superseded and replaced by the authoritative atomic master ledgers in the wiki:**
+> - **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](../../wiki/campaigns/analytic_distribution_ring_master_ledger.md)
+> - **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](../../wiki/campaigns/analytic_distribution_chain_master_ledger.md)
+>
+> All active case classification, status tracking, and analytical program records are now maintained separately per geometry in the wiki master ledgers above.
+
+Status: **SUPERSEDED** (active progress tracked in wiki master ledgers). Date: 2026-09-13.
+Historical summary of initial 9-step ladder below:
 
 | Family | Step | Coefficients ON | P_N | N→∞ | Time average | R(theta) | Status |
 |---|---|---|---|---|---|---|---|

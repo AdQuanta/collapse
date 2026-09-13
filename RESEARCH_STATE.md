@@ -15,7 +15,7 @@
 > remain OPEN. No field randomization is added to the observable.
 > Frozen v3 symbolic checks and 36 further QZ comparisons passed; small-N
 > Gaussian errors are nonmonotone and are retained. See reports 05–07 and
-> `research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md`.
+> `wiki/campaigns/analytic_distribution_ring_master_ledger.md` / `wiki/campaigns/analytic_distribution_chain_master_ledger.md`.
 > Focus correction: park the restricted boundary-Majorana benchmark; it is
 > not an established prerequisite for the full goal. Its v4 candidate check
 > failed (bound pole equation); preserve that record without promotion.

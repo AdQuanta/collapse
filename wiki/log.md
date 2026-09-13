@@ -1,3 +1,16 @@
+## [2026-09-13] ingestion | Analytic Distribution Ring & Endpoint Chain Master Ledgers
+Ingested the comprehensive, atomic master progress ledgers for the ring and endpoint chain geometries into `wiki/campaigns/`, replacing the initial 9-step `research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md`.
+
+**New Campaign Master Ledgers (2):**
+- `wiki/campaigns/analytic_distribution_ring_master_ledger.md` — Single atomic progress ledger for the ring geometry, tracking all 87 physical cases/subcases (Cases 0–86 across Families A–N, covering all $h_0$ regimes and interaction hierarchies) with independent columns for $P_N, P_\infty, \overline{P}_N, \overline{P}_\infty, R_N, R_\infty, \overline{R}_N, \overline{R}_\infty$, Born deviation, and status.
+- `wiki/campaigns/analytic_distribution_chain_master_ledger.md` — Single atomic progress ledger for the endpoint chain geometry, tracking all 87 physical cases/subcases across all $h_0$ regimes and interaction hierarchies under the central-qubit coupled-to-site-1 convention.
+
+**Superseded & Updated:**
+- `research_reports/analytic_p_theta/COEFFICIENT_LEDGER.md` — Marked as superseded and redirected to the authoritative wiki master ledgers.
+- `wiki/campaigns/analytic-p-theta.md` — Updated progress tracking references to point directly to `[[analytic_distribution_ring_master_ledger]]` and `[[analytic_distribution_chain_master_ledger]]`.
+- `RESEARCH_STATE.md` — Updated canonical frontier reference to point to the wiki master ledgers.
+- `wiki/index.md` — Registered both master ledgers under Research Campaigns.
+
 ## [2026-09-13] ingestion | Random Graphs, Complex Networks, Quantum Walks & Fock-Space Graphs
 Executed a comprehensive survey and ingestion of random graph topologies, complex networks, spectral graph theory, quantum walks, quantum transport, and Fock-space localization into the research wiki. This establishes the structural and dynamical foundations for the detector interaction graphs used in `core/detector_graphs.py` and symmetry resolution in `core/graph_spectral_sectors.py`.
 
