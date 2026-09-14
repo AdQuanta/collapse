@@ -1,0 +1,74 @@
+# Family D (Cases 18–20) — Chain Ledger
+
+**Physical Scope:** XY ladder (isotropic and anisotropic)
+
+**Master Ledger Reference:** `wiki/campaigns/analytic_distribution_chain_master_ledger.md`
+
+## Completion rule
+
+Allowed status labels: `PROVED` · `VERIFIED_NUMERICALLY` · `PRELIMINARY_NUMERIC` · `CONJECTURE` · `FALSIFIED` · `OPEN`
+
+## Ledger Rows
+
+| family | case | parent case | nonzero coefficients | scale hierarchy | h0 regime | perturbative type | perturbative parameter | P_N | P_inf | Pbar_N | Pbar_inf | R_N | R_inf | Rbar_N | Rbar_inf | Born deviation | status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| D XY | 18.ISO.H0 | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | H0 | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HzS | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HzS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HzC | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HzC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HzL | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HzL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HpS | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HpS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HpC | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HpC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HpL | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HpL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HgS | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HgS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HgC | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HgC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ISO.HgL | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x=J_y$ | HgL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.H0 | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | H0 | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HzS | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HzS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HzC | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HzC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HzL | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HzL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HpS | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HpS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HpC | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HpC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HpL | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HpL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HgS | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HgS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HgC | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HgC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 18.ANI.HgL | 18 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\ll\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HgL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.H0 | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | H0 | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HzS | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HzS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HzC | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HzC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HzL | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HzL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HpS | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HpS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HpC | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HpC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HpL | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HpL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HgS | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HgS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HgC | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HgC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ISO.HgL | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x=J_y$ | HgL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.H0 | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | H0 | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HzS | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HzS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HzC | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HzC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HzL | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HzL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HpS | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HpS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HpC | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HpC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HpL | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HpL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HgS | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HgS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HgC | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HgC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 19.ANI.HgL | 19 | $h_z,J_x,J_y,g_z$ | $g_z\ll\|J_x\|,\|J_y\|\ll h_z$; $J_x\neq J_y$ | HgL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.H0 | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | H0 | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HzS | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HzS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HzC | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HzC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HzL | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HzL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HpS | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HpS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HpC | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HpC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HpL | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HpL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HgS | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HgS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HgC | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HgC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ISO.HgL | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x=J_y$ | HgL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.H0 | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | H0 | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HzS | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HzS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HzC | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HzC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HzL | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HzL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HpS | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HpS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HpC | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HpC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HpL | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HpL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HgS | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HgS | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HgC | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HgC | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |
+| D XY | 20.ANI.HgL | 20 | $h_z,J_x,J_y,g_z$ | $g_z\ll h_z\sim\|J_x\|,\|J_y\|$; $J_x\neq J_y$ | HgL | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN | OPEN |

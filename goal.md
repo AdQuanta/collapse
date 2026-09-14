@@ -1,4 +1,4 @@
-# goal_analytic_distribution.md — Analytic \(P(\theta)\) and \(R(\theta)\) across the perturbative ring/chain ladder
+# goal.md — Analytic \(P(\theta)\) and \(R(\theta)\) across the perturbative ring/chain ladder
 
 ## Objective
 
@@ -368,10 +368,10 @@ Only after the full NN phase (Cases 0–40) is complete and verified may the NNN
 
 # 5. Master case ladder and ledgers
 
-The complete, authoritative case specifications, scale hierarchies, and atomic subcase rows across all $\mathbf h_0$ regimes are maintained directly in the two master ledgers:
+The complete, authoritative case specifications, scale hierarchies, and atomic subcase rows across all $\mathbf h_0$ regimes are maintained directly in the master ledgers, partitioned by Family into dedicated files to ensure token efficiency and prevent context saturation:
 
-- **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md)
-- **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md)
+- **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md) (Family ledgers in [`wiki/campaigns/ledgers/ring/`](wiki/campaigns/ledgers/ring/))
+- **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md) (Family ledgers in [`wiki/campaigns/ledgers/chain/`](wiki/campaigns/ledgers/chain/))
 
 The program spans all 87 physical cases (Cases 0–86) and their detailed $h_0$ subcases, cataloged across 14 distinct families:
 
@@ -393,9 +393,10 @@ The program spans all 87 physical cases (Cases 0–86) and their detailed $h_0$ 
 - **Family M (Cases 70–77)**: Anisotropic NNN XYZ models.
 - **Family N (Cases 78–86)**: Full production Hamiltonian with arbitrary NN and NNN XYZ couplings and multi-axis qubit coupling ($g_x, g_y, g_z$).
 
-### Sequential Derivation Rule
+### Sequential Derivation & Case-Level Batching Rule
 Derivations must proceed strictly in order from Case 0 to Case 86.
 Never move to Case $k+1$ before Case $k$ (including all its $\mathbf h_0$ subcases) has been completely solved and verified for both geometries.
+**Case-Level Batching**: Because the intrinsic detector Hamiltonian $H_{\rm detector}$ and eigenbasis are identical across all $\mathbf h_0$ subcases of physical Case $k$, solve, verify, and record all $\mathbf h_0$ subcases of Case $k$ in a single consolidated pass rather than 10 separate turn cycles.
 
 ---
 
@@ -719,47 +720,49 @@ A later formula that fails an earlier exact limit must be rejected.
 
 Create and freeze a versioned independent verifier before judging derivations:
 
-`verifier/analytic_p_theta/`
+`verifier/analytic_p_theta/generic_verifier.py`
 
-The verifier is a separate scientific component.
+The generic verifier is a separate scientific component. It receives candidate symbolic/analytical expressions (as formula strings, callables, or structured formula data), constructs the production Hamiltonians numerically using `SinglePixelHamiltonianQuSpin` (`quspin_hamiltonians`), verifies physical assumptions, and numerically checks the candidate projective roots against exact numerical eigensolvers up to \(N = 11\).
 
 Boundary rules:
 
 * derivation code must not import verifier code;
-* verifier code must not import candidate derivation code;
+* verifier code must not import candidate derivation code (it receives candidate expressions as input data/strings/callables);
 * verifier never repairs a candidate;
 * verifier definitions remain fixed during a comparison series;
 * changes to the verifier require justification, regression tests, versioning, and restart of affected comparisons.
 
-Use exact arithmetic whenever possible.
+Use high-precision numerical arithmetic and exact structural checks. Do not use SymPy for matrix algebra.
 
-## Symbolic Verification (SymPy)
+## Verification of Physical Assumptions
 
-The verifier must use **SymPy** to symbolically verify the algebraic and mathematical correctness of every derivation at tractable small \(N\):
+The verifier must explicitly check that all physical assumptions and validity conditions of the derivation are correct:
 
-* independently construct symbolic ring and chain Hamiltonians;
-* compute the symbolic propagator \(U_N(t) = e^{-i H_N t}\);
-* extract the block pencil \((A_N(t), C_N(t))\);
-* compute and symbolically verify the generalized projective roots \(\beta C_N(t) v = \alpha A_N(t) v\);
-* verify closed-form root formulas and their angular representations \(\theta_j^{(N)}(t)\);
-* verify perturbative series expansions in \(g\) against exact symbolic perturbation expansions;
-* compare symbolic Taylor expansions in \(t\) order by order;
-* verify exact measure normalization \(\sum_j w_j = 1\) and reflection relations \(\theta \mapsto \pi - \theta\);
-* verify all zero-coefficient reductions to earlier solved cases in the ladder;
-* verify special rational/algebraic parameter cases and exact conserved charges;
-* verify determinant, Pfaffian, or transfer-matrix identities where proposed;
-* verify algebraic moments or characteristic functions.
+* verify Hamiltonian construction, coupling geometry, tensor ordering, and boundary conditions (periodic for ring, open for chain) via `quspin_hamiltonians`;
+* verify scale hierarchies and explicit perturbative validity domains (checking that the actual control parameter \(\epsilon\), collective enhancement, and gap scalings satisfy the perturbative assumptions);
+* verify exact symmetries, conserved quantities, and sector decompositions;
+* verify hermiticity (\(\|H - H^\dagger\| / \max(\|H\|, 1) \le 10^{-12}\)), unitary time evolution / column isometry (\(\|A^\dagger A + C^\dagger C - I\| \le 10^{-10}\)), and regularity of the pencil (no indeterminate roots);
+* verify exact measure normalization (\(\sum_j w_j = 1\)) and reflection relations (\(\theta \mapsto \pi - \theta\));
+* verify all zero-coefficient reductions to earlier solved cases in the ladder.
 
-## Small-\(N\) Numerical Verification
+## Numerical Verification up to \(N = 11\) using `quspin_hamiltonians`
 
-Perform independent, high-precision numerical matrix exponentials and projective-root evaluations at small \(N\) (e.g., \(N = 1, 2, 3, \dots\)) as a sanity check on finite-\(N\) formulas, root positions, and spectral weights.
+Perform independent, high-precision numerical matrix exponentials, eigensolvers, and projective-root evaluations across system sizes up to \(N = 11\) (e.g., \(N = 1, 2, \dots, 11\)) to verify finite-\(N\) analytical expressions:
+
+* independently construct production ring and chain Hamiltonians using `SinglePixelHamiltonianQuSpin` (`quspin_hamiltonians`) up to \(N = 11\);
+* compute high-precision numerical propagators and block subblocks \((A_N(t), C_N(t))\) via exact diagonalization;
+* solve the generalized eigenvalue pencil \(\beta C_N(t) v = \alpha A_N(t) v\) via generalized eigensolvers;
+* evaluate candidate symbolic expressions at matching physical parameters, times, and sizes;
+* numerically verify closed-form root formulas and angular values \(\theta_j^{(N)}(t)\) via Hungarian matched-angle assignment against numerical spectra;
+* verify perturbative expansions against high-precision numerical results within their stated validity domains;
+* evaluate error bounds, residuals, and numerical convergence across \(N \le 11\).
 
 > [!WARNING]
-> **RESTRICTION ON SMALL-\(N\) NUMERICAL VERIFICATION:**
-> **Small-\(N\) numerical verification must NOT be used to determine if \(R(\theta)\) is Born-like (\(R_{\rm Born}(\theta) = \cos^2(\theta/2)\)).**
-> At small \(N\), the root distribution is dominated by finite-size artifacts, discrete delta atoms, and boundary effects. Whether the system generates a Born profile is strictly an **asymptotic question** for the thermodynamic limit (\(N \to \infty\)) and infinite-time Cesàro limit (\(T \to \infty\)), embodied by \(\overline R_\infty(\theta)\). Small-\(N\) numerics serve exclusively to verify the mathematical correctness of finite-\(N\) identities and solvers, never to judge asymptotic Born behavior.
+> **RESTRICTION ON NUMERICAL VERIFICATION UP TO \(N = 11\):**
+> **Numerical verification up to \(N = 11\) must NOT be used to determine if \(R(\theta)\) is Born-like (\(R_{\rm Born}(\theta) = \cos^2(\theta/2)\)).**
+> Up to \(N = 11\), the root distribution is dominated by finite-size artifacts, discrete delta atoms, and boundary effects. Whether the system generates a Born profile is strictly an **asymptotic question** for the thermodynamic limit (\(N \to \infty\)) and infinite-time Cesàro limit (\(T \to \infty\)), embodied by \(\overline R_\infty(\theta)\). Numerics up to \(N = 11\) serve exclusively to verify the mathematical and numerical correctness of finite-\(N\) identities and solvers, never to judge asymptotic Born behavior.
 
-Numerics can falsify or support finite-\(N\) algebraic identities; they do not prove an asymptotic theorem, and small-\(N\) numerics must never be used to judge whether \(R(\theta)\) is Born-like.
+Numerics can falsify or support finite-\(N\) identities up to \(N = 11\); they do not prove an asymptotic theorem, and finite-\(N\) numerics must never be used to judge whether \(R(\theta)\) is Born-like.
 
 ---
 
@@ -789,7 +792,7 @@ LOOP UNTIL THE CURRENT LEDGER CASE IS RESOLVED:
    Save the formula before verification.
 
 8. **Verify independently**
-   Run the fixed verifier: perform exact symbolic verification with SymPy and small-\(N\) numerical sanity checks. Do NOT use small-\(N\) numerics to judge whether \(R(\theta)\) is Born-like.
+   Run the fixed generic verifier (`verifier/analytic_p_theta/generic_verifier.py`): pass the symbolic expression, construct the Hamiltonian using `quspin_hamiltonians`, verify that all physical assumptions are correct, and numerically verify the result up to \(N = 11\). Do NOT use numerics up to \(N = 11\) to judge whether \(R(\theta)\) is Born-like.
 
 9. **Decide**
    Label the result:
@@ -832,21 +835,29 @@ Use repository evidence labels exactly:
 
 # 11. Required analytical ledgers
 
-All progress across the ladder is recorded atomically in the two authoritative wiki master ledgers:
+All progress across the ladder is recorded atomically in the family-partitioned master ledgers:
 
-- **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md)
-- **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md)
+- **Ring geometry:** [`wiki/campaigns/analytic_distribution_ring_master_ledger.md`](wiki/campaigns/analytic_distribution_ring_master_ledger.md) (Master Index) and [`wiki/campaigns/ledgers/ring/`](wiki/campaigns/ledgers/ring/)
+- **Endpoint chain geometry:** [`wiki/campaigns/analytic_distribution_chain_master_ledger.md`](wiki/campaigns/analytic_distribution_chain_master_ledger.md) (Master Index) and [`wiki/campaigns/ledgers/chain/`](wiki/campaigns/ledgers/chain/)
+
+> [!TIP]
+> **TOKEN-EFFICIENCY DIRECTIVE FOR LEDGER UPDATES:**
+> Never load or rewrite full monolithic master ledgers into context. When working on Case $k$ in Family $F$, inspect and update **only** the dedicated family ledger:
+> `wiki/campaigns/ledgers/<ring|chain>/family_<F>.md`
+> or use `grep_search` to target the specific case line directly.
 
 Maintain:
 
-- `wiki/campaigns/analytic_distribution_ring_master_ledger.md`
-- `wiki/campaigns/analytic_distribution_chain_master_ledger.md`
+- `wiki/campaigns/analytic_distribution_ring_master_ledger.md` (Index status summary)
+- `wiki/campaigns/analytic_distribution_chain_master_ledger.md` (Index status summary)
+- `wiki/campaigns/ledgers/ring/family_<A..N>.md` (Atomic case rows)
+- `wiki/campaigns/ledgers/chain/family_<A..N>.md` (Atomic case rows)
 - `research_reports/analytic_p_theta/`
 - `wiki/`
 - `RESEARCH_STATE.md`
 - and an append-only verifier log (`reports/analytic_p_theta/verifier_log.jsonl`).
 
-The master ledgers contain one dedicated row per physical case and $\mathbf h_0$ subcase, with columns:
+The family ledgers contain one dedicated row per physical case and $\mathbf h_0$ subcase, with columns:
 
 `family | case | parent case | nonzero coefficients | scale hierarchy | h0 regime | perturbative type | perturbative parameter | P_N | P_inf | Pbar_N | Pbar_inf | R_N | R_inf | Rbar_N | Rbar_inf | Born deviation | status`
 
@@ -879,7 +890,7 @@ A single ledger case is complete only when, for **both ring and chain**, the fol
 12. \(\overline R_\infty(\theta)\);
 13. support/atoms/singular cases;
 14. reduction to all nested earlier cases;
-15. independent small-\(N\) symbolic SymPy checks and small-\(N\) numerical verifier checks (with the strict rule that small-\(N\) numerics are never used to judge Born-like behavior);
+15. independent verification that all physical assumptions are correct and numerical verifier checks via `generic_verifier.py` / `quspin_hamiltonians` up to \(N = 11\) (with the strict rule that numerics up to \(N = 11\) are never used to judge Born-like behavior);
 16. explicit perturbative validity domain.
 
 If one of these cannot presently be derived, mark that item `OPEN` and state the precise mathematical obstruction.
