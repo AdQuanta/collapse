@@ -29,6 +29,8 @@ Update `RESEARCH_STATE.md` only when the current frontier, champion, evidence
 status, or next priority changes. Put detailed derivations/history in `wiki/`
 or `research_reports/`, and raw run records in the experiment log.
 
-Use `.agents/skills/zeus-hpc/SKILL.md` for production Zeus work and
+Use `.agents/skills/zeus-hpc/SKILL.md` for production Zeus work,
 `.agents/skills/high-impact-academic-scientific-writing/SKILL.md` for
-manuscript work. Their authorization boundaries remain in force.
+manuscript work, and `.agents/skills/karpathy-llm-wiki/SKILL.md` for
+maintaining the knowledge base (`wiki/`, `raw/`, index, and grounding).
+Their boundaries and workflows remain in force.

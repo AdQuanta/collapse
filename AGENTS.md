@@ -40,6 +40,10 @@ changes before trusting it.
 Do not reload the entire project history by default. Pull detailed background
 from `wiki/` or `research_reports/` only when needed.
 
+Never read or rewrite large monolithic ledgers into context. Inspect only the
+relevant family ledger (`wiki/campaigns/ledgers/`) or use targeted line ranges /
+`grep_search` to view and update specific case rows.
+
 ## 3. Research memory architecture
 
 Use each layer for one purpose:
@@ -50,7 +54,8 @@ Use each layer for one purpose:
 - `CLAUDE.md`: thin tool-specific overlay only.
 - `RESEARCH_STATE.md`: concise current frontier/champion/next questions.
 - `wiki/`: durable scientific knowledge, derivations, failed mechanisms, and
-  conceptual synthesis.
+  conceptual synthesis. Maintained under `.agents/skills/karpathy-llm-wiki/SKILL.md`
+  using the `raw/` and `wiki/` knowledge base architecture and grounding invariants.
 - experiment log: append-only machine-readable record of every experiment,
   including failures.
 - `research_reports/`, `reports/`, `output/`: detailed evidence and derived
@@ -191,13 +196,22 @@ unrelated refactoring.
 Use Python 3.11, type hints for nontrivial interfaces, `pathlib.Path`, explicit
 tolerances, deterministic tests, and domain-aware docstrings.
 
-Typical checks, narrowest first:
+Ensure commands run under the project's Python 3.11 virtual environment with
+scientific dependencies (`quspin`, `numpy`, `scipy`, `pytest`). When `python` on
+`PATH` is missing or points to a non-3.11/non-virtualenv interpreter, resolve the
+Python executable in this order:
+1. active virtualenv: `$VIRTUAL_ENV/bin/python`;
+2. repository-local virtualenv: `.venv/bin/python` or `venv/bin/python`;
+3. user virtualenv: `~/.venvs/collapse-py311/bin/python` or `~/.virtualenvs/collapse-py311/bin/python`;
+4. `python3.11` on `PATH` if verified to import `quspin`.
+
+Typical checks, narrowest first (using `$PYTHON` as the resolved executable):
 
 ```bash
-python -m py_compile path/to/file.py
-python scripts/<script>.py --help
-python -m pytest -q tests/test_<feature>.py
-python -m pytest -q
+$PYTHON -m py_compile path/to/file.py
+$PYTHON scripts/<script>.py --help
+$PYTHON -m pytest -q tests/test_<feature>.py
+$PYTHON -m pytest -q
 ```
 
 Inspect exit status and output before reporting success.
