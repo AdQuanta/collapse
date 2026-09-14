@@ -7,6 +7,12 @@
 
 This index serves as the structural map for the `unitary-collapse` research program. While `RESEARCH_STATE.md` provides the canonical current state and priorities, the Wiki provides deep-dive conceptual synthesis, literature mapping, and operational methods.
 
+## 🗂️ Vault
+
+| Article | Summary | Updated |
+|---------|---------|---------|
+| [Welcome](collapse/Welcome.md) | (no summary) | 2026-09-12 |
+
 ---
 
 ## 🧬 Theory & Concepts
@@ -143,6 +149,39 @@ See [[literature-map]] for the complete strategic citation graph.
 - [[detuning-intervals]] — The no-go for commuting detuned vector fields.
 - [[weak-coupling-search]] — Positive leads in interacting rings and chains.
 - [[constructive-families]] — The analytically certified commuting-X family.
+
+### Family Ledgers
+
+| Article | Summary | Updated |
+|---------|---------|---------|
+| [Family A (Cases 0–8) — Chain Ledger](campaigns/ledgers/chain/family_A.md) | (no summary) | 2026-09-14 |
+| [Family B (Cases 9–14) — Chain Ledger](campaigns/ledgers/chain/family_B.md) | (no summary) | 2026-09-14 |
+| [Family C (Cases 15–17) — Chain Ledger](campaigns/ledgers/chain/family_C.md) | (no summary) | 2026-09-14 |
+| [Family D (Cases 18–20) — Chain Ledger](campaigns/ledgers/chain/family_D.md) | (no summary) | 2026-09-14 |
+| [Family E (Cases 21–26) — Chain Ledger](campaigns/ledgers/chain/family_E.md) | (no summary) | 2026-09-14 |
+| [Family F (Cases 27–32) — Chain Ledger](campaigns/ledgers/chain/family_F.md) | (no summary) | 2026-09-14 |
+| [Family G (Cases 33–36) — Chain Ledger](campaigns/ledgers/chain/family_G.md) | (no summary) | 2026-09-14 |
+| [Family H (Cases 37–40) — Chain Ledger](campaigns/ledgers/chain/family_H.md) | (no summary) | 2026-09-14 |
+| [Family I (Cases 41–48) — Chain Ledger](campaigns/ledgers/chain/family_I.md) | (no summary) | 2026-09-14 |
+| [Family J (Cases 49–54) — Chain Ledger](campaigns/ledgers/chain/family_J.md) | (no summary) | 2026-09-14 |
+| [Family K (Cases 55–60) — Chain Ledger](campaigns/ledgers/chain/family_K.md) | (no summary) | 2026-09-14 |
+| [Family L (Cases 61–69) — Chain Ledger](campaigns/ledgers/chain/family_L.md) | (no summary) | 2026-09-14 |
+| [Family M (Cases 70–77) — Chain Ledger](campaigns/ledgers/chain/family_M.md) | (no summary) | 2026-09-14 |
+| [Family N (Cases 78–86) — Chain Ledger](campaigns/ledgers/chain/family_N.md) | (no summary) | 2026-09-14 |
+| [Family A (Cases 0–8) — Ring Ledger](campaigns/ledgers/ring/family_A.md) | (no summary) | 2026-09-14 |
+| [Family B (Cases 9–14) — Ring Ledger](campaigns/ledgers/ring/family_B.md) | (no summary) | 2026-09-14 |
+| [Family C (Cases 15–17) — Ring Ledger](campaigns/ledgers/ring/family_C.md) | (no summary) | 2026-09-14 |
+| [Family D (Cases 18–20) — Ring Ledger](campaigns/ledgers/ring/family_D.md) | (no summary) | 2026-09-14 |
+| [Family E (Cases 21–26) — Ring Ledger](campaigns/ledgers/ring/family_E.md) | (no summary) | 2026-09-14 |
+| [Family F (Cases 27–32) — Ring Ledger](campaigns/ledgers/ring/family_F.md) | (no summary) | 2026-09-14 |
+| [Family G (Cases 33–36) — Ring Ledger](campaigns/ledgers/ring/family_G.md) | (no summary) | 2026-09-14 |
+| [Family H (Cases 37–40) — Ring Ledger](campaigns/ledgers/ring/family_H.md) | (no summary) | 2026-09-14 |
+| [Family I (Cases 41–48) — Ring Ledger](campaigns/ledgers/ring/family_I.md) | (no summary) | 2026-09-14 |
+| [Family J (Cases 49–54) — Ring Ledger](campaigns/ledgers/ring/family_J.md) | (no summary) | 2026-09-14 |
+| [Family K (Cases 55–60) — Ring Ledger](campaigns/ledgers/ring/family_K.md) | (no summary) | 2026-09-14 |
+| [Family L (Cases 61–69) — Ring Ledger](campaigns/ledgers/ring/family_L.md) | (no summary) | 2026-09-14 |
+| [Family M (Cases 70–77) — Ring Ledger](campaigns/ledgers/ring/family_M.md) | (no summary) | 2026-09-14 |
+| [Family N (Cases 78–86) — Ring Ledger](campaigns/ledgers/ring/family_N.md) | (no summary) | 2026-09-14 |
 
 ---
 
