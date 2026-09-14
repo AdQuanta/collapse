@@ -129,7 +129,7 @@ See [[literature-map]] for the complete strategic citation graph.
 - [[homogeneous-qz]] — Mathematical and numerical implementation of the QZ algorithm.
 - [[symmetry-resolution]] — Correct resolution of symmetry sectors for level-spacing analysis.
 - [[relative-evolution]] — Block partitioning, pencil construction, and time evolution.
-- [[audit-framework]] — The triple-lock system of Registry, Provenance, and Audits.
+- [[audits/framework|audit-framework]] — The triple-lock system of Registry, Provenance, and Audits.
 
 ---
 

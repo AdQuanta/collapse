@@ -237,3 +237,9 @@ All 15 ring coefficients now have an exact translation-sector implementation;
 36 dense/sector conditions and 38 focused tests passed. Six larger-N baseline
 tasks are prepared, but SSH timed out during remote preflight. No production
 submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.
+
+## [2026-09-14] lint | 178 issues found, 2 auto-fixed
+- Auto-fixed: resolved broken link `[[audit-framework]]` in `wiki/index.md` and `wiki/methods/reviewer-responses.md` to `[[audits/framework|audit-framework]]`.
+- Mechanical: `scripts/check_evidence.py` reports 142 evidence errors (all 142 articles lack a `> Raw:` metadata header, and `raw/` directory is not yet initialized).
+- Judgment: 3 broken wikilinks reported (`Barandes-Kagan-2020`, `numerical-provenance`, `create a link`); 28 ledger files nested at depth 3 (`wiki/campaigns/ledgers/{chain,ring}/`); 2 articles lacking standard Status blocks for superseded claims (`perturbative-resolution.md`, `weak-coupling-search.md`); recent 2026-09-14 Born similarity autoresearch loop milestone awaiting ingestion.
+

@@ -43,4 +43,4 @@ $$\text{Appreciation} \longrightarrow \text{Shared Ground} \longrightarrow \text
 ## Cross-References
 - [[scientific-writing]] — Core writing standards and claim ceilings.
 - [[scientific-contract]] — The verification contract and error hierarchy.
-- [[audit-framework]] — The triple-lock verification trail.
+- [[audits/framework|audit-framework]] — The triple-lock verification trail.
