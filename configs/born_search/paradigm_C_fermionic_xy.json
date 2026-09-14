@@ -1,0 +1,15 @@
+{
+  "connectivity": "ring",
+  "central_coupling": "all",
+  "J": 0.0,
+  "Jxx": 1.0,
+  "Jyy": 1.0,
+  "hz": 1.0,
+  "hz0": 0.0,
+  "hx": 0.0,
+  "hx0": 0.0,
+  "Jx": 0.05,
+  "Jy": 0.0,
+  "Jz": 0.0,
+  "use_symmetry": false
+}

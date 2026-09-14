@@ -1,6 +1,28 @@
 # RESEARCH_STATE.md — Current Frontier
 
-> **2026-09-13 analytic goal — OPEN.** Follow `goal-analytic.md`'s
+> **2026-09-14 Autoresearch loop for Born similarity (\(N = 10\)) — COMPLETED (5-Hour Quota).**
+> Fully evaluated **2,786 distinct candidate configurations** across 12 structural
+> paradigms (open chains vs rings, boundary vs collective injection, pure
+> longitudinal/pointer vs transverse coupling, free fermionic XY, isotropic
+> Heisenberg XXX, gapped ferromagnetic Ising rings, and antiferromagnetic XYZ open chains).
+> **FINAL CHAMPION ESTABLISHED:** Antiferromagnetic XYZ Open Chain with uniform
+> collective coupling (`connectivity="chain"`, `central_coupling="all"`, \(J = -1.0\),
+> \(J_{xx} = 0.2857\), \(J_{yy} = 0.1143\), \(h_z = 1.40\), \(J_x = 0.065\)) achieving
+> \(\mathbf{S_{\rm Born} = 0.870192}\) (coverage 100/100, mean abs error 0.03245,
+> \(\epsilon = 0.0464 \le 0.150\)).
+> Key physical insights:
+> (1) Spinon fractionalization in an antiferromagnetic open chain provides a
+> smoother, denser many-body dephasing continuum than ferromagnetic magnons;
+> (2) Open boundaries eliminate discrete momentum selection rules via boundary
+> phase shifts, outperforming periodic rings by +0.15 in \(S_{\rm Born}\);
+> (3) Moderate in-plane anisotropy (\(J_{xx}/J_{yy} = 5:2 = 2.50\)) lifts continuous
+> spinon degeneracies without polar distortion;
+> (4) Pure transverse coupling (\(J_x \neq 0, J_y=J_z=0\)) and vanishing central
+> fields (\(h_{z0}=h_{x0}=0\)) are mathematically mandatory to protect reflection symmetry.
+> Full comprehensive report in `research_reports/BORN_OPTIMIZATION_N10_SEARCH_REPORT.md`.
+
+> **2026-09-13 analytic goal — OPEN.** Follow `goal.md`'s
+
 > thermodynamic-first **Cesàro** order, distinct from the older objective below.
 > **PROVED, central-X rings:** an exact Pauli/Newton recurrence and locality
 > argument give the interacting detector root law as a folded Gaussian with

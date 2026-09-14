@@ -1,0 +1,15 @@
+{
+  "connectivity": "chain",
+  "central_coupling": "first",
+  "J": 1.0,
+  "Jxx": 0.0,
+  "Jyy": 0.0,
+  "hx": 0.5,
+  "hz": 0.0,
+  "hz0": 0.0,
+  "hx0": 0.0,
+  "Jx": 0.05,
+  "Jy": 0.0,
+  "Jz": 0.0,
+  "use_symmetry": false
+}

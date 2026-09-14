@@ -1,0 +1,16 @@
+{
+  "connectivity": "ring",
+  "central_coupling": "all",
+  "J": 0.229454,
+  "Jpm": 0.930278,
+  "J2": 0.211278,
+  "Jpm2": 0.930915,
+  "hz": 0.334425,
+  "hz0": 0.0,
+  "hx": 0.0,
+  "hx0": 0.0,
+  "Jx": 0.05,
+  "Jy": 0.0,
+  "Jz": 0.0,
+  "use_symmetry": false
+}
