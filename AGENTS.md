@@ -48,7 +48,13 @@ These rules override everything else in this file when in conflict:
 - If you find yourself adding "for future extensibility", stop. Future extensibility is a future decision.
 - Bias toward deleting code over adding code. Shipping less is almost always better.
 
-All code must adhere to the principles of SOLID: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.
+All code must adhere to these SOLID principles:
+
+- **Single Responsibility:** Each module, class, or function should have one clear responsibility.
+- **Open/Closed:** Components should be open to extension but closed to modification.
+- **Liskov Substitution:** Subtypes should be usable wherever their base types are expected without breaking correctness.
+- **Interface Segregation:** Interfaces should be small and clients should not depend on methods they do not use.
+- **Dependency Inversion:** High-level code should depend on abstractions rather than concrete implementation details.
 
 The test: would a senior engineer reading the diff call this overcomplicated? If yes, simplify.
 
