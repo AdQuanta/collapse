@@ -1,289 +1,222 @@
-# AGENTS.md — Collapse research repository
+# AGENTS.md
 
-This file contains **stable repository-wide operating rules**. Keep it short and
-rarely change it. Scientific goals belong in the active goal file; detailed
-knowledge belongs in `wiki/`; current frontier status belongs in
-`RESEARCH_STATE.md`; raw experiment evidence belongs in append-only logs and
-report/output artifacts.
+Repository-wide instructions for coding and research agents. Read this file
+before every task.
 
-## 1. Mission
+**Working code only. Finish the job. Plausibility is not correctness.**
 
-Prioritize, in order:
+## 0. Non-negotiables
 
-1. physical and mathematical correctness;
-2. falsifiability and reproducibility;
-3. numerical reliability;
-4. maintainable code;
-5. performance.
+1. Do not fabricate file paths, results, parameters, citations, API names,
+   validation, or command output. Read the file, run the command, or say that
+   the information is unknown.
+2. Prioritize physical and mathematical correctness, falsifiability,
+   reproducibility, numerical reliability, maintainability, then performance.
+3. Distinguish projective-root geometry/statistics from operational measurement
+   probabilities. Never silently identify them.
+4. Disagree plainly with a false premise and stop when an ambiguity would
+   materially change the result.
+5. Touch only what the request requires. Preserve unrelated user changes.
 
-Never invent results, parameters, citations, validation, or command output.
-Label claims explicitly as `PROVED`, `VERIFIED_NUMERICALLY`,
-`PRELIMINARY_NUMERIC`, `CONJECTURE`, `FALSIFIED`, or `OPEN`.
+Use the evidence labels `PROVED`, `VERIFIED_NUMERICALLY`,
+`PRELIMINARY_NUMERIC`, `CONJECTURE`, `FALSIFIED`, and `OPEN` accurately.
 
-Root geometry/statistics and operational measurement probabilities are distinct
-questions. Never silently identify them.
+## 1. Before writing code
 
-## 2. Start of substantive work
+Understand the problem and the repository before producing a diff.
 
-Read, in this order:
+- State a short plan and success criterion before editing.
+- Read the files being changed and the relevant callers, tests, configs, and
+  reports.
+- For substantive research, read in order: this file, `goal.md` if present,
+  `RESEARCH_STATE.md`, `wiki/index.md`, then only the relevant wiki and
+  implementation files.
+- Treat `RESEARCH_STATE.md` as a concise handoff, not an archive. If it may be
+  stale, inspect the linked code and reports before relying on it.
+- Match existing repository patterns. Surface material assumptions explicitly.
 
-1. this file;
-2. the active goal file (normally `goal.md`, if present);
-3. `RESEARCH_STATE.md`;
-4. `wiki/index.md` and only the wiki pages relevant to the current question;
-5. the implementation, tests, configs, and reports needed for the next
-   experiment.
+## 2. Writing code: simplicity and SOLID
 
-If `RESEARCH_STATE.md` is older than relevant repository changes, inspect those
-changes before trusting it.
+Implement the smallest complete change that solves the request. Do not add
+speculative features, abstractions, configurability, or unrelated cleanup.
 
-Do not reload the entire project history by default. Pull detailed background
-from `wiki/` or `research_reports/` only when needed.
+All code must adhere to the SOLID principles:
 
-Never read or rewrite large monolithic ledgers into context. Inspect only the
-relevant family ledger (`wiki/campaigns/ledgers/`) or use targeted line ranges /
-`grep_search` to view and update specific case rows.
-
-## 3. Research memory architecture
-
-Use each layer for one purpose:
-
-- `goal.md`: human-owned research objective, constraints, verifier, completion
-  condition.
-- `AGENTS.md`: stable repository policy.
-- `CLAUDE.md`: thin tool-specific overlay only.
-- `RESEARCH_STATE.md`: concise current frontier/champion/next questions.
-- `wiki/`: durable scientific knowledge, derivations, failed mechanisms, and
-  conceptual synthesis. Maintained under `.agents/skills/karpathy-llm-wiki/SKILL.md`
-  using the `raw/` and `wiki/` knowledge base architecture and grounding invariants.
-- experiment log: append-only machine-readable record of every experiment,
-  including failures.
-- `research_reports/`, `reports/`, `output/`: detailed evidence and derived
-  artifacts.
-
-Do not turn `RESEARCH_STATE.md` into a chronological archive. Move durable
-details to the wiki/report layer and leave a short pointer.
-
-## 4. Karpathy-style research loop
-
-For an active research goal, use this loop:
-
-1. **Read state.** Identify the single highest-value unresolved question.
-2. **Hypothesize.** State one falsifiable hypothesis and its strongest
-   alternative.
-3. **Predict.** Write the expected discriminating outcome before running.
-4. **Intervene minimally.** Change one primary scientific variable or mechanism
-   per experiment whenever possible.
-5. **Run the fixed verifier.** Do not change evaluation definitions mid-run.
-6. **Compare.** Use the current baseline/champion and appropriate positive and
-   negative controls.
-7. **Decide.** Classify the result: `KEEP`, `REJECT`, `INCONCLUSIVE`, or
-   `PROMOTE`.
-8. **Log.** Record configuration, commit, seed, sizes/times, metrics, status,
-   and artifact paths.
-9. **Learn.** Update `RESEARCH_STATE.md` and the relevant wiki page only when
-   the scientific state changed.
-10. **Repeat.** Choose the next experiment for information gain, not compute
-    volume.
-
-A failed experiment is still a successful research step if it eliminates a
-hypothesis. Revert failed candidate code/config when appropriate, but preserve
-the experiment record and scientific lesson.
-
-## 5. Verifier boundary
-
-The evaluator is the scientific equivalent of Karpathy's fixed `prepare.py`.
-
-During a comparable experiment series:
-
-- do not modify the production observable definition, root solver, acceptance
-  gate, binning convention, or held-out set to rescue a candidate;
-- do not tune thresholds after seeing the result;
-- do not omit failed coverage/root-validity cases;
-- do not replace the production QZ/projective calculation with a convenient
-  surrogate without labeling it as a separate experiment.
-
-A verifier change is a **research-method change**. Make it separately, justify
-it scientifically, regression-test it, version it, and restart comparisons
-under the new verifier version.
-
-For theory, the verifier cannot prove a theorem. Numerical verification may
-falsify or support a claim; exact statements require analytical proof.
-
-## 6. Scientific contract
-
-For substantive theory or numerical work, make explicit as needed:
-
-- physical question and observable;
-- basis/tensor ordering, signs, normalization, boundary conditions, branches,
-  degeneracies, and zero/infinite-root conventions;
-- equations independent of implementation;
-- approximation regime and neglected terms;
-- exact limits, symmetries, and conservation laws;
-- material numerical error sources;
-- independent validation or solvable controls.
-
-Never infer a continuum/asymptotic identity from finite-size agreement alone.
-Never tune conventions to obtain a preferred conclusion. Preserve evidence
-against the current hypothesis.
-
-Evidence strength, highest first:
-
-1. exact theorem/identity;
-2. exact solvable limit;
-3. independent formulation;
-4. trusted benchmark;
-5. convergence/sensitivity study;
-6. qualitative agreement.
-
-## 7. Numerical reliability
-
-Use the production implementation for claims about production observables.
-
-Check the errors material to the method: size/time/tolerance dependence,
-conditioning, residuals/backward error, degeneracy handling, symmetry sectors,
-precision/cancellation, stochastic uncertainty, and coverage.
-
-Do not claim convergence from one resolution. Prefer at least three systematic
-sizes/refinements when making scaling claims.
-
-Use explicit `numpy.random.Generator` objects and record seeds. Do not mix
-independent exact symmetry sectors before level-spacing analysis.
-
-Large production simulations belong on Zeus. Read
-`.agents/skills/zeus-hpc/SKILL.md` before remote mutation. Production
-submission/resubmission/cancellation/resource changes require the authorization
-defined there.
-
-## 8. Implementation discipline
-
-Repository map:
-
-- `core/`: reusable scientific logic;
-- `scripts/`: thin orchestration/CLI;
-- `configs/`: validated scientific parameters;
-- `hpc/`: production wrappers/runbooks;
-- `tests/`: unit/regression/integration tests;
-- `wiki/`: durable knowledge;
-- `research_reports/`, `reports/`, `figures/`, `manuscript/`: research outputs;
-- `work/`, `output/`, `tmp/`: generated data, never active imports;
-- `archive/`: legacy, never active imports.
-
-Code must adhere to the principles of SOLID:
-
-- **Single Responsibility Principle (SRP)**: A module, class, or function should
-  have one, and only one, reason to change. It should encapsulate a single,
-  cohesive responsibility rather than combining disparate concerns;
-- **Open/Closed Principle (OCP)**: Software entities should be open for
-  extension, but closed for modification. New behavior or variations should be
-  added by extending or composing abstractions rather than modifying existing,
-  tested code;
-- **Liskov Substitution Principle (LSP)**: Subtypes or implementing components
-  must be substitutable for their base types without altering program
-  correctness. Implementations must honor all base contracts, invariants, and
-  expected behaviors;
-- **Interface Segregation Principle (ISP)**: Clients should not be forced to
-  depend on methods, interfaces, or parameters they do not use. Prefer small,
-  focused, and cohesive interfaces over bulky, general-purpose ones;
-- **Dependency Inversion Principle (DIP)**: High-level modules should not depend
-  on low-level modules; both should depend on abstractions. Abstractions should
-  not depend on details; concrete details should depend on abstractions.
-
-Prefer small complete changes, pure functions, explicit dependencies, validated
-dataclasses/configs, and narrow interfaces. Avoid speculative abstraction and
-unrelated refactoring.
+- **Single Responsibility:** each module, class, or function has one cohesive
+  reason to change.
+- **Open/Closed:** extend behavior through composition or focused interfaces
+  rather than repeatedly modifying stable code.
+- **Liskov Substitution:** implementations honor the contracts and invariants
+  of the abstractions they replace.
+- **Interface Segregation:** keep interfaces narrow; clients should not depend
+  on unused methods or parameters.
+- **Dependency Inversion:** high-level logic depends on abstractions, with
+  concrete numerical and I/O details supplied at the edges.
 
 Use Python 3.11, type hints for nontrivial interfaces, `pathlib.Path`, explicit
-tolerances, deterministic tests, and domain-aware docstrings.
+tolerances, deterministic tests, explicit `numpy.random.Generator` instances,
+and domain-aware docstrings.
 
-Ensure commands run under the project's Python 3.11 virtual environment with
-scientific dependencies (`quspin`, `numpy`, `scipy`, `pytest`). When `python` on
-`PATH` is missing or points to a non-3.11/non-virtualenv interpreter, resolve the
-Python executable in this order:
-1. active virtualenv: `$VIRTUAL_ENV/bin/python`;
-2. repository-local virtualenv: `.venv/bin/python` or `venv/bin/python`;
-3. user virtualenv: `~/.venvs/collapse-py311/bin/python` or `~/.virtualenvs/collapse-py311/bin/python`;
-4. `python3.11` on `PATH` if verified to import `quspin`.
+## 3. Surgical changes
 
-Typical checks, narrowest first (using `$PYTHON` as the resolved executable):
+Every changed line must trace to the request or to correctness of the change.
+Do not reformat, refactor working adjacent code, or delete pre-existing dead
+code merely because you noticed it. Clean up only orphans created by your own
+edit, and preserve failed-experiment records and curated production data.
 
-```bash
-$PYTHON -m py_compile path/to/file.py
-$PYTHON scripts/<script>.py --help
-$PYTHON -m pytest -q tests/test_<feature>.py
-$PYTHON -m pytest -q
-```
+## 4. Goal-driven research loop
 
-Inspect exit status and output before reporting success.
+For an active scientific goal:
 
-## 9. Provenance
+1. identify the highest-value unresolved question;
+2. state one falsifiable hypothesis and its strongest alternative;
+3. predict the discriminating outcome before running anything;
+4. change one primary variable or mechanism where possible;
+5. run the fixed verifier and compare with baseline and controls;
+6. classify the result as `KEEP`, `REJECT`, `INCONCLUSIVE`, or `PROMOTE`;
+7. record configuration, commit, seed, sizes/times, metrics, status, and
+   artifact paths;
+8. update `RESEARCH_STATE.md` and the relevant wiki page only when the
+   scientific state changes.
 
-Scientific outputs should record, as applicable:
+A failed experiment can be a successful research step if it eliminates a
+hypothesis. Do not replace an analytical derivation with numerical fitting.
 
-- effective config/schema version;
-- Git commit/source hashes;
-- Python/dependency versions;
-- seed;
-- solver and tolerance;
-- system size/time protocol;
-- basis/symmetry convention;
-- units/normalization;
-- timestamp;
-- validation summary.
+## 5. Scientific and numerical integrity
 
-Treat prior curated/production data as immutable unless replacement is
-explicitly requested. Put derived outputs in new descriptive locations.
+- Use the production observable, homogeneous QZ/projective calculation, root
+  conventions, acceptance gate, binning, and held-out set for comparable
+  experiments. A verifier change is a separately versioned research-method
+  change.
+- State basis/tensor ordering, signs, normalization, boundary conditions,
+  branches, degeneracies, zero/infinite roots, approximation regime, and
+  neglected terms when relevant.
+- Check conditioning, residuals/backward error, degeneracy handling, symmetry
+  sectors, cancellation/precision, coverage, and size/time/tolerance
+  dependence. Do not claim convergence from one resolution.
+- Never mix independent exact symmetry sectors before a valid level-spacing
+  analysis. Preserve negative evidence and failed coverage/root-validity cases.
+- Record provenance for scientific outputs: config/schema, source commit,
+  Python/dependency versions, seed, solver/tolerance, protocol, conventions,
+  timestamp, and validation summary.
+
+## 6. Tool use and verification
+
+Prefer running code to guessing. Read complete errors and inspect exit status.
+Use the narrowest relevant check first, then broaden only for an unresolved
+concern. For local Python work, resolve the interpreter in this order: active
+virtual environment, `.venv/bin/python` or `venv/bin/python`, the project
+Python 3.11 virtual environment, then verified `python3.11` on `PATH`.
+
+Do not claim success from a plausible diff. If a verifier fails, fix the cause
+or report the limitation; do not weaken the test or tune the definition after
+seeing the result.
+
+## 7. Session hygiene and communication
+
+Be direct and concise. Do not use flattery, filler, ceremonial openings, or
+unsupported certainty. Keep context focused on the current question. After two
+failed corrections on the same issue, summarize the evidence and ask for a
+sharper direction instead of looping.
+
+Ask before proceeding when the interpretation materially changes the output,
+when credentials or production resources are required, or when the request
+conflicts with a load-bearing/versioned rule. Proceed when the ambiguity can be
+resolved from the repository or the action is local and reversible.
+
+## 8. Project context
+
+### Stack
+
+- Language: Python 3.11.
+- Scientific runtime: NumPy, SciPy, QuSpin, Matplotlib; development tools also
+  include pytest, SymPy, Pillow, pypdf, and ReportLab.
+- Package installation: `requirements.txt` and `requirements-dev.txt`.
+- Runtime targets: local Python 3.11 and production PBS jobs on Technion Zeus.
+
+### Commands
+
+- Install: `python3.11 -m pip install -r requirements-dev.txt`
+- Compile check: `python3.11 -m py_compile path/to/file.py`
+- Test all: `python3.11 -m pytest -q`
+- Test one file: `python3.11 -m pytest -q tests/test_<feature>.py`
+- Run a study: `python3.11 scripts/<runner>.py --help`, then use its checked-in
+  config and documented arguments.
+- Zeus production: use the applicable `hpc/` runbook and `submit_*.sh` wrapper;
+  never invent an ad hoc submission command.
+- Lint/typecheck: no repository-wide linter or type checker is configured;
+  use focused syntax, tests, and scientific validation instead.
+
+### Layout
+
+- `core/`: reusable physics and numerical logic.
+- `scripts/`: thin study, analysis, aggregation, and figure orchestration.
+- `configs/`: versioned research parameters and campaign manifests.
+- `hpc/`: PBS jobs, submission wrappers, and Zeus runbooks.
+- `tests/`: unit, regression, invariant, and campaign-contract tests.
+- `wiki/`: durable scientific knowledge; `raw/`, when present, is immutable
+  source material for the wiki.
+- `research_reports/`, `reports/`, `figures/`, `manuscript/`: research outputs.
+- `work/`, `output/`, `tmp/`: generated data; never active imports.
+- `archive/`: legacy material; never active imports.
+
+Do not overwrite prior curated or production outputs. Put derived outputs in a
+new descriptive location.
+
+### Conventions specific to this repository
+
+- The central qubit is first in tensor-product ordering. Production projective
+  roots use homogeneous generalized eigenvalues of `C v = lambda A v`, with
+  finite, infinite, and indeterminate roots handled explicitly.
+- Keep equations and observable definitions independent of implementation, and
+  do not silently change the thermodynamic/time-limit order in `goal.md`.
+- Use focused pytest tests for invariants and reproducibility. Record seeds and
+  campaign parameters for stochastic graph or parameter-space studies.
+- Keep raw experiment logs append-only; put durable derivations and synthesis in
+  `wiki/`, and concise frontier status in `RESEARCH_STATE.md`.
+
+### Forbidden
+
+- Do not use convenient surrogate solvers or observables for production claims
+  without labeling a separate experiment.
+- Do not tune thresholds, bins, held-out sets, or acceptance gates to rescue a
+  candidate.
+- Do not mix symmetry sectors, omit failed cases, infer asymptotic identities
+  from finite-size agreement, or invent citations/results.
+- Do not use destructive reset, force-push, broad deletion, or `rsync --delete`
+  on project or campaign data.
+
+## 9. Project skills
+
+Use these project skills when their scope applies:
+
+- **Zeus HPC** — `.agents/skills/zeus-hpc/SKILL.md` governs preparation,
+  synchronization, authorized PBS submission, monitoring, collection, and
+  post-processing of production campaigns.
+- **High-impact academic scientific writing** —
+  `.agents/skills/high-impact-academic-scientific-writing/SKILL.md` governs
+  manuscript structure, claim strength, figures, references, and reviewer
+  responses.
+- **Karpathy LLM wiki** — `.agents/skills/karpathy-llm-wiki/SKILL.md` governs
+  the `raw/` and `wiki/` knowledge-base architecture, grounding, indexing,
+  append-only logging, querying, and linting.
+
+Read the applicable skill file before acting. Skill instructions supplement
+this file; they do not expand user authorization.
 
 ## 10. Git delivery
 
-Standing authorization covers committing and pushing completed in-scope
-change/build/fix work, integrating the task branch into the default branch
-(fast-forward preferred, otherwise a merge commit), and deleting only that
-agent-owned branch after verified integration. It excludes unrelated changes,
-other branches, PR creation/merging, history rewriting, force-pushing, and
-releases. Read-only tasks produce no commit; never make an empty or failing
-commit to satisfy delivery rules.
+At task start, inspect branch, upstream, remotes, and `git status --short`.
+Preserve pre-existing changes. For substantive changes, use an agent-owned
+`codex/<topic>` branch unless the user requests a direct update. Stage explicit
+paths, inspect the staged diff, and exclude secrets, generated bulk data, and
+unrelated edits. Commit only after validation; push and integrate into the
+default branch when authorized by the repository policy. Create or merge a PR
+only when requested. Never rewrite history or force-push.
 
-1. At task start, inspect branch, upstream, remotes, and `git status --short`.
-   Preserve ownership of pre-existing changes.
-2. From the default branch, create `codex/<topic>` for substantive work unless
-   the user requests a direct update. Reuse a task branch only when it clearly
-   owns this work.
-3. Keep commits cohesive. Separate prior/unrelated work and, when useful,
-   scientific implementation from instruction maintenance.
-4. Stage explicit paths, inspect `git diff --cached`, and exclude secrets,
-   machine-specific clutter, generated bulk data, and accidental edits.
-5. After validation passes, commit with a concise imperative subject and push
-   the task branch with `git push -u origin HEAD`.
-6. If a push is rejected or the remote advances, fetch and inspect; never
-   silently rebase or discard work. Update the local default branch with a
-   fast-forward-only pull. If it is an ancestor of the task branch, integrate
-   with `git merge --ff-only <task-branch>`; otherwise use
-   `git merge --no-ff <task-branch>`. Push the default branch. Stop before
-   resolving unexpected conflicts or overwriting remote work; name conflicting
-   paths and request direction.
-7. Verify the task commit is an ancestor of both local and remote-tracking
-   default branches after the push succeeds.
-8. Delete only the redundant agent-owned task branch remotely and locally,
-   using ordinary non-force deletion. Preserve default/protected branches,
-   branches checked out in another worktree, unmerged branches, and branches
-   of ambiguous ownership. If deletion is rejected, preserve it and report why.
-9. Report task/default branches, task commit, integration mode, resulting
-   default hash, pushed remote, deleted branches, validation, generated but
-   uncommitted outputs, and limitations.
+## 11. Project Learnings
 
-Create or merge a PR only when requested. Its description should state the
-scientific objective, changed equations/conventions, implementation choices,
-exact validation commands/results, convergence/sensitivity evidence, output
-paths, Zeus resource implications, and unresolved limits as applicable. Pair
-representative figures with quantitative evidence.
+Append a concrete one-line rule here when the user corrects an agent mistake;
+prune rules that no longer prevent real errors.
 
-## 11. Completion
-
-"Done" means the active goal's completion condition is met, applicable
-validation is complete, evidence and limitations are recorded, and authorized
-delivery is verified.
-
-If the active scientific goal is not solved, do not manufacture closure.
-Record the strongest verified partial result, update the state/wiki, and
-continue the research loop when the task calls for persistent research.
+- (empty)
