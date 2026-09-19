@@ -1,7 +1,9 @@
 # Falsifiability, Experimental Routes, and Quantum Computing
 
+> Updated: 2026-09-15
+
 ## Overview
-A core strength of the `unitary-collapse` program is that it does not merely offer an interpretational re-description; it exposes the restricted-state hypothesis to concrete experimental and numerical falsification. If the physically realized states are determined by finite-time unitary disentanglement conditions, measurement statistics are **emergent dynamical phenomena** that should exhibit measurable deviations in mesoscopic, short-time, or highly scrambled regimes.
+The restricted-state idea is a hypothesis that can be tested numerically and, only after a physical preparation law is specified, experimentally. If physical preparation were governed by finite-time unitary disentanglement conditions, one could seek mesoscopic, short-time, or scrambling-dependent deviations. The present SPEC does not assume that premise is true.
 
 ---
 
@@ -30,8 +32,12 @@ A core strength of the `unitary-collapse` program is that it does not merely off
 
 Palmer’s *Rational Quantum Mechanics* (2026) suggests that finite arithmetic discretization imposes an absolute information-capacity ceiling on quantum computation. In `unitary-collapse`, the restriction is dynamical and Hamiltonian-dependent rather than arithmetic.
 
+### Adjacent Foundational Use: Computational Rate Density
+
+Katz and Kotler propose a complementary way to turn a quantum processor into a foundational experiment: use a verified computation's equivalent classical operation count, spacetime footprint, and causal history to bound the scale of any underlying classical computational model. This does not test the `unitary-collapse` mechanism or the Born rule. Its relevance is methodological: it shows how an abstract claim about the limits of quantum mechanics can be converted into a hierarchy of explicit processor thresholds while making the resource assumptions visible. See [[Katz-Kotler-2026]].
+
 ### Covering Complexity / Metric Entropy
-Define the metric entropy of the physically realized state set $\mathcal{R}_N$ at precision $\varepsilon$:
+For the mathematical root set $\mathcal{R}_N$, define the metric entropy at precision $\varepsilon$:
 $$
 K_N(\varepsilon) = \log_2 \mathcal{N}_\varepsilon(\mathcal{R}_N),
 $$
@@ -59,4 +65,4 @@ flowchart LR
 3. **Stage 3 (Short-Time and Size Scaling):** Experimentally probe early-time dynamics and systematic finite-$N$ deviations.
 4. **Stage 4 (Circuit Complexity):** Benchmark deep quantum circuits against metric-entropy capacity bounds.
 
-See also: [[big-picture]], [[born-like-points]], [[haar-baseline]], [[foundational-draft-aug2026]].
+See also: [[big-picture]], [[born-like-points]], [[haar-baseline]], [[foundational-draft-aug2026]], [[Katz-Kotler-2026]].

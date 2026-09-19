@@ -21,10 +21,10 @@ The transition from coherent quantum evolution to classical-like measurement out
 The study reveals that **decoherence fundamentally reorganizes the phase diagram**. In real superconducting qubits, decoherence inverts the order of the transitions (e.g., state-freezing occurs before the cessation of oscillations), decoupling signatures that appear simultaneous in idealized models.
 
 ## Relevance to `unitary-collapse`
-The `unitary-collapse` project investigates the **static root geometry** of the relative propagator. Guttel et al. investigate the **dynamic trajectory** of a qubit under continuous monitoring.
+The `unitary-collapse` project investigates the **exact root geometry** of the dual outcome pencils $(U_{10} + \lambda U_{11})|D\rangle=0$ and $(U_{00} + \lambda U_{01})|D\rangle=0$. Guttel et al. investigate the **dynamic trajectory** of a qubit under continuous monitoring.
 
-The link is found in the **non-Hermitian evolution**:
-1. Guttel's "quantum jumps" are driven by the eigenvalues of a non-Hermitian Hamiltonian.
-2. The `unitary-collapse` projective roots are the "zero-energy" solutions of a non-Hermitian operator pencil.
+The link is found in the **non-Hermitian operator structure**:
+1. Guttel's "quantum jumps" are driven by the eigenvalues of an effective non-Hermitian Hamiltonian.
+2. The `unitary-collapse` projective roots are the null-space solutions of the dual matrix pencils.
 
-Both works highlight that the "classical" limit (jumps, freezing, definite outcomes) is not a gradual limit of $N \to \infty$, but can be reached via **sharp transitions** driven by the competition between coherent drive ($\Omega_S$) and measurement rate ($\alpha$). This suggests that the "Born-like" profile found in the `unitary-collapse` project might itself be associated with a dynamical transition in the detector's parameter space.
+Both works highlight that the classical-like limit (jumps, freezing, definite outcomes) may not be a trivial feature of large $N$, but requires specific dynamical conditions. In `unitary-collapse`, establishing whether a stable Born-like regime exists across an open parameter region requires fresh verification under SPEC v1.0, where all paper-readiness gates are `INCOMPLETE`.

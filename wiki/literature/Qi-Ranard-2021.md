@@ -21,6 +21,6 @@ The emergence of classical behavior from quantum systems is a universal, structu
 ## Relevance to `unitary-collapse`
 Qi and Ranard frame classicality as a **topological/informational property** of the environment. 
 
-The `unitary-collapse` project's "detector" can be viewed as a **physically realized Quantum Markov Blanket**. The "collapsible states" are those that are optimally "measured" by the detector in a way that mimics the behavior of an infinite environment's blanket. 
+Quantum Markov blankets provide a possible comparison for detector records and redundancy. No result currently identifies the project's detector or its root states as a realized Markov blanket.
 
 While Qi and Ranard prove that *some* classical measurement emerges generically, the `unitary-collapse` program focuses on the **specific quality** of that measurement—asking when the resulting statistics follow the **Born Rule**. This bridges the gap between the *existence* of classicality (Qi & Ranard) and the *specific laws* governing that classicality (Born).

@@ -15,9 +15,9 @@ metadata:
 If experimenters have "free will" (measurement choices are not deterministic functions of past history in the backward lightcone), then the response of an elementary spin-1 particle (in a Kochen–Specker configuration) is likewise not determined by past history. The theorem assumes three axioms (SPIN, TWIN, FIN/MIN) and derives that particle outcomes cannot be functions of prior information.
 
 ## Key Implication
-The theorem has **exactly one** escape route: **superdeterminism**. If human choice is not independent of past history (Statistical Independence fails), the theorem's premise is violated and its conclusion does not apply.
+Dropping the theorem's freedom/measurement-independence premise is one way to evade its conclusion; it is not a result that every deterministic theory has exactly one possible interpretation.
 
 Conway and Kochen dismissed superdeterminism as absurd, but their theorem rigorously crystallizes that determinism, locality, and quantum outcomes can only coexist if Measurement Independence is violated.
 
 ## Relevance to `unitary-collapse`
-The `unitary-collapse` program explicitly violates Statistical Independence by restricting physically realizable states to projective roots. Under the Conway–Kochen classification, this places `unitary-collapse` in the superdeterministic family—the only family consistent with determinism + locality + QM predictions.
+The current project defines a root subset but does not yet specify that only those states are physically realizable or correlate them with measurement settings. The Conway–Kochen result therefore does not presently classify the project as superdeterministic.

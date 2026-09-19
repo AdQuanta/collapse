@@ -37,7 +37,7 @@ Using stereographic qubit coordinates $|\psi(z)\rangle = \frac{|0\rangle + z|1\r
 - **Outcome 0:** $(C + zD)|\eta\rangle = 0 \iff C|\eta\rangle = \lambda D|\eta\rangle, \quad z = -\lambda$.
 - **Outcome 1:** $(A + zB)|\eta\rangle = 0 \iff A|\eta\rangle = \lambda B|\eta\rangle, \quad z = -\lambda$.
 
-*Note on convention:* Later project phases adopt the complementary-minor / fixed-input-pole convention $Cv = \lambda Av$ (see [[projective-roots]] and [[homogeneous-qz]]), related by unitary dualities.
+*Current convention:* `SPEC.md` v1.0 retains the two physical pencils $(C+zD)$ and $(A+zB)$ in homogeneous form. A complementary or inverse-based pencil is only a derived chart and cannot replace either outcome equation.
 
 ### 2. Foundational Mathematical Propositions
 - **Proposition 1 (Finite special-state set):** For regular degree-$d$ pencils, counting algebraic multiplicity on the Riemann sphere yields exactly $d = 2^n$ roots per outcome. For finite $n$, this set is of measure zero on the continuous Bloch sphere.
@@ -86,7 +86,7 @@ is a pure dipolar ($\ell = 1$) spherical harmonic for an ideal projective measur
   See [[theorem-targets]].
 - **Appendices:**
   - **App A:** Primer on decoherence, einselection, and why reduced density matrix diagonality is not dynamical collapse.
-  - **App B:** Homogeneous coordinates $(\alpha, \beta)$ and Bloch vector $r = \frac{1}{|\alpha|^2+|\beta|^2}(2\text{Re}(\alpha^*\beta), 2\text{Im}(\alpha^*\beta), |\alpha|^2-|\beta|^2)^T$.
+  - **App B:** With $z=\alpha/\beta$ and state proportional to $\beta|0\rangle+\alpha|1\rangle$, the current Bloch convention is $r = \frac{1}{|\alpha|^2+|\beta|^2}(2\text{Re}(\beta^*\alpha), 2\text{Im}(\beta^*\alpha), |\beta|^2-|\alpha|^2)^T$.
   - **App C:** Random unitary isotropy and the complex spherical Ginibre ensemble $\det(G_1 - zG_2)$.
   - **App D:** Martingales, optional stopping theorem, Gleason, and Busch.
   - **App E:** Energy-level statistics primer: consecutive-gap ratio $\langle \tilde{r} \rangle$, ETH, and MBL distinctions.
@@ -94,16 +94,10 @@ is a pure dipolar ($\ell = 1$) spherical harmonic for an ideal projective measur
 
 ---
 
-## Relation to Subsequent Research (August 13 – September 12, 2026)
+## Relation to the SPEC v1.0 Reset
 
-The August 12 draft provided the broad conceptual canvas. Subsequent work in the repository has significantly sharpened the physics:
-1. **Symmetry Sectors & RMT Auditing (Late August):** Mandated sector-by-sector analysis (`scripts/analyze_zeus_spectral_relations.py`), avoiding artificial Poissonian artifacts.
-2. **$N=17$ Symmetry-Resolved Spacings (August 29):** Falsified the naive WD-only conjecture; demonstrated that level statistics alone do not control Born quality ([[spectral-statistics]]).
-3. **Central-X Great-Circle No-Go (August 27):** Showed that $X$-conserving models are restricted to a 1D great circle, requiring non-$X$ channels ($J_z, J_{zx}$) for full-sphere coverage ([[coverage-gates]]).
-4. **Exact Asymptotic Obstructions (September 11):** Proved Theorems A (recurrence), B (commuting conditional limits are $\delta_0$ or uniform), C (measure-zero field restriction), D (folded Gaussian for collective $X$), E (detuned light-tailed coupling no-go). See [[asymptotic-obstructions]].
-5. **Scalar Potential & Nonnormal Limits (September 12):** Derived $J_{C,A}(x)$ potential (Theorem F) and proved that Gaussian operator-moment substitution fails for nonnormal root problems (Theorem G). See [[nonnormal-limits]].
-6. **Detuning Interval No-Go (September 12):** Proved Theorem H, ruling out open detuning intervals for phase-mixed commuting vector fields ([[detuning-intervals]]).
-7. **Constructive Commuting Family (September 11):** Certified a discrete combinatorial family meeting the 64-bin acceptance gate ([[constructive-families]]).
-8. **Resonant Return & Multichannel Ring Leads (September 12):** Formulated exact Schur return representation and audited positive $N=14\text{--}17$ XYZ ring candidates ([[resonant-return-dynamics]], [[weak-coupling-search]]).
+The August 12 draft is historical architecture, not the current research contract. Its single-pencil convention, manuscript claims, parameter families, and acceptance gates are superseded by `SPEC.md` v1.0. Earlier symmetry, spectral, asymptotic, constructive, and multichannel campaign reports remain evidence to inspect, but none receives v1.0 credit without fresh verification through the dual pencils and complete metric suite.
+
+The only newly audited analytic result is the scoped [[commuting-qnd-sector]] calculation: its exact sector reduction is valid and its critical Gaussian limit fails exact Born in the natural $Z$ output basis, but it does not yet rule out every preferred axis. Historical positive scores and theorem labels must not be quoted as current results.
 
 See also: [[big-picture]], [[projective-roots]], [[haar-baseline]], [[theorem-targets]], [[falsifiability-and-experiments]].

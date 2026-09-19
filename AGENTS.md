@@ -191,6 +191,7 @@ Prefer single-file or single-test runs during iteration. Full suites are for the
 - Zeus HPC: `.agents/skills/zeus-hpc/SKILL.md`.
 - Scientific writing: `.agents/skills/high-impact-academic-scientific-writing/SKILL.md`.
 - Karpathy LLM wiki: `.agents/skills/karpathy-llm-wiki/SKILL.md`.
+- Zotero: `.agents/skills/zotero-use/SKILL.md`.
 
 ### Forbidden
 - Do not use surrogate observables or solvers for production claims without labeling a separate experiment.
@@ -206,7 +207,7 @@ Prefer single-file or single-test runs during iteration. Full suites are for the
 
 When the user corrects your approach, append a one-line rule here before ending the session. Write it concretely ("Always use X for Y"), never abstractly ("be careful with Y"). If an existing line already covers the correction, tighten it instead of adding a new one. Remove lines when the underlying issue goes away (model upgrades, refactors, process changes).
 
-- (empty)
+- In wiki maintenance, treat `SPEC.md` as controlling, preserve user-deleted obsolete ledgers, and never grant paper-readiness credit to pre-reset results without fresh verification.
 
 ---
 

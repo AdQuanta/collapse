@@ -22,8 +22,8 @@ The resolution of a quantum measurement into a definite outcome is a result of t
 The `unitary-collapse` project is the direct numerical and structural extension of Schulman's "special state" intuition. 
 
 While Schulman provided a conceptual and statistical framework for the existence of special states, the `unitary-collapse` project:
-1. **Mathematically Defines** these states as the projective roots of the relative propagator.
-2. **Numerically Demonstrates** their existence in finite-system detectors.
-3. **Proves** that their distribution on the Bloch sphere follows a Born-like profile.
+1. **Mathematically Defines** these states as the projective roots of the dual homogeneous outcome pencils: $(U_{10} + \lambda U_{11})|D\rangle=0$ (outcome 0) and $(U_{00} + \lambda U_{01})|D\rangle=0$ (outcome 1).
+2. **Numerically Tests** their existence, kernel multiplicities, and exact output factorization in finite-system detectors; all prior results require fresh dual-pencil verification under the current reset.
+3. **Tests the Hypothesis** that their distribution on the Bloch sphere approaches Born-rule statistics in a stable, non-fine-tuned weak-coupling region (an unverified target under SPEC v1.0, where all gates are `INCOMPLETE` and `paper_ready = false`).
 
-Essentially, the `unitary-collapse` program provides the **exact mechanism and structural classification** for the "special states" that Schulman hypothesized.
+Essentially, the `unitary-collapse` program provides an **exact algebraic framework** to investigate the physical viability of the "special states" that Schulman hypothesized.

@@ -106,11 +106,11 @@ Division events play a role analogous to "frameworks" in the consistent historie
 
 The SQC provides a powerful conceptual lens for the `unitary-collapse` program:
 
-1. **Projective roots as division-event-compatible states:** The projective roots of $C_N v = \lambda A_N v$ are initial qubit states that evolve unitarily into definite pointer states. In Barandes' language, these are the states for which an **autonomous division event** occurs—the many-body detector dynamics naturally restores divisibility without requiring external measurement.
+1. **Projective roots as division-event-compatible states:** In SPEC v1.0, exact collapsible states are defined as solutions of the dual homogeneous outcome pencils $(U_{10} + \lambda U_{11})|D\rangle=0$ and $(U_{00} + \lambda U_{01})|D\rangle=0$. In Barandes' language, these are candidate states for which an **autonomous division event** occurs—the many-body detector dynamics naturally restores divisibility without external intervention.
 
 2. **Indivisibility suppression as collapse mechanism:** The `unitary-collapse` mechanism corresponds to finding structural conditions under which many-body latching suppresses $\mathcal{I}_{ki}$ dynamically, producing an autonomous division event without environmental decoherence.
 
-3. **Born rule from root geometry:** If only projective-root states can serve as legitimate division events (in the Barandes sense), then the Born-like distribution of these roots endows the Born rule with its physical content through the structure of the stochastic process itself.
+3. **Born rule from root geometry:** If only projective-root states can serve as legitimate division events (in the Barandes sense), then an emergent Born-like distribution of these roots would ground Born statistics in the structure of the process itself. Under SPEC v1.0, this emergence remains an unverified hypothesis (`paper_ready = false`).
 
 ### Repository Connection
 
@@ -130,7 +130,7 @@ which directly measures the amplitude of the indivisibility tensor $\mathcal{I}$
 ## Key References
 
 - [[Barandes-2023]] — The Stochastic-Quantum Correspondence (foundational paper).
-- [[Barandes-Kagan-2020]] — Minimal Modal Interpretation (precursor).
+- Barandes and Kagan (2020), Minimal Modal Interpretation — cited precursor; no standalone wiki source note is currently ingested.
 - [[bohmian-mechanics]] — The contrasting deterministic hidden-variable approach.
 - [[superdeterminism]] — State-space restriction as an alternative route.
 - [[projective-roots]] — The constructive special states of unitary collapse.

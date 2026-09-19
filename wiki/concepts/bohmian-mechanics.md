@@ -86,7 +86,7 @@ Bohmian mechanics maintains **Statistical Independence** ($P(\lambda | a, b) = P
 | **Bell Locality** | Violated | Preserved | Preserved |
 | **Determinism** | Yes | Yes | Yes (unitary) |
 | **State restriction** | None ($\forall \|\psi\rangle$) | Fractal/rational | Projective roots |
-| **Born rule** | Equilibrium distribution | Emergent from $I_U$ measure | Root geometry |
+| **Born rule** | Equilibrium distribution | Emergent from $I_U$ measure | Hypothesized root distribution (unverified, `paper_ready = false`) |
 
 ---
 
@@ -95,11 +95,11 @@ Bohmian mechanics maintains **Statistical Independence** ($P(\lambda | a, b) = P
 The `unitary-collapse` program takes the **orthogonal** approach to Bohmian mechanics for resolving the measurement problem:
 
 - **Bohm:** Keeps all $|\psi\rangle$ physically accessible; adds a hidden primitive ontology (particle positions $Q$) with nonlocal guidance.
-- **Unitary collapse:** Adds no extra variables; restricts the physically realizable states to projective roots of the relative evolution pencil—a form of unitary superdeterminism.
+- **Unitary-collapse project:** Adds no extra variables in the tested dynamics and defines projective-root initial states. It has not established that only those states are physically realizable or that their selection is superdeterministic.
 
-**The price of locality:** Bohmian mechanics demonstrates that maintaining Statistical Independence in a deterministic ontology requires accepting manifest nonlocality and a preferred foliation. If `unitary-collapse` insists on local unitary Hamiltonians, it must violate Statistical Independence, placing it in the superdeterministic family (alongside Schulman's special states and Palmer's RaQM).
+Bell-type assumptions would have to be analyzed only after the project supplies an ontology and a preparation/selection law. Local Hamiltonian dynamics and a mathematical root subset alone do not prove violation of Statistical Independence.
 
-Both theories share the commitment that **Born's rule is not a fundamental axiom** but an emergent statistical property (equivariant equilibrium in Bohm; root distribution geometry in unitary collapse).
+Both theories share the commitment that **Born's rule is not a fundamental axiom** but an emergent statistical property (equivariant equilibrium in Bohm; hypothesized root distribution geometry in unitary collapse).
 
 ---
 

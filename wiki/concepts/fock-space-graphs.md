@@ -111,12 +111,12 @@ In certain non-integrable many-body systems, quantum thermalization is avoided n
 
 The Fock-space graph framework provides crucial analytical machinery for the `unitary-collapse` program:
 
-1. **The Relative Evolution Pencil on Fock Space:**
-   In `unitary-collapse`, the block pencil $C_N v = \lambda A_N v$ acts on the $2^N$-dimensional detector Hilbert space. Constructing the matrices $A_N$ and $C_N$ is equivalent to solving an operator-pencil problem on the Fock-space graph of the detector.
-2. **Projective Roots as Non-Ergodic Trajectories:**
-   Generic eigenstates in chaotic detectors thermalize and spread uniformly across the $2^N$ nodes of the Fock-space graph ($D_q = 1$). In contrast, the **projective roots** $v \in \mathbb{C}^{2^N}$ that satisfy the product-to-product measurement boundary condition must remain coherent and structured: they behave like **many-body scars or non-ergodic extended states** on the Fock-space graph, avoiding thermal scrambling to deliver a definite pointer reading.
-3. **Krylov Complexity Bounds on Detector Readout:**
-   The readout timescale $t_m$ corresponds to the time required for the qubit operator to propagate to depth $K(t_m)$ along the detector's Krylov chain. If the detector Hamiltonian has bounded operator growth ($b_n \sim \sqrt{n}$ as in 1D rings), the operator spreads without rapid chaotic dispersion, protecting the Born dipole balance condition $C_B$.
+1. **The Dual Outcome Pencils on Fock Space:**
+   In SPEC v1.0, exact collapsible states are defined by two homogeneous matrix pencils acting on the detector Hilbert space: $(U_{10} + \lambda U_{11})|D\rangle=0$ for outcome 0 and $(U_{00} + \lambda U_{01})|D\rangle=0$ for outcome 1. Constructing these pencils corresponds to solving an operator-pencil null-space problem across the Fock-space graph of the detector.
+2. **Projective-Root Structure as a Hypothesis:**
+   Root detector vectors may have atypical participation, entanglement, or Krylov profiles, but exact collapsibility does not by itself imply scar-like or non-ergodic structure. Those diagnostics must be measured and compared with matched controls.
+3. **Krylov Complexity as a Candidate Mechanism:**
+   Operator growth may constrain the readout timescale and root geometry. No universal $b_n\sim\sqrt n$ law or causal link to Born metrics has been established for the approved rings and chains; this remains a falsifiable mechanism hypothesis.
 
 ---
 

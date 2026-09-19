@@ -18,4 +18,4 @@ Measurement-like "collapse" is an emergent property of open quantum systems. The
 - **Emergence of Classicality**: The transition from a coherent quantum superposition to an effective statistical mixture of classical alternatives.
 
 ## Relevance to `unitary-collapse`
-While Zurek focuses on **open systems** (system + environment), the `unitary-collapse` project explores whether similar "selection" of specific states (collapsible states) can be achieved in a **closed system** (qubit + detector) purely through the structure of the unitary evolution and the projective roots of the relative propagator. Zurek's "pointer basis" is a conceptual ancestor to the "collapsible states" identified in this project.
+While Zurek studies a subsystem coupled to an environment, this project asks whether a closed qubit–detector unitary has exact product inputs that reach definite qubit outputs and whether their two root measures become Born-like. Pointer-basis selection is relevant to the SPEC preferred-axis gate, but decoherence does not supply the required root statistics or a physical root-selection law.

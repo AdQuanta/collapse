@@ -90,12 +90,12 @@ The `unitary-collapse` program and Many-Worlds share the fundamental premise tha
 | Architectural Axis | Many-Worlds Interpretation (Everett) | Unitary Collapse (`collapse` program) |
 |---|---|---|
 | **Dynamical Law** | Exact linear unitary evolution ($U(t) = e^{-iHt/\hbar}$) | Exact linear unitary evolution ($U(t) = e^{-iHt/\hbar}$) |
-| **Number of Outcomes** | **All outcomes occur** (branching multiverse) | **Single outcome occurs** (single classical reality) |
-| **Physical State Space** | **Unrestricted Hilbert space**: all $|\psi\rangle \in \mathcal{H}$ physically realizable | **Restricted state variety**: only projective roots $\mathcal{R} \subset \mathcal{H}$ are physically realized |
-| **Bell's Trilemma** | Violates Single World (keeps Locality + Stat. Indep.) | Violates Statistical Independence (keeps Realism + Locality + Single World) |
-| **Mechanism of Definiteness**| Dynamic isolation by infinite environmental decoherence | Autonomous finite-time latching via detector matrix pencil $(A_N, C_N)$ |
-| **Origin of Born Rule** | Decision theory (Wallace) or envariance (Zurek) | Algebraic geometry / density of projective roots on the Bloch sphere |
-| **Detector Requirement** | Open macroscopic environment with infinite bath modes | Closed, finite mesoscopic detector ($N$ spins) with structured pencil |
+| **Number of Outcomes** | **All outcomes occur** in the Everettian interpretation | Tests whether a selected root can produce one definite qubit output |
+| **Physical State Space** | Universal wave function in Hilbert space | Root subset is mathematically defined; its physical selection is unresolved |
+| **Bell's Trilemma** | Interpretation-dependent commitments | Not settled by the current SPEC claim |
+| **Mechanism of Definiteness**| Branch-relative records through decoherence | Candidate exact product-to-pole boundary condition; selection mechanism open |
+| **Origin of Born Rule** | Decision theory (Wallace) or envariance (Zurek) | Hypothesized emergence from geometric root distribution (unverified under SPEC v1.0, `paper_ready = false`) |
+| **Detector Requirement** | Open macroscopic environment with infinite bath modes | Closed, finite many-body detector ($N$ spins) under fixed evolution time $T$ |
 | **Ontological Cost** | Infinite parallel universes continuously branching | Restriction of initial microstates (unitary superdeterminism) |
 
 ---

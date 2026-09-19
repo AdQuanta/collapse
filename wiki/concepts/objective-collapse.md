@@ -107,9 +107,9 @@ Parameter Space (lambda vs. r_C at r_C = 10^-7 m):
 | **Dynamical Equation** | **Non-linear, stochastic** modification of Schrödinger equation | **Strictly linear, deterministic** Schrödinger equation |
 | **Unitarity** | Fundamentally violated | Strictly preserved globally |
 | **Energy Conservation** | Violated (spontaneous heating / energy drift) | Strictly conserved ($\langle \hat{H} \rangle = \text{const}$) |
-| **Origin of Single Outcomes** | Real, spontaneous stochastic noise field in nature | Autonomous dynamical latching onto projective roots $(A_N, C_N)$ |
+| **Origin of Single Outcomes** | Real, spontaneous stochastic noise field in nature | Autonomous dynamical latching onto projective roots of dual pencils |
 | **Role of Initial Conditions** | Irrelevant (noise drives any state to collapse) | **Crucial:** only projective root microstates yield definite outcomes |
-| **Status of Born's Rule** | Derived dynamically from martingale property of SSE | Derived from geometric distribution of projective roots |
+| **Status of Born's Rule** | Derived dynamically from martingale property of SSE | Hypothesized to emerge from geometric root distribution (unverified under SPEC v1.0, `paper_ready = false`) |
 | **Experimental Deviations** | Spontaneous heating, force noise, anomalous X-rays | Short-time readout latency $t_m$, covering-radius scaling $\delta_n$ |
 
 ---

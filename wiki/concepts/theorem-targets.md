@@ -2,7 +2,7 @@
 
 ## Overview
 Section 15 of the foundational draft (`main.pdf`) establishes that resolving the emergence of Born statistics from unitary dynamics is not one problem but three:
-1. **Existence:** Are there product inputs that evolve to product outcome states? (*Resolved:* Generically yes, yielding $d = 2^n$ states per outcome via matrix pencils).
+1. **Existence:** Are there product inputs that evolve to product outcome states? (*Algebraically characterized, but production counts and singular cases remain to be freshly verified through both outcome pencils.*)
 2. **Statistics:** Why do these special states distribute according to Born's law rather than a uniform or arbitrary law? (*Central ongoing research focus*).
 3. **Ontology / Selection:** Why should nature occupy this restricted set? (*Open physical question; requires a preparation/selection measure*).
 
@@ -30,7 +30,7 @@ flowchart TD
 ### 1. Pointer-Algebra Route
 - **Concept:** Adapt the algebraic classification of two-body Hamiltonians supporting Quantum Darwinism (Doucet & Deffner 2024) to the stronger requirement of complete qubit–detector pole disentanglement.
 - **Mechanism:** Identify the commutant algebra $\mathcal{A}_{\text{ptr}}$ of operators that preserve the preferred measurement axis without generating global entanglement.
-- **Current Status (Sept 2026):** Partially realized in the constructive commuting class ([[constructive-families]]), where $[K, V] = 0$ enables exact 2D block factorization. However, exact asymptotic obstructions (Theorems B & C in [[asymptotic-obstructions]]) prove that pure commutant dynamics with $h_{z0}=0$ cannot yield continuous Born support in the thermodynamic limit.
+- **Current Status (Sept 2026 reset):** The commuting/QND class permits exact sector reduction. A freshly audited calculation proves a $Z$-outcome-basis obstruction, but not an all-preferred-axis no-go; see [[commuting-qnd-sector]]. Broader historical theorem labels require revalidation before use.
 
 ### 2. Spectral Route
 - **Concept:** Prove that a specific spectral universality class (e.g., intermediate statistics or localized spectra) enforces a dipolar asymmetry in generalized eigenvalues, whereas unitary-design-like chaotic dynamics drives the pencil to Haar isotropy.
@@ -40,7 +40,7 @@ flowchart TD
 ### 3. Entanglement-Geometry Route
 - **Concept:** Analyze the algebraic geometry of intersections between the separable product-state variety $\mathcal{V}_{\text{sep}} \subset \mathcal{H}_Q \otimes \mathcal{H}_D$ and its unitary image $U(t)\mathcal{V}_{\text{sep}}$, and then impose the pole-readout constraint.
 - **Connection:** Leverages the mathematics of universal entanglers (Chen et al. 2008, Klassen et al. 2013) and entangling power (Chen & Yu 2016).
-- **Current Status:** Connected to the [[nonnormal-limits]] program, where the scalar potential $J_{C,A}(x)$ maps the geometric distribution of generalized eigenvalues through log-determinant potentials.
+- **Current Status:** Log-determinant potentials and nonnormal limits remain possible tools, but the former campaign page was retired and no v1.0 theorem credit is currently assigned.
 
 ### 4. Stochastic / Martingale Route (§9, App. D)
 - **Concept:** Derive an effective one-dimensional stochastic process for the qubit branch coordinate $Z_t = \langle \sigma_z \rangle_t$ along collapse-compatible trajectories.

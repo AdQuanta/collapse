@@ -42,7 +42,7 @@ residuals. These do not prove an open stable Born phase.
 
 Sources: [derivation and validation](../../research_reports/BORN_RESONANT_RETURN.md),
 [positive multichannel audit](../../research_reports/BORN_POSITIVE_MULTICHANNEL.md).
-See [[weak-coupling-search]] and [[projective-roots]].
+See [[projective-roots]] and the historical reports under `research_reports/`.
 
 **PROVED, conditional (2026-09-13):** changing only the ring parameter gz
 changes U(t) in normalized Hilbert-Schmidt norm by at most

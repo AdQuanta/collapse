@@ -4,7 +4,7 @@
 
 Superdeterminism is an ontological framework that resolves Bell's theorem by rejecting **Statistical Independence** (measurement independence): the assumption that hidden variables $\lambda$ describing a quantum source are uncorrelated with the detector settings $(a, b)$ chosen by the experimenters. By allowing $P(\lambda \mid a, b) \neq P(\lambda)$, superdeterminism preserves strict locality and determinism while reproducing the observed violations of Bell inequalities.
 
-The `unitary-collapse` program implements a form of **unitary superdeterminism**: restricting physically realizable states to projective roots of the evolution pencil, within standard linear Hilbert space, without requiring new physics.
+The `unitary-collapse` program does not currently implement superdeterminism. It defines exact projective-root initial states and tests their statistics. Calling the program superdeterministic would additionally require an ontology or preparation law that correlates physical hidden variables with measurement settings; no such law is part of `SPEC.md` v1.0.
 
 ---
 
@@ -129,9 +129,9 @@ The `unitary-collapse` program is a **unitary, algebraic realization of superdet
 
 | Superdeterminism concept | `unitary-collapse` analogue |
 |---|---|
-| Restricted state space ($I_U$, rational Bloch sphere) | Projective root variety of $(A_N, C_N)$ |
-| Statistical independence violation | Only projective roots lead to definite outcomes |
-| Born rule from attractor/fractal measure | Born profile $R_*(\theta) = \cos^2(\theta/2)$ from root distribution |
+| Restricted state space ($I_U$, rational Bloch sphere) | Projective root variety of dual outcome pencils |
+| Statistical independence violation | Not established; would require a setting-correlated physical selection law beyond the root equations |
+| Born rule from attractor/fractal measure | Hypothesized Born profile from root distribution (unverified, `paper_ready = false`) |
 | Deterministic evolution | Standard unitary Schrödinger evolution |
 | Macroscopic definiteness | Effective collapse via pencil-matched initial conditions |
 
@@ -139,7 +139,7 @@ The `unitary-collapse` program is a **unitary, algebraic realization of superdet
 
 - **No new physics required:** No fractal attractors, $p$-adic metrics, or cellular automata; only standard QM with restricted initial conditions.
 - **The restriction is dynamical:** The projective root set is determined by the system–detector Hamiltonian, not by cosmological boundary conditions.
-- **Constructive mechanism:** Roots are computed explicitly from the generalized eigenvalue problem $C_N v = \lambda A_N v$.
+- **Constructive mechanism:** Roots are computed from the exact dual homogeneous outcome pencils $(U_{10} + \lambda U_{11})|D\rangle=0$ and $(U_{00} + \lambda U_{01})|D\rangle=0$.
 
 ### Schulman's Special States as the Bridge
 

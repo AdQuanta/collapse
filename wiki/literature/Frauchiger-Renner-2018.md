@@ -17,4 +17,4 @@ Extended Wigner's friend scenario showing that if QM is universally valid, self-
 - No single-world interpretation of universally valid QM can consistently describe nested observers.
 
 ## Relevance to `unitary-collapse`
-The Frauchiger-Renner paradox highlights the tension between universality and single outcomes. Unitary-collapse resolves it: QM is universally valid AND single outcomes occur, because only projective-root initial states are physically realized (Statistical Independence is violated).
+The Frauchiger–Renner argument is a useful consistency test for any eventual single-world interpretation. The current root construction does not yet resolve the paradox because it has not supplied a physical selection rule, observer reasoning framework, or verified single-outcome ontology.

@@ -24,4 +24,4 @@ Formulates the **decoherent histories** approach to quantum mechanics specifical
 - **Quasiclassical Variables:** Hydrodynamic densities (mass, momentum, conserved charges) decohere continuously via environmental particle scattering, preserving classical conservation equations across cosmological history.
 
 ## Relevance to `unitary-collapse`
-Gell-Mann and Hartle's program establishes that measurement must be understood as an internal physical interaction within a closed system. `unitary-collapse` builds upon this closed-system philosophy, replacing the coarse-graining of histories with an exact, algebraic matrix pencil construction $(A_N, C_N)$ that produces definite outcomes unitarily in finite systems.
+Gell-Mann and Hartle's program establishes that measurement must be understood as an internal physical interaction within a closed system. `unitary-collapse` builds upon this closed-system philosophy, replacing the coarse-graining of histories with exact dual homogeneous outcome pencils $(U_{10}, -U_{11})$ and $(U_{00}, -U_{01})$ to define collapsible initial states unitarily under $U(T)$, with all paper-readiness gates currently `INCOMPLETE`.

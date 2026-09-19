@@ -88,7 +88,7 @@ The experimental realities of quantum trajectories provide direct empirical foun
 
 1. **Validation of Continuous Unitary Dynamics:** Minev et al. and Weber et al. experimentally disprove the idea that collapse is an instantaneous, non-unitary axiom. If collapse is a physical, continuous transit lasting microseconds, then modeling collapse as an internal dynamical process governed by the Schrödinger equation is physically sound.
 2. **Internal Stochasticity vs. External Noise:** In standard trajectory theory, the noise $dW(t)$ comes from an external classical environment/detector. In `unitary-collapse`, the detector is modeled microscopically as an $N$-spin quantum system: the effective noise arises internally from many-body dephasing and information dispersal among detector modes.
-3. **Projective Roots as Deterministic Trajectory Attractors:** The optimal paths observed by Weber et al. correspond to paths connecting initial states to final pointer eigenstates. In `unitary-collapse`, the projective roots of the pencil $C_N v = \lambda A_N v$ are precisely those initial microstates whose deterministic unitary trajectory converges to an unentangled pointer outcome.
+3. **Projective Roots as Exact Collapsible States:** In SPEC v1.0, exact collapsible states are defined as solutions of the dual homogeneous pencils $(U_{10} + \lambda U_{11})|D\rangle = 0$ (outcome 0) and $(U_{00} + \lambda U_{01})|D\rangle = 0$ (outcome 1). These initial product microstates evolve deterministically under $U(T)$ into unentangled pointer outcomes.
 
 ---
 

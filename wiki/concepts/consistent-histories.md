@@ -83,11 +83,11 @@ Fay Dowker and Adrian Kent (1995, 1996) proved a series of theorems demonstratin
 |---|---|---|
 | **Dynamical Law** | Exact unitary Schrödinger evolution | Exact unitary Schrödinger evolution |
 | **Collapse Postulate** | Rejected: replaced by history probabilities | Rejected: replaced by projective root geometry |
-| **Framework Status** | **Infinite incompatible frameworks** coexist; observer picks framework | **Unique physical framework** determined by the detector's matrix pencil $(A_N, C_N)$ |
+| **Framework Status** | **Infinite incompatible frameworks** coexist; observer picks framework | Preferred physical basis hypothesized from dual outcome pencils (unverified gate under SPEC v1.0) |
 | **Ontology** | Intersubjective / logical propositions | Objective ontic state restricted to algebraic root varieties |
-| **Measurement Description**| Coarse-graining + consistency functional | Autonomous dynamic latching onto projective roots |
-| **Dowker–Kent Anarchy** | **Vulnerable**: no dynamical rule selects the classical framework | **Immune**: root solutions are mathematically fixed by the detector Hamiltonian spectrum |
-| **Born Rule Status** | Diagonal elements of decoherence functional $D(\alpha, \alpha)$ | Distribution of projective roots on the Bloch sphere |
+| **Measurement Description**| Coarse-graining + consistency functional | Autonomous dynamic latching onto projective roots of dual pencils |
+| **Dowker–Kent Anarchy** | **Vulnerable**: no dynamical rule selects the classical framework | **Addressed by hypothesis**: basis selection and stability require explicit verification under SPEC v1.0 |
+| **Born Rule Status** | Diagonal elements of decoherence functional $D(\alpha, \alpha)$ | Hypothesized distribution of projective roots (unverified under SPEC v1.0, `paper_ready = false`) |
 
 ---
 

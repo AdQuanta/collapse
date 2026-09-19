@@ -93,10 +93,10 @@ Because acquiring new information cannot exceed the fixed maximum capacity $N$, 
 | **Ontology of State** | **$\psi$-relational / epistemic:** state is relative to an observer | **$\psi$-ontic:** objective physical state of the closed system |
 | **Status of Facts** | Observer-dependent / relative; no view from nowhere | Absolute, single-world objective reality |
 | **Dynamical Law** | Unitary relative to non-interacting systems; collapse relative to interacting system | **Globally unitary at all times**; no relativization |
-| **Mechanism of Definiteness**| Relational interaction event | Autonomous dynamical latching onto projective roots $(A_N, C_N)$ |
-| **Brukner / FR Resolution** | Rejects Observer-Independent Facts | Rejects Statistical Independence (special-state initial conditions) |
-| **Role of Detector** | Generic physical system acting as relational reference | Specific many-body Hamiltonian with structured matrix pencil |
-| **Origin of Born Rule** | Informational capacity postulates | Algebraic density of projective roots on the Bloch sphere |
+| **Mechanism of Definiteness**| Relational interaction event | Candidate exact product-to-pole boundary condition; physical selection remains open |
+| **Brukner / FR Resolution** | Rejects Observer-Independent Facts | No established resolution under the current SPEC |
+| **Role of Detector** | Generic physical system acting as relational reference | Specific many-body Hamiltonian with structured dual pencils |
+| **Origin of Born Rule** | Informational capacity postulates | Hypothesized algebraic density of projective roots (unverified under SPEC v1.0, `paper_ready = false`) |
 
 ---
 

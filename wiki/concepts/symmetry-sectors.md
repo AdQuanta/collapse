@@ -21,8 +21,13 @@ $$ (k, N_\uparrow) \longrightarrow (k, N_\uparrow \pm 1) $$
 This means the qubit's evolution involves transitions between adjacent magnetization sectors while preserving momentum.
 
 ## Sector-Resolved Root Evaluation
-To compute projective roots without constructing the full dense $U(t)$ matrix, the project evaluates the pencil $(C, A)$ sector-by-sector. This ensures:
-- **Computational Efficiency**: Only small block-matrices are handled.
-- **Correct Weighting**: Each sector's contribution to the total root multiset is weighted by its dimension.
+Under SPEC v1.0, exact collapsible states are characterized by the dual outcome pencils:
+- Outcome 0: $(U_{10} + \lambda U_{11})|D\rangle = 0$
+- Outcome 1: $(U_{00} + \lambda U_{01})|D\rangle = 0$
 
-See also: [[spectral-statistics]], [[symmetry-resolution]], [[production-pipeline]].
+When evaluating these pencils sector-by-sector:
+- **Full Hilbert Space**: All symmetry sectors comprising $\mathcal{H}_D$ must be accounted for without silently discarding sectors.
+- **Kernel Multiplicity**: Each root must be weighted by the dimension of its null space (kernel) within that sector.
+- **Separate Normalization**: Outcome 0 and outcome 1 measures must be constructed and normalized independently.
+
+See also: [[spectral-statistics]], [[symmetry-resolution]], [[production-pipeline]], [[governance/paper-readiness-ledger|paper-readiness-ledger]].

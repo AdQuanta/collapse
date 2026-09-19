@@ -14,7 +14,7 @@ To maintain scientific integrity and prevent the over-interpretation of numerica
 - **Poisson vs. MBL**: Poisson statistics do not imply MBL. Symmetries must be resolved before level-statistics analysis.
 
 ## Physical Assumptions
-- **Superposition**: The physically realized special set is generically **not** closed under superposition. Do not silently restore universal physical superposition.
+- **Superposition**: The mathematical root set is generically not closed under superposition. Do not infer from this alone that non-root superpositions are physically unrealizable.
 - **Ontology**: Keep ontology separate from mathematics. Superselection, superdeterminism, or attracting dynamics are *interpretations*, not established mechanisms.
 
 See also: [[spectral-statistics]], [[born-like-points]].

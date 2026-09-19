@@ -247,3 +247,64 @@ submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.
 - Auto-fixed: added index entries for the 28 chain/ring family ledgers and the `collapse/Welcome.md` vault note, using `(no summary)` placeholders and filesystem-derived Updated dates.
 - Mechanical: `scripts/check_evidence.py` reports 142 evidence errors; all 142 articles lack a `> Raw:` metadata header, and `raw/` contains no source files. No fidelity suspects or unreferenced raw files were found.
 - Judgment: 3 unresolved wikilinks (`Barandes-Kagan-2020`, `numerical-provenance`, and the `create a link` tutorial placeholder); 28 ledger files violate the one-level topic-directory convention; `perturbative-resolution.md` and `weak-coupling-search.md` contain superseded/positive-claim context without standard Status blocks; the 2026-09-14 autoresearch milestone in `RESEARCH_STATE.md` is not represented in the wiki; 6 orphan articles have no inbound links from other wiki articles (`git-delivery.md`, `implementation-standards.md`, `Welcome.md`, `scientific-rules.md`, `perturbative-resolution.md`, `analytic-p-theta.md`).
+
+## [2026-09-15] ingest | Katz & Kotler 2026 — Probing the Planck Scale with Quantum Computation
+- Disposition: New
+- Raw: raw/quantum-foundations/2026-04-07-probing-the-planck-scale-with-quantum-computation.md
+- Updated: Falsifiability, Experimental Routes, and Quantum Computing
+- Updated: Strategic Literature Map
+
+## [2026-09-15] ingest | Research Specification v1.0
+- Disposition: New; Update; Disputed
+- Raw: raw/project-governance/research-spec-v1.md
+- Updated: Research Specification v1.0
+- Updated: Research Control Center
+- Updated: Paper Readiness Ledger
+- Updated: all research campaign pages, ring/chain master ledgers, and 28 family ledgers
+- Updated: affected project concept, method, and audit pages with explicit supersession status
+
+## [2026-09-15] ingest | Paper Readiness Reset
+- Disposition: Update; Disputed
+- Raw: raw/project-governance/2026-09-15-paper-readiness-reset.md
+- Updated: Research Specification v1.0
+- Updated: Research Control Center
+- Updated: Paper Readiness Ledger
+
+## [2026-09-15] lint | 176 issues found, 0 auto-fixed
+- Mechanical: 142 legacy articles lack a `> Raw:` metadata header; the three new governance articles have no fidelity suspects or evidence errors, and both new raw sources are referenced.
+- Judgment: 3 unresolved legacy wikilinks (`Barandes-Kagan-2020`, `numerical-provenance`, and the `create a link` tutorial placeholder); 28 family ledgers remain below the one-level topic-depth convention; 3 orphan pages remain (`git-delivery.md`, `implementation-standards.md`, and `Welcome.md`).
+
+## [2026-09-15] update | Full Wiki Alignment with SPEC.md v1.0
+- Disposition: Update; Disputed
+- Updated: All remaining concepts (`symmetry-sectors.md`, `random-graphs.md`, `fock-space-graphs.md`, `quantum-transport-networks.md`, `quantum-trajectories.md`, `quantum-arrow-of-time.md`, `measurement-induced-transitions.md`, `objective-collapse.md`, `many-worlds.md`, `bohmian-mechanics.md`, `consistent-histories.md`, `qbism.md`, `relational-qm.md`, `stochastic-quantum-correspondence.md`, `superdeterminism.md`) with explicit SPEC v1.0 revalidation status and dual-pencil formulations.
+- Updated: All remaining method articles (`figure-design.md`, `scientific-writing.md`, `reviewer-responses.md`, `implementation-standards.md`, `git-delivery.md`) to reflect pre-manuscript phase (`paper_ready = false`) and frozen verifier governance.
+- Updated: Outdated literature notes (`Schulman-Theory.md`, `Atas-et-al-2013.md`, `Altshuler-et-al-1997.md`, `Cramer-1986.md`, `Everett-1957.md`, `Gell-Mann-Hartle-1990.md`, `Griffiths-1984.md`, `Maccone-2009.md`, `Palmer-2026.md`, `Guttel-2026.md`) removing unverified proof assertions and updating legacy pencil formulations to exact dual outcome pencils.
+- Updated: `wiki/index.md` summaries for updated concepts and methods.
+
+## [2026-09-19] correction | SPEC v1.0 wiki recovery
+- Supersedes the 2026-09-15 “Full Wiki Alignment” entry: that pass added status banners but left substantive single-pencil, reflected-ratio, family-scope, and ontology contradictions.
+- Preserved the user-deleted campaign pages and removed the 28 orphaned family ledgers, the tutorial Welcome note, and an accidental empty duplicate page.
+- Rewrote the controlling root, Born, Hamiltonian-family, relative-propagator, and production-pipeline articles directly from `SPEC.md` v1.0.
+- Removed all live navigation and cross-references to the retired 87-case hierarchy. The paper-readiness ledger is the only live wiki ledger; all gates remain `INCOMPLETE` and `paper_ready = false`.
+- Corrected the Haar $E_2$ value, homogeneous-coordinate convention, exact-collapse tolerance language, unsupported scar/Krylov mechanism claims, and claims that the project has already established an ontology or violation of Statistical Independence.
+
+## [2026-09-19] ingest | Commuting/QND detector-sector Chat result
+- Disposition: New; Update; Disputed
+- Raw: raw/campaigns/2026-09-19-commuting-qnd-chat-result.md
+- Added: Commuting/QND Detector Sector: Verified Scope and Obstruction
+- Verified: finite-sector reduction, multiplicity-weighted polar measure, pure-power scaling trichotomy in the stated ensemble, phase-average kernel, Gaussian mixture, and pole asymptotics.
+- Corrected: $d\theta$ versus SPEC surface-density conventions, Cesàro versus instantaneous limits, endpoint cap-mass wording, and overclaims about strong-support failure and approximate Born exclusion.
+- Scoped: the exact-Born obstruction is proved only for the $Z$ outcome basis; an all-preferred-axis no-go remains open.
+
+## [2026-09-19] ingest | Zotero collection “Collapse and Chaos”
+- Disposition: New; Update
+- Raw: raw/zotero-collapse-chaos/collection-metadata-2026-09-19.md
+- Added: Zotero Collection: Collapse and Chaos
+- Deduplication: 28 distinct parent records across nine subcollections; no normalized DOI or normalized title/year duplicates.
+- Evidence depth: complete metadata for all 28 and stored abstracts for 14. All 28 PDF attachment records lack local payloads and Zotero full-text retrieval returned 404, so no full-paper claims were inferred.
+
+## [2026-09-19] lint | 102 issues found, 3 auto-fixed
+- Auto-fixed: two unresolved internal links and one accidental orphan page.
+- Verified: zero broken links, zero orphans, zero files below the allowed topic depth, zero dangling references to the deleted campaign hierarchy outside the append-only historical log, and a clean whitespace diff.
+- Mechanical: the ten new or controlling SPEC/QND/Zotero articles pass evidence lint with 0 fidelity suspects, 0 evidence errors, and 0 unreferenced raw files.
+- Judgment: the full legacy wiki still has 99 evidence errors because those older articles predate the raw-source invariant and have no `> Raw:` field. They were not papered over with fabricated sources; source-backed re-ingestion or an explicit archival decision remains required.

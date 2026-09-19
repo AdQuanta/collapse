@@ -90,5 +90,5 @@ A self-contained figure caption follows a four-part sequence:
 
 ## Cross-References
 - [[scientific-writing]] — Overall manuscript architecture and prose standards.
-- [[numerical-provenance]] — Linking figure panels to underlying data runs and Git commits.
+- [`manuscript/NUMERICAL_PROVENANCE.md`](../../manuscript/NUMERICAL_PROVENANCE.md) — Historical links between figure panels, data runs, and Git revisions.
 - [[coverage-gates]] — Mathematical definitions of coverage and diagnostic gates.

@@ -20,6 +20,6 @@ Thermalization in isolated quantum many-body systems is not a result of ergodici
 ## Relevance to `unitary-collapse`
 The `unitary-collapse` project leverages the logic of ETH to frame the "measurement problem" as a dynamical process of state selection. 
 
-ETH shows that "thermal" properties emerge from the statistical structure of eigenstates. The `unitary-collapse` program asks a parallel question: *Can "measurement" properties emerge from the statistical structure of the relative propagator's roots?*
+ETH shows how thermal properties may emerge from eigenstate structure. This project asks a parallel but distinct question: can the two exact outcome-pencil root measures acquire the required Born profile in an approved local detector family?
 
 If ETH tells us that most eigenstates of a chaotic system are thermal, the `unitary-collapse` program seeks to prove that most "special states" of a measurement-capable Hamiltonian are Born-like. Both programs replace an axiomatic "collapse" (of the wave function or of the thermal ensemble) with a structural property of the unitary operator's spectrum.

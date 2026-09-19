@@ -1,102 +1,84 @@
-# Projective Roots & Collapsible States
+# Projective Roots and Exact Collapsible States
 
-## Physical Setup & The Linearity Loophole
-The system is composed of a measured qubit $Q$ coupled to a many-body detector $D$ with Hilbert-space dimension $d = 2^n$:
-$$
-\mathcal{H} = \mathcal{H}_Q \otimes \mathcal{H}_D, \quad H = H_Q + H_D + H_{QD}, \quad U(t) = e^{-iHt}.
-$$
-In the standard linearity obstruction, a unitary measurement that correlates basis states $|0\rangle \to |0\rangle|\Phi_0\rangle$ and $|1\rangle \to |1\rangle|\Phi_1\rangle$ inevitably maps an arbitrary superposition $\alpha|0\rangle + \beta|1\rangle$ into an entangled cat state $\alpha|0\rangle|\Phi_0\rangle + \beta|1\rangle|\Phi_1\rangle$.
+> Sources: `SPEC.md` v1.0, 2026-09-15
+> Raw: [Research specification snapshot](../../raw/project-governance/research-spec-v1.md)
+> Updated: 2026-09-19
 
-The **restricted-state loophole** asks: *What initial product states evolve at time $t$ into separable product states aligned with the readout basis?*
+This page records the controlling algebraic definition. It replaces the legacy single-pencil and inverse-relative-propagator conventions.
 
----
+## Exact condition
 
-## Exact Collapsible States (Draft Def. 1)
+Write the qubit-block decomposition of the propagator as
 
-**Definition:** An initial product state $|\psi\rangle_Q \otimes |\eta\rangle_D$ is an **exact outcome-$k$ collapsible state** at time $t$ if:
 $$
-U(t)|\psi\rangle_Q \otimes |\eta\rangle_D = |k\rangle_Q \otimes |\Phi_k\rangle_D \quad (k \in \{0, 1\}),
-$$
-for some normalized detector state $|\Phi_k\rangle_D$. Both the initial and final states are strictly separable, and the final qubit is aligned with a chosen readout pole.
-
----
-
-## The Block Propagator & Dual Matrix Pencils (Draft §3)
-
-Partition $U(t)$ into $d \times d$ blocks in the qubit readout basis $\{|0\rangle, |1\rangle\}$:
-$$
-U(t) = \begin{pmatrix} A(t) & B(t) \\ C(t) & D(t) \end{pmatrix}.
-$$
-Representing the initial qubit state in stereographic coordinates:
-$$
-|\psi(z)\rangle = \frac{|0\rangle + z|1\rangle}{\sqrt{1+|z|^2}}, \quad z = e^{i\phi}\tan(\theta/2) \in \mathbb{C} \cup \{\infty\},
-$$
-the evolved state is:
-$$
-U(t)|\psi(z)\rangle|\eta\rangle = \frac{1}{\sqrt{1+|z|^2}}\Big[ |0\rangle \otimes (A + zB)|\eta\rangle + |1\rangle \otimes (C + zD)|\eta\rangle \Big].
+U(T)=\begin{pmatrix}U_{00}&U_{01}\\U_{10}&U_{11}\end{pmatrix}_q,
+\qquad
+|\psi_q(\lambda)\rangle=\frac{|0\rangle+\lambda|1\rangle}{\sqrt{1+|\lambda|^2}}.
 $$
 
-### 1. Dual Outcome Pencils
-- **Outcome 0:** Eliminating the $|1\rangle$ component requires $(C + zD)|\eta\rangle = 0$. This is the generalized eigenvalue problem:
-  $$
-  C|\eta\rangle = \lambda D|\eta\rangle, \quad z = -\lambda.
-  $$
-- **Outcome 1:** Eliminating the $|0\rangle$ component requires $(A + zB)|\eta\rangle = 0$:
-  $$
-  A|\eta\rangle = \lambda B|\eta\rangle, \quad z = -\lambda.
-  $$
+For an unrestricted detector state $|D\rangle$, exact collapse at the externally specified time $T$ means
 
-### 2. The Production Complementary-Minor Pencil
-In the production pipeline (see `core/relative_evolution_pencil.py` and `core/analysis.py`), the relative evolution pencil is conventionally formulated as:
 $$
-Cv = \lambda Av.
-$$
-By unitary complementary-minor duality, this fixed-input-pole pencil is algebraically paired with the forward branches, relating the two outcome multisets by exact Bloch antipodes (see `manuscript/audits/THEORY_AUDIT.md`).
-
----
-
-## Fundamental Mathematical Propositions
-
-### Proposition 1: Finite Special-State Count (Draft Prop. 1)
-For a regular $d \times d$ matrix pencil, $\det(C + zD)$ defines a degree-$d$ generalized characteristic polynomial on the Riemann sphere $\mathbb{C} \cup \{\infty\}$.
-- **Exact Count:** Counting algebraic multiplicities, there are generically exactly $d = 2^n$ roots per pencil.
-- **Measure Zero:** For any finite $n$, the set of collapsible qubit states is finite, and thus has Lebesgue measure zero on the continuous Bloch sphere $S^2$.
-
-### Proposition 2: Generic Non-Closure Under Superposition (Draft Prop. 2)
-Except in nongeneric cases where generalized eigenspaces share a common eigenvalue $z$ and degenerate nullspace:
-- Two collapsible states with distinct generalized eigenvalues $z_1 \neq z_2$ possess distinct detector eigenvectors $|\eta_1\rangle \neq |\eta_2\rangle$.
-- Their vector sum $(\alpha |\psi(z_1)\rangle|\eta_1\rangle + \beta |\psi(z_2)\rangle|\eta_2\rangle)$ is **entangled** and does not satisfy either pencil null condition with a single common $z$.
-- **Consequence:** The physical set of collapsible states is **not a vector space**. Non-closure under superposition is not an ad hoc axiom; it is an exact algebraic consequence of the generalized eigenvalue problem.
-
----
-
-## Homogeneous Coordinates & Bloch Sphere Mapping (Draft App. B)
-
-To treat finite, infinite ($z = \infty$), and near-singular roots on an equal footing without numerical matrix inversion, roots are solved in homogeneous coordinates $(\alpha, \beta)$ using the **homogeneous QZ algorithm**:
-$$
-(\alpha C + \beta D)|\eta\rangle = 0.
-$$
-The corresponding Bloch vector $\vec{r} = (r_x, r_y, r_z)^T \in S^2$ is evaluated projectively:
-$$
-\vec{r} = \frac{1}{|\alpha|^2 + |\beta|^2} \begin{pmatrix} 2\text{Re}(\alpha^* \beta) \\ 2\text{Im}(\alpha^* \beta) \\ |\alpha|^2 - |\beta|^2 \end{pmatrix}, \quad \theta = 2\operatorname{atan2}(|\alpha|, |\beta|).
+U(T)|\psi_q(\lambda),D\rangle=|b\rangle|D_b'\rangle.
 $$
 
----
+The two outcome pencils are therefore
 
-## Approximate Solutions & Extended Disentangling States (Draft §2.3, §3.3)
+$$
+M_0(\lambda)=U_{10}+\lambda U_{11},
+\qquad
+M_1(\lambda)=U_{00}+\lambda U_{01},
+$$
 
-### Approximate $\varepsilon$-Collapsible States
-In real physical systems and numerical simulations, exact zero nullity is relaxed to a smallest-singular-value problem:
-$$
-\min_{\|\eta\|=1} \|(C + zD)\eta\| = \sigma_{\min}(C + zD) \le \varepsilon.
-$$
-This formulation allows the study of finite-width stability basins around exact roots.
+with $M_b(\lambda)|D\rangle=0$. Both pencils are required. A pencil such as $Cv=\lambda Av$ may arise in a special chart or derived symmetry reduction, but it is not the project-wide definition and cannot replace either outcome pencil.
 
-### Extended Disentangling States $\mathcal{C}_{\text{sep}}(t)$
-The requirement of landing on $|0\rangle$ or $|1\rangle$ is stronger than mere disentanglement. The extended set of disentangling states is:
-$$
-\mathcal{C}_{\text{sep}}(t) = \{ |\psi\rangle|\eta\rangle : U(t)|\psi\rangle|\eta\rangle = |\phi\rangle|\Phi\rangle \text{ for some } |\phi\rangle, |\Phi\rangle \}.
-$$
-This corresponds to vanishing bipartite entanglement $S(\rho_Q(t)) = 0 \iff \text{Tr}(\rho_Q^2) = 1$, connecting the theory to the geometry of universal entanglers and product varieties.
+## Homogeneous roots
 
-See also: [[born-like-points]], [[homogeneous-qz]], [[relative-propagator]], [[foundational-draft-aug2026]].
+Use projective coordinates $[\alpha:\beta]$ with $\lambda=\alpha/\beta$. The homogeneous pencils are
+
+$$
+\widehat M_0(\alpha,\beta)=\beta U_{10}+\alpha U_{11},
+\qquad
+\widehat M_1(\alpha,\beta)=\beta U_{00}+\alpha U_{01}.
+$$
+
+This convention gives the qubit state and Bloch vector
+
+$$
+|\psi_q\rangle=\frac{\beta|0\rangle+\alpha|1\rangle}{\sqrt{|\alpha|^2+|\beta|^2}},
+$$
+
+$$
+\mathbf r=\frac{(2\operatorname{Re}\beta^*\alpha,\ 2\operatorname{Im}\beta^*\alpha,\ |\beta|^2-|\alpha|^2)}{|\alpha|^2+|\beta|^2},
+\qquad
+\theta=2\operatorname{atan2}(|\alpha|,|\beta|).
+$$
+
+Thus $[0:1]$ is the north pole ($\lambda=0$) and $[1:0]$ is the south pole ($\lambda=\infty$). A numerical implementation must retain finite, infinite, multiple, singular, and indeterminate cases rather than filtering them through matrix inversion.
+
+## Multiplicity and finite-$N$ measure
+
+For every admissible root, the physical weight is the kernel dimension
+
+$$
+k_j^{(b)}=\dim\ker M_b(\lambda_j^{(b)}).
+$$
+
+The separately normalized empirical outcome measure is
+
+$$
+\rho_b^{(N)}(\Omega;T)=\frac{1}{K_b}\sum_j k_j^{(b)}\delta(\Omega-\Omega_j),
+\qquad K_b=\sum_j k_j^{(b)}.
+$$
+
+For a regular $d\times d$ pencil, the determinant has total algebraic degree $d$ on the Riemann sphere, but kernel dimension and algebraic multiplicity are not interchangeable in singular or defective cases. The verifier must report both when relevant.
+
+## Numerical tolerance is not the definition
+
+Residuals and singular values locate and verify roots. They do not turn a near-null vector into an exactly collapsible state. Every accepted root needs a homogeneous backward residual, a kernel/nullity determination, and an explicit classification of singular or indeterminate cases. Approximate-collapse basins may be studied as a separate experiment only when clearly labelled.
+
+## Status
+
+The derivation above follows directly from block multiplication and is the current contract. The production solver and all historical root sets still require fresh dual-pencil validation before they satisfy any paper-readiness gate.
+
+See also: [[born-like-points]], [[homogeneous-qz]], [[relative-propagator]], [[research-specification-v1]].

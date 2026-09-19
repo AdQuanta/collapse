@@ -21,10 +21,10 @@ The ratio of consecutive level spacings $r_n = (e_{n+1} - e_n) / (e_n - e_{n-1})
 - **Universality**: Demonstrated that the ratio distribution accurately identifies the spectral properties of diverse systems, from quantum Ising chains to the zeros of the Riemann zeta function.
 
 ## Relevance to `unitary-collapse`
-The `unitary-collapse` project uses level-spacing statistics as a diagnostic tool to classify the Hamiltonians that produce Born-like statistics.
+The `unitary-collapse` project uses level-spacing statistics as a diagnostic tool to classify the spectral properties of candidate detector Hamiltonians.
 
 Specifically, the project:
-1. **Uses the Ratio $\langle r \rangle$** to determine if a candidate Hamiltonian is in the "chaotic" (GOE/GUE) or "integrable" (Poisson) regime.
-2. **Distinguishes Structure from Chaos**: By comparing the root geometry of "Haar-random" (fully chaotic) unitaries against structured "Born-producing" unitaries, the project proves that Born-like geometry is **not** a generic property of chaos. 
+1. **Uses the Ratio $\langle r \rangle$** within strictly separated symmetry sectors to determine if a candidate Hamiltonian is in the chaotic (GOE/GUE) or regular/integrable (Poisson) regime.
+2. **Distinguishes Structure from Chaos**: Comparing the root geometry of Haar-random (isotropic) unitaries against candidate structured unitaries indicates that Born-like geometry is not a generic consequence of chaos alone.
 
-Atas et al. provide the mathematical tool used to verify that a system is chaotic; the `unitary-collapse` project then shows that while chaos is common, the specific "Born-like" root arrangement requires a more specific structural balance.
+Under SPEC v1.0, spectral statistics serve as diagnostics inside a derived physical mechanism chain rather than as a substitute for root, Born, control, and asymptotic gates; all paper-readiness gates remain `INCOMPLETE`.

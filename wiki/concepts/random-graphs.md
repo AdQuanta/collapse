@@ -197,9 +197,9 @@ The interaction graph determines whether the detector acts as an ideal measureme
 +-----------------------------------------------------------------------------------------+
 ```
 
-1. **The Positive Ring Leads:** Audited calculations in `RESEARCH_STATE.md` §10b and `research_reports/` demonstrate that structured detectors with 1D periodic ring topology achieve exceptional Born scores ($S_{\text{born}} > 0.93$, ratio RMSE $< 0.02$). The 1D topology provides a directional spatial flow that carries quantum information away from the central qubit while preventing rapid chaotic backflow.
-2. **The Expander / Scrambling Obstruction:** When the interaction graph is an expander (Random Regular or All-to-All), the large spectral gap $\lambda_2$ drives rapid operator scrambling across the entire network. This rapid mixing acts like a unitary 2-design, destroying the directional dipole imbalance and driving the projective roots toward the uniform, isotropic Haar baseline ($S_{\text{born}} \to 0$).
-3. **The Small-World Frontier:** Watts–Strogatz networks allow continuous tuning of the rewiring probability $p_{\text{rewire}}$, providing an ideal numerical probe to locate the exact structural threshold where small-world shortcuts destroy the Born dipole.
+1. **Historical Ring Leads:** Legacy calculations in `RESEARCH_STATE.md` and earlier reports observed that structured detectors with 1D periodic ring topology achieved favorable scalar scores ($S_{\text{born}} > 0.93$, ratio RMSE $< 0.02$). Under SPEC v1.0, these scalar thresholds are historical diagnostics only; genuine paper readiness requires certifying the full 4-metric suite ($E_2, E_\infty, E_{\text{harm}}, E_{\text{marg}}$) under the frozen verifier across an open weak-coupling region with matched controls.
+2. **Expander / Scrambling Hypothesis:** Large graph gaps can promote rapid mixing and may drive roots toward an isotropic Haar-like baseline, but this mechanism has not been established for the SPEC pencils. For a uniform outcome ratio $p_0=1/2$, the SPEC error against Born is $E_2=1/(2\sqrt3)$, not zero.
+3. **The Small-World Frontier:** Watts–Strogatz networks allow continuous tuning of the rewiring probability $p_{\text{rewire}}$, providing a potential future probe in the generality program (SPEC §18) to study how shortcuts degrade candidate mechanisms.
 
 ---
 

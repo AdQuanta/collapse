@@ -26,4 +26,4 @@ Standard quantum mechanics contains an internal inconsistency between two contra
 ## Relevance to `unitary-collapse`
 Both Everett's formulation and `unitary-collapse` reject non-unitary collapse and take exact linear Schrödinger evolution as fundamental. However, their physical mechanisms for definiteness are diametrically opposed:
 - **Everett:** All outcomes physically occur; the universe branches into an unobserved multiverse.
-- **`unitary-collapse`:** A single outcome occurs; the physically realized microstates are restricted to projective roots of the detector matrix pencil $(A_N, C_N)$, providing a single-world unitary resolution.
+- **`unitary-collapse`:** Tests whether exact projective-root inputs can yield definite qubit outputs and Born-like root measures. It has not established that nature selects only those inputs or that this supplies a single-world ontology; all SPEC v1.0 gates remain `INCOMPLETE`.

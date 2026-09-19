@@ -1,19 +1,38 @@
 # Homogeneous-QZ Pipeline
 
 ## The Problem
-Finding the projective roots of the pencil $(C, A)$ requires solving $Cv = \lambda Av$. Standard eigenvalue solvers (like `eig(C @ inv(A))`) fail when $A$ is singular or ill-conditioned, which is common in the `unitary-collapse` model.
+Write the qubit-first propagator as
+\[
+U(T)=\begin{pmatrix}U_{00}&U_{01}\\U_{10}&U_{11}\end{pmatrix}.
+\]
+The exact projective coordinate \(\lambda\) and detector vector \(v\ne0\) obey one of two physical pencils:
+\[
+(U_{10}+\lambda U_{11})v=0\quad(b=0),\qquad
+(U_{00}+\lambda U_{01})v=0\quad(b=1).
+\]
+An ordinary eigenproblem formed with an inverse is incomplete whenever a coefficient block is singular or ill-conditioned, and it omits the projective point \(\lambda=\infty\).
 
 ## The Solution: QZ Decomposition
-The production pipeline uses the **QZ algorithm** (Generalized Schur Decomposition), which decomposes $A$ and $C$ into upper triangular matrices $S$ and $T$ using unitary matrices $Q$ and $Z$:
-$$ A = Q S Z^H, \quad C = Q T Z^H $$
-The generalized eigenvalues are then simply the ratios of the diagonal elements:
-$$ \lambda_j = \frac{T_{jj}}{S_{jj}} $$
+Solve each ordered coefficient pair in homogeneous coordinates. If a pencil is written as \(M_0+\lambda M_1\), QZ returns a projective pair rather than requiring division; a finite coordinate can be formed only after applying the solver's sign and ordering convention. The implementation must test that convention directly by substituting the returned pair into the original physical pencil.
+
+This keeps three cases distinct:
+
+- finite roots;
+- roots at \(\lambda=\infty\), obtained from the appropriate kernel of the \(\lambda\)-coefficient;
+- indeterminate/singular structure, where both homogeneous coefficients vanish and ordinary eigenvalue counting is insufficient.
+
+For every admissible projective point, its physical weight is the geometric kernel multiplicity \(k=\dim\ker(M_0+\lambda M_1)\), not merely the number of repeated floating-point eigenvalue entries.
 
 ## Validation & Diagnostics
-To ensure the numerical integrity of the roots, the pipeline reports several diagnostics:
-- **Homogeneous Residual**: $\max \|T_{jj} v_j - S_{jj} \lambda_j v_j\|$.
-- **Column Isometry**: Checks if $U_{00}^\dagger U_{00} + U_{10}^\dagger U_{10} = I$.
-- **Condition Number**: $\kappa(U_{00})$ is tracked to identify pencils where $A$ is nearly singular.
-- **Root Classification**: Roots are explicitly tagged as **finite**, **infinite** ($S_{jj} = 0$), or **indeterminate** ($S_{jj} = T_{jj} = 0$).
+The revalidated pipeline must report, for both outcomes:
+
+- homogeneous backward residuals in the original pencil;
+- root classification and kernel multiplicity;
+- reconstructed normalized input \(|\psi_q(\lambda)\rangle\otimes|D\rangle\);
+- the forbidden-output amplitude after applying \(U(T)\), which is the exact-collapse residual;
+- propagator unitarity and block-isometry identities;
+- sensitivity to numerical precision and rank thresholds near singular roots.
+
+Condition numbers are warnings, not permission to discard roots. No result is current until the frozen verifier independently reproduces these checks.
 
 See also: [[projective-roots]], [[production-pipeline]].

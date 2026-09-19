@@ -150,13 +150,11 @@ global unitarity       --> global unitarity       --> unitary route?
 [Lindblad/Open Systems]    [ETH/Dephasing/Scrambling] [Restricted State Loophole]
 ```
 
-1. **Measurement on the Same Footing as Thermalization:** In classical statistical mechanics, an isolated gas expands into a vacuum irreversibly despite reversible microscopic mechanics, because initial conditions are constrained by the Past Hypothesis. In `unitary-collapse`, a measured qubit collapses irreversibly into a definite pointer state despite exact linear unitary dynamics, because the physically realized initial microstates are constrained to **projective roots** of the evolution pencil $(A_N, C_N)$.
+1. **Measurement on the Same Footing as Thermalization:** In classical statistical mechanics, an isolated gas can display irreversible macroscopic behavior despite reversible microscopic mechanics because its initial macrostate is constrained. The project tests the analogous hypothesis that selected qubit-detector product states can evolve unitarily into definite pointer states. It does not assume that physical microstates are in fact restricted to those roots.
 
-2. **The Restricted-State Loophole as a Quantum Past Hypothesis:** The restriction to projective roots $\mathcal{R} \subset \mathcal{H}$ is the quantum-foundational counterpart of Albert's Past Hypothesis. Nature does not occupy arbitrary superpositions; it occupies the measure-zero algebraic variety that guarantees unentangled, single-outcome pointer states at the readout time $t_m$.
+2. **The Restricted-State Loophole as a Candidate Quantum Past Hypothesis:** A preparation or boundary-condition law concentrated on projective roots would be analogous to a low-entropy boundary condition. Whether such a law exists, and why it would assign the required weights, remains open.
 
-3. **Time-Reversal Symmetry of the Root Distribution:** The central analytical condition for the emergence of the Born rule:
-   $$R_*(\theta) = \cos^2(\theta/2) \iff q_*(1/r) = r^4 q_*(r)$$
-   possesses an intrinsic **inversion symmetry** ($r \leftrightarrow 1/r$, corresponding to antipodal reflection $\theta \leftrightarrow \pi - \theta$). The exact Born balance condition $C_B$ reflects an underlying time-reversal symmetry of the relative-evolution pencil, demonstrating that the time-asymmetric measurement outcome emerges from a time-symmetric algebraic structure.
+3. **Time-Reversal and the Dual Pencils:** The historical inversion-balance identity remains a valid scoped algebraic diagnostic when its assumptions hold. It is not replaced by numerical metrics; rather, it is insufficient by itself. SPEC v1.0 additionally requires both normalized outcome measures and the full diagnostic suite.
 
 ---
 

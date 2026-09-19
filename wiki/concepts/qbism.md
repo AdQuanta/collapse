@@ -87,11 +87,11 @@ QBism and the `unitary-collapse` program represent radically opposing philosophi
 |---|---|---|
 | **Quantum State Ontology** | **$\psi$-epistemic:** personal subjective credence held by an agent | **$\psi$-ontic:** objective physical state of the closed many-body system |
 | **Status of Collapse** | Epistemic Bayesian conditionalization upon personal experience | Autonomous, deterministic physical evolution via projective roots |
-| **The Measurement Problem** | **Dissolved:** no objective collapse exists to explain | **Solved:** definite outcomes derived unitarily from restricted initial states |
+| **The Measurement Problem** | **Dissolved:** no objective collapse exists to explain | **Under investigation:** definite outcomes hypothesized from exact dual pencils (`paper_ready = false`) |
 | **Role of the Observer** | Primary and indispensable (participatory agent) | Completely absent; purely Hamiltonian many-body dynamics |
-| **Status of Born Rule** | Normative constraint on betting coherence (Urgleichung) | Objective statistical measure emerging from root geometry on Bloch sphere |
+| **Status of Born Rule** | Normative constraint on betting coherence (Urgleichung) | Hypothesized objective statistical measure from dual-pencil root geometry (unverified under SPEC v1.0) |
 | **Locality** | Trivially local (beliefs update locally) | Strictly local (unitary evolution with local Hamiltonians) |
-| **Statistical Independence** | Maintained (agents choose measurement settings freely) | **Violated:** physically realized states are restricted to projective roots |
+| **Statistical Independence** | Maintained (agents choose measurement settings freely) | Not determined by the root construction; a future selection law could raise measurement-independence questions |
 
 ---
 

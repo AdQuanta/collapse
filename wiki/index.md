@@ -1,19 +1,22 @@
 # Research Wiki Index
 
-- [[analytic-p-theta]] — Exact commuting and noninteracting-field root measures, thermodynamic-first Cesàro limits, frozen symbolic verifiers, and singular-pencil domain obstruction.
-- [[analytic_distribution_ring_master_ledger]] — Single atomic progress ledger for ring geometry across all 87 cases and h0 regimes.
-- [[analytic_distribution_chain_master_ledger]] — Single atomic progress ledger for endpoint chain geometry across all 87 cases and h0 regimes.
+- [[governance/research-specification-v1|research-specification-v1]] — Controlling `SPEC.md` v1.0 contract; overrides conflicting prior wiki goals and gates.
+- [[governance/paper-readiness-ledger|paper-readiness-ledger]] — All mandatory gates reset to `INCOMPLETE`; `paper_ready = false`.
+- [[governance/research-control-center|research-control-center]] — Minimal-loading map for current state, knowledge, evidence, verifiers, and active work.
+- [[campaigns/commuting-qnd-sector|commuting-qnd-sector]] — Verified part of the supplied commuting/QND calculation, corrected to the SPEC density and limit conventions.
 
 
-This index serves as the structural map for the `unitary-collapse` research program. While `RESEARCH_STATE.md` provides the canonical current state and priorities, the Wiki provides deep-dive conceptual synthesis, literature mapping, and operational methods.
+This index serves as the structural map for the `unitary-collapse` research program. `SPEC.md` v1.0 is controlling authority; `RESEARCH_STATE.md` provides the compact current handoff subject to that specification. The Wiki provides durable scientific synthesis, evidence navigation, and operational methods.
 
-## 🗂️ Vault
+## Research Governance
+
+Specification authority, paper-readiness state, and efficient access to the repository's knowledge and ledgers.
 
 | Article | Summary | Updated |
 |---------|---------|---------|
-| [Welcome](collapse/Welcome.md) | (no summary) | 2026-09-12 |
-
----
+| [Research Specification v1.0](governance/research-specification-v1.md) | Controlling scientific target, approved search space, verifier architecture, and manuscript gate. | 2026-09-15 |
+| [Paper Readiness Ledger](governance/paper-readiness-ledger.md) | Every mandatory gate is `INCOMPLETE`; all prior results require fresh verification. | 2026-09-15 |
+| [Research Control Center](governance/research-control-center.md) | Start page for authority, current state, durable knowledge, evidence, verifiers, reports, and live paper-readiness tracking. | 2026-09-19 |
 
 ## 🧬 Theory & Concepts
 - [[foundational-draft-aug2026]] — Architectural digest of the August 12, 2026 foundation manuscript (`main.pdf`).
@@ -26,12 +29,12 @@ This index serves as the structural map for the `unitary-collapse` research prog
 - [[resonant-return-dynamics]] — Exact projected return operator and positive multichannel leads.
 - [[relative-propagator]] — The relative-unitary evolution and its eigenphases.
 - [[spectral-statistics]] — Role of Wigner-Dyson vs. Poisson statistics in generating Born geometry.
-- [[symmetry-sectors]] — Exact irreducible sectors and the rule against mixing spectra.
-- [[coverage-gates]] — Requirements for full-sphere support and polar acceptance.
-- [[hamiltonian-families]] — Overview of detector architectures and models.
-- [[random-graphs]] — Random graph detectors: ER, WS, BA, expander graphs, and spectral graph theory.
-- [[quantum-transport-networks]] — Quantum walks, continuous-time transport, speedups, and ENAQT on complex networks.
-- [[fock-space-graphs]] — Many-body Fock-space graphs, Anderson/MBL transitions, and Krylov complexity.
+- [[symmetry-sectors]] — Exact irreducible sectors, dual outcome pencils, and full Hilbert-space accounting.
+- [[coverage-gates]] — Historical finite-bin diagnostics, now subordinate to the full `SPEC.md` v1.0 metric suite.
+- [[hamiltonian-families]] — Historical catalog; active families are restricted by `SPEC.md` v1.0.
+- [[random-graphs]] — Complex networks in secondary generality program; nearest-neighbor rings/chains active.
+- [[quantum-transport-networks]] — Network transport and qualitative operator-spreading intuition.
+- [[fock-space-graphs]] — Fock-space graphs, MBL transitions, dual pencils, and Krylov complexity.
 - [[scientific-rules]] — Absolute rules for physical correctness and scientific integrity.
 - [[bohmian-mechanics]] — de Broglie–Bohm pilot-wave theory: deterministic nonlocal hidden variables.
 - [[superdeterminism]] — Violation of Statistical Independence: 't Hooft CAI, Palmer IST/RaQM, Hossenfelder–Donadi.
@@ -49,6 +52,8 @@ This index serves as the structural map for the `unitary-collapse` research prog
 
 ## 📚 Strategic Literature (Four Sets)
 See [[literature-map]] for the complete strategic citation graph.
+
+- [[collapse-and-chaos-zotero-collection]] — Audited index of all 28 distinct records in the Zotero “Collapse and Chaos” collection, with metadata/abstract evidence depth and retrieval caveats.
 
 ### Foundations
 - [[Born-1926]] — Statistical interpretation of the wave function ($p \propto |\psi|^2$).
@@ -112,6 +117,7 @@ See [[literature-map]] for the complete strategic citation graph.
 - [[Kottos-Smilansky-1997]] — Quantum chaos on graphs: trace formulas and Wigner-Dyson spectral statistics.
 - [[Mulken-Blumen-2011]] — Continuous-time quantum walks on complex networks review.
 - [[Palmer-2026]] — Rational Quantum Mechanics and finite arithmetic state spaces.
+- [[Katz-Kotler-2026]] — Quantum computation as an indirect Planck-scale stress test for classical substrata through computational rate density.
 - [[Doucet-Deffner-2024]] — Microscopic Hamiltonian conditions for Quantum Darwinism.
 - [[Popescu-Short-Winter-2006]] — Canonical typicality in pure quantum states.
 - [[Atas-et-al-2013]] — Level-spacing ratio distributions ($r$-statistics).
@@ -125,63 +131,24 @@ See [[literature-map]] for the complete strategic citation graph.
 ---
 
 ## ⚙️ Methods & Pipeline
-- [[scientific-writing]] — High-impact storytelling, claim ladders, section architectures, and audits.
-- [[figure-design]] — Figure-first doctrine, 4-figure architecture, Figure Cards, and vector pipeline.
-- [[reviewer-responses]] — Five-step referee response loop and de-escalation protocols.
+- [[scientific-writing]] — High-impact storytelling, claim ladders, section architectures (deferred while `paper_ready = false`).
+- [[figure-design]] — Figure-first doctrine, 4-figure architecture, and vector pipeline (preparatory for manuscript phase).
+- [[reviewer-responses]] — Five-step referee response loop and revision protocols.
 - [[scientific-contract]] — Physical questions, invariants, exact limits, and validation hierarchy.
-- [[implementation-standards]] — SOLID principles, PEP 8, and testing standards.
-- [[git-delivery]] — Standardized audit-ready Git delivery workflow.
+- [[implementation-standards]] — SOLID principles, PEP 8, frozen verifier, and result packet standards.
+- [[git-delivery]] — Standardized audit-ready Git delivery workflow enforcing frozen-spec governance.
 - [[production-pipeline]] — Overview of the homogeneous-QZ solver and validation checks.
 - [[homogeneous-qz]] — Mathematical and numerical implementation of the QZ algorithm.
 - [[symmetry-resolution]] — Correct resolution of symmetry sectors for level-spacing analysis.
 - [[relative-evolution]] — Block partitioning, pencil construction, and time evolution.
-- [[audits/framework|audit-framework]] — The triple-lock system of Registry, Provenance, and Audits.
+- [[audits/framework|audit-framework]] — Legacy registry/provenance/audit structure awaiting v1.0 revalidation.
 
 ---
 
 ## 🚀 Research Campaigns
-- [[analytic-p-theta]] — Exact commuting and noninteracting-field root measures, thermodynamic-first Cesàro limits, frozen symbolic verifiers, and singular-pencil domain obstruction.
-- [[analytic_distribution_ring_master_ledger]] — Single atomic progress ledger for ring geometry across all 87 cases and h0 regimes.
-- [[analytic_distribution_chain_master_ledger]] — Single atomic progress ledger for endpoint chain geometry across all 87 cases and h0 regimes.
-- [[perturbative-resolution]] — Audit of the withdrawn phase claim; valid conditional identities and remaining gaps.
-- [[asymptotic-obstructions]] — The search for long-time thermodynamic Born limits.
-- [[nonnormal-limits]] — Scalar potential $J(x)$ and non-normal counterexamples.
-- [[detuning-intervals]] — The no-go for commuting detuned vector fields.
-- [[weak-coupling-search]] — Positive leads in interacting rings and chains.
-- [[constructive-families]] — The analytically certified commuting-X family.
+- [[campaigns/commuting-qnd-sector|commuting-qnd-sector]] — Exact sector reduction and a corrected no-go result for the commuting/QND starting tier.
 
-### Family Ledgers
-
-| Article | Summary | Updated |
-|---------|---------|---------|
-| [Family A (Cases 0–8) — Chain Ledger](campaigns/ledgers/chain/family_A.md) | (no summary) | 2026-09-14 |
-| [Family B (Cases 9–14) — Chain Ledger](campaigns/ledgers/chain/family_B.md) | (no summary) | 2026-09-14 |
-| [Family C (Cases 15–17) — Chain Ledger](campaigns/ledgers/chain/family_C.md) | (no summary) | 2026-09-14 |
-| [Family D (Cases 18–20) — Chain Ledger](campaigns/ledgers/chain/family_D.md) | (no summary) | 2026-09-14 |
-| [Family E (Cases 21–26) — Chain Ledger](campaigns/ledgers/chain/family_E.md) | (no summary) | 2026-09-14 |
-| [Family F (Cases 27–32) — Chain Ledger](campaigns/ledgers/chain/family_F.md) | (no summary) | 2026-09-14 |
-| [Family G (Cases 33–36) — Chain Ledger](campaigns/ledgers/chain/family_G.md) | (no summary) | 2026-09-14 |
-| [Family H (Cases 37–40) — Chain Ledger](campaigns/ledgers/chain/family_H.md) | (no summary) | 2026-09-14 |
-| [Family I (Cases 41–48) — Chain Ledger](campaigns/ledgers/chain/family_I.md) | (no summary) | 2026-09-14 |
-| [Family J (Cases 49–54) — Chain Ledger](campaigns/ledgers/chain/family_J.md) | (no summary) | 2026-09-14 |
-| [Family K (Cases 55–60) — Chain Ledger](campaigns/ledgers/chain/family_K.md) | (no summary) | 2026-09-14 |
-| [Family L (Cases 61–69) — Chain Ledger](campaigns/ledgers/chain/family_L.md) | (no summary) | 2026-09-14 |
-| [Family M (Cases 70–77) — Chain Ledger](campaigns/ledgers/chain/family_M.md) | (no summary) | 2026-09-14 |
-| [Family N (Cases 78–86) — Chain Ledger](campaigns/ledgers/chain/family_N.md) | (no summary) | 2026-09-14 |
-| [Family A (Cases 0–8) — Ring Ledger](campaigns/ledgers/ring/family_A.md) | (no summary) | 2026-09-14 |
-| [Family B (Cases 9–14) — Ring Ledger](campaigns/ledgers/ring/family_B.md) | (no summary) | 2026-09-14 |
-| [Family C (Cases 15–17) — Ring Ledger](campaigns/ledgers/ring/family_C.md) | (no summary) | 2026-09-14 |
-| [Family D (Cases 18–20) — Ring Ledger](campaigns/ledgers/ring/family_D.md) | (no summary) | 2026-09-14 |
-| [Family E (Cases 21–26) — Ring Ledger](campaigns/ledgers/ring/family_E.md) | (no summary) | 2026-09-14 |
-| [Family F (Cases 27–32) — Ring Ledger](campaigns/ledgers/ring/family_F.md) | (no summary) | 2026-09-14 |
-| [Family G (Cases 33–36) — Ring Ledger](campaigns/ledgers/ring/family_G.md) | (no summary) | 2026-09-14 |
-| [Family H (Cases 37–40) — Ring Ledger](campaigns/ledgers/ring/family_H.md) | (no summary) | 2026-09-14 |
-| [Family I (Cases 41–48) — Ring Ledger](campaigns/ledgers/ring/family_I.md) | (no summary) | 2026-09-14 |
-| [Family J (Cases 49–54) — Ring Ledger](campaigns/ledgers/ring/family_J.md) | (no summary) | 2026-09-14 |
-| [Family K (Cases 55–60) — Ring Ledger](campaigns/ledgers/ring/family_K.md) | (no summary) | 2026-09-14 |
-| [Family L (Cases 61–69) — Ring Ledger](campaigns/ledgers/ring/family_L.md) | (no summary) | 2026-09-14 |
-| [Family M (Cases 70–77) — Ring Ledger](campaigns/ledgers/ring/family_M.md) | (no summary) | 2026-09-14 |
-| [Family N (Cases 78–86) — Ring Ledger](campaigns/ledgers/ring/family_N.md) | (no summary) | 2026-09-14 |
+The former 87-case ring/chain ledgers and their campaign summaries were deleted as obsolete. Current progress is tracked only against the [paper-readiness ledger](governance/paper-readiness-ledger.md); all gates remain `INCOMPLETE`.
 
 ---
 

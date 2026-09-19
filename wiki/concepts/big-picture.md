@@ -48,10 +48,10 @@ The loophole explored in the `unitary-collapse` program is to **retain exact uni
 
 In the laboratory, an experimentalist never performs an abstract operation: *"take two arbitrary global initial state vectors and add them."* State preparation is itself a physical dynamical process, implemented through a sequence of interactions governed by the Hamiltonian.
 
-It is therefore logically possible that the set of physically realized global states $\mathcal{R} \subset \mathcal{H}$ is only a very small, structured subset of the mathematical Hilbert space, and that this subset is **not closed under vector addition** (not a vector space). In that case, the linear combination used in the standard no-go theorem is mathematically well-defined but physically unrealized.
+The project tests the hypothesis that a small structured subset $\mathcal R\subset\mathcal H$ is physically relevant. The root set is generally not closed under vector addition, but the algebra alone does not show that non-root states are physically unrealized; that would require a preparation or boundary-condition law.
 
 ### The Historical Bohr Analogy (Draft §15.1)
-In early quantum theory, Bohr resolved the radiative instability of classical atoms by restricting electrons to a discrete subset of allowed orbits satisfying quantum boundary conditions. Similarly, the mathematical Hilbert space provides a continuous background, but the physically realized states may be restricted by finite-time boundary conditions under the unitary propagator. Unlike Bohr orbits, these special states are Hamiltonian-dependent and become increasingly dense as detector size $N$ grows.
+The Bohr-orbit comparison is only an analogy: a future theory might restrict preparations by finite-time boundary conditions. The current project has not established such a restriction or general density of roots in the thermodynamic limit.
 
 ---
 

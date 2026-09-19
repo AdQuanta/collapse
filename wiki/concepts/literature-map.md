@@ -1,5 +1,7 @@
 # Strategic Literature Map
 
+> Updated: 2026-09-15
+
 This map organizes the foundational, comparative, and contextual literature for the `unitary-collapse` research program. In accordance with the **Scientific Writing Skill**, citations are treated as active pillars of the scientific argument, structured into four strategic functional sets:
 
 $$\text{Foundations} \quad\big|\quad \text{Nearest Prior Art} \quad\big|\quad \text{Contrast \& Limitations} \quad\big|\quad \text{Implications \& Generalization}$$
@@ -82,6 +84,7 @@ $$\text{Foundations} \quad\big|\quad \text{Nearest Prior Art} \quad\big|\quad \t
 - [[Kottos-Smilansky-1997]] — Quantum chaos on graphs: trace formulas and Wigner-Dyson spectral statistics.
 - [[Mulken-Blumen-2011]] — Comprehensive review of continuous-time quantum walks across complex networks.
 - [[Palmer-2026]] — Rational Quantum Mechanics, proposing a finite arithmetic restriction on physical state spaces ($N_{\max} < 1000$).
+- [[Katz-Kotler-2026]] — Quantum computation as an indirect Planck-scale stress test for classical substrata via computational rate density and causal resource bounds.
 - [[Doucet-Deffner-2024]] — Microscopic Hamiltonian conditions required for the emergence of Quantum Darwinism.
 - [[Popescu-Short-Winter-2006]] — Canonical typicality: why pure states in large environments appear locally canonical without ensemble averaging.
 - [[Atas-et-al-2013]] — Level-spacing ratio distributions ($r$-statistics) for Wigner-Dyson vs. Poissonian spectral classes.

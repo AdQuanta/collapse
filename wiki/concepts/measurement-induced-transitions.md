@@ -116,7 +116,7 @@ Two major breakthroughs bypassed the post-selection bottleneck:
 MIPT has profound implications for the `unitary-collapse` program:
 
 1. **Measurement as a Dynamical Many-Body Phase Transition:** MIPT proves that measurement is not an unmodeled, instantaneous collapse, but a genuine physical phase transition governed by competing microscopic timescales (scrambling time vs. measurement back-action time).
-2. **The Scrambling-to-Born Crossover:** In `unitary-collapse`, a structured detector Hamiltonian produces a Born profile $R_*(\theta) = \cos^2(\theta/2)$, whereas an isotropic Haar-scrambling detector drives the system to a non-Born uniform distribution. The competition between local structured coupling and integrability-breaking scrambling in `unitary-collapse` is the Hamiltonian analog of the MIPT transition.
+2. **The Scrambling-to-Born Hypothesis:** In the `unitary-collapse` program, it is hypothesized that an appropriately structured detector Hamiltonian can produce a Born-like root distribution, whereas an isotropic Haar-scrambling detector drives the system to a uniform baseline. The competition between local structured coupling and integrability-breaking scrambling in `unitary-collapse` is the Hamiltonian analog of the MIPT transition, subject to verification under the SPEC v1.0 frozen verifier.
 3. **Experimental Validation Platforms:** The superconducting processors used to demonstrate MIPT (Google Sycamore, IBM Quantum) provide the exact experimental platforms proposed in the `unitary-collapse` experimental roadmap ([[falsifiability-and-experiments]]) to probe mesoscopic detector latching and covering-radius scaling.
 
 ---

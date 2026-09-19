@@ -15,4 +15,8 @@ The pipeline uses `QuSpin` and custom sector-decomposition logic:
 ## Sector-Safe Root Evaluation
 In `core/relative_evolution_sector.py`, projective roots are evaluated per sector. This avoids the need for a dense projection of the full Hilbert space and ensures that each sector's contribution to the total root multiset is correctly weighted by its dimension.
 
+This implementation claim remains to be revalidated. Sectorwise root solving is legitimate only when the full propagator blocks preserve the sector decomposition relevant to each of the two outcome pencils. The recombined empirical measure must include every sector and every kernel multiplicity exactly once. Symmetry-sector dimensions are not substitutes for nullity weights, and roots may not be dropped merely because a block is singular.
+
+For preferred-axis searches, the basis rotation itself can change which symmetries are manifest in the blocks. The verifier must therefore confirm equivalence with the unsplit full-space construction at tractable sizes before sector decomposition is used for production claims.
+
 See also: [[spectral-statistics]], [[production-pipeline]].
