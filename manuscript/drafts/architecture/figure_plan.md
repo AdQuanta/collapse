@@ -1,87 +1,80 @@
-# Four-Figure Manuscript Architecture (PRL / NatPhys Format)
+# Four-Figure Manuscript Architecture
 
-This figure plan establishes the four empirical and theoretical pillars of the Letter. In accordance with the **Scientific Writing Skill**, the figures form an autonomous, figure-first narrative: an expert skimming only the visual plates and captions recovers the complete, rigorous scientific argument.
+The figure sequence separates motivation, exact mathematics, finite full-sphere evidence, and finite-size trend. A reader scanning only the figures should recover both the advance and its boundary.
 
----
+**Central paper claim:** Unitary qubit--detector dynamics fixes an exact projective and antipodal outcome geometry; Haar dynamics is isotropic at the ensemble one-point level, while one audited matched-field ring develops a finite Born-like dipolar root-count geometry.
 
-## The Four Pillars
+**Figure-only reader outcome:** Figure 1 identifies the unresolved global-record problem and limits the manuscript to a restricted-state test. Figure 2 supplies the exact construction and the honest bridge to the production calculation. Figure 3 presents the strongest finite full-sphere diagnostic. Figure 4 shows that the highlighted case belongs to a monotonic six-size trend, while its caption blocks statistical and asymptotic overinterpretation.
 
-```
-+---------------------------------------------------------------------------------+
-| Fig. 1 CONCEPT: The Projective Pencil & Exact Antipodal Duality                 |
-| System schematic | Block partition | Roots on S^2 | Exact minor antipodality    |
-+---------------------------------------------------------------------------------+
-                                       |
-                                       v
-+---------------------------------------------------------------------------------+
-| Fig. 2 PROOF: Full-Sphere Born Dipole in an Interacting Spin Ring                |
-| Equal-area 2D map | Dipole fit (98.2% ell=1 power) | Haar null contrast         |
-+---------------------------------------------------------------------------------+
-                                       |
-                                       v
-+---------------------------------------------------------------------------------+
-| Fig. 3 ROBUSTNESS: Finite-Size Scaling & Harmonic Suppression                   |
-| S_B monotonic rise (0.192 -> 0.807) | Unit coverage | Azimuthal gate (|c2|<=0.25) |
-+---------------------------------------------------------------------------------+
-                                       |
-                                       v
-+---------------------------------------------------------------------------------+
-| Fig. 4 BOUNDARIES: Analytic Certification & Rigorous No-Gos                     |
-| Commuting-X constructive family | Detuning interval no-go | Non-normal breakdown |
-+---------------------------------------------------------------------------------+
+## Figure sequence
+
+```text
+Fig. 1 — SCOPE
+Established subsystem arrows → unresolved global measurement step → restricted-state question
+        ↓
+Fig. 2 — EXACT CONSTRUCTION
+Block unitary → homogeneous outcome pencils → antipodal roots → production/inverse-time bridge
+        ↓
+Fig. 3 — STRONGEST FINITE DIAGNOSTIC
+N=16 matched ring → fully occupied equal-area map → dipole fit and residual
+        ↓
+Fig. 4 — FINITE-SIZE TREND AND CONTROLS
+N=11…16 deterministic times → rising median score → polar coverage and azimuthal gate
 ```
 
----
+## Figure 1: Measurement is the unresolved stronger arrow
 
-## Detailed Figure Specifications
+- **Figure claim:** Established subsystem arrows coexist with global unitarity, whereas one definite global measurement record remains unresolved; this work tests only a restricted-state route.
+- **Notice first:** The measurement box is dashed and explicitly unresolved.
+- **Panels/elements:** Spontaneous emission, decoherence, thermalization, measurement; below them, restricted product-boundary set + exact $U(t)$ → outcome-labelled roots.
+- **Key contrast:** Established local/subsystem irreversibility versus the unproved global-record step.
+- **Advance over prior figure:** Opens the story and fixes the scope before any algebra appears.
+- **Evidence/caveat:** Conceptual schematic only; no empirical claim.
 
-### Figure 1: The Projective Pencil Framework & Antipodal Duality (Concept)
-- **Scientific Role**: Concept & Platform.
-- **Dominant Scientific Idea**: Definite-outcome product inputs under unitary evolution are projective matrix-pencil roots whose outcome multisets are exact Bloch antipodes.
-- **Panels**:
-  - **(a) Physical System**: Qubit coupled to a many-body detector $\mathcal{H}_D$ ($d=2^N$) via Hamiltonian $H$.
-  - **(b) Pencil Engine**: Block partitioning $U(t) = \begin{pmatrix} A & B \\ C & D \end{pmatrix} \to$ forward pole pencils $(\alpha C + \beta D)\eta = 0$ and $(\alpha A + \beta B)\eta = 0$.
-  - **(c) Bloch Projection**: Complex pencil roots $z = \beta/\alpha \to$ polar angles $\theta = 2\arctan |z|$, azimuthal phases $\phi = \arg z$.
-  - **(d) Antipodal Minor Duality**: Visual demonstration that outcome-$0$ roots $\Omega_j^{(0)}$ and outcome-$1$ roots $\Omega_j^{(1)}$ satisfy $\Omega_j^{(1)} = -\Omega_j^{(0)}$.
-- **Dominant Visual**: Panel (d) showing the exact antipodal pairing on the Bloch sphere.
-- **Instant Comparison**: Generic independent root clouds vs. the exact antipodal pairing forced by unitarity.
-- **Quantitative Anchor**: Exactly $d = 2^N$ projective roots counted with algebraic multiplicity.
+## Figure 2: Unitary block structure fixes projective and antipodal roots
 
----
+- **Figure claim:** Pole-compatible product inputs are homogeneous pencil roots, and unitarity makes the two outcome-root multisets exact antipodes.
+- **Notice first:** One outcome cloud determines the other; they are not independent.
+- **Panels/elements:** $U=\begin{pmatrix}A&B\\C&D\end{pmatrix}$; roots of $C+zD$; antipodal roots of $A+zB$; production pencil $Cv=\lambda Av$; bridge to forward preimages under $U^\dagger=U(-t)$.
+- **Key contrast:** Exact same-unitary forward construction versus the related production-output calculation.
+- **Advance over Fig. 1:** Turns the restricted-state question into an exact projective problem and states the numerical bridge honestly.
+- **Evidence/caveat:** T1–T2. Regular-pencil counting requires a homogeneous formulation; singular pencils need separate analysis.
 
-### Figure 2: Emergence of Full-Sphere Born Dipoles in Many-Body Rings (Proof)
-- **Scientific Role**: Decisive Observation & Primary Proof.
-- **Dominant Scientific Idea**: Clean interacting spin rings generate a full-sphere dipolar root asymmetry matching the Born rule, distinct from the uniform Haar null.
-- **Panels**:
-  - **(a) Full-Sphere Asymmetry Map**: Equal-area projection ($36\times18$ bins) of asymmetry $a(\phi, \mu)$ at $N=16, t=10^4\,\hbar/J$.
-  - **(b) Polar Profile vs. Born Dipole**: Polar slice $R(\theta)$ compared against the ideal Born curve $\cos^2(\theta/2)$.
-  - **(c) Control Contrast**: Side-by-side comparison of the matched spin ring against the flat Haar-scrambling null ($S_{\mathrm{B}} = 0$) and a strict-QND localized pole distribution.
-- **Dominant Visual**: Panel (a) the high-resolution 2D full-sphere dipole map.
-- **Instant Comparison**: The pronounced dipolar gradient of the interacting ring vs. the featureless flat intensity of the Haar ensemble.
-- **Quantitative Anchor**: Count-weighted Born residual of $0.089$; correlation with $\mu = \cos\theta$ of $0.971$; dipole mode carries $98.2\%$ of resolved odd multipole power.
+## Figure 3: The highlighted matched ring has a strongly dipolar full-sphere asymmetry
 
----
+- **Figure claim:** At $N=16,t=10^4$, the matched ring produces a finite-resolution root-count asymmetry dominated by the Born dipole.
+- **Notice first:** The equal-area map has a clear $z$-aligned dipolar gradient rather than an azimuthally pinched stripe.
+- **Panels:** Bloch-sphere root cloud and antipodal partner; $36\times18$ equal-area asymmetry map; polar profile; odd-multipole or free-dipole diagnostic.
+- **Key comparison:** Empirical asymmetry versus the unit-amplitude Born dipole $a_{\mathrm B}=\mu$; contextual contrast with the exact Haar isotropic one-point null.
+- **Advance over Fig. 2:** Moves from universal constraints to the strongest audited structured-Hamiltonian diagnostic.
+- **Quantitative anchors:** 65,536 roots; all 648 bins occupied; residual $0.089$; correlation $0.971$; $\ell=1$ fraction $0.982$; free-fit amplitude $1.062$ and residual $0.070$.
+- **Caveat:** Finite size, deterministic time, finite binning, no smoothing, and no operational probability interpretation.
 
-### Figure 3: Finite-Size Scaling & Systematic Harmonic Suppression (Robustness)
-- **Scientific Role**: Mechanism, Scaling & Controls.
-- **Dominant Scientific Idea**: The Born dipolar profile converges monotonically with system size while maintaining unit full-sphere coverage and suppressing azimuthal warping.
-- **Panels**:
-  - **(a) Polar Score Scaling**: Median and range of $S_{\mathrm{B}}$ across four time decades ($t=10^3\text{--}10^6\,\hbar/J$) as a function of $N=11\text{--}16$, contrasted with the Haar baseline.
-  - **(b) Full-Sphere Coverage**: Fraction of occupied equal-area bins demonstrating unit coverage ($1.0$) across all $N \ge 11$.
-  - **(c) Azimuthal Harmonic Gate**: Second-harmonic distortion $|c_2|$ across sizes, showing compliance with the gate $|c_2| \le 0.25$.
-- **Dominant Visual**: Panel (a) the monotonic upward scaling curve of median $S_{\mathrm{B}}$.
-- **Instant Comparison**: Monotonic rise of structured ring scores ($0.192 \to 0.807$) contrasted against the flat horizontal Haar intensity baseline ($S_{\mathrm{B}} = 0$).
-- **Quantitative Anchor**: Monotonic increase of median $S_{\mathrm{B}}$: $N=11$ ($0.192$), $N=12$ ($0.341$), $N=13$ ($0.495$), $N=14$ ($0.638$), $N=15$ ($0.742$), $N=16$ ($0.807$).
+## Figure 4: The matched sequence shows a monotonic finite-size trend
 
----
+- **Figure claim:** Across $N=11,\ldots,16$, the four-time median polar score rises monotonically while the matched rows retain unit polar coverage and satisfy the declared second-harmonic gate.
+- **Notice first:** Median $S_{\mathrm B}$ rises from $0.192$ to $0.807$; the Haar line is an intensity-level analytical baseline.
+- **Panels:** Individual deterministic times plus median and maximum score; median (|c_2|) and polar coverage by size.
+- **Key comparison:** Structured matched-ring scores versus $S_{\mathrm B}=0$ for the Haar ensemble one-point intensity.
+- **Advance over Fig. 3:** Shows that the highlighted map belongs to an ordered six-size sequence rather than standing alone.
+- **Quantitative anchors:** Median scores $0.192,0.411,0.571,0.715,0.788,0.807$; 24 deterministic rows; unit polar coverage; $|c_2|\le0.25$.
+- **Caveat:** No error bars, finite-$d$ Haar sample distribution, continuum limit, or thermodynamic extrapolation. Lines guide the eye.
 
-### Figure 4: Theoretical Certification & Non-Normal Boundaries (Boundaries)
-- **Scientific Role**: Theoretical Boundaries, Certification & No-Gos.
-- **Dominant Scientific Idea**: Born geometry is analytically certifiable in constructive commuting-X families but is bounded by rigorous no-gos in simple commuting fields and non-normal limits.
-- **Panels**:
-  - **(a) Constructive Family Certification**: Folded energy spectrum $\sum_i s_i g_i$ analytically satisfying the finite-resolution gate $C_{\mathrm{B}}$.
-  - **(b) Detuning Interval No-Go**: Theorem H demonstration showing the unavoidable breakdown of Born balance across open detuning intervals in commuting vector fields.
-  - **(c) Non-Normal Counterexample**: Native exchange channel root law ($\delta_0$) contrasted with the incorrect Gaussian-substitution prediction, revealing the breakdown of singular-value shortcuts.
-- **Dominant Visual**: Panel (a) the exact analytical recovery of the Born profile in the constructive family.
-- **Instant Comparison**: Analytical success of the structured constructive class vs. the rigorous failure of naive commuting and Gaussian approximations.
-- **Quantitative Anchor**: Proof of Theorem H across detuning intervals; divergence of logarithmic singular-value tails.
+## Cross-figure consistency ledger
+
+- Use “root-count geometry” or “root-count asymmetry,” not “Born probabilities.”
+- Use “finite-size trend,” not “convergence.”
+- Use “exact antipodal partners,” not “independently generated branches.”
+- Use $S_{\mathrm B}$, $a(\Omega)$, $\mu=\cos\theta$, and $d=2^N$ consistently.
+- Refer to Fig. 3 occupancy as full-sphere equal-area occupancy; refer to Fig. 4 coverage as polar coverage.
+- Label the Haar line as an ensemble-intensity baseline, not a finite-sample mean.
+
+## Production audit for every figure
+
+- Give each figure one dominant visual idea and an obvious reading order.
+- Use the same muted semantic colors for established results, unresolved questions, outcome labels, and analytical baselines throughout.
+- Pair color with line style, marker, or annotation wherever the distinction is scientifically essential.
+- Use readable sans-serif type, consistent panel letters, quantity-plus-unit axis labels, outside ticks, and no decorative gridlines.
+- Prefer direct labels when they remain legible; keep legends subordinate to data.
+- Export schematics and line plots as vector PDF and inspect both at high zoom and at final column width.
+- Start every caption with a short claim-like title, then define panels, encodings, conditions, and the main limitation.

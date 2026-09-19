@@ -1,10 +1,10 @@
 # Commuting/QND Detector Sector: Verified Scope and Obstruction
 
-> Sources: User-provided Chat derivation, Unknown; `SPEC.md` v1.0, 2026-09-15
-> Raw: [Verbatim supplied derivation](../../raw/campaigns/2026-09-19-commuting-qnd-chat-result.md); [Research specification snapshot](../../raw/project-governance/research-spec-v1.md)
+> Sources: User-provided Chat derivation, Unknown; `SPEC.md` v1.0, 2026-09-15; User correction, 2026-09-19
+> Raw: [Verbatim supplied derivation](../../raw/campaigns/2026-09-19-commuting-qnd-chat-result.md); [Research specification snapshot](../../raw/project-governance/research-spec-v1.md); [Weak Born criterion correction](../../raw/project-governance/2026-09-19-weak-born-criterion-correction.md)
 > Updated: 2026-09-19
 
-**Status:** The finite-$N$ reduction and a $Z$-outcome-basis exact-Born obstruction are verified. This does not eliminate the family for every preferred axis, does not give a uniform lower bound on approximate-Born error, and does not advance a paper-readiness gate.
+**Status:** The finite-$N$ reduction and a $Z$-outcome-basis exact weak-Born ratio obstruction are verified. This does not eliminate the family for every preferred axis, does not give a uniform lower bound on approximate-Born error, and does not advance a paper-readiness gate.
 
 ## Model and exact sector reduction
 
@@ -65,19 +65,21 @@ p_\rho^{(d\theta)}(\theta)=
 \qquad 0<\theta<2\arcsin\rho.
 $$
 
-This is not the SPEC weak density. They are related by
+This is the outcome-0 polar marginal density $\rho_0^{(\theta)}$ used by the corrected weak criterion. Because the outcome measures are antipodal in this sector,
 
 $$
-p_b^{(d\theta)}(\theta)=\bar\rho_b(\theta)\sin\theta.
+\rho_1^{(\theta)}(\theta)=\rho_0^{(\theta)}(\pi-\theta),
 $$
 
-The Born targets in the $d\theta$ convention are therefore
+and the weak equal-prior ratio becomes
 
 $$
-p_{\mathrm{Born},0}^{(d\theta)}=\cos^2(\theta/2)\sin\theta,
-\qquad
-p_{\mathrm{Born},1}^{(d\theta)}=\sin^2(\theta/2)\sin\theta.
+p_0^{\mathrm{weak}}(\theta)
+=\frac{p_0^{(d\theta)}(\theta)}
+{p_0^{(d\theta)}(\theta)+p_0^{(d\theta)}(\pi-\theta)}.
 $$
+
+The corrected SPEC does not require either marginal density to equal a cosine- or sine-squared profile separately. Its target applies to this ratio.
 
 ## Critical Gaussian $Z$-basis obstruction
 
@@ -113,13 +115,13 @@ p_0^{(d\theta)}(\theta)=B+O(\theta^2),
 p_0^{(d\theta)}(\pi-\epsilon)=a\epsilon+O(\epsilon^3).
 $$
 
-Hence $\bar\rho_0(\theta)\sim B/\theta$ at the north pole and approaches $a$ at the south pole, whereas the weak Born density is finite at the north pole and vanishes quadratically at the south pole. The reflected marginal ratio also has a linear correction,
+The marginal-density endpoint laws imply that the weak ratio has a linear correction,
 
 $$
 R(\theta)=1-\frac aB\theta+O(\theta^2),
 $$
 
-instead of $\cos^2(\theta/2)=1-\theta^2/4+O(\theta^4)$. This proves failure of exact weak Born and of the necessary ratio condition for the $Z$ output basis at every fixed finite $h_{0z}/g$.
+instead of $\cos^2(\theta/2)=1-\theta^2/4+O(\theta^4)$. Because antipodality makes this reflected ratio exactly $p_0^{\mathrm{weak}}$, the mismatch proves failure of the corrected weak Born criterion in the $Z$ output basis at every fixed finite $h_{0z}/g$. The individual density shapes are inputs to this ratio argument, not separate SPEC targets.
 
 ## Order of limits
 

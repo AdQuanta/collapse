@@ -176,6 +176,7 @@ Boris Cherny (creator of Claude Code) keeps his team's file around 100 lines. Un
 Prefer single-file or single-test runs during iteration. Full suites are for the final verification pass.
 
 ### Layout
+- Project knowledge lives in: `wiki/`.
 - Source lives in: `core/` and `scripts/`.
 - Tests live in: `tests/`.
 - Do not modify: generated or curated outputs in `work/`, `reports/`, `figures/`, `tmp/`, and `archive/`, except by creating new descriptive derived artifacts when requested.
@@ -208,6 +209,8 @@ Prefer single-file or single-test runs during iteration. Full suites are for the
 When the user corrects your approach, append a one-line rule here before ending the session. Write it concretely ("Always use X for Y"), never abstractly ("be careful with Y"). If an existing line already covers the correction, tighten it instead of adding a new one. Remove lines when the underlying issue goes away (model upgrades, refactors, process changes).
 
 - In wiki maintenance, treat `SPEC.md` as controlling, preserve user-deleted obsolete ledgers, and never grant paper-readiness credit to pre-reset results without fresh verification.
+- Evaluate the weak Born criterion from the ratio of the two normalized polar marginals after azimuthal integration, not by matching either marginal density separately.
+- Store generated source snapshots with non-executable suffixes so pytest cannot collect copied tests from evidence packets.
 
 ---
 

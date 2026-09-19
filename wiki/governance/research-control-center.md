@@ -1,7 +1,7 @@
 # Research Control Center
 
-> Sources: Repository research specification, Unknown; User instruction, 2026-09-15
-> Raw: [Research specification v1.0](../../raw/project-governance/research-spec-v1.md); [Paper readiness reset](../../raw/project-governance/2026-09-15-paper-readiness-reset.md)
+> Sources: Repository research specification, Unknown; User instruction, 2026-09-15; User instruction, 2026-09-19
+> Raw: [Research specification v1.0](../../raw/project-governance/research-spec-v1.md); [Paper readiness reset](../../raw/project-governance/2026-09-15-paper-readiness-reset.md); [Exact-formalism gate activation approval](../../raw/project-governance/2026-09-19-exact-formalism-gate-activation-approval.md)
 > Updated: 2026-09-19
 
 ## Purpose
@@ -14,7 +14,7 @@ This is the starting point for fresh-context work. It separates controlling auth
 2. Then read [`RESEARCH_STATE.md`](../../RESEARCH_STATE.md) for the current frontier.
 3. Reconcile every state item against the specification. Where an older goal, acceptance gate, family scope, limit prescription, or manuscript claim conflicts, the specification wins.
 
-4. Consult the [paper readiness ledger](paper-readiness-ledger.md). Every gate is currently `INCOMPLETE`; existing results must be verified again before receiving v1.0 credit.
+4. Consult the [paper readiness ledger](paper-readiness-ledger.md). `Exact collapse-like formalism` is `COMPLETE`; every other gate is `INCOMPLETE`, `paper_ready = false`, and existing results must be verified again before receiving v1.0 credit.
 
 `RESEARCH_STATE.md` is a handoff, not a historical diary or an independent success definition. It should identify the best current hypothesis, established and falsified results, verifier status, and immediate next experiment or derivation.
 
@@ -50,7 +50,7 @@ Before promoting a candidate, its packet must be remapped to the specification's
 
 ## Verifier status
 
-The existing [`verifier/analytic_p_theta/`](../../verifier/analytic_p_theta/) records are frozen, scoped checks for the analytical-distribution program. They do not constitute the complete hybrid verifier required by `SPEC.md` v1.0.
+The existing [`verifier/analytic_p_theta/`](../../verifier/analytic_p_theta/) records are frozen, scoped checks for the analytical-distribution program. [`verifier/exact_formalism/v1/`](../../verifier/exact_formalism/v1/) (`exact-formalism-v1`) is activated and certifies the `Exact collapse-like formalism` gate only; see the [paper readiness ledger](paper-readiness-ledger.md) for its evidence and the [activation approval record](../../raw/project-governance/2026-09-19-exact-formalism-gate-activation-approval.md). Neither verifier constitutes the complete hybrid verifier required by `SPEC.md` v1.0.
 
 Until an approved full verifier certifies every mandatory gate and a fresh-context referee passes the scientific layer, `paper_ready = false`. Manuscript drafts, narrative registries, and figure plans must not be treated as the active research contract.
 

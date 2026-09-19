@@ -308,3 +308,39 @@ submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.
 - Verified: zero broken links, zero orphans, zero files below the allowed topic depth, zero dangling references to the deleted campaign hierarchy outside the append-only historical log, and a clean whitespace diff.
 - Mechanical: the ten new or controlling SPEC/QND/Zotero articles pass evidence lint with 0 fidelity suspects, 0 evidence errors, and 0 unreferenced raw files.
 - Judgment: the full legacy wiki still has 99 evidence errors because those older articles predate the raw-source invariant and have no `> Raw:` field. They were not papered over with fabricated sources; source-backed re-ingestion or an explicit archival decision remains required.
+
+## [2026-09-19] ingest | Weak Born Criterion Correction
+- Disposition: Update; Disputed
+- Raw: raw/project-governance/2026-09-19-weak-born-criterion-correction.md
+- Updated: Born Criteria for Collapsible-State Measures
+- Updated: Research Specification v1.0
+- Updated: Commuting/QND Detector Sector: Verified Scope and Obstruction
+
+## [2026-09-19] lint | 0 issues found, 0 auto-fixed
+- Scope: the three source-backed wiki articles changed by the weak Born correction.
+- Verified: 0 fidelity suspects, 0 evidence errors, 0 unreferenced raw files, and all touched raw links exist.
+- Mathematical check: both test polar marginals normalized within \(2.06\times10^{-11}\), and the common \(\sin\theta\) Jacobian canceled from their ratio within \(2.22\times10^{-16}\).
+- Search check: no obsolete individual-density weak Born target remains in `SPEC.md` or the live wiki.
+
+## [2026-09-19] ingest | Exact collapse formalism validation and figure gallery
+- Disposition: New; Update
+- Raw: raw/campaigns/2026-09-19-exact-formalism-validation.md
+- Updated: Paper Readiness Ledger (pending review only; all gates INCOMPLETE)
+- Added: Exact collapse formalism article and all 15 fixture theta/ratio plots.
+- Validation: DRAFT_PASS; no approved certification or gate promotion.
+
+## [2026-09-19] governance | Exact-formalism gate promoted to COMPLETE
+- Disposition: Update
+- Raw: raw/project-governance/2026-09-19-exact-formalism-gate-activation-approval.md
+- Updated: Paper Readiness Ledger (`Exact collapse-like formalism` row: INCOMPLETE -> COMPLETE)
+- Updated: Exact collapse formalism campaign article
+- Updated: wiki/index.md ledger summary
+- Verified independently (not solely from the pasted referee verdict): manifest hash-bindings for SPEC.md/check.py/METHOD.md/build_exact_formalism_packet.py; fresh checker rerun (PASS, matching packet hashes); 26/26 focused tests; full suite scoped to `tests/` reproduces 641 passed, 2 failed with identical error magnitudes to the recorded baseline.
+- Disclosed: `verifier/exact_formalism/v1/check.py` had been edited after the review run to relabel DRAFT_PASS/DRAFT_FAIL/certification=False as PASS/FAIL/certification=True and to gate on its own manifest's self-declared "activated" status, with no prior traceable approval record. The verification math was unaffected by the edit and was independently reproduced. The user's explicit conditional approval, given after this finding was disclosed, is the activation authorization now on record.
+- Scoped: the two known full-suite failures (matched-ring forward bridge; zero-field independent-spin angles) remain open, unrelated to this gate, and continue to block "Complete matrix-pencil characterization," "No unresolved hard failure," and "Executable verifier." `paper_ready` remains `false`; no other gate is affected.
+
+## [2026-09-19] lint | 108 issues found, 1 auto-fixed
+- Auto-fixed: `wiki/index.md`'s Paper Readiness Ledger table row showed Updated `2026-09-15`; the article's own metadata Updated is `2026-09-19` (it now cites the exact-formalism-validation raw source), so the index row was corrected to match.
+- Verified: all 111 articles are indexed and resolvable, all internal/See Also/Raw links resolve, no topic-depth violations, and the one fidelity suspect (`5.291901841267055e-16` in `exact-collapse-formalism.md`) matches its raw source verbatim.
+- Mechanical: `scripts/check_evidence.py` reports 99 evidence errors, all legacy literature/concepts/methods articles that predate the raw-source invariant and still lack a `> Raw:` field; 0 unreferenced raw files.
+- Judgment: 4 orphan pages with no inbound links from other article bodies (`literature/collapse-and-chaos-zotero-collection.md`, `methods/git-delivery.md`, `methods/implementation-standards.md`, `concepts/resonant-return-dynamics.md`); 3 missing cross-references — `born-like-points.md`'s Status section describes the exact dual-root/multiplicity criteria that `exact-collapse-formalism.md`'s verifier now tests, but neither links to the other; `commuting-qnd-sector.md` (the other live campaign) does not reference `exact-collapse-formalism.md`; and `research-control-center.md`'s knowledge-routing table and Verifier status section omit the new `verifier/exact_formalism/v1/` entirely, still pointing only to the frozen `verifier/analytic_p_theta/`.

@@ -45,6 +45,77 @@ class QubitFirstBlocks:
         return int(self.A.shape[0])
 
 
+@dataclass(frozen=True)
+class CollapseStateReconstruction:
+    """State-level diagnostics, not a root-completeness or readiness verdict.
+
+    The retained detector branch is deliberately *not* renormalized: its norm
+    error is evidence and must not be hidden for a near-collapse input.
+    """
+
+    qubit_input: np.ndarray
+    detector_input: np.ndarray
+    evolved_joint_state: np.ndarray
+    retained_detector_branch: np.ndarray
+    forbidden_branch_norm: float
+    retained_norm_error: float
+    factorization_residual: float
+
+
+def reconstruct_collapse_state(
+    U: np.ndarray,
+    outcome: int,
+    alpha: complex,
+    beta: complex,
+    detector_state: np.ndarray,
+) -> CollapseStateReconstruction:
+    """Propagate ``(beta, alpha) tensor detector_state`` in qubit-first order.
+
+    Normalize nonzero inputs without dividing by beta, including the infinite
+    root. This accepts finite even square operators so an independent verifier
+    can diagnose nonunitarity separately. No tolerance changes the definition
+    of collapse, and no kernel multiplicity or probability measure is inferred.
+    """
+
+    blocks = split_qubit_first_blocks(U)
+    if not isinstance(outcome, (int, np.integer)) or outcome not in (0, 1):
+        raise ValueError("outcome must be 0 or 1")
+    outcome = int(outcome)
+    qubit = np.asarray([beta, alpha], dtype=np.complex128)
+    if qubit.shape != (2,) or not np.all(np.isfinite(qubit)):
+        raise ValueError("alpha and beta must be finite scalars")
+    detector = np.asarray(detector_state, dtype=np.complex128)
+    if detector.shape != (blocks.detector_dimension,):
+        raise ValueError("detector_state must be a vector of detector dimension")
+    if not np.all(np.isfinite(detector)):
+        raise ValueError("detector_state must contain only finite values")
+
+    def normalized(vector: np.ndarray) -> np.ndarray:
+        # Scale components before taking norms to avoid overflow/underflow.
+        scale = max(float(np.max(np.abs(vector.real))),
+                    float(np.max(np.abs(vector.imag))))
+        if scale == 0.0:
+            raise ValueError("homogeneous pair and detector_state must be nonzero")
+        scaled = vector / scale
+        return scaled / np.linalg.norm(scaled)
+
+    qubit = normalized(qubit)
+    detector = normalized(detector)
+    evolved = np.asarray(U, dtype=np.complex128) @ np.kron(qubit, detector)
+    branches = evolved.reshape(2, blocks.detector_dimension)
+    retained = branches[outcome].copy()
+    factorized = np.kron(np.eye(2)[outcome], retained)
+    return CollapseStateReconstruction(
+        qubit_input=qubit,
+        detector_input=detector,
+        evolved_joint_state=evolved,
+        retained_detector_branch=retained,
+        forbidden_branch_norm=float(np.linalg.norm(branches[1 - outcome])),
+        retained_norm_error=float(abs(np.linalg.norm(retained) - 1.0)),
+        factorization_residual=float(np.linalg.norm(evolved - factorized)),
+    )
+
+
 def append_uncoupled_spectator(
     unitary: np.ndarray,
     spectator_unitary: np.ndarray,

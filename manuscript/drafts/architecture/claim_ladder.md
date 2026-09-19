@@ -1,97 +1,71 @@
-# The Claim Ladder
+# Evidence-Bound Claim Ladder
 
-This ladder orders the major scientific claims of the manuscript according to the structural progression:
-$$\text{Phenomenon / Platform} \longrightarrow \text{Decisive Observation} \longrightarrow \text{Mechanism} \longrightarrow \text{Robustness} \longrightarrow \text{Significance}$$
+The manuscript advances from exact existence and symmetry results to a finite numerical diagnostic, then stops at the operational boundary. Each claim below is tied to `manuscript/EVIDENCE_REGISTRY.md`.
 
-Each claim is earned by its predecessors and is strictly bound by its evidential state and wording ceiling.
+## Claim 1: Definite-pole product inputs are homogeneous pencil roots
 
----
+**Statement.** For a qubit-first unitary $U=\begin{pmatrix}A&B\\C&D\end{pmatrix}$, a product input with qubit coordinate $q=[\alpha:\beta]$ reaches pole $0$ exactly when $(\alpha C+\beta D)\eta=0$, and reaches pole $1$ exactly when $(\alpha A+\beta B)\eta=0$. A regular $d\times d$ pencil has $d$ roots in $\mathbb{CP}^1$, counted with algebraic multiplicity.
 
-## Claim 1: Exact Projective Pencil Construction & Antipodal Duality
-*Phenomenon / Platform*
+- **Evidence:** T1, exact theorem.
+- **Comparator:** Replaces an informal search over special inputs with a homogeneous generalized-eigenvalue problem.
+- **Caveat:** The count does not imply distinct roots, equal physical weights, or $d$ independent detector rays. Roots at infinity must be retained; singular pencils require Kronecker analysis.
+- **Figure/equation:** Fig. 2; block and pole-condition equations.
+- **Wording ceiling:** “Characterizes pole-compatible product inputs as projective pencil roots and counts them for regular pencils.”
 
-**Statement**: Under unitary evolution $U(t)$ of a qubit coupled to a $d$-dimensional detector, initial product states yielding definite measurement outcomes are precisely the projective roots of a detector-space matrix pencil $(C, A)$. Unitarity and Jacobi complementary-minor duality force the two outcome-root multisets to be exact Bloch antipodes.
-- **Evidence**: `analytically derived`
-- **Comparator**: Contrasts with standard open-system decoherence, which describes asymptotic density-matrix off-diagonal decay without identifying exact product-boundary preimages.
-- **Caveat**: Algebraic root multiplicity on the Bloch sphere does not, by itself, define a physical probability measure or an outcome selection law.
-- **Figure / Equation**: Figure 1 / Figure 2; Equations \eqref{eq:block}--\eqref{eq:asymmetry}.
-- **Confidence**: Exact mathematical theorem.
-- **Wording Ceiling**: *"Establishes an exact correspondence between definite-outcome product inputs and projective pencil roots, with antipodally paired outcome multisets."*
+## Claim 2: Unitarity fixes exact antipodal outcome geometry
 
----
+**Statement.** Jacobi complementary-minor duality pairs every outcome-$0$ root with the Bloch antipode of an outcome-$1$ root, preserving algebraic multiplicity. Hence $\rho_1(\Omega)=\rho_0(-\Omega)$ and the paired asymmetry is inversion odd.
 
-## Claim 2: Generic Haar Scrambling Precludes Axis Selection
-*Decisive Observation / Null Model*
+- **Evidence:** T2, exact theorem.
+- **Comparator:** The outcome labels form one root multiset and its deterministic antipodal partner, not two independent point clouds.
+- **Caveat:** Antipodal root coordinates do not provide the companion detector vectors, a selection law, or a detector record.
+- **Figure/equation:** Fig. 2; complementary-minor identity and asymmetry equation.
+- **Wording ceiling:** “Proves exact antipodal pairing of the two same-unitary outcome-root multisets.”
 
-**Statement**: For Haar-distributed unitaries $U(2d)$, the projective pencil roots are distributed as the complex spherical ensemble with uniform one-point intensity $d/(4\pi)$ on the sphere. Generic unitary scrambling yields no preferred measurement axis at the ensemble level.
-- **Evidence**: `analytically derived`
-- **Comparator**: Directly rules out the hypothesis that generic chaotic or random unitary scrambling spontaneously produces a preferred Born measurement dipole.
-- **Caveat**: Finite-size random realizations exhibit sample fluctuations; the theorem governs the ensemble one-point intensity ($S_{\mathrm{B}} = 0$).
-- **Figure / Equation**: Figure 2(c) / Figure \ref{fig:scaling}(a) dashed baseline; Section "Haar null model".
-- **Confidence**: Exact mathematical theorem based on Ginibre-Stiefel reduction.
-- **Wording Ceiling**: *"Proves that generic Haar scrambling yields uniform spherical intensity and precludes an ensemble-selected measurement axis."*
+## Claim 3: Haar scrambling is an exact isotropic ensemble null
 
----
+**Statement.** For Haar $U(2d)$, the forward roots have the complex spherical-ensemble law and uniform one-point intensity $d/(4\pi)$ on the Bloch sphere.
 
-## Claim 3: Emergence of Born-Like Dipolar Geometry in Many-Body Rings
-*Decisive Observation / Numerical Geometry*
+- **Evidence:** T3, exact ensemble theorem.
+- **Comparator:** An isotropic ensemble intensity has no fixed preferred measurement axis and gives the intensity-level baseline $S_{\mathrm B}=0$.
+- **Caveat:** This is not a concentration theorem for one finite Haar realization and does not justify claims about generic chaotic Hamiltonians.
+- **Figure/equation:** Haar-null result in the text; baseline in Fig. 4(a).
+- **Wording ceiling:** “Shows that the Haar ensemble has uniform one-point root intensity and no ensemble-selected axis.”
 
-**Statement**: In a clean interacting many-body spin ring with collective transverse coupling, the full-sphere distribution of pencil roots develops a strongly dipolar root-count asymmetry matching the qubit Born rule $\cos^2(\theta/2)$, with a count-weighted residual of $0.089$ and $98.2\%$ of odd resolved power in the $\ell=1$ dipole mode.
-- **Evidence**: `simulated`
-- **Comparator**: Contrasted directly with the flat isotropic Haar null ($S_{\mathrm{B}} = 0$) and the extreme localized poles of strict-QND Hamiltonians.
-- **Caveat**: Validated at finite resolution ($36\times18$ equal-area grid) at deterministic post-cutoff times ($t=10^4\,\hbar/J$); does not represent an infinite-time thermodynamic proof.
-- **Figure / Equation**: Figure 2 / Figure \ref{fig:fullsphere}; Equation \eqref{eq:H}.
-- **Confidence**: Verified on audited Zeus campaign datasets (`N16/hz0_+0.1000/raw_t10000.npz`).
-- **Wording Ceiling**: *"Demonstrates that clean interacting spin rings generate a dipolar root-count geometry closely approximating the Born profile."*
+## Claim 4: One matched ring exhibits a strongly dipolar full-sphere root asymmetry
 
----
+**Statement.** For the audited $N=16,t=10^4$ matched-field ring, 65,536 finite production roots and their exact antipodal partners yield a fully occupied $36\times18$ equal-area map with no smoothing, count-weighted Born residual $0.089$, correlation $0.971$ with $\mu=\cos\theta$, and dipole fraction $0.982$ of resolved odd power through $\ell=7$.
 
-## Claim 4: Finite-Size Convergence and Robustness Across System Scales
-*Mechanism & Scaling*
+- **Evidence:** N2 and N3, trusted/derived post-cutoff diagnostics.
+- **Comparator:** The map is strongly dipolar, unlike the exact isotropic Haar one-point null.
+- **Caveat:** The residual depends on resolution as cells become sparse; the result is a root-count diagnostic at finite size and resolution, not a continuum or probability claim. Even-power suppression checks exact antipodal construction rather than adding independent physics.
+- **Figure/equation:** Fig. 3; full-sphere asymmetry and residual definition.
+- **Wording ceiling:** “Shows a strongly dipolar finite-resolution root-count asymmetry in the highlighted matched ring.”
 
-**Statement**: The polar Born score $S_{\mathrm{B}}$ increases monotonically with system size from $0.192$ at $N=11$ ($2,048$ roots) to $0.807$ at $N=16$ ($65,536$ roots), maintaining unit full-sphere coverage and low azimuthal second-harmonic distortion ($|c_2| \le 0.25$) across all four audited time decades.
-- **Evidence**: `simulated`
-- **Comparator**: Distinguishes the matched spin ring from un-gated parameter sweeps that exhibit heavy radial tails, severe azimuthal warping, or zero coverage.
-- **Caveat**: Evaluated across 24 deterministic parameter rows ($N=11\text{--}16$, $t=10^3\text{--}10^6$); thermodynamic scaling remains a numerical projection.
-- **Figure / Equation**: Figure 3 / Figure \ref{fig:scaling}; Equation \eqref{eq:score}.
-- **Confidence**: High empirical reproducibility across all 24 verified post-cutoff rows.
-- **Wording Ceiling**: *"Shows monotonic finite-size convergence toward Born-like dipolar geometry while preserving unit full-sphere coverage."*
+## Claim 5: The matched sequence has a monotonic finite-size trend
 
----
+**Statement.** Across four deterministic saved times at each $N=11,\ldots,16$, the median polar score is $0.192, 0.411, 0.571, 0.715, 0.788,$ and $0.807$, respectively. All 24 matched rows have unit polar coverage and satisfy the declared $|c_2|\le0.25$ gate.
 
-## Claim 5: Analytical Certification of Native Commuting-X Families
-*Theoretical Certification / Constructive Family*
+- **Evidence:** N1 and N4, trusted post-cutoff numerical evidence.
+- **Comparator:** Among 1,208 completed spectra in the four audited sweep tables, exactly these 24 matched-field rows pass the declared coverage and azimuthal gates.
+- **Caveat:** Saved times are deterministic observations, not independent samples. The trend supplies no stochastic uncertainty, controlled $N\to\infty$ extrapolation, or mechanism for the matched-field condition. The second harmonic alone does not establish azimuthal uniformity.
+- **Figure/equation:** Fig. 4; polar-score definition.
+- **Wording ceiling:** “Reports a monotonic finite-size trend across the audited matched sequence.”
 
-**Statement**: There exists an explicit, non-empty constructive class of Hamiltonians (the Commuting-X family) whose folded energy spectrum $\sum_i s_i g_i$ analytically satisfies the finite-resolution Born criterion $C_{\mathrm{B}}$.
-- **Evidence**: `analytically derived`
-- **Comparator**: Shows that Born-like root geometry does not require non-integrable chaos; it can be engineered constructively in structured integrable models.
-- **Caveat**: Relies on finely tuned coupling ratios $g_i$ and specific phase choices rather than generic self-tuning.
-- **Figure / Equation**: Figure 4(a); `campaigns/constructive-families.md`.
-- **Confidence**: Exact analytical proof.
-- **Wording Ceiling**: *"Proves the existence of a native Hamiltonian family whose spectrum analytically certifies the Born criterion."*
+## Claim 6: The result defines a classification problem, not a completed measurement theory
 
----
+**Statement.** Exact root geometry and the structured-versus-Haar contrast motivate classifying Hamiltonians by their outcome-root geometry, preparation measure, and record structure.
 
-## Claim 6: Rigorous No-Go Boundaries and Non-Normal Breakdown
-*Boundaries & Obstructions*
+- **Evidence:** Inference from T1–T3 and N1–N4.
+- **Comparator:** Separates the proved existence question from unresolved selection and record questions.
+- **Caveat:** Algebraic multiplicity is not an operational probability. Different roots generally require different detector microstates, and instantaneous factorization does not establish stable, distinguishable, redundant records.
+- **Figure/equation:** Interpretation/discussion; Fig. 1 scope boundary.
+- **Wording ceiling:** “Defines a concrete structural classification program for unitary measurement-compatible dynamics.”
 
-**Statement**: Simple commuting vector fields cannot produce exact Born balance across open detuning intervals (Theorem H). Furthermore, singular-value convergence is insufficient to predict the root distribution of non-normal pencils, falsifying naive Gaussian-substitution approximations.
-- **Evidence**: `analytically derived`
-- **Comparator**: Rules out simplistic commuting field models and heuristic random-matrix shortcuts.
-- **Caveat**: The detuning obstruction applies to commuting fields; non-commuting Hamiltonians with non-trivial relative commutators bypass the no-go.
-- **Figure / Equation**: Figure 4(b, c); `campaigns/detuning-intervals.md` and `campaigns/nonnormal-limits.md`.
-- **Confidence**: Rigorous mathematical proofs.
-- **Wording Ceiling**: *"Establishes rigorous no-go boundaries for commuting vector fields and proves the failure of Gaussian substitution in non-normal pencils."*
+## Claims excluded from the manuscript spine
 
----
-
-## Claim 7: Hamiltonian Classification of Unitary Measurement
-*Scientific Capability & Significance*
-
-**Statement**: Formulating measurement-compatible states via projective pencils converts the measurement problem into a concrete many-body classification program: characterizing the Hamiltonian algebras and spectral symmetries that produce Born root geometry and record stability.
-- **Evidence**: `inferred`
-- **Comparator**: Replaces unfalsifiable philosophical interpretations with mathematically defined spectral and geometric criteria.
-- **Caveat**: Does not solve the operational preparation problem (why nature populates these boundary states) or prove macroscopic record amplification.
-- **Figure / Equation**: Figure 1; Section "Interpretation".
-- **Confidence**: Strong conceptual synthesis grounded directly in Claims 1–6.
-- **Wording Ceiling**: *"Provides a structural framework for classifying which unitary many-body dynamics admit measurement-compatible root geometries."*
+- A derivation of definite outcomes or wave-function collapse.
+- Operational Born probabilities from algebraic root counts.
+- A universal or asymptotic Born law for structured detectors.
+- A chaos, integrability, or many-body-localization mechanism.
+- Analytic constructive families, detuning no-go theorems, or non-normal limits not registered in the active evidence base.

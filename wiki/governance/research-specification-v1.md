@@ -1,8 +1,8 @@
 # Research Specification v1.0
 
-> Sources: Repository research specification, Unknown; User instruction, 2026-09-15
-> Raw: [Research specification v1.0](../../raw/project-governance/research-spec-v1.md); [Paper readiness reset](../../raw/project-governance/2026-09-15-paper-readiness-reset.md)
-> Updated: 2026-09-15
+> Sources: Repository research specification, Unknown; User instructions, 2026-09-15 and 2026-09-19
+> Raw: [Research specification v1.0](../../raw/project-governance/research-spec-v1.md); [Paper readiness reset](../../raw/project-governance/2026-09-15-paper-readiness-reset.md); [Weak Born criterion correction](../../raw/project-governance/2026-09-19-weak-born-criterion-correction.md)
+> Updated: 2026-09-19
 
 ## Authority
 
@@ -43,9 +43,24 @@ p_0(\Omega)=\frac{\rho_0(\Omega)}{\rho_0(\Omega)+\rho_1(\Omega)}
 =\cos^2\frac{\theta}{2},
 $$
 
-while the weak target concerns the azimuthally integrated outcome densities. Passing the weak target does not imply passing the strong one.
+For the weak target, first form the normalized polar marginals
 
-No single scalar certifies success. The required diagnostic suite includes global RMS error $E_2$, supported worst-case error $E_\infty$, spherical-harmonic leakage $E_{\mathrm{harm}}$, weak marginal error $E_{\mathrm{marg}}$, and estimator-robustness checks. Earlier fixed-bin thresholds remain useful historical diagnostics only; they are not the specification's success gate.
+$$
+\rho_b^{(\theta)}(\theta)
+=\sin\theta\int_0^{2\pi}\rho_b(\theta,\phi)\,d\phi,
+$$
+
+then require their equal-prior outcome ratio to satisfy
+
+$$
+\frac{\rho_0^{(\theta)}(\theta)}
+{\rho_0^{(\theta)}(\theta)+\rho_1^{(\theta)}(\theta)}
+=\cos^2\frac{\theta}{2}
+$$
+
+where the denominator is nonzero. Passing this weak target does not imply passing the strong one because azimuthal anisotropy can be hidden by marginalization.
+
+No single scalar certifies success. The required diagnostic suite includes global RMS error $E_2$, supported worst-case error $E_\infty$, spherical-harmonic leakage $E_{\mathrm{harm}}$, weak marginal-ratio error $E_{\mathrm{marg}}$, and estimator-robustness checks. Earlier fixed-bin thresholds remain useful historical diagnostics only; they are not the specification's success gate.
 
 ## Limits and weak coupling
 
@@ -98,4 +113,3 @@ Every promising candidate requires a reproducible result packet. Objective check
 - [Born-like point process](../concepts/born-like-points.md)
 - [Scientific contract](../methods/scientific-contract.md)
 - [Production pipeline](../methods/production-pipeline.md)
-

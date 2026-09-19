@@ -1,0 +1,12 @@
+{
+  "version": "exact-formalism-v1",
+  "status": "activated",
+  "certification": true,
+  "approved_at": "2026-09-19",
+  "spec_sha256": "a0d086567e2c717a6109439f67b4bfc9b5600e943ea03538427acbc38e67bb6d",
+  "source_hashes": {
+    "verifier/exact_formalism/v1/check.py": "0fc14e0255ed207df401d41fd4f4d7acc5ec197cb321bd356af658ed360d2306",
+    "verifier/exact_formalism/v1/METHOD.md": "a4f70242ba90e7a0bbcedf1c327f1c7faec0b4a54ff5d8f9101c6aa1c93b2df2",
+    "scripts/build_exact_formalism_packet.py": "0f3d98981cfc349f5d5542267f020ec8dc7107dfb548d494a4e6f53e49017953"
+  }
+}

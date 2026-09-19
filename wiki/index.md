@@ -3,7 +3,7 @@
 - [[governance/research-specification-v1|research-specification-v1]] — Controlling `SPEC.md` v1.0 contract; overrides conflicting prior wiki goals and gates.
 - [[governance/paper-readiness-ledger|paper-readiness-ledger]] — All mandatory gates reset to `INCOMPLETE`; `paper_ready = false`.
 - [[governance/research-control-center|research-control-center]] — Minimal-loading map for current state, knowledge, evidence, verifiers, and active work.
-- [[campaigns/commuting-qnd-sector|commuting-qnd-sector]] — Verified part of the supplied commuting/QND calculation, corrected to the SPEC density and limit conventions.
+- [[campaigns/commuting-qnd-sector|commuting-qnd-sector]] — Verified commuting/QND reduction and $Z$-basis weak-ratio obstruction under the corrected SPEC convention.
 
 
 This index serves as the structural map for the `unitary-collapse` research program. `SPEC.md` v1.0 is controlling authority; `RESEARCH_STATE.md` provides the compact current handoff subject to that specification. The Wiki provides durable scientific synthesis, evidence navigation, and operational methods.
@@ -14,14 +14,14 @@ Specification authority, paper-readiness state, and efficient access to the repo
 
 | Article | Summary | Updated |
 |---------|---------|---------|
-| [Research Specification v1.0](governance/research-specification-v1.md) | Controlling scientific target, approved search space, verifier architecture, and manuscript gate. | 2026-09-15 |
-| [Paper Readiness Ledger](governance/paper-readiness-ledger.md) | Every mandatory gate is `INCOMPLETE`; all prior results require fresh verification. | 2026-09-15 |
+| [Research Specification v1.0](governance/research-specification-v1.md) | Controlling scientific target, approved search space, verifier architecture, and manuscript gate. | 2026-09-19 |
+| [Paper Readiness Ledger](governance/paper-readiness-ledger.md) | `Exact collapse-like formalism` is `COMPLETE`; every other mandatory gate is `INCOMPLETE` and `paper_ready = false`. | 2026-09-19 |
 | [Research Control Center](governance/research-control-center.md) | Start page for authority, current state, durable knowledge, evidence, verifiers, reports, and live paper-readiness tracking. | 2026-09-19 |
 
 ## 🧬 Theory & Concepts
 - [[foundational-draft-aug2026]] — Architectural digest of the August 12, 2026 foundation manuscript (`main.pdf`).
 - [[big-picture]] — The fundamental scientific question and the restricted-state loophole.
-- [[born-like-points]] — Definition and diagnostics of Born-like root distributions and inversion balance.
+- [[born-like-points]] — Strong full-sphere and weak polar-marginal-ratio Born criteria and diagnostics.
 - [[projective-roots]] — The mathematical construction of collapsible states via matrix pencils.
 - [[haar-baseline]] — Solvable Haar-random baseline, $SU(2)$ invariance proof, and spherical ensemble.
 - [[theorem-targets]] — Five strategic theorem routes, martingale formulation, and harmonic-oscillator conjecture.
@@ -146,7 +146,9 @@ See [[literature-map]] for the complete strategic citation graph.
 ---
 
 ## 🚀 Research Campaigns
-- [[campaigns/commuting-qnd-sector|commuting-qnd-sector]] — Exact sector reduction and a corrected no-go result for the commuting/QND starting tier.
+- [[campaigns/exact-collapse-formalism|exact-collapse-formalism]] — Draft state-level verification and all fixture theta/ratio plots; activation and gate promotion pending.
+- [[campaigns/commuting-qnd-sector|commuting-qnd-sector]] — Exact sector reduction and a $Z$-basis weak-ratio obstruction for the commuting/QND starting tier.
+- [[campaigns/markovianity-born|markovianity-born]] — Exploratory memory-versus-Born study; the collective ring is asymptotically Markovian, less memory tracks better Born similarity, and the finite-size trend is an estimator artifact. No gate credit.
 
 The former 87-case ring/chain ledgers and their campaign summaries were deleted as obsolete. Current progress is tracked only against the [paper-readiness ledger](governance/paper-readiness-ledger.md); all gates remain `INCOMPLETE`.
 

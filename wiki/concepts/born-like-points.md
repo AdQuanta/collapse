@@ -1,7 +1,7 @@
 # Born Criteria for Collapsible-State Measures
 
-> Sources: `SPEC.md` v1.0, 2026-09-15
-> Raw: [Research specification snapshot](../../raw/project-governance/research-spec-v1.md)
+> Sources: `SPEC.md` v1.0, 2026-09-15; User correction, 2026-09-19
+> Raw: [Research specification snapshot](../../raw/project-governance/research-spec-v1.md); [Weak Born criterion correction](../../raw/project-governance/2026-09-19-weak-born-criterion-correction.md)
 > Updated: 2026-09-19
 
 The specification defines two separately normalized outcome measures. A single reflected histogram or a visually close finite-size curve is not the target.
@@ -32,29 +32,34 @@ This is a full-sphere statement. Azimuthal structure and unsupported regions can
 
 ## Weak polar criterion
 
-Define the azimuthally integrated surface density
+Define the probability density of the polar angle with respect to $d\theta$,
 
 $$
-\bar\rho_b(\theta)=\int_0^{2\pi}\rho_b(\theta,\phi)\,d\phi,
+\rho_b^{(\theta)}(\theta)
+=\sin\theta\int_0^{2\pi}\rho_b(\theta,\phi)\,d\phi,
 \qquad
-\int_0^\pi\bar\rho_b(\theta)\sin\theta\,d\theta=1.
+\int_0^\pi\rho_b^{(\theta)}(\theta)\,d\theta=1.
 $$
 
-The weak target is
+With equal outcome priors, first form the ratio after marginalizing over azimuth,
 
 $$
-\bar\rho_0(\theta)=\cos^2\frac\theta2,
+p_0^{\mathrm{weak}}(\theta)
+=\frac{\rho_0^{(\theta)}(\theta)}
+{\rho_0^{(\theta)}(\theta)+\rho_1^{(\theta)}(\theta)},
 \qquad
-\bar\rho_1(\theta)=\sin^2\frac\theta2.
+p_1^{\mathrm{weak}}(\theta)=1-p_0^{\mathrm{weak}}(\theta).
 $$
 
-If a calculation instead reports the probability density $p_b(\theta)$ with respect to $d\theta$, then
+The weak Born criterion is
 
 $$
-p_b(\theta)=\bar\rho_b(\theta)\sin\theta.
+p_0^{\mathrm{weak}}(\theta)=\cos^2\frac\theta2,
+\qquad
+p_1^{\mathrm{weak}}(\theta)=\sin^2\frac\theta2,
 $$
 
-Therefore the Born targets in that convention are $p_0(\theta)=\cos^2(\theta/2)\sin\theta$ and $p_1(\theta)=\sin^2(\theta/2)\sin\theta$. Confusing these two density conventions changes endpoint powers and can create false agreements or false no-go arguments.
+where the denominator is nonzero. For $0<\theta<\pi$, the common Jacobian $\sin\theta$ cancels from this ratio, so it can equivalently be evaluated from the azimuthally integrated surface densities. The criterion does not prescribe either outcome marginal separately: the two marginals may share a nontrivial polar envelope. It is weaker than the full-sphere criterion because marginalization can hide azimuthal deviations or anisotropies.
 
 ## Mandatory diagnostics
 
@@ -63,7 +68,7 @@ Every candidate must report all of the following, with estimator dependence chec
 1. $E_2$, the global spherical RMS error of $p_0$ from $\cos^2(\theta/2)$;
 2. $E_\infty$, the worst supported error, evaluated only where the estimator is resolved;
 3. $E_{\mathrm{harm}}$, leakage outside the $Y_{00}$ and $Y_{10}$ sectors in the preferred basis;
-4. $E_{\mathrm{marg}}$, the weighted polar-marginal error for both $\bar\rho_0$ and $\bar\rho_1$.
+4. $E_{\mathrm{marg}}$, the normalized, $\sin\theta$-weighted error of the weak marginal ratios on their supported polar domain.
 
 Coverage, multiplicities, numerical residuals, binning/KDE/harmonic-reconstruction sensitivity, and both outcome sample sizes accompany these scores. No legacy scalar score or 64-bin gate substitutes for this suite.
 
@@ -79,13 +84,13 @@ Instantaneous convergence after the large-$N$ limit is preferred. A Cesàro time
 
 ## Reflected ratios are secondary
 
-For a single polar density $P(\theta)$, the identity
+For a single polar density $P(\theta)$, the reflected ratio
 
 $$
 \frac{P(\theta)}{P(\theta)+P(\pi-\theta)}=\cos^2\frac\theta2
 $$
 
-is equivalent, where the denominator is nonzero, to $P(\theta)=(1+\cos\theta)E(\theta)$ with reflection-even $E$. This inversion-balance identity is valid but is not the SPEC strong or weak criterion: it neither constructs the two independently normalized outcome measures nor tests full-sphere support. It may be reported only as a derived diagnostic.
+is equivalent, where the denominator is nonzero, to $P(\theta)=(1+\cos\theta)E(\theta)$ with reflection-even $E$. It equals the SPEC weak ratio only when the two independently normalized outcome marginals obey $\rho_1^{(\theta)}(\theta)=\rho_0^{(\theta)}(\pi-\theta)$, as they do when the outcome measures are antipodal. Without that additional result, a single reflected histogram constructs neither the weak ratio nor the strong full-sphere criterion.
 
 ## Interpretation boundary
 

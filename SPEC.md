@@ -267,39 +267,48 @@ The target is asymptotic convergence toward this profile in the prescribed many-
 
 ## 5.2 Weak Born criterion
 
-Define azimuthally integrated conditional densities
+For each outcome \(b\in\{0,1\}\), define the polar marginal probability density
 
 \[
-\bar\rho_b(\theta)
+\rho_b^{(\theta)}(\theta)
 =
+\sin\theta
 \int_0^{2\pi}
 \rho_b(\theta,\phi)\,d\phi,
+\qquad
+\int_0^\pi
+\rho_b^{(\theta)}(\theta)\,d\theta=1.
 \]
 
-with
+With equal outcome priors, define
 
 \[
-\int_0^\pi
-\bar\rho_b(\theta)\sin\theta\,d\theta=1.
+p_0^{\mathrm{weak}}(\theta)
+=
+\frac{\rho_0^{(\theta)}(\theta)}
+{\rho_0^{(\theta)}(\theta)+\rho_1^{(\theta)}(\theta)},
+\qquad
+p_1^{\mathrm{weak}}(\theta)
+=1-p_0^{\mathrm{weak}}(\theta).
 \]
 
-The weaker target is
+The weak Born criterion in the preferred basis is
 
 \[
 \boxed{
-\bar\rho_0(\theta)
+p_0^{\mathrm{weak}}(\theta)
 =
 \cos^2\frac{\theta}{2},
 \qquad
-\bar\rho_1(\theta)
+p_1^{\mathrm{weak}}(\theta)
 =
 \sin^2\frac{\theta}{2}
 }
 \]
 
-in the relevant asymptotic limit.
+for all \(\theta\) where the denominator is nonzero, in the relevant asymptotic limit.
 
-The strong and weak criteria must be reported separately. Passing the weak criterion does not imply passing the strong one.
+The strong and weak criteria must be reported separately. Passing the weak criterion does not imply passing the strong one because azimuthal deviations or anisotropies may be hidden by the marginalization over \(\phi\).
 
 ---
 
@@ -361,7 +370,7 @@ This score must expose, in particular, unwanted \(m\neq0\) azimuthal structure.
 
 ## 6.4 Weak marginal error
 
-Define \(E_{\mathrm{marg}}\) from the deviation of \(\bar\rho_0,\bar\rho_1\) from their target cosine- and sine-squared forms, using a normalized \(L^2\)-type measure with weight \(\sin\theta\).
+Define \(E_{\mathrm{marg}}\) from the deviation of \(p_0^{\mathrm{weak}},p_1^{\mathrm{weak}}\) from their target cosine- and sine-squared forms, using a normalized \(L^2\)-type measure with weight \(\sin\theta\) over the supported polar domain where \(\rho_0^{(\theta)}+\rho_1^{(\theta)}\neq0\).
 
 ## 6.5 Estimator robustness
 
@@ -1130,4 +1139,3 @@ The research loop should behave as:
 The agent is encouraged to be creative about **how to solve the problem**.
 
 It is not allowed to be creative about **what counts as solving the problem**.
-

@@ -1,39 +1,17 @@
-# Figure Card 1: Projective Pencil Roots Define Antipodally Paired Definite-Outcome States
+# Figure Card 1: Scope of the Restricted-State Question
 
-## 1. Figure Card Specification
+## Figure specification
 
-1. **Claim-like Title**:
-   *Projective Matrix-Pencil Roots Define an Antipodally Paired Set of Definite-Outcome Product States on the Bloch Sphere.*
+1. **Claim-like title:** *Measurement remains the unresolved stronger arrow under global unitarity.*
+2. **One-sentence takeaway:** Spontaneous emission, decoherence, and thermalization reconcile local irreversibility with global unitarity, whereas a single global measurement record remains unaccounted for; the manuscript tests a restricted product-boundary construction rather than claiming to derive that arrow.
+3. **Question answered:** What problem does the projective construction address, and what does it deliberately leave unresolved?
+4. **Visual flow:** Established subsystem arrows → dashed measurement question → restricted non-superposition-closed product-boundary set + exact propagator $U(t)$ → outcome-labelled root geometry.
+5. **Dominant element:** The dashed “Measurement?” box and the dashed return arrow from root geometry, which visibly marks the gap between the construction and a record theorem.
+6. **Instant comparison:** Blue established processes versus the orange unresolved global-record step.
+7. **Quantitative anchor:** None; this is a scope-setting conceptual figure.
+8. **Alternative interpretation addressed:** Prevents readers from treating the manuscript as a derivation of collapse or a completed unitary measurement model.
+9. **Why main text:** The limitation is part of the paper’s central claim and must appear before the mathematical construction.
 
-2. **One-Sentence Takeaway**:
-   Under unitary evolution of a qubit-detector system, the exact initial product states yielding definite measurement outcomes are the projective roots of a detector-space matrix pencil, whose outcome multisets are forced by unitarity to form exact Bloch antipodes.
+## Draft caption
 
-3. **Question Answered**:
-   How can a globally linear, unitary many-body evolution produce definite, non-superposed measurement outcomes from pure initial states without invoking non-unitary state reduction?
-
-4. **Panel Flow**:
-   - **(a) Physical Architecture**: Qubit $|\phi_0\rangle = \alpha|0\rangle + \beta|1\rangle$ coupled to a $d$-dimensional detector $\mathcal{H}_D$ via unitary propagator $U(t) = \exp(-\ii H t)$.
-   - **(b) Algebraic Engine**: $2\times 2$ block partition of $U(t) \to$ forward pole pencils $(\alpha C + \beta D)\eta = 0$ (pole $0$) and $(\alpha A + \beta B)\eta = 0$ (pole $1$).
-   - **(c) Geometric Projection**: Complex affine pencil roots $z = \beta/\alpha \in \mathbb{CP}^1$ mapped to Bloch sphere coordinates $\theta = 2\arctan|z|$, $\phi = \arg z$.
-   - **(d) Antipodal Minor Duality**: Visual mapping of the outcome multisets $\Omega_j^{(0)}$ and $\Omega_j^{(1)}$ on $S^2$, showing $\Omega_j^{(1)} = -\Omega_j^{(0)}$.
-
-5. **Dominant Panel**:
-   Panel (d), visually demonstrating that the two outcome multisets are not independent random clouds but exact geometric antipodes.
-
-6. **Instant Comparison**:
-   The contrast between an arbitrary set of unconstrained states versus the structured, antipodally locked pairs forced by unitarity via Jacobi's complementary-minor theorem.
-
-7. **Quantitative Anchor**:
-   Exactly $d = 2^N$ projective roots counted with algebraic multiplicity in $\mathbb{CP}^1$ for regular pencils of detector dimension $d$.
-
-8. **Alternative Explanation Addressed**:
-   Rules out the objection that definite outcomes under unitary dynamics can only be approximate (e.g., asymptotic off-diagonal decay in decoherence). This construction is an exact algebraic identity for perfect disentanglement.
-
-9. **Why Main Text vs. SI**:
-   Defines the central mathematical object of the Letter; without establishing the pencil root construction and antipodal duality, the subsequent numerical distributions cannot be physically interpreted.
-
----
-
-## 2. Publication-Ready Draft Caption
-
-> **FIG. 1. Projective pencil construction and exact antipodal outcome geometry.** (a) System schematic: a readout qubit coupled to a $d$-dimensional many-body detector evolving under global unitary propagator $U(t)$. (b) Partitioning $U(t)$ into $d\times d$ blocks yields the homogeneous forward pole pencils $(\alpha C + \beta D)\eta = 0$ for outcome $0$ and $(\alpha A + \beta B)\eta = 0$ for outcome $1$. (c) Projective roots $z = \beta/\alpha \in \mathbb{CP}^1$ define discrete coordinates on the Bloch sphere $S^2$ via $\theta = 2\arctan |z|$ and $\phi = \arg z$. (d) By Jacobi's complementary-minor theorem, unitarity forces the outcome-$1$ roots to be exact Bloch antipodes of the outcome-$0$ roots ($\Omega_j^{(1)} = -\Omega_j^{(0)}$), guaranteeing an odd antipodal asymmetry $a(-\Omega) = -a(\Omega)$ for any regular detector.
+> **FIG. 1. Measurement is the unresolved stronger arrow.** Spontaneous emission, decoherence, and thermalization reconcile apparently irreversible subsystem behavior with reversible global dynamics. Measurement asks for the stronger transition from a superposition of alternatives to one global record. We retain exact unitarity and test a restricted set of product boundary states whose outcome labels define roots on the Bloch sphere. The dashed measurement link marks the scope of the result: the construction classifies boundary-compatible states but does not supply a selection law or prove stable records.
