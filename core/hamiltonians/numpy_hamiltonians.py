@@ -283,7 +283,7 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
                 (\sigma^+_i \sigma^-_j + \sigma^-_i \sigma^+_j)
             -\sum_i \bigl(J_x\, X_0 X_i + J_z\, Z_0 Z_i
                          + J_{zx}\, Z_0 X_i\bigr)
-            -\sum_i \bigl(h_{x,i}\, X_i + h_{z,i}\, Z_i\bigr)
+            -\sum_i \bigl(h_{x,i}\, X_i + h_{y,i}\, Y_i + h_{z,i}\, Z_i\bigr)
 
     Parameters
     ----------
@@ -308,12 +308,17 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
     hx : float
         Transverse self-energy field (pixel qubits, and central when
         *hx0* is *None*).
+    hy : float
+        Transverse ``Y`` self-energy field (pixel qubits, and central when
+        *hy0* is *None*).
     hz : float
         Longitudinal self-energy field (pixel qubits, and central when
         *hz0* is *None*).
     hx0 : float or None
         Transverse field on the central qubit.  Falls back to *hx* when
         *None*.
+    hy0 : float or None
+        ``Y`` field on the central qubit.  Falls back to *hy* when *None*.
     hz0 : float or None
         Longitudinal field on the central qubit.  Falls back to *hz*
         when *None*.
@@ -348,8 +353,10 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         Jzx: float = 0.0,
         Jcpm: float = 0.0,
         hx: float = 0.0,
+        hy: float = 0.0,
         hz: float = 0.0,
         hx0: Optional[float] = None,
+        hy0: Optional[float] = None,
         hz0: Optional[float] = None,
         connectivity: str = "ring",
         central_coupling: str = "auto",
@@ -383,8 +390,10 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         self.Jzx = Jzx
         self.Jcpm = Jcpm
         self.hx = hx
+        self.hy = hy
         self.hz = hz
         self.hx0 = hx0
+        self.hy0 = hy0
         self.hz0 = hz0
         self.connectivity = connectivity
         self.graph_spec = graph_spec or DetectorGraphSpec(kind=connectivity)
@@ -435,7 +444,11 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
     def generate(self) -> np.ndarray:
         N = self.N_pixel + 1  # qubit 0 = central, 1…N_pixel = ring
         D = 2**N
-        H = np.zeros((D, D), dtype=np.float64)
+        # A single-site Y term is purely imaginary, so the accumulator must be
+        # complex whenever a Y self-field is active.  Without one the dtype is
+        # unchanged, keeping every pre-existing caller bit-identical.
+        has_y_field = self.hy != 0.0 or (self.hy0 is not None and self.hy0 != 0.0)
+        H = np.zeros((D, D), dtype=np.complex128 if has_y_field else np.float64)
         Xs, Zs = build_pauli_operators(N)
 
         if self.seed is not None:
@@ -458,7 +471,8 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
             H -= j2_val * (Zs[i] @ Zs[j])
 
         needs_y = (
-            self.Jpm != 0.0
+            has_y_field
+            or self.Jpm != 0.0
             or self.Jpm2 != 0.0
             or self.Jxx != 0.0
             or self.Jyy != 0.0
@@ -526,16 +540,21 @@ class SinglePixelHamiltonianNumpy(HamiltonianGenerator):
         # Self-energy fields (on-site)
         # Central qubit (i=0) may have its own field values
         hx0_base = self.hx0 if self.hx0 is not None else self.hx
+        hy0_base = self.hy0 if self.hy0 is not None else self.hy
         hz0_base = self.hz0 if self.hz0 is not None else self.hz
         hx0_val = _val(self._disorder, hx0_base, self.disorder_strength_hx)
         hz0_val = _val(self._disorder, hz0_base, self.disorder_strength_hz)
         H -= hx0_val * Xs[0]
         H -= hz0_val * Zs[0]
+        if hy0_base != 0.0:
+            H -= hy0_base * Ys[0]
         for i in range(1, N):
             hx_val = _val(self._disorder, self.hx, self.disorder_strength_hx)
             hz_val = _val(self._disorder, self.hz, self.disorder_strength_hz)
             H -= hx_val * Xs[i]
             H -= hz_val * Zs[i]
+            if self.hy != 0.0:
+                H -= self.hy * Ys[i]
 
         return H
 

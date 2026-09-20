@@ -478,8 +478,10 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         Jzx: float = 0.0,
         Jcpm: float = 0.0,
         hx: float = 0.0,
+        hy: float = 0.0,
         hz: float = 0.0,
         hx0: Optional[float] = None,
+        hy0: Optional[float] = None,
         hz0: Optional[float] = None,
         connectivity: str = "ring",
         central_coupling: str = "auto",
@@ -514,8 +516,10 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
         self.Jzx = Jzx
         self.Jcpm = Jcpm
         self.hx = hx
+        self.hy = hy
         self.hz = hz
         self.hx0 = hx0
+        self.hy0 = hy0
         self.hz0 = hz0
         self.connectivity = connectivity
         self.graph_spec = graph_spec or DetectorGraphSpec(kind=connectivity)
@@ -563,6 +567,16 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             or (self._disorder is not None and self.disorder_strength_Jpm2 != 0.0)
         ):
             raise ValueError("J2 and Jpm2 are defined only for ring connectivity")
+
+    def _has_y_field(self) -> bool:
+        """Return whether a single-site ``Y`` self-field is active.
+
+        A single ``Y`` term is purely imaginary in the computational basis, so
+        it forces a complex accumulator, and it breaks both total-``Sz``
+        conservation and ``Z``-parity.
+        """
+        hy0 = self.hy0 if self.hy0 is not None else self.hy
+        return self.hy != 0.0 or hy0 != 0.0
 
     def _build_static(self) -> Tuple[list, int]:
         """Build static operator list and return ``(static, N)``."""
@@ -630,6 +644,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
                 cpm_list.append([-jcpm_val / 4, 0, i])
         # Central qubit (i=0) may have its own field values
         hx0_base = self.hx0 if self.hx0 is not None else self.hx
+        hy0_base = self.hy0 if self.hy0 is not None else self.hy
         hz0_base = self.hz0 if self.hz0 is not None else self.hz
         hx_list = [
             [-_val(self._disorder, hx0_base, self.disorder_strength_hx), 0]
@@ -637,6 +652,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             [-_val(self._disorder, self.hx, self.disorder_strength_hx), i]
             for i in range(1, N)
         ]
+        hy_list = [[-hy0_base, 0]] + [[-self.hy, i] for i in range(1, N)]
         hz_list = [
             [-_val(self._disorder, hz0_base, self.disorder_strength_hz), 0]
         ] + [
@@ -666,6 +682,8 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             static.append(["-+", cpm_list])
         if any(v[0] != 0 for v in hx_list):
             static.append(["x", hx_list])
+        if any(v[0] != 0 for v in hy_list):
+            static.append(["y", hy_list])
         if any(v[0] != 0 for v in hz_list):
             static.append(["z", hz_list])
 
@@ -678,7 +696,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             static,
             [],
             basis=basis,
-            dtype=np.float64,
+            dtype=np.complex128 if self._has_y_field() else np.float64,
             check_symm=False,
             check_herm=False,
         )
@@ -700,6 +718,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             self._disorder is not None and self.disorder_strength_Jzx != 0.0
         )
         has_pairing = self.Jxx != 0.0 or self.Jyy != 0.0 or self.Jy != 0.0
+        has_y_field = self._has_y_field()
         has_disord = _has_disorder(
             self._disorder,
             self.disorder_strength_J,
@@ -724,7 +743,9 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             and not has_disord
             and central_preserves_shift
         )
-        can_use_mag = not has_xx_x and not has_zx and not has_pairing
+        can_use_mag = (
+            not has_xx_x and not has_zx and not has_pairing and not has_y_field
+        )
         has_single_x = (
             self.hx != 0.0
             or (self.hx0 is not None and self.hx0 != 0.0)
@@ -734,7 +755,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             )
             or has_zx
         )
-        can_use_mag_parity = not has_single_x
+        can_use_mag_parity = not has_single_x and not has_y_field
 
         if not self.use_symmetry or (
             not can_use_shift and not can_use_mag and not can_use_mag_parity
@@ -783,6 +804,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             self._disorder is not None and self.disorder_strength_Jzx != 0.0
         )
         has_pairing = self.Jxx != 0.0 or self.Jyy != 0.0 or self.Jy != 0.0
+        has_y_field = self._has_y_field()
         has_disord = _has_disorder(
             self._disorder,
             self.disorder_strength_J,
@@ -807,7 +829,9 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             and not has_disord
             and central_preserves_shift
         )
-        can_use_mag = not has_xx_x and not has_zx and not has_pairing
+        can_use_mag = (
+            not has_xx_x and not has_zx and not has_pairing and not has_y_field
+        )
         has_single_x = (
             self.hx != 0.0
             or (self.hx0 is not None and self.hx0 != 0.0)
@@ -817,7 +841,7 @@ class SinglePixelHamiltonianQuSpin(HamiltonianGenerator):
             )
             or has_zx
         )
-        can_use_mag_parity = not has_single_x
+        can_use_mag_parity = not has_single_x and not has_y_field
         if not self.use_symmetry or (
             not can_use_shift and not can_use_mag and not can_use_mag_parity
         ):
