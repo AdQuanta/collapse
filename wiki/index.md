@@ -23,6 +23,7 @@ Specification authority, paper-readiness state, and efficient access to the repo
 - [[big-picture]] — The fundamental scientific question and the restricted-state loophole.
 - [[born-like-points]] — Strong full-sphere and weak polar-marginal-ratio Born criteria and diagnostics.
 - [[projective-roots]] — The mathematical construction of collapsible states via matrix pencils.
+- [[outcome-antipodality]] — Unitarity pairs the two outcome root sets by antipodes with equal kernel weights; proof and consequences.
 - [[haar-baseline]] — Solvable Haar-random baseline, $SU(2)$ invariance proof, and spherical ensemble.
 - [[theorem-targets]] — Five strategic theorem routes, martingale formulation, and harmonic-oscillator conjecture.
 - [[falsifiability-and-experiments]] — Mesoscopic tests, short-time deviations, covering complexity, and experimental roadmap.

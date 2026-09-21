@@ -252,3 +252,117 @@ def test_singular_pencil_keeps_left_diagnostics_flag_true() -> None:
     assert np.isnan(spectrum.maximum_left_homogeneous_residual)
     assert spectrum.left_diagnostics_available is True
     _require_left_diagnostics(spectrum.left_diagnostics_available)
+
+
+def _structured_ring_blocks(detector_n: int) -> tuple[np.ndarray, np.ndarray]:
+    """Return the ``(U00, U10)`` blocks of a symmetric matched ring at ``t=37``."""
+
+    from scipy.linalg import expm
+
+    from core.hamiltonians.numpy_hamiltonians import SinglePixelHamiltonianNumpy
+
+    hamiltonian = SinglePixelHamiltonianNumpy(
+        N_pixel=detector_n,
+        J=1.0,
+        Jpm=0.0,
+        Jx=0.01 / np.sqrt(detector_n),
+        Jy=0.0,
+        Jz=0.0,
+        Jzx=0.0,
+        Jcpm=0.0,
+        hx=0.0,
+        hz=0.1,
+        hx0=0.0,
+        hz0=0.1,
+        connectivity="ring",
+        central_coupling="all",
+    ).generate()
+    unitary = expm(-1.0j * hamiltonian * 37.0)
+    half = unitary.shape[0] // 2
+    return unitary[:half, :half].copy(), unitary[half:, :half].copy()
+
+
+def _worst_backward_error(
+    u00: np.ndarray,
+    u10: np.ndarray,
+    alpha: np.ndarray,
+    beta: np.ndarray,
+) -> float:
+    """Return the largest ``sigma_min(beta U10 - alpha U00)`` over unit root pairs."""
+
+    worst = 0.0
+    for a, b in zip(alpha, beta, strict=True):
+        scale = float(np.hypot(abs(a), abs(b)))
+        if scale == 0.0:
+            continue
+        smallest = np.linalg.svd(
+            (b / scale) * u10 - (a / scale) * u00, compute_uv=False
+        )[-1]
+        worst = max(worst, float(smallest))
+    return worst
+
+
+def test_preconditioning_restores_precision_on_structured_blocks() -> None:
+    """LAPACK ``zggev`` loses digits on exactly structured symmetric blocks.
+
+    Every root of this pencil is semisimple and every eigenvalue condition
+    number is order one, so the loss is a property of the exact zeros in the
+    blocks rather than of the problem.  The unitary DFT right factor mixes that
+    structure away without changing the projective spectrum, and both the roots
+    and the eigenvectors return to machine precision.
+    """
+
+    u00, u10 = _structured_ring_blocks(4)
+
+    plain = generalized_relative_evolution_spectrum(u00, u10, precondition=False)
+    preconditioned = generalized_relative_evolution_spectrum(u00, u10)
+
+    assert plain.preconditioner == "none"
+    assert preconditioned.preconditioner == "dft"
+
+    plain_backward = _worst_backward_error(u00, u10, plain.alpha, plain.beta)
+    fixed_backward = _worst_backward_error(
+        u00, u10, preconditioned.alpha, preconditioned.beta
+    )
+    assert plain_backward > 1.0e-10
+    assert fixed_backward < 1.0e-14
+
+    # The eigenvectors are the collapsible detector states, so their residual
+    # matters as much as the root location.
+    assert plain.maximum_homogeneous_residual > 1.0e-10
+    assert preconditioned.maximum_homogeneous_residual < 1.0e-14
+
+
+def test_preconditioning_leaves_generic_pencils_unharmed() -> None:
+    """A generic pencil is already accurate, and the DFT factor must not cost it."""
+
+    rng = np.random.default_rng(20260920)
+    dimension = 24
+    unitary, _ = np.linalg.qr(
+        rng.normal(size=(2 * dimension, 2 * dimension))
+        + 1j * rng.normal(size=(2 * dimension, 2 * dimension))
+    )
+    u00 = unitary[:dimension, :dimension].copy()
+    u10 = unitary[dimension:, :dimension].copy()
+
+    plain = generalized_relative_evolution_spectrum(u00, u10, precondition=False)
+    preconditioned = generalized_relative_evolution_spectrum(u00, u10)
+
+    maximum, _ = matched_projective_angle_error(plain.theta, preconditioned.theta)
+    assert maximum < 1.0e-12
+    assert preconditioned.maximum_homogeneous_residual < 1.0e-14
+
+
+def test_preconditioning_applies_without_left_eigenvectors() -> None:
+    """The correction is a change of basis, so the lean path gets it too."""
+
+    u00, u10 = _structured_ring_blocks(4)
+
+    lean = generalized_relative_evolution_spectrum(
+        u00, u10, compute_left_eigenvectors=False
+    )
+
+    assert lean.preconditioner == "dft"
+    assert lean.left_diagnostics_available is False
+    assert _worst_backward_error(u00, u10, lean.alpha, lean.beta) < 1.0e-14
+    assert lean.maximum_homogeneous_residual < 1.0e-14

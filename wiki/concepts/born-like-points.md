@@ -1,8 +1,8 @@
 # Born Criteria for Collapsible-State Measures
 
-> Sources: `SPEC.md` v1.0, 2026-09-15; User correction, 2026-09-19
-> Raw: [Research specification snapshot](../../raw/project-governance/research-spec-v1.md); [Weak Born criterion correction](../../raw/project-governance/2026-09-19-weak-born-criterion-correction.md)
-> Updated: 2026-09-19
+> Sources: `SPEC.md` v1.0, 2026-09-15; User correction, 2026-09-19; Repository execution, 2026-09-21
+> Raw: [Research specification snapshot](../../raw/project-governance/research-spec-v1.md); [Weak Born criterion correction](../../raw/project-governance/2026-09-19-weak-born-criterion-correction.md); [Outcome antipodality verification](../../raw/campaigns/2026-09-21-outcome-antipodality-verification.md)
+> Updated: 2026-09-21
 
 The specification defines two separately normalized outcome measures. A single reflected histogram or a visually close finite-size curve is not the target.
 
@@ -90,7 +90,7 @@ $$
 \frac{P(\theta)}{P(\theta)+P(\pi-\theta)}=\cos^2\frac\theta2
 $$
 
-is equivalent, where the denominator is nonzero, to $P(\theta)=(1+\cos\theta)E(\theta)$ with reflection-even $E$. It equals the SPEC weak ratio only when the two independently normalized outcome marginals obey $\rho_1^{(\theta)}(\theta)=\rho_0^{(\theta)}(\pi-\theta)$, as they do when the outcome measures are antipodal. Without that additional result, a single reflected histogram constructs neither the weak ratio nor the strong full-sphere criterion.
+is equivalent, where the denominator is nonzero, to $P(\theta)=(1+\cos\theta)E(\theta)$ with reflection-even $E$. It equals the SPEC weak ratio only when the two independently normalized outcome marginals obey $\rho_1^{(\theta)}(\theta)=\rho_0^{(\theta)}(\pi-\theta)$. Unitarity forces exactly that, because the two outcome measures are antipodal ([[outcome-antipodality]]), so a single reflected polar histogram does construct the weak ratio. It still constructs nothing about the strong full-sphere criterion, which needs the joint $(\theta,\phi)$ density and its antipodal image.
 
 ## Interpretation boundary
 
@@ -100,4 +100,4 @@ Root counting describes propagator geometry. It is not yet an operational probab
 
 All historical Born-like labels are uncredited under v1.0 until the dual roots, multiplicity weights, both measures, mandatory metrics, preferred basis, ordered limits, robustness region, and controls are rerun through the frozen verifier. `paper_ready = false`.
 
-See also: [[projective-roots]], [[coverage-gates]], [[haar-baseline]], [[research-specification-v1]].
+See also: [[projective-roots]], [[outcome-antipodality]], [[coverage-gates]], [[haar-baseline]], [[research-specification-v1]].

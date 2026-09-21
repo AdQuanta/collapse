@@ -344,3 +344,13 @@ submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.
 - Verified: all 111 articles are indexed and resolvable, all internal/See Also/Raw links resolve, no topic-depth violations, and the one fidelity suspect (`5.291901841267055e-16` in `exact-collapse-formalism.md`) matches its raw source verbatim.
 - Mechanical: `scripts/check_evidence.py` reports 99 evidence errors, all legacy literature/concepts/methods articles that predate the raw-source invariant and still lack a `> Raw:` field; 0 unreferenced raw files.
 - Judgment: 4 orphan pages with no inbound links from other article bodies (`literature/collapse-and-chaos-zotero-collection.md`, `methods/git-delivery.md`, `methods/implementation-standards.md`, `concepts/resonant-return-dynamics.md`); 3 missing cross-references — `born-like-points.md`'s Status section describes the exact dual-root/multiplicity criteria that `exact-collapse-formalism.md`'s verifier now tests, but neither links to the other; `commuting-qnd-sector.md` (the other live campaign) does not reference `exact-collapse-formalism.md`; and `research-control-center.md`'s knowledge-routing table and Verifier status section omit the new `verifier/exact_formalism/v1/` entirely, still pointing only to the frozen `verifier/analytic_p_theta/`.
+
+## [2026-09-21] ingest | Antipodality of the Two Outcome Root Sets
+- Disposition: New; Update
+- Raw: raw/campaigns/2026-09-21-outcome-antipodality-verification.md
+- Added: `wiki/concepts/outcome-antipodality.md` — theorem, subspace-intersection proof (as recorded in the frozen `verifier/exact_formalism/v1/METHOD.md`), independent branch-Gram-identity proof, consequences for the two Born criteria, and numerical certification.
+- Updated: Born Criteria for Collapsible-State Measures — the "Reflected ratios are secondary" section stated the antipodal marginal relation as an unmet condition; it is now discharged, so the reflected polar histogram used throughout the search scripts computes the weak ratio itself. The caution about the strong criterion is retained and sharpened.
+- Updated: Projective Roots and Exact Collapsible States — records that the two outcome measures are antipodal pushforwards with $K_0=K_1$.
+- Updated: wiki/index.md concepts list.
+- Validation: `tests/test_outcome_antipodality.py` 13 passed; antipodal-map mutation killed 3/3 by the kernel-dimension tests.
+- Scoped: no gate promoted, `paper_ready` remains `false`. The theorem pairs rays and kernel dimensions only; it supplies no singular-continuum measure and no evidence about any score's value.

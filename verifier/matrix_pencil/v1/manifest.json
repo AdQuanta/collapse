@@ -1,0 +1,38 @@
+{
+  "version": "matrix-pencil-v1",
+  "status": "candidate",
+  "certification": false,
+  "proposed_at": "2026-09-20",
+  "activation_note": "SPEC.md 0.1 forbids activating a verifier without explicit user approval. This checker reports certification=false until the user sets status to activated and records the approval.",
+  "covers": [
+    "SPEC.md 3 distinct-root reduction and kernel-dimension weights",
+    "finite, infinite, degenerate (semisimple and defective), and singular cases"
+  ],
+  "hashes_core_dependencies": true,
+  "source_hashes": {
+    "SPEC.md": "a0d086567e2c717a6109439f67b4bfc9b5600e943ea03538427acbc38e67bb6d",
+    "verifier/matrix_pencil/v1/check.py": "5fe8c12e526b8b96433121e2c0485be48a66bb10ceffa50f080f9a1e7984ce8b",
+    "verifier/matrix_pencil/v1/METHOD.md": "5953227c03e3502c1e1351e70e49f4f90894cefcd75c47e95b7f1ad2557bbb07",
+    "core/__init__.py": "7af7157ac698f16c4c83db4408458043f25c23c4d101a02e0033e3e2237ceae5",
+    "core/analysis.py": "4d24f07dd9c042fad35eb1ec680f5fe56f78281d0c78de7ab2fddda07e410626",
+    "core/born.py": "83649fe004f426db7bd602ea46381cb8ee2942c2ac9ceee9c8914f0410cb75f4",
+    "core/detector_graphs.py": "27726aa64bfbc8021fe3d71e6de37ab62b71661eb7d00a98d9c05bf79bb86089",
+    "core/disorder.py": "4446bf6ec45b6260bf9b907ea66b58233ee00686dfea29cffd30217fb0c3541d",
+    "core/distribution_fit.py": "bd0cbfcd0b77c0717941ca6759e23c67e69ff9f4f2096a3430dcba84a4de85af",
+    "core/gleason_diagnostics.py": "c51e4757d46138b9fb3c989cf1c47c1eb5e7f8e84b2adb6c7c8c90ebc98e6a14",
+    "core/hamiltonian_classification.py": "3b95301f371258296f58acbcbcad2582c5dce5699a6747001b3279f2aeec1806",
+    "core/hamiltonians/__init__.py": "a5bc3ddfbfcb05b028bdba61fe2cb082ada5f3975ce8dcaa4b4ea8c1ed402b81",
+    "core/hamiltonians/base.py": "d9b04acab0543b383c8a44801077c83b8308b827d54e363eb03d1d73bdc364b3",
+    "core/hamiltonians/numpy_hamiltonians.py": "dbfa09a579cc21c3bc9076d256f35a1eb5fed5d1c2aec0d1401b9d7e9ec66619",
+    "core/hamiltonians/quspin_hamiltonians.py": "e482039312280977e17bd1e8258780b38167747ea01207cb33b16c0811fc7566",
+    "core/level_spacing.py": "9c35aa0347e94d3ceab15f9b9240dc3b1cf8bc5382418e296e4fd8f1e155ade4",
+    "core/pauli.py": "0b899d85aa5940f7db4b806c7c4688bfae2238eeb7ebd1406ec3eb29cf482dd9",
+    "core/pencil_characterization.py": "d5abf9a2271c9446f3736cdeec326be747a1c50219fae48900c144e3f2ae3e48",
+    "core/projective_roots.py": "d7dae046fbef848cd26bc0e864e3d6f092a36c710c19ae0d5e5470c9b695915f",
+    "core/quantum_utils.py": "012254f6dde3da6d71936ebe319c01d6ad536213cc53eb5e86d6f69482ffbf70",
+    "core/relative_evolution_pencil.py": "e12e9392009e32edf02250748786b76c27b56ea5bc810bfb3cc6885b298443f2",
+    "core/spherical_harmonics.py": "10817996c723189fa50cbe6439aff8f02364e53a96cc41eb96c0b155877802f6",
+    "core/visualization.py": "9a6978eca9935a00c967d3e589c0974fbc10561d99d34fdb2893399e153f1191",
+    "core/wrapped_cauchy.py": "4260cf6a73970a23179f0db59f3b47cfbfc36367517c5baed8988464c864033a"
+  }
+}

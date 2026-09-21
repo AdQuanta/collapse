@@ -64,6 +64,10 @@ class RelativeEvolutionPencilSpectrum:
     # indeterminate".  Consumers that gate on those diagnostics must branch on
     # this flag rather than on ``isnan``, which cannot distinguish the two.
     left_diagnostics_available: bool = True
+    # Name of the unitary change of detector basis applied before the QZ call,
+    # or ``"none"``.  It is a numerical device only: a unitary right factor
+    # leaves the projective spectrum invariant in exact arithmetic.
+    preconditioner: str = "none"
 
 
 @dataclass(frozen=True)
@@ -287,6 +291,20 @@ def _audit_root(
     )
 
 
+def _dft_right_multiply(matrix: np.ndarray) -> np.ndarray:
+    """Return ``matrix @ F`` for the unitary DFT matrix ``F`` of matching size."""
+
+    columns = matrix.shape[1]
+    return np.fft.ifft(matrix, axis=1) * np.sqrt(columns)
+
+
+def _dft_left_multiply(matrix: np.ndarray) -> np.ndarray:
+    """Return ``F @ matrix`` for the unitary DFT matrix ``F`` of matching size."""
+
+    rows = matrix.shape[0]
+    return np.fft.ifft(matrix, axis=0) * np.sqrt(rows)
+
+
 def generalized_relative_evolution_spectrum(
     u00: np.ndarray,
     u10: np.ndarray,
@@ -300,6 +318,7 @@ def generalized_relative_evolution_spectrum(
     duplicate_tolerance: float | None = None,
     maximum_duplicate_roots: int = 512,
     compute_left_eigenvectors: bool = True,
+    precondition: bool = True,
 ) -> RelativeEvolutionPencilSpectrum:
     """Solve ``U10 v = lambda U00 v`` without forming ``U00**(-1)``.
 
@@ -325,6 +344,15 @@ def generalized_relative_evolution_spectrum(
         Chordal distance used to cluster repeated projective roots. Defaults
         to ``sqrt(eps)``. Pairwise work is skipped when the spectrum exceeds
         ``maximum_duplicate_roots``.
+    precondition:
+        Whether to solve the unitarily equivalent pencil ``(U00 F, U10 F)``
+        for the DFT matrix ``F`` and map the right eigenvectors back with
+        ``F``.  The default is *True*.  A unitary right factor leaves the
+        projective spectrum and every condition number invariant in exact
+        arithmetic, but LAPACK ``zggev`` loses six to nine digits on the
+        exactly structured blocks that symmetric ring and chain Hamiltonians
+        produce, and recovers full precision once that structure is mixed
+        away.  The cost is two FFTs on the blocks and one on the eigenvectors.
     compute_left_eigenvectors:
         Whether to solve for left eigenvectors as well as right ones.  The
         default is *True*, which preserves the full diagnostic set.  Setting it
@@ -367,10 +395,16 @@ def generalized_relative_evolution_spectrum(
     norm_a = sigma_max
     norm_c = float(np.linalg.norm(c, ord=2))
 
+    # ``v`` solves ``beta C v = alpha A v`` exactly when ``w = F^H v`` solves
+    # ``beta (C F) w = alpha (A F) w``, so the substitution changes no root and
+    # no left eigenvector, only the floating-point path taken to reach them.
+    solver_a = _dft_right_multiply(a) if precondition else a
+    solver_c = _dft_right_multiply(c) if precondition else c
+
     if compute_left_eigenvectors:
         homogeneous, left_vectors, right_vectors = eig(
-            c,
-            a,
+            solver_c,
+            solver_a,
             right=True,
             left=True,
             homogeneous_eigvals=True,
@@ -379,8 +413,8 @@ def generalized_relative_evolution_spectrum(
         left_vectors = np.asarray(left_vectors, dtype=np.complex128)
     else:
         homogeneous, right_vectors = eig(
-            c,
-            a,
+            solver_c,
+            solver_a,
             right=True,
             left=False,
             homogeneous_eigvals=True,
@@ -390,6 +424,8 @@ def generalized_relative_evolution_spectrum(
     alpha = np.asarray(homogeneous[0], dtype=np.complex128)
     beta = np.asarray(homogeneous[1], dtype=np.complex128)
     right_vectors = np.asarray(right_vectors, dtype=np.complex128)
+    if precondition:
+        right_vectors = _dft_left_multiply(right_vectors)
 
     pair_scale = np.maximum(np.abs(alpha), np.abs(beta))
     absolute_floor = projective_tolerance * max(norm_a, norm_c, 1.0)
@@ -548,6 +584,7 @@ def generalized_relative_evolution_spectrum(
         root_audits=tuple(root_audits),
         duplicate_diagnostics=duplicates,
         left_diagnostics_available=compute_left_eigenvectors,
+        preconditioner="dft" if precondition else "none",
     )
 
 

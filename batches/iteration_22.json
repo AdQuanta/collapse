@@ -1,0 +1,16 @@
+[
+  {
+    "name": "b22_xxzN_center",
+    "rung": "3-xxz-N",
+    "hypothesis": "best XXZ region (Delta=0.5) on the N=8..11 ladder at fixed root budget; the XYZ region plateaued near 0.72 and turned over at N=12, so the question is whether that is a property of the family",
+    "Jxx": 2.0,
+    "Jyy": 2.0,
+    "Jzz": 1.0,
+    "hx": 1.4,
+    "hz": 1.0,
+    "h0x": 1.0,
+    "h0y": 1.0,
+    "h0z": 1.0,
+    "gz": 0.1
+  }
+]

@@ -2,7 +2,7 @@
 
 > Sources: `SPEC.md` v1.0, 2026-09-15
 > Raw: [Research specification snapshot](../../raw/project-governance/research-spec-v1.md)
-> Updated: 2026-09-19
+> Updated: 2026-09-21
 
 This page records the controlling algebraic definition. It replaces the legacy single-pencil and inverse-relative-propagator conventions.
 
@@ -73,6 +73,8 @@ $$
 
 For a regular $d\times d$ pencil, the determinant has total algebraic degree $d$ on the Riemann sphere, but kernel dimension and algebraic multiplicity are not interchangeable in singular or defective cases. The verifier must report both when relevant.
 
+The two outcome measures are not independent: unitarity makes each the antipodal pushforward of the other, with identical kernel weights, so $K_0=K_1$ and one solved pencil determines both sets. See [[outcome-antipodality]] for the theorem and its consequences for the two Born criteria.
+
 ## Numerical tolerance is not the definition
 
 Residuals and singular values locate and verify roots. They do not turn a near-null vector into an exactly collapsible state. Every accepted root needs a homogeneous backward residual, a kernel/nullity determination, and an explicit classification of singular or indeterminate cases. Approximate-collapse basins may be studied as a separate experiment only when clearly labelled.
@@ -81,4 +83,4 @@ Residuals and singular values locate and verify roots. They do not turn a near-n
 
 The derivation above follows directly from block multiplication and is the current contract. The production solver and all historical root sets still require fresh dual-pencil validation before they satisfy any paper-readiness gate.
 
-See also: [[born-like-points]], [[homogeneous-qz]], [[relative-propagator]], [[research-specification-v1]].
+See also: [[born-like-points]], [[outcome-antipodality]], [[homogeneous-qz]], [[relative-propagator]], [[research-specification-v1]].

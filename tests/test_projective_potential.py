@@ -65,6 +65,21 @@ def test_native_nonnormal_pencil_jensen_identity(seed):
 
 @pytest.mark.parametrize("size", [2, 3, 4, 5])
 def test_native_exchange_sector_trace_and_zero_roots(size):
+    """The collapsed polar law of the exchange sector is exact nilpotency.
+
+    Every root of this pencil sits at ``theta = 0`` because ``A^-1 C`` is
+    nilpotent, and nilpotency is a similarity invariant that floating point
+    reproduces exactly: ``M**d`` is the zero matrix bit for bit.  The QZ angles
+    are deliberately *not* asserted to vanish.  A nilpotent pencil is maximally
+    defective, so its root location carries the ``eps**(1/m)`` sensitivity of a
+    Jordan block; the closing assertion below shows a ``1e-15`` perturbation of
+    the blocks, far below any physical scale, already spreads the angles by
+    four to nine orders of magnitude.  An unperturbed QZ call returns exact
+    zeros only because LAPACK deflates the exactly zero entries of these
+    structured blocks, which is an artifact of the basis and not a property of
+    the pencil.
+    """
+
     from core.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin
     g, time = .7, .61
     h = SinglePixelHamiltonianQuSpin(
@@ -76,7 +91,7 @@ def test_native_exchange_sector_trace_and_zero_roots(size):
     a, c = u[:d, :d], u[d:, :d]
     root = generalized_relative_evolution_spectrum(a, c)
     assert not np.any(root.indeterminate | root.infinite)
-    np.testing.assert_allclose(root.theta, 0, atol=1e-12)
+    assert np.linalg.norm(np.linalg.matrix_power(np.linalg.solve(a, c), d), 2) == 0.
     weight_sum, flip, loga = 0, 0., 0.
     for sector in exchange_sector_blocks(size, coupling=g, time=time):
         dim = sector.two_j+1
@@ -86,12 +101,18 @@ def test_native_exchange_sector_trace_and_zero_roots(size):
                                    np.eye(dim), atol=3e-15)
         flip += weight*np.linalg.norm(sector.c, "fro")**2
         loga += weight*np.sum(np.log(abs(sector.a.diagonal())))
-        qz = generalized_relative_evolution_spectrum(sector.a, sector.c)
-        np.testing.assert_allclose(qz.theta, 0, atol=1e-14)
+        block = np.linalg.solve(sector.a, sector.c)
+        assert np.linalg.norm(np.linalg.matrix_power(block, dim), 2) == 0.
     assert weight_sum == d
     assert abs(flip-np.linalg.norm(c, "fro")**2/d) < 2e-14
     np.testing.assert_allclose(a, a.conj().T, atol=2e-14)
     assert abs(loga-np.sum(np.log(abs(eigvalsh(a))))/d) < 2e-14
+    # Guard the defectiveness finding itself: the exact zeros above are not
+    # numerically robust, so no future change may reinstate a QZ angle gate.
+    rng = np.random.default_rng(20260920)
+    jitter = lambda: 1e-15*(rng.normal(size=(d, d))+1j*rng.normal(size=(d, d)))
+    perturbed = generalized_relative_evolution_spectrum(a+jitter(), c+jitter())
+    assert np.max(perturbed.theta) > 1e-8
 
 
 def test_gaussian_trace_limit_and_incorrect_root_limit_separate():

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "smoke_ref_hz1.01",
+    "rung": "smoke",
+    "hypothesis": "timing smoke test at the reference detector; measures loop cost only",
+    "Jzz": 1.0,
+    "hx": 1.0,
+    "hz": 1.01,
+    "h0x": 1.0,
+    "h0z": 1.0,
+    "gz": 0.1
+  },
+  {
+    "name": "smoke_ref_hz1.02",
+    "rung": "smoke",
+    "hypothesis": "timing smoke test at the reference detector; measures loop cost only",
+    "Jzz": 1.0,
+    "hx": 1.0,
+    "hz": 1.02,
+    "h0x": 1.0,
+    "h0z": 1.0,
+    "gz": 0.1
+  },
+  {
+    "name": "smoke_ref_hz1.03",
+    "rung": "smoke",
+    "hypothesis": "timing smoke test at the reference detector; measures loop cost only",
+    "Jzz": 1.0,
+    "hx": 1.0,
+    "hz": 1.03,
+    "h0x": 1.0,
+    "h0z": 1.0,
+    "gz": 0.1
+  }
+]

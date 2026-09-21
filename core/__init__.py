@@ -16,6 +16,11 @@ from core.analysis import (
     diagonalize_relative_evolution_from_unitary,
     relative_evolution_matrix,
 )
+from core.pencil_characterization import (
+    DistinctProjectiveRoot,
+    PencilCharacterization,
+    characterize_pencil_roots,
+)
 from core.relative_evolution_pencil import (
     LinearPencilRegularityAudit,
     ProjectiveDuplicateDiagnostics,
@@ -187,6 +192,9 @@ __all__ = [
     "audit_linear_pencil_regularity",
     "compare_direct_and_generalized",
     "diagnose_projective_duplicates",
+    "DistinctProjectiveRoot",
+    "PencilCharacterization",
+    "characterize_pencil_roots",
     "generalized_relative_evolution_spectrum",
     "matched_projective_angle_error",
     "projective_chordal_distance",
