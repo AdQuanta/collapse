@@ -364,6 +364,6 @@ submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.
 - Updated: Relative-Unitary Evolution — See Also cross-reference.
 - Updated: wiki/index.md concepts list.
 - Disputed/withdrawn: an agent-side claim of 2026-09-21 that the production pipeline scores a surrogate observable. It rested on a Haar-unitary counterexample, which is not symmetric and so lies outside the approved families. The user rejected the claim and it is withdrawn.
-- Validation: 36-cell sweep of both approved families (ring/chain x all/first x N=3,4,5 x t=1,37,211). With the Y self-fields off, worst `max|U - U^T|` 1.665e-16, worst `|fixed - conj(outcome0)|` 8.265e-14, worst radii gap 5.662e-14; with them on, 1.026e+00, 2.670e+00, 1.541e-01. Duality checked exactly (0.000e+00) on three Haar unitaries; conjugation map gives 1.442e+00 there, so the agreement is not vacuous.
+- Validation: `tests/test_fixed_input_outcome_equivalence.py` 14 passed; full suite 756 passed, 0 failed. 36-cell sweep of both approved families (ring/chain x all/first x N=3,4,5 x t=1,37,211). With the Y self-fields off, worst `max|U - U^T|` 1.665e-16, worst `|fixed - conj(outcome0)|` 8.265e-14, worst radii gap 5.662e-14; with them on, 1.026e+00, 2.670e+00, 1.541e-01. Duality checked exactly (0.000e+00) on three Haar unitaries; conjugation map gives 1.442e+00 there, so the agreement is not vacuous.
 - Scoped: no gate promoted, `paper_ready` remains `false`.
 

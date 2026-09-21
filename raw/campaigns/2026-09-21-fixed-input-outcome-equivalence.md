@@ -79,6 +79,12 @@ so the outcome-1 roots and weights are the fixed-input roots and weights under
 
 ## Numerical certification
 
+`python3.11 -m pytest -q tests/test_fixed_input_outcome_equivalence.py`
+gives 14 passed. It asserts both statements, asserts that the conjugation map is not
+vacuous (replacing it by the identity breaks the agreement), and asserts that the `Y`
+self-fields do break statement 2 while leaving statement 1 intact, so the file cannot
+pass by accident.
+
 All runs use `SinglePixelHamiltonianQuSpin` with `use_symmetry=False`, dense
 `numpy.linalg.eigh`, and the propagator formed as `V exp(-iEt) V^dagger`.
 

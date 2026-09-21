@@ -60,7 +60,7 @@ This matters in practice because the `screen_00` region of [[chain-born-regions]
 
 ## Numerical certification
 
-On Haar unitaries of matrix dimension 8 (seeds 7, 11, 23) the duality is exact: the fixed-input roots of $U$ and the outcome-0 roots of $U^{\dagger}$ agree to `0.000e+00`, while the fixed-input and outcome-0 roots of the same $U$ differ by 3.043, 2.789 and 1.799.
+`tests/test_fixed_input_outcome_equivalence.py` certifies both statements in the form used here: 14 passed. On Haar unitaries of matrix dimension 8 (seeds 7, 11, 23) the duality is exact: the fixed-input roots of $U$ and the outcome-0 roots of $U^{\dagger}$ agree to `0.000e+00`, while the fixed-input and outcome-0 roots of the same $U$ differ by 3.043, 2.789 and 1.799.
 
 A 36-cell sweep of both approved families — `connectivity` in {ring, chain}, `central_coupling` in {all, first}, $N\in\{3,4,5\}$, $t\in\{1,37,211\}$ — certifies the corollary. With the $Y$ self-fields off the worst $\max|U-U^{T}|$ is 1.665e-16, the worst $|z-\overline{\lambda_0}|$ is 8.265e-14 and the worst sorted-radii gap is 5.662e-14. With $h_y=0.7$ and $h_{0y}=-1.69$ the same sweep gives 1.026, 2.670 and 1.541e-01. On a Haar unitary the conjugation map gives 1.442, so the agreement is produced by the symmetry rather than by the map being vacuous.
 
