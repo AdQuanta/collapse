@@ -24,4 +24,4 @@ Finite roots map by
 \]
 with \(\lambda=\infty\) mapped explicitly to the opposite pole. Every point is weighted by its kernel multiplicity. The two outcome measures are normalized separately before computing the strong conditional ratio and weak azimuthal marginals; a polar histogram alone is insufficient.
 
-See also: [[projective-roots]], [[born-like-points]].
+See also: [[projective-roots]], [[born-like-points]], [[fixed-input-outcome-equivalence]].

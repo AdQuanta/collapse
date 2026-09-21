@@ -354,3 +354,16 @@ submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.
 - Updated: wiki/index.md concepts list.
 - Validation: `tests/test_outcome_antipodality.py` 13 passed; antipodal-map mutation killed 3/3 by the kernel-dimension tests.
 - Scoped: no gate promoted, `paper_ready` remains `false`. The theorem pairs rays and kernel dimensions only; it supplies no singular-continuum measure and no evidence about any score's value.
+
+## [2026-09-21] ingest | Equivalence of the Fixed-Input and Outcome Pencils
+- Disposition: New; Update; Disputed
+- Raw: raw/campaigns/2026-09-21-fixed-input-outcome-equivalence.md
+- Added: `wiki/concepts/fixed-input-outcome-equivalence.md` — unconditional time-reversal duality between the fixed-input pencil of `U` and the outcome-0 pencil of `U^dagger`, the corollary `z = conj(lambda_0)` for `U^T = U`, the transposition proof via the outcome-1 pencil composed with antipodality, and the scope where the corollary fails.
+- Updated: Antipodality of the Two Outcome Root Sets — consequence 3 asserted that the search scripts' reflected scoring computes the weak criterion, but those scripts histogram the fixed-input pencil rather than an outcome pencil; the missing second step is now supplied and its scope stated.
+- Updated: Born Criteria for Collapsible-State Measures — same gap closed in "Reflected ratios are secondary".
+- Updated: Relative-Unitary Evolution — See Also cross-reference.
+- Updated: wiki/index.md concepts list.
+- Disputed/withdrawn: an agent-side claim of 2026-09-21 that the production pipeline scores a surrogate observable. It rested on a Haar-unitary counterexample, which is not symmetric and so lies outside the approved families. The user rejected the claim and it is withdrawn.
+- Validation: 36-cell sweep of both approved families (ring/chain x all/first x N=3,4,5 x t=1,37,211). With the Y self-fields off, worst `max|U - U^T|` 1.665e-16, worst `|fixed - conj(outcome0)|` 8.265e-14, worst radii gap 5.662e-14; with them on, 1.026e+00, 2.670e+00, 1.541e-01. Duality checked exactly (0.000e+00) on three Haar unitaries; conjugation map gives 1.442e+00 there, so the agreement is not vacuous.
+- Scoped: no gate promoted, `paper_ready` remains `false`.
+

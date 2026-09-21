@@ -90,7 +90,7 @@ $$
 \frac{P(\theta)}{P(\theta)+P(\pi-\theta)}=\cos^2\frac\theta2
 $$
 
-is equivalent, where the denominator is nonzero, to $P(\theta)=(1+\cos\theta)E(\theta)$ with reflection-even $E$. It equals the SPEC weak ratio only when the two independently normalized outcome marginals obey $\rho_1^{(\theta)}(\theta)=\rho_0^{(\theta)}(\pi-\theta)$. Unitarity forces exactly that, because the two outcome measures are antipodal ([[outcome-antipodality]]), so a single reflected polar histogram does construct the weak ratio. It still constructs nothing about the strong full-sphere criterion, which needs the joint $(\theta,\phi)$ density and its antipodal image.
+is equivalent, where the denominator is nonzero, to $P(\theta)=(1+\cos\theta)E(\theta)$ with reflection-even $E$. It equals the SPEC weak ratio only when the two independently normalized outcome marginals obey $\rho_1^{(\theta)}(\theta)=\rho_0^{(\theta)}(\pi-\theta)$. Unitarity forces exactly that, because the two outcome measures are antipodal ([[outcome-antipodality]]), so a single reflected polar histogram does construct the weak ratio. The search scripts histogram the *fixed-input* pencil rather than an outcome pencil, which supplies the same polar law whenever the model is time-reversal invariant ([[fixed-input-outcome-equivalence]]). It still constructs nothing about the strong full-sphere criterion, which needs the joint $(\theta,\phi)$ density and its antipodal image.
 
 ## Interpretation boundary
 
@@ -100,4 +100,4 @@ Root counting describes propagator geometry. It is not yet an operational probab
 
 All historical Born-like labels are uncredited under v1.0 until the dual roots, multiplicity weights, both measures, mandatory metrics, preferred basis, ordered limits, robustness region, and controls are rerun through the frozen verifier. `paper_ready = false`.
 
-See also: [[projective-roots]], [[outcome-antipodality]], [[coverage-gates]], [[haar-baseline]], [[research-specification-v1]].
+See also: [[projective-roots]], [[outcome-antipodality]], [[fixed-input-outcome-equivalence]], [[coverage-gates]], [[haar-baseline]], [[research-specification-v1]].

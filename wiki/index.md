@@ -24,6 +24,7 @@ Specification authority, paper-readiness state, and efficient access to the repo
 - [[born-like-points]] — Strong full-sphere and weak polar-marginal-ratio Born criteria and diagnostics.
 - [[projective-roots]] — The mathematical construction of collapsible states via matrix pencils.
 - [[outcome-antipodality]] — Unitarity pairs the two outcome root sets by antipodes with equal kernel weights; proof and consequences.
+- [[fixed-input-outcome-equivalence]] — The production fixed-input pencil and the SPEC outcome pencils are exchanged by time reversal and coincide for real Hamiltonians.
 - [[haar-baseline]] — Solvable Haar-random baseline, $SU(2)$ invariance proof, and spherical ensemble.
 - [[theorem-targets]] — Five strategic theorem routes, martingale formulation, and harmonic-oscillator conjecture.
 - [[falsifiability-and-experiments]] — Mesoscopic tests, short-time deviations, covering complexity, and experimental roadmap.
