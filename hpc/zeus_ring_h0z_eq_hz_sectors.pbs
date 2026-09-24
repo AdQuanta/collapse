@@ -1,6 +1,6 @@
 #!/bin/bash
 # Resonant Ising ring (h0z = hz, g_x/sqrt(N)) polar root law, one detector-momentum
-# sector per array index (kp = PBS_ARRAY_INDEX, 0..N/2); see
+# sector per array index; TAUS is colon-separated (qsub -v splits on commas) (kp = PBS_ARRAY_INDEX, 0..N/2); see
 # scripts/ring_h0z_eq_hz_sector_roots.py for the model and conventions.
 #PBS -N ring_h0zhz
 #PBS -q zeus_new_q
@@ -31,7 +31,7 @@ export OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 MKL_NUM_THREADS=8 NUMEXPR_NUM_TH
 LOG="$RUN_ROOT/logs/N${N_PIXEL}_kp${KP}_${PBS_JOBID:-manual}.log"
 echo "[$(date --iso-8601=seconds)] N=$N_PIXEL J=$J_BOND g=$G_COUP taus=$TAUS kp=$KP start host=$(hostname)" | tee -a "$LOG"
 python3.11 scripts/ring_h0z_eq_hz_sector_roots.py --n "$N_PIXEL" --j "$J_BOND" --g "$G_COUP" \
-  --taus "$TAUS" --kp "$KP" --out "$RUN_ROOT/sectors" 2>&1 | tee -a "$LOG"
+  --taus "${TAUS//:/,}" --kp "$KP" --out "$RUN_ROOT/sectors" 2>&1 | tee -a "$LOG"
 MARKER="$RUN_ROOT/sectors/N${N_PIXEL}_J${J_BOND}_g${G_COUP}_kp${KP}_complete.json"
 [[ -s "$MARKER" ]] || { echo "[$(date --iso-8601=seconds)] kp=$KP status=FAILED missing marker" | tee -a "$LOG"; exit 1; }
 echo "[$(date --iso-8601=seconds)] kp=$KP status=finished" | tee -a "$LOG"

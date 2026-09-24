@@ -1,13 +1,15 @@
 #!/bin/bash
 # Submit the resonant Ising ring sector campaign as one PBS array (kp = 0..N/2).
-# Usage: N_PIXEL=18 J_BOND=0.37 G_COUP=0.1 TAUS=10,30,100 [WALLTIME=36:00:00] [RUN_ROOT=<dir>] \
+# Usage: N_PIXEL=18 J_BOND=0.37 G_COUP=0.1 TAUS=10:30:100 [WALLTIME=36:00:00] [RUN_ROOT=<dir>] \
 #          hpc/submit_zeus_ring_h0z_eq_hz_sectors.sh
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$REPO_ROOT"
 command -v qsub >/dev/null 2>&1 || { echo "qsub is unavailable; run on Zeus." >&2; exit 2; }
+
 : "${N_PIXEL:?}"; : "${J_BOND:?}"; : "${G_COUP:?}"; : "${TAUS:?}"
+[[ "$TAUS" != *,* ]] || { echo "TAUS must be colon-separated (qsub -v splits on commas)" >&2; exit 2; }
 WALLTIME="${WALLTIME:-36:00:00}"
 RUN_ROOT="${RUN_ROOT:?Set RUN_ROOT to a fresh directory}"
 mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/sectors"
