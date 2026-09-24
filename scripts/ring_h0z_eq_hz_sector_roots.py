@@ -39,9 +39,9 @@ from core.analysis import _relative_eigenvalues_from_local_sectors  # noqa: E402
 from core.hamiltonians.quspin_hamiltonians import SinglePixelHamiltonianQuSpin  # noqa: E402
 
 
-def build_model(n: int, h: float, j: float, g: float) -> SinglePixelHamiltonianQuSpin:
+def build_model(n: int, h: float, j: float, g: float, h0: float | None = None) -> SinglePixelHamiltonianQuSpin:
     return SinglePixelHamiltonianQuSpin(
-        N_pixel=n, J=-j, Jx=-g / np.sqrt(n), hz=-h, hz0=-h,
+        N_pixel=n, J=-j, Jx=-g / np.sqrt(n), hz=-h, hz0=-(h if h0 is None else h0),
         connectivity="ring", central_coupling="all",
     )
 
@@ -68,6 +68,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--n", type=int, required=True)
     parser.add_argument("--h", type=float, default=1.0)
+    parser.add_argument("--h0", type=float, default=None, help="qubit field h0z (default: equal to --h)")
     parser.add_argument("--j", type=float, required=True)
     parser.add_argument("--g", type=float, required=True)
     parser.add_argument("--taus", type=str, default="10,30,100", help="tau = g T values")
@@ -79,19 +80,20 @@ def main() -> None:
     times = np.array([float(x) / args.g for x in args.taus.split(",")])
     kps = range(n // 2 + 1) if args.kp == "all" else [int(x) for x in args.kp.split(",")]
     args.out.mkdir(parents=True, exist_ok=True)
-    model = build_model(n, args.h, args.j, args.g)
+    model = build_model(n, args.h, args.j, args.g, args.h0)
     for kp in kps:
         if not 0 <= kp <= n // 2:
             raise ValueError(f"kp must lie in 0..{n // 2}; got {kp}")
         start = time.time()
         theta = sector_thetas(model, kp, times)
         weight = 1 if kp in (0, n / 2) else 2
-        path = args.out / f"N{n}_J{args.j}_g{args.g}_kp{kp}.npz"
-        np.savez(path, theta=theta, times=times, weight=weight, kp=kp, n=n, h=args.h, j=args.j, g=args.g)
+        tag = f"N{n}_J{args.j}_g{args.g}" + ("" if args.h0 is None else f"_h0{args.h0}")
+        path = args.out / f"{tag}_kp{kp}.npz"
+        np.savez(path, theta=theta, times=times, weight=weight, kp=kp, n=n, h=args.h, h0=args.h if args.h0 is None else args.h0, j=args.j, g=args.g)
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
         marker = {"status": "complete", "n": n, "kp": kp, "weight": weight, "file": str(path), "sha256": digest,
                   "n_roots": int(theta.shape[1]), "seconds": round(time.time() - start, 1)}
-        (args.out / f"N{n}_J{args.j}_g{args.g}_kp{kp}_complete.json").write_text(json.dumps(marker))
+        (args.out / f"{tag}_kp{kp}_complete.json").write_text(json.dumps(marker))
         print(json.dumps(marker), flush=True)
 
 
