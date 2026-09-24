@@ -1,0 +1,37 @@
+#!/bin/bash
+# Resonant Ising ring (h0z = hz, g_x/sqrt(N)) polar root law, one detector-momentum
+# sector per array index (kp = PBS_ARRAY_INDEX, 0..N/2); see
+# scripts/ring_h0z_eq_hz_sector_roots.py for the model and conventions.
+#PBS -N ring_h0zhz
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=80gb
+#PBS -l walltime=36:00:00
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+[[ -f scripts/ring_h0z_eq_hz_sector_roots.py ]] || { echo "worker not found from $PWD" >&2; exit 2; }
+
+: "${RUN_ROOT:?Submit with hpc/submit_zeus_ring_h0z_eq_hz_sectors.sh}"
+: "${N_PIXEL:?}"; : "${J_BOND:?}"; : "${G_COUP:?}"; : "${TAUS:?}"
+KP="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${KP:-}}}"
+if [[ ! "$KP" =~ ^[0-9]+$ ]] || (( KP > N_PIXEL / 2 )); then
+  echo "array index must be 0..$((N_PIXEL / 2)); got '$KP'" >&2
+  exit 2
+fi
+
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/tmp/kp${KP}"
+export PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+export TMPDIR="$RUN_ROOT/tmp/kp${KP}"
+export OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 MKL_NUM_THREADS=8 NUMEXPR_NUM_THREADS=8
+
+LOG="$RUN_ROOT/logs/N${N_PIXEL}_kp${KP}_${PBS_JOBID:-manual}.log"
+echo "[$(date --iso-8601=seconds)] N=$N_PIXEL J=$J_BOND g=$G_COUP taus=$TAUS kp=$KP start host=$(hostname)" | tee -a "$LOG"
+python3.11 scripts/ring_h0z_eq_hz_sector_roots.py --n "$N_PIXEL" --j "$J_BOND" --g "$G_COUP" \
+  --taus "$TAUS" --kp "$KP" --out "$RUN_ROOT/sectors" 2>&1 | tee -a "$LOG"
+MARKER="$RUN_ROOT/sectors/N${N_PIXEL}_J${J_BOND}_g${G_COUP}_kp${KP}_complete.json"
+[[ -s "$MARKER" ]] || { echo "[$(date --iso-8601=seconds)] kp=$KP status=FAILED missing marker" | tee -a "$LOG"; exit 1; }
+echo "[$(date --iso-8601=seconds)] kp=$KP status=finished" | tee -a "$LOG"
