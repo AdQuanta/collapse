@@ -15,6 +15,33 @@ figures, and reproducible PBS workflows for the Technion Zeus cluster.
 
 ---
 
+## Motivation: One More Arrow of Time
+
+A recurring theme in twentieth-century physics is that an apparent arrow of time and
+effective irreversibility can emerge from time-reversible microscopic unitary laws once
+inaccessible degrees of freedom are accounted for: an excited atom's spontaneous emission
+looks irreversible only because the atom is not the whole system (Lindblad 1976), and a
+closed many-body system relaxes locally to thermal equilibrium while its global
+wavefunction evolves reversibly (Deutsch 1991; Srednicki 1994). This project asks whether
+measurement collapse belongs on the same trajectory: not an axiomatic breakdown of
+unitarity, but an apparent macroscopic irreversibility produced by reversible unitary
+dynamics acting on a dynamically restricted set of initial states
+([`wiki/concepts/big-picture.md`](wiki/concepts/big-picture.md),
+[`wiki/concepts/quantum-arrow-of-time.md`](wiki/concepts/quantum-arrow-of-time.md)).
+
+The restricted-state loophole this repository studies — which product qubit–detector
+inputs a finite propagator sends to a definite qubit outcome, and whether their angular
+distribution can match the Born rule — is spelled out below in
+[Intuition: The Disentangling Spectrum](#intuition-the-disentangling-spectrum). It is a
+candidate boundary-condition loophole, analogous to Albert's cosmological Past Hypothesis
+restated for measurement: it neither modifies nor breaks the linear Schrödinger equation.
+It motivates the numerics in this repository; it is not a claim that an arrow of time, or
+Born-rule statistics, has been derived — see
+[`manuscript/audits/THEORY_AUDIT.md`](manuscript/audits/THEORY_AUDIT.md) for the standing
+caveats on that distinction.
+
+---
+
 ## Overview
 
 The main model consists of a central qubit coupled to a detector of $N_D$
@@ -294,7 +321,7 @@ collapse/
 ├── archive/                  # Legacy code; not imported by active modules
 ├── requirements.txt         # Pinned scientific runtime
 ├── requirements-dev.txt     # Tests, figures, and report builders
-├── AGENTS.md                 # Scientific and engineering contribution rules
+├── CLAUDE.md                 # Scientific and engineering contribution rules
 └── README.md
 ```
 
@@ -530,7 +557,7 @@ A visually plausible figure is not sufficient validation.
 - [`manuscript/BUILD.md`](manuscript/BUILD.md) — manuscript build and verification
   instructions.
 - [`hpc/README.md`](hpc/README.md) — Zeus campaign layout and operating notes.
-- [`AGENTS.md`](AGENTS.md) — scientific and engineering standards for
+- [`CLAUDE.md`](CLAUDE.md) — scientific and engineering standards for
   contributions.
 
 ---
@@ -547,6 +574,8 @@ the project maintainers.
 Claims in exploratory scripts or generated reports should not be interpreted
 as peer-reviewed conclusions.
 
+---
+
 ## Data and License
 
 Bulk results, downloaded Zeus data, generated reports, and most figures are
@@ -556,6 +585,8 @@ original directory structure or pass explicit paths to analysis scripts.
 No license file is currently included. Until the research group selects and
 adds a license, treat this repository as internal group research code and do
 not redistribute it outside the authorized collaboration.
+
+---
 
 ## Contact
 
