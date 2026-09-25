@@ -41,6 +41,88 @@ system size, evolution time, and graph connectivity.
 
 ---
 
+## Intuition: The Disentangling Spectrum
+
+Before the production conventions in [Physics Background](#physics-background), it is
+worth stating the underlying question in its simplest form. Take any unitary $U$ on a
+qubit $\otimes$ a $d$-dimensional detector, written in the qubit basis as four $d\times d$
+blocks $U_{ba}$ ($b$ output, $a$ input). Which product inputs
+$|\psi\rangle\otimes|D\rangle$ does $U$ send to a product output with the qubit in a
+definite state, say $|0\rangle$? The answer is the homogeneous pencil
+
+```math
+(U_{10}+\lambda U_{11})\,D=0,
+```
+
+so there are exactly $d$ such inputs per outcome, labeled by the qubit ray $\lambda$
+(equivalently, a point on the Bloch sphere). This is the *disentangling spectrum* of $U$.
+It is the outcome-0 pencil of $U^\dagger$; the production fixed-input pencil used
+elsewhere in this document ($Cv=\lambda Av$, below) coincides with it up to conjugation
+whenever $H$ is real
+([`wiki/concepts/fixed-input-outcome-equivalence.md`](wiki/concepts/fixed-input-outcome-equivalence.md)).
+
+Three facts hold for *any* such $U$ and motivate the whole project:
+
+- **Antipodality.** The outcome-1 roots are the exact antipodes of the outcome-0 roots,
+  $\{-1/\bar\lambda\}$, with equal multiplicities: Born-like behavior is a property of a
+  single cloud.
+- **Haar $\Rightarrow$ uniform.** For $U$ Haar-random, the root density is uniform on the
+  sphere and the outcome ratio $R(\theta)\equiv 1/2$ everywhere: a random apparatus
+  measures nothing.
+- **Secular no-go.** If $U$ commutes with $H_Q+H_D$ and the qubit is gapped, every outcome
+  root along the field axis sits exactly at the corresponding pole: energy conservation
+  forbids exact collapse read out in the energy basis.
+
+Between "knows nothing" (Haar) and "collapses nothing" (energy-conserving) is where a
+measurement-like process would have to live: an outcome ratio concentrated toward the
+poles but covering the sphere, equal to the Born weight $\cos^2(\theta/2)$. A qubit
+resonantly exchanging its quantum with a spin-ring detector gets close to this curve
+without being tuned to it. Identifying the property of $U$ that would put it exactly on
+the Born curve, and whether any many-body system realizes that property, is the project's
+central open question, independent of any interpretation of measurement.
+
+A minimal, self-contained illustration (no repository imports; `numpy`, `scipy`, and
+`matplotlib` only) — a Haar baseline, an energy-conserving (QND) baseline, and a
+resonantly coupled ring compared with the Born curve — lives in
+[`onboarding/playground.py`](onboarding/playground.py):
+
+```bash
+python onboarding/playground.py anchors --N 8 --K 8 --fig onboarding/fig_three_anchors.png
+```
+
+![Three anchors: QND, Haar, and a resonant ring compared with the Born curve at N=8](onboarding/fig_three_anchors.png)
+
+The ring panels above use $N=8$ detector qubits and dense diagonalization of the full
+$2^{N+1}$-dimensional unitary, which stops being practical well before the system sizes
+studied elsewhere in this repository. Because the ring's coupling to the central qubit is
+collective (every detector site couples equally), the model is invariant under cyclic
+permutation of the detector sites, and
+[`onboarding/reproduce_large_N.py`](onboarding/reproduce_large_N.py) diagonalizes each
+momentum sector separately — a few-thousand-dimensional block instead of one
+$2^{15}$-dimensional matrix — using `SinglePixelHamiltonianQuSpin` and the sector-local
+relative-evolution routine from [`core/analysis.py`](core/analysis.py) (the same
+`DisentanglementAnalyzer.from_sectors` code path), following the pattern of
+[`scripts/ring_h0z_eq_hz_sector_roots.py`](scripts/ring_h0z_eq_hz_sector_roots.py).
+This reaches $N=14$ detector qubits (262144 pooled roots, over 8 pooled evolution times) in
+about three minutes on a laptop, with the sector calculation checked against
+`playground.py`'s dense code at small $N$ (`--verify`):
+
+```bash
+python onboarding/reproduce_large_N.py --n-pixel 14 --fig onboarding/fig_three_anchors_large_N.png
+```
+
+![Three anchors reproduced at N=14 detector qubits via momentum sectors](onboarding/fig_three_anchors_large_N.png)
+
+The matched-ring cloud stays close to Born at this much larger size (MAE $0.033$,
+steepness $k=1.32$); the rotated-45° cloud does too (MAE $0.043$, $k=1.41$). This is a
+qualitative onboarding check, not a production result: it uses a small pooled set of
+evolution times rather than a full dephased ensemble or a production-scale time/parameter
+scan, and is not a substitute for the campaigns tracked in
+[`wiki/campaigns/`](wiki/campaigns/) and gated by
+[`wiki/governance/paper-readiness-ledger.md`](wiki/governance/paper-readiness-ledger.md).
+
+---
+
 ## Key Features
 
 - **Qubit–detector Hamiltonians**: central-spin, single-pixel, two-pixel,
