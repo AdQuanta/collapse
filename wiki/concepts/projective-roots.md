@@ -83,4 +83,4 @@ Residuals and singular values locate and verify roots. They do not turn a near-n
 
 The derivation above follows directly from block multiplication and is the current contract. The production solver and all historical root sets still require fresh dual-pencil validation before they satisfy any paper-readiness gate.
 
-See also: [[born-like-points]], [[outcome-antipodality]], [[homogeneous-qz]], [[relative-propagator]], [[research-specification-v1]].
+See also: [[collapsible-basis-dependence]], [[born-like-points]], [[outcome-antipodality]], [[homogeneous-qz]], [[relative-propagator]], [[research-specification-v1]].

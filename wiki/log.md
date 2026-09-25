@@ -367,3 +367,47 @@ submission occurred. See `research_reports/BORN_RING_TRANSLATION_2026-09-13.md`.
 - Validation: `tests/test_fixed_input_outcome_equivalence.py` 14 passed; full suite 756 passed, 0 failed. 36-cell sweep of both approved families (ring/chain x all/first x N=3,4,5 x t=1,37,211). With the Y self-fields off, worst `max|U - U^T|` 1.665e-16, worst `|fixed - conj(outcome0)|` 8.265e-14, worst radii gap 5.662e-14; with them on, 1.026e+00, 2.670e+00, 1.541e-01. Duality checked exactly (0.000e+00) on three Haar unitaries; conjugation map gives 1.442e+00 there, so the agreement is not vacuous.
 - Scoped: no gate promoted, `paper_ready` remains `false`.
 
+
+## [2026-09-21] ingest | Basis Dependence of Collapsible States
+- Disposition: New; Update; Disputed
+- Raw: raw/campaigns/2026-09-21-collapsible-output-basis-dependence.md
+- Added: `wiki/concepts/collapsible-basis-dependence.md` — changing the qubit output basis is exactly `U -> (V^dagger tensor I) U`, under which the branch operators transform as an operator-valued spinor `N_b^(n) = w_b0 N_0 + w_b1 N_1`; the outcome pencil becomes a pencil on independent linear combinations of all four blocks, so both the collapsible input rays and the collapsible detector kernels change. Also: the input basis is inert (the collapsible set is invariant, only its coordinates rotate); the collapsible locus has bidegree `(d,d)` in `CP^1_in x CP^1_out`, so collapsibility is generic and the physics is entirely in which single axis serves a whole cloud; antipodality is basis-covariant while `B1` is input-rotation invariant but output-basis dependent; and the `SPEC.md` §12 preferred axis must be a fixed point of `Phi(n) = n_hat_fit(C_0(n))`, which also yields a fixed-point iteration in place of a search over `S^2`.
+- Updated: Antipodality of the Two Outcome Root Sets — "What the theorem does not give" now records that the pairing holds in every output basis and therefore cannot single out the preferred axis.
+- Updated: Preferred-basis campaign — new scope-limit section: every cloud is solved in the lab-frame `z` output basis (`forward_pole_root_spectrum` takes no basis argument, no caller rotates `U`), the fitted axis is free, `Phi` is evaluated once at `n = z_hat` and not fed back, and `n_hat . z_hat` is never reported although it is the alignment the Born reading requires.
+- Updated: Projective Roots and Collapsible States — See Also cross-reference.
+- Updated: wiki/index.md concepts list.
+- Disputed/demoted: an agent-side reading that WP5's `B1` ordering tracks misalignment between the fitted axis and the hardcoded output axis, which would make the `h_0 || x` and `h_0 || y` nulls a basis artifact. The campaign's own centre series refutes it as an explanation — at `screen_00` the misalignment is fixed at about 47 degrees while `B1` runs `1.3018 -> 1.1496 -> 0.8795` at `N=8,10,12`, crossing through 1 — so it is recorded only as a confound on fixed-`N` comparisons. The detector-axis reading of `RESEARCH_STATE.md` is not refuted.
+- Validation: none. Sections 2-6 of the raw are derivations, checked only against the two degenerate cases `d=1` and `U=I` and against the repository's own block and ray conventions; no test covers them and no `core/` module implements the output-basis rotation. The implementation audit is a code reading of `core/projective_roots.py`, `core/outcome_measures.py` and `scripts/eval_preferred_basis.py` on 2026-09-21. All campaign numbers are quoted from `wiki/campaigns/preferred-basis-campaign.md`; the only derived values are `|h_0| = 2.9527` and `h_0_hat . z_hat = 2.01/2.9527 = 0.6807`, both shown with their components.
+- Scoped: no gate promoted, no ledger row touched, no verifier activated, `paper_ready` remains `false`.
+
+## [2026-09-24] ingest | Go/No-Go Theorem for Born-Profile Stable Regions
+- Disposition: New; Disputed
+- Raw: raw/campaigns/2026-09-24-born-gonogo-brief.md; raw/campaigns/2026-09-24-born-gonogo-wp1-exact-no-go-classes.md; raw/campaigns/2026-09-24-born-gonogo-wp2-weak-coupling-axis.md; raw/campaigns/2026-09-24-born-gonogo-wp3-ring-resonant-regime.md; raw/campaigns/2026-09-24-born-gonogo-wp3-math-referee.md; raw/campaigns/2026-09-24-born-gonogo-wp4-endpoint-chain.md; raw/campaigns/2026-09-24-born-gonogo-wp5-go-requirements.md
+- Added: `wiki/campaigns/born-gonogo-theorem.md` — intermediate results of the go/no-go derivation (exact tools, exact no-go classes, generic-interior findings, go requirements, open items).
+- Disputed: WP3's concentration-based verdict (P8) downgraded to HEURISTIC by its mathematics referee.
+- Scoped: no gate promoted, `paper_ready` remains `false`.
+
+## [2026-09-24] ingest | Go/No-Go Theorem — focus case h0z = hz, g_x/sqrt(N) ring
+- Disposition: Update
+- Raw: raw/campaigns/2026-09-24-ring-h0z-eq-hz-sqrtN-study.md
+- Updated: `wiki/campaigns/born-gonogo-theorem.md` — new section: exact-sector numerics (J = 0 to N = 400; J != 0 to N = 12, N = 14 running). Late-time weak ratio at J != 0 approaches Born with N (PRELIMINARY_NUMERIC).
+
+## [2026-09-24] ingest | Go/No-Go Theorem — h0z = hz ring, g-variation
+- Disposition: Update
+- Raw: raw/campaigns/2026-09-24-ring-h0z-eq-hz-sqrtN-study.md
+- Updated: focus-case section — g = 0.05, 0.2 at N = 10, 12; near-Born ratio with a small resolved residual at N = 12.
+
+## [2026-09-24] ingest | Go/No-Go Theorem — h0z = hz ring, N = 14 and user parameters
+- Disposition: Update
+- Raw: raw/campaigns/2026-09-24-ring-h0z-eq-hz-sqrtN-study.md
+- Updated: focus-case section — J = 0.37 set resolved as a near-Born plateau at N = 14; user parameters (hz = 0.1, J = 1, gx = 0.01) consistent with Born at N = 12, larger N submitted to Zeus (jobs 4701701[], 4701702[]).
+
+## [2026-09-24] ingest | Go/No-Go Theorem — h0z = hz ring, perturbation cloud
+- Disposition: Update
+- Raw: raw/campaigns/2026-09-24-ring-h0z-eq-hz-sqrtN-study.md
+- Updated: focus-case section — near-Born plateau robust in J and gx but destroyed by a 3% h0z detuning: confined to the resonance manifold (width ~ g).
+
+## [2026-09-24] ingest | Go/No-Go Theorem — h0z = hz ring, Zeus N = 16
+- Disposition: Update
+- Raw: raw/campaigns/2026-09-24-ring-h0z-eq-hz-sqrtN-study.md
+- Updated: focus-case section — late-time plateau (E about 0.065) confirmed at N = 16; finite-time tau = 3 crossover approaching Born with N noted.

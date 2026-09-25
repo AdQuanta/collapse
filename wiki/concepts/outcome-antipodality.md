@@ -76,6 +76,7 @@ The second and third points together explain why the weak criterion has been sco
 
 - It pairs rays and kernel *dimensions*, not the detector kernel vectors. The collapsible detector states of the two outcomes are unrelated by it.
 - It selects no measure for a singular pencil's continuum of rays, which remains the open specification decision.
+- It does not select the output basis. The pairing holds in *every* qubit output basis, since $(V^\dagger\otimes I)U$ is unitary whenever $U$ is, so antipodality is basis-covariant and cannot by itself single out the `SPEC.md` §12 preferred axis. Which basis is meant is a separate question, and the collapsible set genuinely changes with it; see [[collapsible-basis-dependence]].
 - It makes neither Born criterion true, and it grants no paper-readiness gate. It removes a conditional from the interpretation of existing scores; it supplies no evidence about their values.
 
 ## Numerical certification
@@ -88,4 +89,4 @@ Residuals of order 1e-12 appear only at $t=211.0$, where the propagator built by
 
 **PROVED**, dimension-independent, no family restriction, and numerically certified. The argument was already present in the frozen `verifier/exact_formalism/v1/METHOD.md` and is the premise of `core/gleason_diagnostics.py`, whose asymmetry field is inversion-odd for this reason; this page is where it now lives as durable knowledge.
 
-See also: [[projective-roots]], [[born-like-points]], [[fixed-input-outcome-equivalence]], [[homogeneous-qz]], [[exact-collapse-formalism]], [[research-specification-v1]].
+See also: [[collapsible-basis-dependence]], [[projective-roots]], [[born-like-points]], [[fixed-input-outcome-equivalence]], [[homogeneous-qz]], [[exact-collapse-formalism]], [[research-specification-v1]].

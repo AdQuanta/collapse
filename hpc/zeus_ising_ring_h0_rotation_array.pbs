@@ -1,0 +1,62 @@
+#!/bin/bash
+# Ising ring detector, h_0 rotated off h_0z=h_z, collapse measured in h_0's own
+# eigenbasis, via the pixel-translation symmetry sectors (see
+# scripts/plot_ising_ring_h0_rotation_bloch_and_ratio.py). One array index per
+# N_pixel value, N = 13 + PBS_ARRAY_INDEX.
+#PBS -N ising_ring_h0rot
+#PBS -q zeus_new_q
+#PBS -l select=1:ncpus=8:mem=32gb
+#PBS -l walltime=6:00:00
+#PBS -m abe
+#PBS -M matanhaller@campus.technion.ac.il
+#PBS -j oe
+
+set -euo pipefail
+
+cd "${PBS_O_WORKDIR:?PBS_O_WORKDIR is not set}"
+if [[ -f scripts/plot_ising_ring_h0_rotation_bloch_and_ratio.py ]]; then
+  REPO_ROOT="$PWD"
+elif [[ -f ../scripts/plot_ising_ring_h0_rotation_bloch_and_ratio.py ]]; then
+  REPO_ROOT="$(cd .. && pwd)"
+else
+  echo "Cannot locate plot_ising_ring_h0_rotation_bloch_and_ratio.py from $PWD" >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+
+: "${RUN_ROOT:?Submit with the documented wrapper or define RUN_ROOT}"
+ARRAY_INDEX="${PBS_ARRAY_INDEX:-${PBS_ARRAYID:-${N_OFFSET:-}}}"
+if [[ ! "$ARRAY_INDEX" =~ ^[0-5]$ ]]; then
+  echo "PBS array index must be 0..5 (N=13..18); got '$ARRAY_INDEX'" >&2
+  exit 2
+fi
+N_PIXEL=$((13 + ARRAY_INDEX))
+
+mkdir -p "$RUN_ROOT/logs" "$RUN_ROOT/tmp/N${N_PIXEL}" "$RUN_ROOT/.mplconfig/N${N_PIXEL}"
+export PYTHONUNBUFFERED=1
+export MPLBACKEND=Agg
+export TMPDIR="$RUN_ROOT/tmp/N${N_PIXEL}"
+export MPLCONFIGDIR="$RUN_ROOT/.mplconfig/N${N_PIXEL}"
+export OMP_NUM_THREADS=8
+export OPENBLAS_NUM_THREADS=8
+export MKL_NUM_THREADS=8
+export NUMEXPR_NUM_THREADS=8
+
+LOG="$RUN_ROOT/logs/N${N_PIXEL}_${PBS_JOBID:-manual}.log"
+OUT_PDF="$RUN_ROOT/ising_ring_h0_rotation_N${N_PIXEL}_t1e+06_sectors_h0basis.pdf"
+echo "[$(date --iso-8601=seconds)] array_index=$ARRAY_INDEX N_pixel=$N_PIXEL start" | tee -a "$LOG"
+
+python3.11 scripts/plot_ising_ring_h0_rotation_bloch_and_ratio.py \
+  --n-pixel "$N_PIXEL" --time 1e6 --symmetry --basis h0 --n-bins 24 \
+  --out "$OUT_PDF" \
+  2>&1 | tee -a "$LOG"
+
+if [[ ! -s "$OUT_PDF" ]]; then
+  echo "[$(date --iso-8601=seconds)] array_index=$ARRAY_INDEX N_pixel=$N_PIXEL status=FAILED missing_output" | tee -a "$LOG"
+  exit 1
+fi
+SHA256=$(shasum -a 256 "$OUT_PDF" | awk '{print $1}')
+MARKER="$RUN_ROOT/N${N_PIXEL}_complete.json"
+printf '{"status":"complete","n_pixel":%d,"output":"%s","sha256":"%s","completed_at":"%s"}\n' \
+  "$N_PIXEL" "$OUT_PDF" "$SHA256" "$(date --iso-8601=seconds)" > "$MARKER"
+echo "[$(date --iso-8601=seconds)] array_index=$ARRAY_INDEX N_pixel=$N_PIXEL status=finished sha256=$SHA256" | tee -a "$LOG"

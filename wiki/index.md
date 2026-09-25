@@ -24,6 +24,7 @@ Specification authority, paper-readiness state, and efficient access to the repo
 - [[born-like-points]] — Strong full-sphere and weak polar-marginal-ratio Born criteria and diagnostics.
 - [[projective-roots]] — The mathematical construction of collapsible states via matrix pencils.
 - [[outcome-antipodality]] — Unitarity pairs the two outcome root sets by antipodes with equal kernel weights; proof and consequences.
+- [[collapsible-basis-dependence]] — The collapsible set is defined relative to a qubit output basis; transformation law, bidegree-$(d,d)$ count, and the preferred-basis fixed-point condition.
 - [[fixed-input-outcome-equivalence]] — The production fixed-input pencil and the SPEC outcome pencils are exchanged by time reversal and coincide for real Hamiltonians.
 - [[haar-baseline]] — Solvable Haar-random baseline, $SU(2)$ invariance proof, and spherical ensemble.
 - [[theorem-targets]] — Five strategic theorem routes, martingale formulation, and harmonic-oscillator conjecture.
@@ -151,6 +152,7 @@ See [[literature-map]] for the complete strategic citation graph.
 - [[campaigns/exact-collapse-formalism|exact-collapse-formalism]] — Draft state-level verification and all fixture theta/ratio plots; activation and gate promotion pending.
 - [[campaigns/commuting-qnd-sector|commuting-qnd-sector]] — Exact sector reduction and a $Z$-basis weak-ratio obstruction for the commuting/QND starting tier.
 - [[campaigns/markovianity-born|markovianity-born]] — Exploratory memory-versus-Born study; the collective ring is asymptotically Markovian, less memory tracks better Born similarity, and the finite-size trend is an estimator artifact. No gate credit.
+- [[campaigns/born-gonogo-theorem|born-gonogo-theorem]] — In-progress go/no-go theorem: no-go in every controlled weak-coupling regime of ring and chain via energy grading of the outcome pencil; open residuals named. No gate credit.
 
 The former 87-case ring/chain ledgers and their campaign summaries were deleted as obsolete. Current progress is tracked only against the [paper-readiness ledger](governance/paper-readiness-ledger.md); all gates remain `INCOMPLETE`.
 

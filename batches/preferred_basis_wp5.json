@@ -1,0 +1,178 @@
+[
+  {
+    "name": "wp5_axis_x",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'axis_x' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      2.952744486067157,
+      0.0,
+      0.0
+    ],
+    "h0x": 2.952744486067157,
+    "h0y": 0.0,
+    "h0z": 0.0,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  },
+  {
+    "name": "wp5_axis_y",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'axis_y' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      0.0,
+      2.952744486067157,
+      0.0
+    ],
+    "h0x": 0.0,
+    "h0y": 2.952744486067157,
+    "h0z": 0.0,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  },
+  {
+    "name": "wp5_axis_z",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'axis_z' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      0.0,
+      0.0,
+      2.952744486067157
+    ],
+    "h0x": 0.0,
+    "h0y": 0.0,
+    "h0z": 2.952744486067157,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  },
+  {
+    "name": "wp5_screen_00_direction",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'screen_00_direction' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      -1.35,
+      -1.69,
+      2.01
+    ],
+    "h0x": -1.35,
+    "h0y": -1.69,
+    "h0z": 2.01,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  },
+  {
+    "name": "wp5_generic_0",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'generic_0' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      -1.1316015548647798,
+      0.3432393445331762,
+      -2.7056172444364788
+    ],
+    "h0x": -1.1316015548647798,
+    "h0y": 0.3432393445331762,
+    "h0z": -2.7056172444364788,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  },
+  {
+    "name": "wp5_generic_1",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'generic_1' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      2.637947229388677,
+      1.2063490262557517,
+      -0.551956920250487
+    ],
+    "h0x": 2.637947229388677,
+    "h0y": 1.2063490262557517,
+    "h0z": -0.551956920250487,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  },
+  {
+    "name": "wp5_generic_2",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'generic_2' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      -1.8020417855361293,
+      1.755169763748832,
+      -1.5461967868300681
+    ],
+    "h0x": -1.8020417855361293,
+    "h0y": 1.755169763748832,
+    "h0z": -1.5461967868300681,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  },
+  {
+    "name": "wp5_generic_3",
+    "hypothesis": "WP5 mechanism rotation: h_0 direction 'generic_3' at fixed |h_0|",
+    "rung": "wp5",
+    "reference_axis": [
+      -0.7302271091870126,
+      2.3275450104808493,
+      1.663731526777707
+    ],
+    "h0x": -0.7302271091870126,
+    "h0y": 2.3275450104808493,
+    "h0z": 1.663731526777707,
+    "hx": -1.34,
+    "hy": 0.0,
+    "hz": 1.0,
+    "Jxx": 1.32,
+    "Jyy": 2.53,
+    "Jzz": 1.1,
+    "gx": 0.1,
+    "gy": 0.05,
+    "gz": 0.06
+  }
+]

@@ -1,4 +1,4 @@
-# Equivalence of the Fixed-Input and Outcome Pencils
+ # Equivalence of the Fixed-Input and Outcome Pencils
 
 > Sources: User instruction, 2026-09-21; Repository execution, 2026-09-21
 > Raw: [Fixed-input/outcome equivalence](../../raw/campaigns/2026-09-21-fixed-input-outcome-equivalence.md); [Outcome antipodality verification](../../raw/campaigns/2026-09-21-outcome-antipodality-verification.md)
